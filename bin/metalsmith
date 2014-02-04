@@ -1,0 +1,64 @@
+#!/usr/bin/env node
+
+var defaults = require('./plugins');
+var exists = require('fs').existsSync;
+var Metalsmith = require('..');
+var program = require('commander');
+
+/**
+ * Program.
+ */
+
+program
+  .option('-c, --config', 'set a config file')
+  .option('-d, --destination', 'set the destination directory')
+  .option('-s, --source', 'set the source directory')
+  .parse(process.argv);
+
+/**
+ * Settings.
+ */
+
+var json = exists(program.config) ? require(program.config) : {};
+var src = program.source || json.source;
+var dest = program.destination || json.destination;
+var data = json.metadata;
+var plugins = json.plugins || defaults;
+
+/**
+ * Metalsmith.
+ */
+
+var metalsmith = new Metalsmith(process.cwd());
+if (src) metalsmith.source(src);
+if (dest) metalsmith.destination(dest);
+if (data) metalsmith.metadata(data);
+
+/**
+ * Plugins.
+ */
+
+for (var key in plugins) {
+  var plugin;
+  var opts = plugins[key];
+
+  try {
+    // TODO: remove reaching and separate plugins into their individual repos
+    key = key.slice(11);
+    plugin = require('../lib/plugins/' + key);
+  } catch (e) {
+    console.error('failed to require plugin "' + key + '"');
+    process.exit(1);
+  }
+
+  metalsmith.use(plugin(opts));
+}
+
+/**
+ * Build.
+ */
+
+metalsmith.build(function(err){
+  if (err) return console.error(err);
+  console.log('built');
+});

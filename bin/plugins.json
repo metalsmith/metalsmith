@@ -1,0 +1,14 @@
+{
+  "metalsmith-drafts": true,
+  "metalsmith-markdown": {
+    "breaks": true,
+    "gfm": true,
+    "smartLists": true,
+    "smartypants": true,
+    "tables": true
+  },
+  "metalsmith-templates": {
+    "engine": "swig",
+    "directory": "templates"
+  }
+}
