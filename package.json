@@ -1,6 +1,6 @@
 {
   "name": "metalsmith",
-  "description": "An extremely simple, pluggable static file site generator.",
+  "description": "An extremely simple, pluggable static site generator.",
   "repository": "git://github.com/segmentio/metalsmith.git",
   "version": "0.0.0",
   "license": "MIT",

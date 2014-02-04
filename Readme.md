@@ -1,7 +1,7 @@
 
 # metalsmith
 
-  An extremely simple, _pluggable_ static file site generator.
+  An extremely simple, _pluggable_ static site generator.
 
 ## Installation
 
