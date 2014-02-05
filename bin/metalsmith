@@ -1,29 +1,30 @@
 #!/usr/bin/env node
 
-var defaults = require('./plugins');
 var exists = require('fs').existsSync;
 var Metalsmith = require('..');
 var program = require('commander');
+var resolve = require('path').resolve;
 
 /**
  * Program.
  */
 
 program
-  .option('-c, --config', 'set a config file')
   .option('-d, --destination', 'set the destination directory')
   .option('-s, --source', 'set the source directory')
+  .option('-c, --config', 'set an alternate config file')
   .parse(process.argv);
 
 /**
  * Settings.
  */
 
-var json = exists(program.config) ? require(program.config) : {};
+var config = resolve(process.cwd(), program.config || 'metalsmith.json');
+var json = exists(config) ? require(config) : {};
 var src = program.source || json.source;
 var dest = program.destination || json.destination;
 var data = json.metadata;
-var plugins = json.plugins || defaults;
+var plugins = json.plugins;
 
 /**
  * Metalsmith.
@@ -43,9 +44,7 @@ for (var key in plugins) {
   var opts = plugins[key];
 
   try {
-    // TODO: remove reaching and separate plugins into their individual repos
-    key = key.slice(11);
-    plugin = require('../lib/plugins/' + key);
+    plugin = require(key);
   } catch (e) {
     console.error('failed to require plugin "' + key + '"');
     process.exit(1);

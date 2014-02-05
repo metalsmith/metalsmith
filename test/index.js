@@ -1,5 +1,6 @@
 
 var assert = require('assert');
+var exec = require('child_process').exec;
 var fs = require('fs');
 var Metalsmith = require('..');
 var noop = function(){};
@@ -94,7 +95,7 @@ describe('Metalsmith', function(){
       Metalsmith('test/fixtures/basic')
         .build(function(err){
           if (err) return done(err);
-          equivalent('test/fixtures/basic/out', 'test/fixtures/basic/build');
+          equal('basic/build', 'basic/expected');
           done();
         });
     });
@@ -110,21 +111,61 @@ describe('Metalsmith', function(){
         })
         .build(function(err){
           if (err) return done(err);
-          equivalent('test/fixtures/basic-plugin/out', 'test/fixtures/basic-plugin/build');
+          equal('basic-plugin/build', 'basic-plugin/expected');
           done();
         });
     });
   });
 });
 
+describe('CLI', function(){
+  var bin = __dirname + '/../bin/metalsmith';
+
+  describe('build', function(){
+    it('should perform a basic build', function(done){
+      exec('cd test/fixtures/cli-basic && ' + bin, function(err, stdout){
+        if (err) return done(err);
+        equal('cli-basic/build', 'cli-basic/expected');
+        done();
+      });
+    });
+
+    it('should grab config from metalsmith.json', function(done){
+      exec('cd test/fixtures/cli-json && ' + bin, function(err, stdout){
+        if (err) return done(err);
+        equal('cli-json/destination', 'cli-json/expected');
+        done();
+      });
+    });
+
+    // it('should grab config from alternate json', function(done){
+    //   exec('cd test/fixtures/cli-config && ' + bin + ' -c config.json', function(err, stdout){
+    //     if (err) return done(err);
+    //     equal('cli-config/destination', 'cli-config/expected');
+    //     done();
+    //   });
+    // });
+
+    // it('should require a plugin', function(done){
+    //   exec('cd test/fixtures/cli-templates && ' + bin, function(err, stdout){
+    //     if (err) return done(err);
+    //     equal('cli-templates/build', 'cli-templates/expected');
+    //     done();
+    //   });
+    // });
+  });
+});
+
 /**
- * Assert two directories have equivalent contents.
+ * Assert a fixture build matches its expected contents.
  *
  * @param {String} one
  * @param {String} two
  */
 
-function equivalent(one, two){
+function equal(one, two){
+  one = 'test/fixtures/' + one;
+  two = 'test/fixtures/' + two;
   readdir(one).forEach(function(rel){
     var file = path.resolve(one, rel);
     var other = path.resolve(two, rel);
