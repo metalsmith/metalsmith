@@ -1,10 +1,28 @@
 {
   "name": "metalsmith",
-  "description": "An extremely simple, pluggable static site generator.",
   "repository": "git://github.com/segmentio/metalsmith.git",
   "version": "0.0.1",
   "license": "MIT",
+  "description": "An extremely simple, pluggable static site generator.",
+  "keywords": [
+    "static",
+    "file",
+    "site",
+    "website",
+    "blog",
+    "generator",
+    "markdown",
+    "jekyll",
+    "wintersmith",
+    "blacksmith"
+  ],
   "main": "lib/index.js",
+  "bin": {
+    "metalsmith": "bin/metalsmith"
+  },
+  "scripts": {
+    "test": "make test"
+  },
   "dependencies": {
     "front-matter": "~0.2.0",
     "ware": "~0.2.1",
