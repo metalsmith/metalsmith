@@ -138,21 +138,45 @@ describe('CLI', function(){
       });
     });
 
-    // it('should grab config from alternate json', function(done){
-    //   exec('cd test/fixtures/cli-config && ' + bin + ' -c config.json', function(err, stdout){
-    //     if (err) return done(err);
-    //     equal('cli-config/destination', 'cli-config/expected');
-    //     done();
-    //   });
-    // });
+    it('should grab config from alternate json', function(done){
+      exec('cd test/fixtures/cli-config && ' + bin + ' -c config.json', function(err, stdout){
+        if (err) return done(err);
+        equal('cli-config/destination', 'cli-config/expected');
+        done();
+      });
+    });
 
-    // it('should require a plugin', function(done){
-    //   exec('cd test/fixtures/cli-templates && ' + bin, function(err, stdout){
-    //     if (err) return done(err);
-    //     equal('cli-templates/build', 'cli-templates/expected');
-    //     done();
-    //   });
-    // });
+    it('should respect --source flag', function(done){
+      exec('cd test/fixtures/cli-source && ' + bin + ' --source overriden', function(err, stdout){
+        if (err) return done(err);
+        equal('cli-source/destination', 'cli-source/expected');
+        done();
+      });
+    });
+
+    it('should respect --destination flag', function(done){
+      exec('cd test/fixtures/cli-destination && ' + bin + ' --destination overriden', function(err, stdout){
+        if (err) return done(err);
+        equal('cli-destination/overriden', 'cli-destination/expected');
+        done();
+      });
+    });
+
+    it('should require a plugin', function(done){
+      exec('cd test/fixtures/cli-templates && ' + bin, function(err, stdout){
+        if (err) return done(err);
+        equal('cli-templates/build', 'cli-templates/expected');
+        done();
+      });
+    });
+
+    it('should add global metadata', function(done){
+      exec('cd test/fixtures/cli-metadata && ' + bin, function(err, stdout){
+        if (err) return done(err);
+        equal('cli-metadata/build', 'cli-metadata/expected');
+        done();
+      });
+    });
   });
 });
 

@@ -10,9 +10,9 @@ var resolve = require('path').resolve;
  */
 
 program
-  .option('-d, --destination', 'set the destination directory')
-  .option('-s, --source', 'set the source directory')
-  .option('-c, --config', 'set an alternate config file')
+  .option('-d, --destination <dir>', 'set the destination directory')
+  .option('-s, --source <dir>', 'set the source directory')
+  .option('-c, --config <file>', 'set an alternate config file')
   .parse(process.argv);
 
 /**

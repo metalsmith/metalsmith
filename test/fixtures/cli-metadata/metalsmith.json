@@ -1,0 +1,12 @@
+{
+  "metadata": {
+    "title": "Global Title",
+    "description": "Global description."
+  },
+  "plugins": {
+    "metalsmith-templates": {
+      "engine": "swig",
+      "directory": "templates"
+    }
+  }
+}
