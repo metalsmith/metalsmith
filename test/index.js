@@ -169,14 +169,6 @@ describe('CLI', function(){
         done();
       });
     });
-
-    it('should add global metadata', function(done){
-      exec('cd test/fixtures/cli-metadata && ' + bin, function(err, stdout){
-        if (err) return done(err);
-        equal('cli-metadata/build', 'cli-metadata/expected');
-        done();
-      });
-    });
   });
 });
 
