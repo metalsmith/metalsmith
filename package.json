@@ -2,7 +2,7 @@
   "name": "metalsmith",
   "description": "An extremely simple, pluggable static site generator.",
   "repository": "git://github.com/segmentio/metalsmith.git",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {
