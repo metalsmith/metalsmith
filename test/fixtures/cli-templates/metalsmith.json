@@ -1,8 +1,0 @@
-{
-  "plugins": {
-    "metalsmith-templates": {
-      "engine": "swig",
-      "directory": "templates"
-    }
-  }
-}

@@ -117,7 +117,7 @@ describe('Metalsmith', function(){
         .use(function(files, metalsmith, done){
           Object.keys(files).forEach(function(file){
             var data = files[file];
-            data.body = data.title;
+            data.contents = new Buffer(data.title);
           });
           done();
         })
@@ -175,9 +175,9 @@ describe('CLI', function(){
     });
 
     it('should require a plugin', function(done){
-      exec('cd test/fixtures/cli-templates && ' + bin, function(err, stdout){
+      exec('cd test/fixtures/cli-drafts && ' + bin, function(err, stdout){
         if (err) return done(err);
-        equal('test/fixtures/cli-templates/build', 'test/fixtures/cli-templates/expected');
+        equal('test/fixtures/cli-drafts/build', 'test/fixtures/cli-drafts/expected');
         done();
       });
     });

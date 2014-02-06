@@ -1,4 +1,8 @@
 
+0.1.0 - February 5, 2013
+------------------------
+* switch to `contents` always being a Buffer
+
 0.0.4 - February 5, 2013
 ------------------------
 * fix corrupted non-utf8 files
