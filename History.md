@@ -1,4 +1,8 @@
 
+0.0.4 - February 5, 2013
+------------------------
+* fix corrupted non-utf8 files
+
 0.0.3 - February 5, 2013
 ------------------------
 * expose `files` dictionary to `build` callback

@@ -1,5 +1,6 @@
 
 var assert = require('assert');
+var equal = require('assert-dir-equal');
 var exec = require('child_process').exec;
 var fs = require('fs');
 var Metalsmith = require('..');
@@ -96,7 +97,17 @@ describe('Metalsmith', function(){
         .build(function(err, files){
           if (err) return done(err);
           assert.equal('object', typeof files);
-          equal('basic/build', 'basic/expected');
+          equal('test/fixtures/basic/build', 'test/fixtures/basic/expected');
+          done();
+        });
+    });
+
+    it('should preserve binary files', function(done){
+      Metalsmith('test/fixtures/basic-images')
+        .build(function(err, files){
+          if (err) return done(err);
+          assert.equal('object', typeof files);
+          equal('test/fixtures/basic-images/build', 'test/fixtures/basic-images/expected');
           done();
         });
     });
@@ -112,7 +123,7 @@ describe('Metalsmith', function(){
         })
         .build(function(err){
           if (err) return done(err);
-          equal('basic-plugin/build', 'basic-plugin/expected');
+          equal('test/fixtures/basic-plugin/build', 'test/fixtures/basic-plugin/expected');
           done();
         });
     });
@@ -126,7 +137,7 @@ describe('CLI', function(){
     it('should perform a basic build', function(done){
       exec('cd test/fixtures/cli-basic && ' + bin, function(err, stdout){
         if (err) return done(err);
-        equal('cli-basic/build', 'cli-basic/expected');
+        equal('test/fixtures/cli-basic/build', 'test/fixtures/cli-basic/expected');
         done();
       });
     });
@@ -134,7 +145,7 @@ describe('CLI', function(){
     it('should grab config from metalsmith.json', function(done){
       exec('cd test/fixtures/cli-json && ' + bin, function(err, stdout){
         if (err) return done(err);
-        equal('cli-json/destination', 'cli-json/expected');
+        equal('test/fixtures/cli-json/destination', 'test/fixtures/cli-json/expected');
         done();
       });
     });
@@ -142,7 +153,7 @@ describe('CLI', function(){
     it('should grab config from alternate json', function(done){
       exec('cd test/fixtures/cli-config && ' + bin + ' -c config.json', function(err, stdout){
         if (err) return done(err);
-        equal('cli-config/destination', 'cli-config/expected');
+        equal('test/fixtures/cli-config/destination', 'test/fixtures/cli-config/expected');
         done();
       });
     });
@@ -150,7 +161,7 @@ describe('CLI', function(){
     it('should respect --source flag', function(done){
       exec('cd test/fixtures/cli-source && ' + bin + ' --source overriden', function(err, stdout){
         if (err) return done(err);
-        equal('cli-source/destination', 'cli-source/expected');
+        equal('test/fixtures/cli-source/destination', 'test/fixtures/cli-source/expected');
         done();
       });
     });
@@ -158,7 +169,7 @@ describe('CLI', function(){
     it('should respect --destination flag', function(done){
       exec('cd test/fixtures/cli-destination && ' + bin + ' --destination overriden', function(err, stdout){
         if (err) return done(err);
-        equal('cli-destination/overriden', 'cli-destination/expected');
+        equal('test/fixtures/cli-destination/overriden', 'test/fixtures/cli-destination/expected');
         done();
       });
     });
@@ -166,28 +177,9 @@ describe('CLI', function(){
     it('should require a plugin', function(done){
       exec('cd test/fixtures/cli-templates && ' + bin, function(err, stdout){
         if (err) return done(err);
-        equal('cli-templates/build', 'cli-templates/expected');
+        equal('test/fixtures/cli-templates/build', 'test/fixtures/cli-templates/expected');
         done();
       });
     });
   });
 });
-
-/**
- * Assert a fixture build matches its expected contents.
- *
- * @param {String} one
- * @param {String} two
- */
-
-function equal(one, two){
-  one = 'test/fixtures/' + one;
-  two = 'test/fixtures/' + two;
-  readdir(one).forEach(function(rel){
-    var file = path.resolve(one, rel);
-    var other = path.resolve(two, rel);
-    file = fs.readFileSync(file, 'utf8');
-    other = fs.readFileSync(other, 'utf8');
-    assert.equal(file, other);
-  });
-}
