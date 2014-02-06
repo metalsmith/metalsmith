@@ -93,8 +93,9 @@ describe('Metalsmith', function(){
   describe('#build', function(){
     it('should do a basic copy with no plugins', function(done){
       Metalsmith('test/fixtures/basic')
-        .build(function(err){
+        .build(function(err, files){
           if (err) return done(err);
+          assert.equal('object', typeof files);
           equal('basic/build', 'basic/expected');
           done();
         });
