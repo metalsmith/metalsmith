@@ -56,16 +56,16 @@
 
 ## CLI
 
-  In addition to a simple Javascript API, the Metalsmith CLI can also process a middleware configuration from a `metalsmith.json` file, so that you can build static-site generators similar to [Jekyll](jekyllrb.com) or [Wintersmith](wintersmith.io) easily.
+  In addition to a simple Javascript API, the Metalsmith CLI can process a middleware configuration from a `metalsmith.json` file, so that you can build static-site generators similar to [Jekyll](jekyllrb.com) or [Wintersmith](wintersmith.io) easily.
 
       Usage: metalsmith [options]
     
       Options:
       
         -h, --help         output usage information
-        -c, --config       set a config file
-        -d, --destination  set the destination directory
-        -s, --source       set the source directory
+        -c, --config       set a config file              default: `metalsmith.json`
+        -d, --destination  set the destination directory  default: `build`
+        -s, --source       set the source directory       default: `src`
 
 ## API
 

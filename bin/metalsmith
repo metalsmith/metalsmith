@@ -10,8 +10,6 @@ var resolve = require('path').resolve;
  */
 
 program
-  .option('-d, --destination <dir>', 'set the destination directory')
-  .option('-s, --source <dir>', 'set the source directory')
   .option('-c, --config <file>', 'set an alternate config file')
   .parse(process.argv);
 
@@ -21,27 +19,23 @@ program
 
 var config = resolve(process.cwd(), program.config || 'metalsmith.json');
 var json = exists(config) ? require(config) : {};
-var src = program.source || json.source;
-var dest = program.destination || json.destination;
-var data = json.metadata;
-var plugins = json.plugins;
 
 /**
  * Metalsmith.
  */
 
 var metalsmith = new Metalsmith(process.cwd());
-if (src) metalsmith.source(src);
-if (dest) metalsmith.destination(dest);
-if (data) metalsmith.metadata(data);
+if (json.source) metalsmith.source(json.source);
+if (json.destination) metalsmith.destination(json.destination);
+if (json.metadata) metalsmith.metadata(json.metadata);
 
 /**
  * Plugins.
  */
 
-for (var key in plugins) {
+for (var key in json.plugins) {
   var plugin;
-  var opts = plugins[key];
+  var opts = json.plugins[key];
 
   try {
     plugin = require(key);

@@ -158,22 +158,6 @@ describe('CLI', function(){
       });
     });
 
-    it('should respect --source flag', function(done){
-      exec('cd test/fixtures/cli-source && ' + bin + ' --source overriden', function(err, stdout){
-        if (err) return done(err);
-        equal('test/fixtures/cli-source/destination', 'test/fixtures/cli-source/expected');
-        done();
-      });
-    });
-
-    it('should respect --destination flag', function(done){
-      exec('cd test/fixtures/cli-destination && ' + bin + ' --destination overriden', function(err, stdout){
-        if (err) return done(err);
-        equal('test/fixtures/cli-destination/overriden', 'test/fixtures/cli-destination/expected');
-        done();
-      });
-    });
-
     it('should require a plugin', function(done){
       exec('cd test/fixtures/cli-drafts && ' + bin, function(err, stdout){
         if (err) return done(err);
