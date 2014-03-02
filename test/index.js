@@ -134,10 +134,10 @@ describe('CLI', function(){
   var bin = __dirname + '/../bin/metalsmith';
 
   describe('build', function(){
-    it('should perform a basic build', function(done){
-      exec('cd test/fixtures/cli-basic && ' + bin, function(err, stdout){
-        if (err) return done(err);
-        equal('test/fixtures/cli-basic/build', 'test/fixtures/cli-basic/expected');
+    it('should error without a metalsmith.json', function(done){
+      exec('cd test/fixtures/cli-no-config && ' + bin, function(err, stdout){
+        assert(err);
+        assert(~err.message.indexOf('Could not find a "metalsmith.json" configuration file.'));
         done();
       });
     });
@@ -146,14 +146,8 @@ describe('CLI', function(){
       exec('cd test/fixtures/cli-json && ' + bin, function(err, stdout){
         if (err) return done(err);
         equal('test/fixtures/cli-json/destination', 'test/fixtures/cli-json/expected');
-        done();
-      });
-    });
-
-    it('should grab config from alternate json', function(done){
-      exec('cd test/fixtures/cli-config && ' + bin + ' -c config.json', function(err, stdout){
-        if (err) return done(err);
-        equal('test/fixtures/cli-config/destination', 'test/fixtures/cli-config/expected');
+        assert(~stdout.indexOf('Successfully built to '));
+        assert(~stdout.indexOf('test/fixtures/cli-json/destination'));
         done();
       });
     });
@@ -162,6 +156,16 @@ describe('CLI', function(){
       exec('cd test/fixtures/cli-drafts && ' + bin, function(err, stdout){
         if (err) return done(err);
         equal('test/fixtures/cli-drafts/build', 'test/fixtures/cli-drafts/expected');
+        assert(~stdout.indexOf('Successfully built to '));
+        assert(~stdout.indexOf('test/fixtures/cli-drafts/build'));
+        done();
+      });
+    });
+
+    it('should error when failing to require a plugin', function(done){
+      exec('cd test/fixtures/cli-no-plugin && ' + bin, function(err, stdout){
+        assert(err);
+        assert(~err.message.indexOf('Failed to require plugin "metalsmith-non-existant".'));
         done();
       });
     });

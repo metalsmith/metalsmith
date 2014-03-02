@@ -1,24 +1,17 @@
 #!/usr/bin/env node
 
+var colors = require('colors');
 var exists = require('fs').existsSync;
 var Metalsmith = require('..');
-var program = require('commander');
 var resolve = require('path').resolve;
 
 /**
- * Program.
+ * Config.
  */
 
-program
-  .option('-c, --config <file>', 'set an alternate config file')
-  .parse(process.argv);
-
-/**
- * Settings.
- */
-
-var config = resolve(process.cwd(), program.config || 'metalsmith.json');
-var json = exists(config) ? require(config) : {};
+var config = resolve(process.cwd(), 'metalsmith.json');
+if (!exists(config)) console.error('Could not find a "metalsmith.json" configuration file.');
+var json = require(config);
 
 /**
  * Metalsmith.
@@ -40,8 +33,7 @@ for (var key in json.plugins) {
   try {
     plugin = require(key);
   } catch (e) {
-    console.error('failed to require plugin "' + key + '"');
-    process.exit(1);
+    fatal('Failed to require plugin "' + key + '".');
   }
 
   metalsmith.use(plugin(opts));
@@ -52,6 +44,31 @@ for (var key in json.plugins) {
  */
 
 metalsmith.build(function(err){
-  if (err) return console.error(err);
-  console.log('built');
+  if (err) return fatal(err.message);
+  log('Successfully built to ' + metalsmith.destination());
 });
+
+/**
+ * Log an error and then exit the process.
+ *
+ * @param {String} message
+ */
+
+function fatal(msg){
+  console.error();
+  console.error('  Error: '.red + msg);
+  console.error();
+  process.exit(1);
+}
+
+/**
+ * Log a `message`.
+ *
+ * @param {String} message
+ */
+
+function log(message){
+  console.log();
+  console.log('  Metalsmith: '.gray + message);
+  console.log();
+}
