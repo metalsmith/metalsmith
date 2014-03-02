@@ -5,10 +5,10 @@
     "title": "A Jekyll Example"
   },
   "plugins": {
-    "metalsmith-ignore": {
-      "patterns": []
-    },
     "metalsmith-markdown": {},
+    "metalsmith-permalinks": {
+      "pattern": ":title"
+    },
     "metalsmith-templates": {
       "engine": "jade",
       "directory": "./templates"
