@@ -1,13 +1,15 @@
 {
   "metadata": {
-    "url": "http://example.com",
-    "title": "Example",
-    "description": "Segment.io's simple, sleak, sexy, static site."
+    "title": "My Blog",
+    "description": "My second, super-cool blog."
   },
   "plugins": {
     "metalsmith-markdown": {},
+    "metalsmith-permalinks": {
+      "pattern": ":title"
+    },
     "metalsmith-templates": {
-      "engine": "swig"
+      "engine": "handlebars"
     }
   }
 }

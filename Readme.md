@@ -28,7 +28,7 @@
     date: 2014-12-01
     ---
     
-    An informative body.
+    An informative article.
   
   ...would be parsed into...
 
@@ -37,7 +37,7 @@
   'path/to/my-file.md': {
     title: 'A Catchy Title',
     date: new Date('2014-12-01'),
-    body: new Buffer('An informative body.')
+    contents: new Buffer('An informative article.')
   }
 }
 ```
