@@ -51,8 +51,8 @@
   - [A simple static site generator.](examples/static-site)
   - [A simple project scaffolder.](examples/project-scaffolder)
   - [A simple build tool for Sass files.](examples/build-tool)
-  - [An implementation similar to Jekyll with just a few plugins.](examples/jekyll)
-  - [An implementation similar to Wintersmith with just a few plugins.](examples/wintersmith)
+  - [An Jekyll-like static site generator.](examples/jekyll)
+  - [An Wintersmith-like static site generator.](examples/wintersmith)
 
 ## CLI
 
