@@ -1,5 +1,5 @@
 ---
-title: My Third Post
+title: Third Post
 date: 2012-09-28
 template: post.html
 ---
