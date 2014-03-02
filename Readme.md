@@ -1,5 +1,5 @@
 
-# metalsmith
+# Metalsmith
 
   An extremely simple, _pluggable_ way to manipulate directories.
 
@@ -37,7 +37,7 @@
   'path/to/my-file.md': {
     title: 'A Catchy Title',
     date: new Date('2014-12-01'),
-    body: new Buffer('An informative body')
+    body: new Buffer('An informative body.')
   }
 }
 ```
@@ -46,26 +46,22 @@
 
 ## Examples
 
-  Check out the examples directory to see it in action. There are examples of:
+  Check out the [examples directory](examples) to see it in action. There are examples of:
 
-  - A simple static site generator. [here](examples/static-site)
-  - A simple project scaffolder. [here](examples/project-scaffolder)
-  - A simple build tool for Sass files. [here](examples/build-tool)
-  - An implementation similar to [Jekyll](jekyllrb.com) with just a few plugins. [here](examples/jekyll)
-  - An implementation similar to [Wintersmith](wintersmith.io) with just a few plugins. [here](examples/wintersmith)
+  - [A simple static site generator.](examples/static-site)
+  - [A simple project scaffolder.](examples/project-scaffolder)
+  - [A simple build tool for Sass files.](examples/build-tool)
+  - [An implementation similar to Jekyll with just a few plugins.](examples/jekyll)
+  - [An implementation similar to Wintersmith with just a few plugins.](examples/wintersmith)
 
 ## CLI
 
-  In addition to a simple Javascript API, the Metalsmith CLI can process a middleware configuration from a `metalsmith.json` file, so that you can build static-site generators similar to [Jekyll](jekyllrb.com) or [Wintersmith](wintersmith.io) easily.
+  In addition to a simple [Javascript API](#api), the Metalsmith CLI can read configuration from a `metalsmith.json` file, so that you can build static-site generators similar to [Jekyll](jekyllrb.com) or [Wintersmith](wintersmith.io) easily. Simply...
 
-      Usage: metalsmith [options]
-    
-      Options:
+    $ metalsmith
       
-        -h, --help         output usage information
-        -c, --config       set a config file              default: `metalsmith.json`
-        -d, --destination  set the destination directory  default: `build`
-        -s, --source       set the source directory       default: `src`
+        Reading configuration from /path/to/metalsmith.json
+        Successfully built to /path/to/build
 
 ## API
 
@@ -77,6 +73,10 @@
 
   Add the given `plugin` function to the middleware stack.
 
+#### #build(fn)
+
+  Build with the given settings and call `fn(err, files)`.
+
 #### #source(path)
 
   Set the relative `path` to the source directory, or get the full one if no `path` is provided. The source directory defaults to `./src`.
@@ -87,21 +87,17 @@
 
 #### #metadata(json)
 
-  Set global metadata that should be applied to each file, in addition to any YAML front-matter.
+  Set global metadata, in addition to any YAML front-matter.
 
 #### #join(paths...)
  
   Join any amount of `paths...` to the working directory.
 
-#### #build(fn)
-
-  Build with the given settings and plugins, and call `fn(err)`.
-
 ## License
 
   The MIT License (MIT)
 
-  Copyright @copy; 2013, Segment.io \<friends@segment.io\>
+  Copyright &copy; 2013, Segment.io \<friends@segment.io\>
 
   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
