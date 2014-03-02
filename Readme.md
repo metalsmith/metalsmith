@@ -60,8 +60,8 @@
 
     $ metalsmith
       
-        Reading configuration from /path/to/metalsmith.json
-        Successfully built to /path/to/build
+        Metalsmith · reading configuration from: /path/to/metalsmith.json
+        Metalsmith · successfully built to: /path/to/build
 
 ## API
 
