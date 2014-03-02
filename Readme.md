@@ -1,31 +1,58 @@
 
 # metalsmith
 
-  An extremely simple, _pluggable_ static site generator.
+  An extremely simple, _pluggable_ way to manipulate directories.
+
+  **It's a static site generator:** using plugins that convert markdown, render templates and handle permalinks.
+
+  **It's a project scaffolder:** using plugins that prompt for placeholders and render templates.
+
+  **It's a build tool:** using plugins that pre-process files and then concatenate them together.
 
 ## Installation
 
     $ npm install metalsmith
 
-## Example
+## Plugins
 
-  With a directory structure like this ...
+  Check out the Wiki for a list of [plugins]().
 
-    /blog
-      /src
-        /a-post.md
-        /another-post.md
+## How does it work?
 
-  ... running Metalsmith ...
+  Metalsmith is super simple. It reads all the files in a source directory, runs the contents through a series of middleware that can manipulate as they please, and then writes the contents to a destination directory.
 
-    $ metalsmith
+  Each file can contain YAML front-matter that will be attached as metadata, so a simple file like...
 
-  ... will create:
+    ---
+    title: A Catchy Title
+    date: 2014-12-01
+    ---
+    
+    An informative body.
+  
+  ...would be parsed into...
 
-    /blog
-      /build
-        /a-post.html
-        /another-post.html
+```js
+{
+  '/path/to/my-file.md': {
+    title: 'A Catchy Title',
+    date: new Date('2014-12-01'),
+    body: new Buffer('An informative body')
+  }
+}
+```
+
+  ...which any of the plugins can then manipulate.
+
+## Examples
+
+  Check out the examples directory to see it in action. There are examples of:
+
+  - A simple static site generator. [here]()
+  - A simple project scaffolder. [here]()
+  - A simple build tool for Sass files. [here]()
+  - An implementation similar to Wintersmith with just a few plugins. [here]()
+  - An implementation similar to Jekyll with just a few plugins. [here]()
 
 ## CLI
 
@@ -38,7 +65,7 @@
         -d, --destination  set the destination directory
         -s, --source       set the source directory
 
-## Javascript API
+## API
 
 #### new Metalsmith(dir)
 
@@ -70,4 +97,12 @@
 
 ## License
 
-  MIT
+  The MIT License (MIT)
+
+  Copyright @copy; 2013, Segment.io \<friends@segment.io\>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
