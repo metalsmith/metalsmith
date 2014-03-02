@@ -10,7 +10,7 @@ var resolve = require('path').resolve;
  */
 
 var config = resolve(process.cwd(), 'metalsmith.json');
-if (!exists(config)) console.error('Could not find a "metalsmith.json" configuration file.');
+if (!exists(config)) console.error('could not find a "metalsmith.json" configuration file.');
 var json = require(config);
 
 /**
@@ -33,7 +33,7 @@ for (var key in json.plugins) {
   try {
     plugin = require(key);
   } catch (e) {
-    fatal('Failed to require plugin "' + key + '".');
+    fatal('failed to require plugin "' + key + '".');
   }
 
   metalsmith.use(plugin(opts));
@@ -45,7 +45,7 @@ for (var key in json.plugins) {
 
 metalsmith.build(function(err){
   if (err) return fatal(err.message);
-  log('Successfully built to ' + metalsmith.destination());
+  log('successfully built to ' + metalsmith.destination());
 });
 
 /**
