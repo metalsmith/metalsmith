@@ -2,19 +2,18 @@
   "source": "./_posts",
   "destination": "./_site",
   "metadata": {
-    "site": {
-      "url": "http://example.com",
-      "title": "A Jekyll Example"
-    }
+    "title": "My Jekyll-Powered Blog",
+    "description": "My second, super-cool, jekyll-powered blog."
   },
   "plugins": {
     "metalsmith-drafts": {},
     "metalsmith-markdown": {},
     "metalsmith-permalinks": {
-      "pattern": ":yyyy-:mm-:dd-:slug"
+      "pattern": ":title"
     },
     "metalsmith-templates": {
-      "engine": "liquid",
+      "engine": "swig",
       "directory": "_layouts"
     }
   }
+}

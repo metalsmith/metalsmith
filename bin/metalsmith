@@ -10,8 +10,13 @@ var resolve = require('path').resolve;
  */
 
 var config = resolve(process.cwd(), 'metalsmith.json');
-if (!exists(config)) console.error('could not find a "metalsmith.json" configuration file.');
-var json = require(config);
+if (!exists(config)) fatal('could not find a "metalsmith.json" configuration file.');
+
+try {
+  var json = require(config);
+} catch (e) {
+  fatal('it seems like "metalsmith.json" is malformed.');
+}
 
 /**
  * Metalsmith.
