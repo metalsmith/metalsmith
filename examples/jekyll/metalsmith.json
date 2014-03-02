@@ -1,0 +1,20 @@
+{
+  "source": "./_posts",
+  "destination": "./_site",
+  "metadata": {
+    "site": {
+      "url": "http://example.com",
+      "title": "A Jekyll Example"
+    }
+  },
+  "plugins": {
+    "metalsmith-drafts": {},
+    "metalsmith-markdown": {},
+    "metalsmith-permalinks": {
+      "pattern": ":yyyy-:mm-:dd-:slug"
+    },
+    "metalsmith-templates": {
+      "engine": "liquid",
+      "directory": "_layouts"
+    }
+  }

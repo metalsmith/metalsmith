@@ -1,0 +1,17 @@
+{
+  "source": "./contents",
+  "metadata": {
+    "url": "http://example.com",
+    "title": "A Jekyll Example"
+  },
+  "plugins": {
+    "metalsmith-ignore": {
+      "patterns": []
+    },
+    "metalsmith-markdown": {},
+    "metalsmith-templates": {
+      "engine": "jade",
+      "directory": "./templates"
+    }
+  }
+}
