@@ -34,7 +34,7 @@
 
 ```js
 {
-  '/path/to/my-file.md': {
+  'path/to/my-file.md': {
     title: 'A Catchy Title',
     date: new Date('2014-12-01'),
     body: new Buffer('An informative body')
@@ -48,13 +48,15 @@
 
   Check out the examples directory to see it in action. There are examples of:
 
-  - A simple static site generator. [here]()
-  - A simple project scaffolder. [here]()
-  - A simple build tool for Sass files. [here]()
-  - An implementation similar to Wintersmith with just a few plugins. [here]()
-  - An implementation similar to Jekyll with just a few plugins. [here]()
+  - A simple static site generator. [here](examples/static-site)
+  - A simple project scaffolder. [here](examples/project-scaffolder)
+  - A simple build tool for Sass files. [here](examples/build-tool)
+  - An implementation similar to [Jekyll](jekyllrb.com) with just a few plugins. [here](examples/jekyll)
+  - An implementation similar to [Wintersmith](wintersmith.io) with just a few plugins. [here](examples/wintersmith)
 
 ## CLI
+
+  In addition to a simple Javascript API, the Metalsmith CLI can also process a middleware configuration from a `metalsmith.json` file, so that you can build static-site generators similar to [Jekyll](jekyllrb.com) or [Wintersmith](wintersmith.io) easily.
 
       Usage: metalsmith [options]
     
