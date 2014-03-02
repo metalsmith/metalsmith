@@ -56,7 +56,7 @@ metalsmith.build(function(err){
 
 function fatal(msg){
   console.error();
-  console.error('  Error: '.red + msg);
+  console.error('  Metalsmith · '.red + msg);
   console.error();
   process.exit(1);
 }
@@ -69,6 +69,6 @@ function fatal(msg){
 
 function log(message){
   console.log();
-  console.log('  Metalsmith: '.gray + message);
+  console.log('  Metalsmith · '.gray + message);
   console.log();
 }
