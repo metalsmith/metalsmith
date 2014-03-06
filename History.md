@@ -1,7 +1,11 @@
 
+0.2.0 - March 6, 2013
+---------------------
+* change to `#metadata` just being a getter
+
 0.1.0 - February 5, 2013
 ------------------------
-* switch to `contents` always being a Buffer
+* change to `contents` always being a Buffer
 
 0.0.4 - February 5, 2013
 ------------------------

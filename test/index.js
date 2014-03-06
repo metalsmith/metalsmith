@@ -68,18 +68,10 @@ describe('Metalsmith', function(){
   });
 
   describe('#metadata', function(){
-    it('should set metadata', function(){
-      var m = Metalsmith('test/tmp');
-      var data = { property: true };
-      m.metadata(data);
-      assert(data == m._data);
-    });
-
     it('should get metadata', function(){
       var m = Metalsmith('test/tmp');
       var data = { property: true };
-      m.metadata(data);
-      assert(data == m.metadata());
+      assert.deepEqual(m.metadata(), {});
     });
   });
 
@@ -137,7 +129,7 @@ describe('CLI', function(){
     it('should error without a metalsmith.json', function(done){
       exec('cd test/fixtures/cli-no-config && ' + bin, function(err, stdout){
         assert(err);
-        assert(~err.message.indexOf('Could not find a "metalsmith.json" configuration file.'));
+        assert(~err.message.indexOf('could not find a "metalsmith.json" configuration file.'));
         done();
       });
     });
@@ -146,7 +138,7 @@ describe('CLI', function(){
       exec('cd test/fixtures/cli-json && ' + bin, function(err, stdout){
         if (err) return done(err);
         equal('test/fixtures/cli-json/destination', 'test/fixtures/cli-json/expected');
-        assert(~stdout.indexOf('Successfully built to '));
+        assert(~stdout.indexOf('successfully built to '));
         assert(~stdout.indexOf('test/fixtures/cli-json/destination'));
         done();
       });
@@ -156,7 +148,7 @@ describe('CLI', function(){
       exec('cd test/fixtures/cli-drafts && ' + bin, function(err, stdout){
         if (err) return done(err);
         equal('test/fixtures/cli-drafts/build', 'test/fixtures/cli-drafts/expected');
-        assert(~stdout.indexOf('Successfully built to '));
+        assert(~stdout.indexOf('successfully built to '));
         assert(~stdout.indexOf('test/fixtures/cli-drafts/build'));
         done();
       });
@@ -165,7 +157,7 @@ describe('CLI', function(){
     it('should error when failing to require a plugin', function(done){
       exec('cd test/fixtures/cli-no-plugin && ' + bin, function(err, stdout){
         assert(err);
-        assert(~err.message.indexOf('Failed to require plugin "metalsmith-non-existant".'));
+        assert(~err.message.indexOf('failed to require plugin "metalsmith-non-existant".'));
         done();
       });
     });
