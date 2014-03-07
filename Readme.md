@@ -65,7 +65,7 @@ Each plugin is invoked with the contents of the source directory, and each file 
 
 Of course they can get a lot more complicated too. That's what makes Metalsmith powerful; the plugins can do anything you want!
 
-## Secret!
+## The secret...
 
 We keep referring to Metalsmith as a "static site generator", but it's a lot more than that. Since everything is a plugin, the core library is actually just an abstraction for manipulating a directory of files.
 
