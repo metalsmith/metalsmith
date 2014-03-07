@@ -80,7 +80,22 @@ Which means you could just as easily use it to make...
 
 ## CLI
 
-In addition to a simple [Javascript API](#api), the Metalsmith CLI can read configuration from a `metalsmith.json` file, so that you can build static-site generators similar to [Jekyll](jekyllrb.com) or [Wintersmith](wintersmith.io) easily. Simply...
+In addition to a simple [Javascript API](#api), the Metalsmith CLI can read configuration from a `metalsmith.json` file, so that you can build static-site generators similar to [Jekyll](jekyllrb.com) or [Wintersmith](wintersmith.io) easily. The example blog above would be configured like this:
+
+```json
+{
+  "source": "src",
+  "destination": "build",
+  "plugins": {
+    "metalsmith-drafts": true,
+    "metalsmith-markdown": true,
+    "metalsmith-permalinks": "posts/:title",
+    "metalsmith-templates": "handlebars"
+  }
+}
+```
+
+And then from the CLI, simply run...
 
     $ metalsmith
       
