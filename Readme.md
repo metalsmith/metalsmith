@@ -1,4 +1,3 @@
-
 # Metalsmith
 
 An extremely simple, _pluggable_ static site generator.
@@ -73,7 +72,6 @@ We keep referring to Metalsmith as a "static site generator", but it's a lot mor
 Which means you could just as easily use it to make...
 
   - [A simple static site generator.](examples/static-site)
-  - [A simple project scaffolder.](examples/project-scaffolder)
   - [A simple build tool for Sass files.](examples/build-tool)
   - [An Jekyll-like static site generator.](examples/jekyll)
   - [An Wintersmith-like static site generator.](examples/wintersmith)
