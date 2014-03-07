@@ -1,5 +1,5 @@
 
-var each = require('async').eachSeries;
+var async = require('async');
 var Metalsmith = require('../..');
 var prompt = require('cli-prompt');
 var render = require('consolidate').handlebars.render;
@@ -27,7 +27,7 @@ function ask(files, metalsmith, done){
   var prompts = ['name', 'repository', 'description', 'license'];
   var metadata = metalsmith.metadata();
 
-  each(prompts, run, done);
+  async.eachSeries(prompts, run, done);
 
   function run(key, done){
     prompt('  ' + key + ': ', function(val){
@@ -49,7 +49,7 @@ function template(files, metalsmith, done){
   var keys = Object.keys(files);
   var metadata = metalsmith.metadata();
 
-  each(keys, run, done);
+  async.each(keys, run, done);
 
   function run(file, done){
     var str = files[file].contents.toString();
