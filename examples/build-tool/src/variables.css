@@ -1,0 +1,23 @@
+
+/**
+ * Variables.
+ */
+
+:root {
+  var-white: #fefefe;
+  var-light-gray: #ededed;
+  var-gray: #a3a3a4;
+  var-dark-gray: #4a4848;
+  var-black: #262727;
+  var-gold: #daae20;
+
+  var-sentinel: "Sentinel SSm A", "Sentinel SSm B", "Sentinel", "Georgia", sans-serif;
+  var-tungsten: "Tungsten A", "Tungsten B", "Tungsten", "Impact", sans-serif;
+  var-source-code: "Source Code", monospace;
+
+  var-m: 1.25;
+  var-much-smaller: calc(1em / var(m) / var(m));
+  var-smaller: calc(1em / var(m));
+  var-larger: calc(1em * var(m));
+  var-much-larger: calc(1em * var(m) * var(m));
+}

@@ -1,0 +1,55 @@
+
+/**
+ * Plugin.
+ */
+
+.Plugin {
+  position: relative;
+  padding: 1.5em;
+  background-color: white;
+}
+
+.Plugin + .Plugin {
+  margin-top: 1px;
+}
+
+.Plugin-title {
+  font-size: 1.5em;
+  margin-bottom: .25em;
+  text-align: left;
+}
+
+.Plugin-icon {
+  font-size: .7em;
+  color: var(gold);
+  margin-left: .4em;
+}
+
+.Plugin-icon::before {
+  top: .075em;
+}
+
+.Plugin-description {
+  font-size: .85em;
+  margin: 0;
+}
+
+.Plugin-arrow {
+  position: absolute;
+  top: 1.2em;
+  right: 1.5em;
+  opacity: .3;
+  transition: opacity .2s;
+}
+
+.Plugin-arrow::before {
+  color: var(gray);
+}
+
+.Plugin:hover .Plugin-arrow {
+  opacity: 1;
+}
+
+.Plugin:hover .Plugin-repository {
+  display: block;
+}

@@ -1,8 +1,8 @@
 {
   "source": "./contents",
   "metadata": {
-    "url": "http://example.com",
-    "title": "A Jekyll Example"
+    "title": "My Wintersmith-Powered Blog",
+    "description": "My second, super-cool, Wintersmith-powered blog."
   },
   "plugins": {
     "metalsmith-markdown": {},

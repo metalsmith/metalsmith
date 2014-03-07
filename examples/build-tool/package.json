@@ -1,0 +1,7 @@
+{
+  "name": "build-tool-example",
+  "private": true,
+  "dependencies": {
+    "myth": "^0.3.0"
+  }
+}

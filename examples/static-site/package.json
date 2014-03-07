@@ -1,0 +1,9 @@
+{
+  "name": "static-site-example",
+  "private": true,
+  "dependencies": {
+    "metalsmith-templates": "^0.1.0",
+    "metalsmith-markdown": "^0.2.1",
+    "metalsmith-permalinks": "^0.1.0"
+  }
+}

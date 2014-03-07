@@ -1,0 +1,145 @@
+/**
+ * Base.
+ */
+
+html {
+  font: 500 16px/1.6 "Sentinel SSm A", "Sentinel SSm B", "Sentinel", "Georgia", sans-serif;
+  color: #4a4848;
+  background: url('images/ground.jpg') #ededed;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: .5em;
+  font-family: "Tungsten A", "Tungsten B", "Tungsten", "Impact", sans-serif;
+  text-transform: uppercase;
+  color: #262727;
+  text-align: center;
+}
+
+p {
+  margin: 1em 0;
+}
+
+p a {
+  text-decoration: underline;
+  color: #262727;
+}
+
+p a:hover {
+  color: #000;
+}
+
+figure {
+  margin: 1.5em 0;
+}
+
+ol {
+  margin: 1em 0 1em 2.5em;
+  list-style: decimal outside;
+  font-size: 0.8em;
+}
+
+pre {
+  font: 300 0.64em/1.3 "Source Code", monospace;
+  position: relative;
+  background-color: #fefefe;
+  padding: 1.5em;
+}
+
+pre + pre {
+  margin-top: 1px;
+}
+
+code b {
+  color: #262727;
+}
+
+code i {
+  font-style: normal;
+  color: #daae20;
+}
+
+/**
+ * Example.
+ */
+
+.Example {
+  max-width: 17em;
+  margin-top: 1px;
+  padding: 1.5em;
+  background-color: white;
+}
+
+.Example-title {
+  font-size: 1.5em;
+  margin-bottom: .4em;
+  text-align: center;
+}
+
+.Example-step-list {
+  list-style: none;
+  line-height: 2;
+  margin: 0;
+}
+
+/**
+ * Plugin.
+ */
+
+.Plugin {
+  position: relative;
+  padding: 1.5em;
+  background-color: white;
+}
+
+.Plugin + .Plugin {
+  margin-top: 1px;
+}
+
+.Plugin-title {
+  font-size: 1.5em;
+  margin-bottom: .25em;
+  text-align: left;
+}
+
+.Plugin-icon {
+  font-size: .7em;
+  color: #daae20;
+  margin-left: .4em;
+}
+
+.Plugin-icon::before {
+  top: .075em;
+}
+
+.Plugin-description {
+  font-size: .85em;
+  margin: 0;
+}
+
+.Plugin-arrow {
+  position: absolute;
+  top: 1.2em;
+  right: 1.5em;
+  opacity: .3;
+  -webkit-transition: opacity .2s;
+  transition: opacity .2s;
+}
+
+.Plugin-arrow::before {
+  color: #a3a3a4;
+}
+
+.Plugin:hover .Plugin-arrow {
+  opacity: 1;
+}
+
+.Plugin:hover .Plugin-repository {
+  display: block;
+}
+
+/**
+ * Variables.
+ */
+

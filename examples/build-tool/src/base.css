@@ -1,0 +1,62 @@
+
+/**
+ * Base.
+ */
+
+html {
+  font: 500 16px/1.6 var(sentinel);
+  color: var(dark-gray);
+  background: url('images/ground.jpg') var(light-gray);
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: .5em;
+  font-family: var(tungsten);
+  text-transform: uppercase;
+  color: var(black);
+  text-align: center;
+}
+
+p {
+  margin: 1em 0;
+}
+
+p a {
+  text-decoration: underline;
+  color: var(black);
+}
+
+p a:hover {
+  color: #000;
+}
+
+figure {
+  margin: 1.5em 0;
+}
+
+ol {
+  margin: 1em 0 1em 2.5em;
+  list-style: decimal outside;
+  font-size: var(smaller);
+}
+
+pre {
+  font: 300 var(much-smaller)/1.3 var(source-code);
+  position: relative;
+  background-color: var(white);
+  padding: 1.5em;
+}
+
+pre + pre {
+  margin-top: 1px;
+}
+
+code b {
+  color: var(black);
+}
+
+code i {
+  font-style: normal;
+  color: var(gold);
+}

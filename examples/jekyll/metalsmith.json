@@ -3,7 +3,7 @@
   "destination": "./_site",
   "metadata": {
     "title": "My Jekyll-Powered Blog",
-    "description": "My second, super-cool, jekyll-powered blog."
+    "description": "My second, super-cool, Jekyll-powered blog."
   },
   "plugins": {
     "metalsmith-drafts": {},

@@ -1,0 +1,23 @@
+
+/**
+ * Example.
+ */
+
+.Example {
+  max-width: 17em;
+  margin-top: 1px;
+  padding: 1.5em;
+  background-color: white;
+}
+
+.Example-title {
+  font-size: 1.5em;
+  margin-bottom: .4em;
+  text-align: center;
+}
+
+.Example-step-list {
+  list-style: none;
+  line-height: 2;
+  margin: 0;
+}

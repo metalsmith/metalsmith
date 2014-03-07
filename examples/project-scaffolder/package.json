@@ -1,0 +1,10 @@
+{
+  "name": "project-scaffolder-example",
+  "private": true,
+  "dependencies": {
+    "consolidate": "^0.10.0",
+    "async": "^0.2.10",
+    "handlebars": "^2.0.0-alpha.2",
+    "cli-prompt": "^0.3.2"
+  }
+}
