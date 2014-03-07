@@ -1,4 +1,12 @@
 
+0.2.3 - March 7, 2013
+---------------------
+* add setting back to `#metadata`
+
+0.2.2 - March 7, 2013
+---------------------
+* fix install error
+
 0.2.1 - March 7, 2013
 ---------------------
 * change to `chalk` from `colors`
