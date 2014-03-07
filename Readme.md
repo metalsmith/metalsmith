@@ -1,13 +1,29 @@
 
 # Metalsmith
 
-  An extremely simple, _pluggable_ way to manipulate directories.
+An extremely simple, _pluggable_ static site generator.
 
-  **It's a static site generator:** using plugins that convert markdown, render templates and handle permalinks.
+In Metalsmith, all of the logic is handled by plugins. You simply chain them together. Here's what the simplest blog looks like...
 
-  **It's a project scaffolder:** using plugins that prompt for placeholders and render templates.
+```js
+Metalsmith(__dirname)
+  .use(markdown)
+  .use(templates('handlebars'))
+  .build();
+```
 
-  **It's a build tool:** using plugins that pre-process files and then concatenate them together.
+...but what if you want to get fancier by hiding your unfinished drafts and using custom permalinks? Just add plugins...
+
+```js
+Metalsmith(__dirname)
+  .use(drafts)
+  .use(markdown)
+  .use(permalinks('posts/:title'))
+  .use(templates('handlebars'))
+  .build();
+```
+
+...it's as easy as that!
 
 ## Installation
 
@@ -15,13 +31,17 @@
 
 ## Plugins
 
-  Check out the Wiki for a list of [plugins]().
+Check out the website for a list of [plugins](http://www.metalsmith.io#the-plugins).
 
 ## How does it work?
 
-  Metalsmith is super simple. It reads all the files in a source directory, runs the contents through a series of middleware that can manipulate as they please, and then writes the contents to a destination directory.
+Metalsmith works in three simple steps:
 
-  Each file can contain YAML front-matter that will be attached as metadata, so a simple file like...
+  1. Read all the files in a source directory.
+  2. Invoke a series of plugins that manipulate the files.
+  3. Write the results to a destination directory!
+
+Each plugin is invoked with the contents of the source directory, and each file can contain YAML front-matter that will be attached as metadata, so a simple file like...
 
     ---
     title: A Catchy Title
@@ -42,11 +62,15 @@
 }
 ```
 
-  ...which any of the plugins can then manipulate.
+...which any of the plugins can then manipulate however they want. And writing the plugins is incredibly simple, just take a look at the [example drafts plugin](examples/drafts-plugin/index.js).
 
-## Examples
+Of course they can get a lot more complicated too. That's what makes Metalsmith powerful; the plugins can do anything you want!
 
-  Check out the [examples directory](examples) to see it in action. There are examples of:
+## Secret!
+
+We keep referring to Metalsmith as a "static site generator", but it's a lot more than that. Since everything is a plugin, the core library is actually just an abstraction for manipulating a directory of files.
+
+Which means you could just as easily use it to make...
 
   - [A simple static site generator.](examples/static-site)
   - [A simple project scaffolder.](examples/project-scaffolder)
@@ -56,7 +80,7 @@
 
 ## CLI
 
-  In addition to a simple [Javascript API](#api), the Metalsmith CLI can read configuration from a `metalsmith.json` file, so that you can build static-site generators similar to [Jekyll](jekyllrb.com) or [Wintersmith](wintersmith.io) easily. Simply...
+In addition to a simple [Javascript API](#api), the Metalsmith CLI can read configuration from a `metalsmith.json` file, so that you can build static-site generators similar to [Jekyll](jekyllrb.com) or [Wintersmith](wintersmith.io) easily. Simply...
 
     $ metalsmith
       
@@ -67,40 +91,40 @@
 
 #### new Metalsmith(dir)
 
-  Create a new `Metalsmith` instance for a working `dir`.
+Create a new `Metalsmith` instance for a working `dir`.
 
 #### #use(plugin)
 
-  Add the given `plugin` function to the middleware stack.
+Add the given `plugin` function to the middleware stack.
 
 #### #build(fn)
 
-  Build with the given settings and call `fn(err, files)`.
+Build with the given settings and call `fn(err, files)`.
 
 #### #source(path)
 
-  Set the relative `path` to the source directory, or get the full one if no `path` is provided. The source directory defaults to `./src`.
+Set the relative `path` to the source directory, or get the full one if no `path` is provided. The source directory defaults to `./src`.
 
 #### #destination(path)
 
-  Set the relative `path` to the destination directory, or get the full one if no `path` is provided. The destination directory defaults to `./build`.
+Set the relative `path` to the destination directory, or get the full one if no `path` is provided. The destination directory defaults to `./build`.
 
 #### #metadata(json)
 
-  Set global metadata, in addition to any YAML front-matter.
+Get the global metadata. This is useful for plugins that want to set global-level metadata that can be applied to all files.
 
 #### #join(paths...)
  
-  Join any amount of `paths...` to the working directory.
+Join any amount of `paths...` to the working directory. This is useful for plugins who want to read extra assets from another directory, for example `./templates`.
 
 ## License
 
-  The MIT License (MIT)
+The MIT License (MIT)
 
-  Copyright &copy; 2013, Segment.io \<friends@segment.io\>
+Copyright &copy; 2013, Segment.io \<friends@segment.io\>
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
