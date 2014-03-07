@@ -1,4 +1,8 @@
 
+0.2.1 - March 7, 2013
+---------------------
+* change to `chalk` from `colors`
+
 0.2.0 - March 6, 2013
 ---------------------
 * change to `#metadata` just being a getter

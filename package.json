@@ -1,7 +1,7 @@
 {
   "name": "metalsmith",
   "repository": "git://github.com/segmentio/metalsmith.git",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "description": "An extremely simple, pluggable static site generator.",
   "keywords": [
@@ -31,7 +31,7 @@
     "fs-extra": "~0.8.1",
     "defaults": "~1.0.0",
     "is-utf8": "~0.2.0",
-    "colors": "~0.6.2"
+    "chalk": "^0.4.0"
   },
   "devDependencies": {
     "mocha": "1.x",

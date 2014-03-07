@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var colors = require('colors');
+var chalk = require('chalk');
 var exists = require('fs').existsSync;
 var Metalsmith = require('..');
 var resolve = require('path').resolve;
@@ -61,7 +61,7 @@ metalsmith.build(function(err){
 
 function fatal(msg){
   console.error();
-  console.error('  Metalsmith'.red + ' · '.grey + msg);
+  console.error(chalk.red('  Metalsmith') + chalk.gray(' · ') + msg);
   console.error();
   process.exit(1);
 }
@@ -74,6 +74,6 @@ function fatal(msg){
 
 function log(message){
   console.log();
-  console.log('  Metalsmith · '.grey + message);
+  console.log(chalk.gray('  Metalsmith · ') + message);
   console.log();
 }
