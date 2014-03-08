@@ -37,6 +37,7 @@
     "mocha": "1.x",
     "rimraf": "~2.2.6",
     "fs-readdir-recursive": "0.0.1",
-    "assert-dir-equal": "~0.1.0"
+    "assert-dir-equal": "~0.1.0",
+    "metalsmith-drafts": "0.0.1"
   }
 }
