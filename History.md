@@ -1,4 +1,8 @@
 
+0.3.0 - March 8, 2013
+---------------------
+* change to not trim file contents
+
 0.2.3 - March 7, 2013
 ---------------------
 * add setting back to `#metadata`
