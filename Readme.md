@@ -94,14 +94,25 @@ In addition to a simple [Javascript API](#api), the Metalsmith CLI can read conf
 }
 ```
 
-And then from the CLI, simply run...
+And then just install `metalsmith` and the plugins and run the metalsmith CLI...
+
+    $ node_modules/.bin/metalsmith
+      
+        Metalsmith · reading configuration from: /path/to/metalsmith.json
+        Metalsmith · successfully built to: /path/to/build
+
+Or if you install them globally, you can just use:
 
     $ metalsmith
       
         Metalsmith · reading configuration from: /path/to/metalsmith.json
         Metalsmith · successfully built to: /path/to/build
 
+Checkout the [static site](examples/static-site), [Jekyll](examples/jekyll) or [Wintersmith](examples/wintersmith) examples to see the CLI in action.
+
 ## API
+
+Checkout the [project scaffolder](examples/project-scaffolder) or [build tool](examples/build-tool) examples to see a real example of the Javascript API in use.
 
 #### new Metalsmith(dir)
 
