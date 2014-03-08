@@ -1,11 +1,11 @@
-# iasd
+# my-project
 
-  kasmdl
+  Whatever my new project does.
 
 ## Installation
 
-    $ npm install iasd
+    $ npm install my-project
 
 ## License
 
-  aksldm
+  MIT

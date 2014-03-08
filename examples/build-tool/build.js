@@ -1,6 +1,6 @@
 
 var extname = require('path').extname;
-var Metalsmith = require('../..');
+var Metalsmith = require('metalsmith');
 var myth = require('myth');
 
 /**

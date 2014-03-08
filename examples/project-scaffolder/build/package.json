@@ -1,9 +1,9 @@
 {
-  "name": "iasd",
-  "description": "kasmdl",
-  "repository": "git://github.com/kasmd.git",
+  "name": "my-project",
+  "description": "Whatever my new project does.",
+  "repository": "git://github.com/segmentio/my-project.git",
   "version": "0.0.0",
-  "license": "aksldm",
+  "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {},
   "devDependencies": {

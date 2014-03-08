@@ -2,6 +2,7 @@
   "name": "build-tool-example",
   "private": true,
   "dependencies": {
-    "myth": "^0.3.0"
+    "myth": "^0.3.0",
+    "metalsmith": "^0.2.3"
   }
 }

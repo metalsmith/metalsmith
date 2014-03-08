@@ -1,6 +1,6 @@
 
 var async = require('async');
-var Metalsmith = require('../..');
+var Metalsmith = require('metalsmith');
 var prompt = require('cli-prompt');
 var render = require('consolidate').handlebars.render;
 
