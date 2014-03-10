@@ -6,7 +6,7 @@ In Metalsmith, all of the logic is handled by plugins. You simply chain them tog
 
 ```js
 Metalsmith(__dirname)
-  .use(markdown)
+  .use(markdown())
   .use(templates('handlebars'))
   .build();
 ```
@@ -15,8 +15,8 @@ Metalsmith(__dirname)
 
 ```js
 Metalsmith(__dirname)
-  .use(drafts)
-  .use(markdown)
+  .use(drafts())
+  .use(markdown())
   .use(permalinks('posts/:title'))
   .use(templates('handlebars'))
   .build();
