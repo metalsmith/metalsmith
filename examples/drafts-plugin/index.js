@@ -1,9 +1,9 @@
 
 /**
- * Expose `drafts`.
+ * Expose `plugin`.
  */
 
-module.exports = drafts;
+module.exports = plugin;
 
 /**
  * A Metalsmith plugin to hide any files marked as `draft`.
@@ -13,9 +13,11 @@ module.exports = drafts;
  * @param {Function} done
  */
 
-function drafts(files, metalsmith, done){
-  for (var file in files) {
-    if (files[file].draft) delete files[file];
-  }
-  done();
+function plugin(){
+  return function(files, metalsmith, done){
+    for (var file in files) {
+      if (files[file].draft) delete files[file];
+    }
+    done();
+  };
 }
