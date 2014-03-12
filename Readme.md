@@ -74,8 +74,8 @@ Which means you could just as easily use it to make...
   - [A simple project scaffolder.](examples/project-scaffolder)
   - [A simple build tool for Sass files.](examples/build-tool)
   - [A simple static site generator.](examples/static-site)
-  - [An Jekyll-like static site generator.](examples/jekyll)
-  - [An Wintersmith-like static site generator.](examples/wintersmith)
+  - [A Jekyll-like static site generator.](examples/jekyll)
+  - [A Wintersmith-like static site generator.](examples/wintersmith)
 
 ## CLI
 
