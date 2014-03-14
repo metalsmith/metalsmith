@@ -70,8 +70,15 @@ describe('Metalsmith', function(){
   describe('#metadata', function(){
     it('should get metadata', function(){
       var m = Metalsmith('test/tmp');
-      var data = { property: true };
       assert.deepEqual(m.metadata(), {});
+    });
+
+    it('should set a clone of metadata', function(){
+      var m = Metalsmith('test/tmp');
+      var data = { property: true };
+      m.metadata(data);
+      assert.notEqual(m.metadata(), data);
+      assert.deepEqual(m.metadata(), data);
     });
   });
 
