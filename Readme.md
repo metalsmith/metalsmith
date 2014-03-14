@@ -74,12 +74,12 @@ Which means you could just as easily use it to make...
   - [A simple project scaffolder.](examples/project-scaffolder)
   - [A simple build tool for Sass files.](examples/build-tool)
   - [A simple static site generator.](examples/static-site)
-  - [An Jekyll-like static site generator.](examples/jekyll)
-  - [An Wintersmith-like static site generator.](examples/wintersmith)
+  - [A Jekyll-like static site generator.](examples/jekyll)
+  - [A Wintersmith-like static site generator.](examples/wintersmith)
 
 ## CLI
 
-In addition to a simple [Javascript API](#api), the Metalsmith CLI can read configuration from a `metalsmith.json` file, so that you can build static-site generators similar to [Jekyll](jekyllrb.com) or [Wintersmith](wintersmith.io) easily. The example blog above would be configured like this:
+In addition to a simple [Javascript API](#api), the Metalsmith CLI can read configuration from a `metalsmith.json` file, so that you can build static-site generators similar to [Jekyll](http://jekyllrb.com) or [Wintersmith](http://wintersmith.io) easily. The example blog above would be configured like this:
 
 ```json
 {
@@ -146,7 +146,7 @@ Join any amount of `paths...` to the working directory. This is useful for plugi
 
 The MIT License (MIT)
 
-Copyright &copy; 2013, Segment.io \<friends@segment.io\>
+Copyright &copy; 2014, Segment.io \<friends@segment.io\>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
