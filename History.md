@@ -1,4 +1,8 @@
 
+0.4.0 - March 14, 2013
+----------------------
+* change #metadata to set a clone
+
 0.3.0 - March 8, 2013
 ---------------------
 * change to not trim file contents
