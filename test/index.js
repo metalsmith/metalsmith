@@ -90,6 +90,47 @@ describe('Metalsmith', function(){
     });
   });
 
+  describe('#read', function(){
+    it('should read from a source directory', function(done){
+      var m = Metalsmith('test/fixtures/read');
+      m.read(function(err, files){
+        if (err) return done(err);
+        assert.deepEqual(files, {
+          'index.md': {
+            title: 'A Title',
+            contents: new Buffer('body')
+          }
+        });
+        done();
+      });
+    });
+  });
+
+  describe('#write', function(){
+    it('should write to a destination directory', function(done){
+      var m = Metalsmith('test/fixtures/write');
+      var files = { 'index.md': { contents: new Buffer('body') }};
+      m.write(files, function(err){
+        if (err) return done(err);
+        equal('test/fixtures/write/build', 'test/fixtures/write/expected');
+        done();
+      });
+    });
+
+    it('should remove an existing destination directory', function(done){
+      var m = Metalsmith('test/fixtures/write');
+      exec('touch test/fixtures/write/build/empty.md', function(err){
+        if (err) return done(err);
+        var files = { 'index.md': { contents: new Buffer('body') }};
+        m.write(files, function(err){
+          if (err) return done(err);
+          equal('test/fixtures/write/build', 'test/fixtures/write/expected');
+          done();
+        });
+      });
+    });
+  });
+
   describe('#run', function(){
     it('should apply a plugin', function(done){
       var m = Metalsmith('test/tmp');

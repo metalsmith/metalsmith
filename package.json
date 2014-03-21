@@ -32,11 +32,11 @@
     "defaults": "~1.0.0",
     "is-utf8": "~0.2.0",
     "chalk": "^0.4.0",
-    "clone": "^0.1.11"
+    "clone": "^0.1.11",
+    "rimraf": "^2.2.6"
   },
   "devDependencies": {
     "mocha": "1.x",
-    "rimraf": "~2.2.6",
     "fs-readdir-recursive": "0.0.1",
     "assert-dir-equal": "~0.1.0",
     "metalsmith-drafts": "0.0.1"
