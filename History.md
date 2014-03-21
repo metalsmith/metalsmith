@@ -1,4 +1,10 @@
 
+0.5.0 - March 21, 2013
+----------------------
+* remove destination directory when writing
+* expose `#run` to run middleware stack
+* fix jade examples
+
 0.4.0 - March 14, 2013
 ----------------------
 * change #metadata to set a clone
