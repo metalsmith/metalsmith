@@ -126,6 +126,10 @@ Add the given `plugin` function to the middleware stack.
 
 Build with the given settings and call `fn(err, files)`.
 
+#### #run(fn)
+
+Build with the given settings without writing the files to disk and call `fn(err, files)`.
+
 #### #source(path)
 
 Set the relative `path` to the source directory, or get the full one if no `path` is provided. The source directory defaults to `./src`.
