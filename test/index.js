@@ -90,6 +90,53 @@ describe('Metalsmith', function(){
     });
   });
 
+  describe('#run', function(){
+    it('should do a basic copy with no plugins', function(done){
+      Metalsmith('test/fixtures/basic')
+        .run(function(err, files){
+          if (err) return done(err);
+          assert.equal('object', typeof files);
+          assert.ok(files['index.md']);
+          assert.ok(files['nested/index.md']);
+          done();
+        });
+    });
+
+    it('should preserve binary files', function(done){
+      Metalsmith('test/fixtures/basic-images')
+        .run(function(err, files){
+          if (err) return done(err);
+          assert.equal('object', typeof files);
+          assert.deepEqual(
+            files['2013-11-25 18.59.52.jpg'].contents,
+            fs.readFileSync('test/fixtures/basic-images/expected/2013-11-25 18.59.52.jpg'));
+          done();
+        });
+    });
+
+    it('should apply a plugin', function(done){
+      Metalsmith('test/fixtures/basic-plugin')
+        .use(function(files, metalsmith, done){
+          Object.keys(files).forEach(function(file){
+            var data = files[file];
+            data.contents = new Buffer(data.title);
+          });
+          done();
+        })
+        .run(function(err, files){
+          if (err) return done(err);
+          assert.equal('object', typeof files);
+          assert.deepEqual(
+            files['one.md'].contents,
+            fs.readFileSync('test/fixtures/basic-plugin/expected/one.md'));
+          assert.deepEqual(
+            files['two.md'].contents,
+            fs.readFileSync('test/fixtures/basic-plugin/expected/two.md'));
+          done();
+        });
+    });
+  });
+
   describe('#build', function(){
     it('should do a basic copy with no plugins', function(done){
       Metalsmith('test/fixtures/basic')
