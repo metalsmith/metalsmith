@@ -126,10 +126,6 @@ Add the given `plugin` function to the middleware stack.
 
 Build with the given settings and call `fn(err, files)`.
 
-#### #run(fn)
-
-Build with the given settings without writing the files to disk and call `fn(err, files)`.
-
 #### #source(path)
 
 Set the relative `path` to the source directory, or get the full one if no `path` is provided. The source directory defaults to `./src`.
@@ -145,6 +141,10 @@ Get the global metadata. This is useful for plugins that want to set global-leve
 #### #join(paths...)
  
 Join any amount of `paths...` to the working directory. This is useful for plugins who want to read extra assets from another directory, for example `./templates`.
+
+#### #run(files, fn)
+
+Run all of the middleware functions on a dictionary of `files` and callback with `fn(err, files)`, where `files` is the altered dictionary.
 
 ## License
 
