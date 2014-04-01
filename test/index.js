@@ -129,6 +129,18 @@ describe('Metalsmith', function(){
         });
       });
     });
+
+    it('should output a file with user executable permissions', function(done){
+      var m = Metalsmith('test/fixtures/write-executable');
+      var files = { 'test.sh': { contents: new Buffer('echo test'), mode: 0764 }};
+      m.write(files, function(err){
+        exec('test/fixtures/write-executable/build/test.sh', function(err, stdout, stderr){
+          if (err) return done(err)
+          assert(stdout == 'test\n');
+          done();
+        });
+      });
+    });
   });
 
   describe('#run', function(){
