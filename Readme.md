@@ -146,6 +146,27 @@ Join any amount of `paths...` to the working directory. This is useful for plugi
 
 Run all of the middleware functions on a dictionary of `files` and callback with `fn(err, files)`, where `files` is the altered dictionary.
 
+## Metadata API
+
+Add metadata to your files to access these build features. 
+
+#### mode
+
+Set the mode of the file. For example,
+
+```
+$ cat cleanup.sh
+
+--
+mode: 0764
+--
+
+rm -rf .
+```
+
+would be built with mode ```-rwxrw-r--```, i.e. user-executable. 
+
+
 ## License
 
 The MIT License (MIT)
