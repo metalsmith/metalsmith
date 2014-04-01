@@ -148,23 +148,25 @@ Run all of the middleware functions on a dictionary of `files` and callback with
 
 ## Metadata API
 
-Add metadata to your files to access these build features. For example,
+Add metadata to your files to access these build features. 
+
+#### mode
+
+Set the mode of the file. For example,
 
 ```
-cleanup.sh
+$ cat cleanup.sh
 
-  --
-  mode: 0764
-  --
+--
+mode: 0764
+--
 
-  rm -rf build/
+rm -rf build/
 ```
 
 would be built with user executable permissions.
 
-#### mode
 
-Set the mode of the file
 
 ## License
 
