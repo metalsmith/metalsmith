@@ -161,11 +161,10 @@ $ cat cleanup.sh
 mode: 0764
 --
 
-rm -rf build/
+rm -rf .
 ```
 
-would be built with user executable permissions.
-
+would be built with mode ```-rwxrw-r--```, i.e. user-executable. 
 
 
 ## License
