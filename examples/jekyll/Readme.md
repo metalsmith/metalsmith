@@ -1,6 +1,8 @@
-
 # jekyll
 
-This example uses Metalsmith to emulate a Jekyll static site. To test it out yourself just run:
+This example uses Metalsmith to emulate a Jekyll static site. To test it out yourself just install and run:
 
-    $ make build
+```bash
+npm install
+npm run build
+```
