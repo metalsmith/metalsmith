@@ -4,10 +4,12 @@ var equal = require('assert-dir-equal');
 var exec = require('child_process').exec;
 var fs = require('fs');
 var Metalsmith = require('..');
+var Mode = require('stat-mode');
 var noop = function(){};
 var path = require('path');
 var readdir = require('fs-readdir-recursive');
 var rm = require('rimraf').sync;
+var stat = fs.statSync;
 
 describe('Metalsmith', function(){
   beforeEach(function(){
@@ -98,7 +100,22 @@ describe('Metalsmith', function(){
         assert.deepEqual(files, {
           'index.md': {
             title: 'A Title',
-            contents: new Buffer('body')
+            contents: new Buffer('body'),
+            mode: '0644'
+          }
+        });
+        done();
+      });
+    });
+
+    it('should preserve an existing file mode', function(done){
+      var m = Metalsmith('test/fixtures/read-mode');
+      m.read(function(err, files){
+        if (err) return done(err);
+        assert.deepEqual(files, {
+          'bin': {
+            contents: new Buffer('echo test'),
+            mode: '0777'
           }
         });
         done();
@@ -130,15 +147,20 @@ describe('Metalsmith', function(){
       });
     });
 
-    it('should output a file with user executable permissions', function(done){
-      var m = Metalsmith('test/fixtures/write-executable');
-      var files = { 'test.sh': { contents: new Buffer('echo test'), mode: 0764 }};
+    it('should chmod an optional mode from file metadata', function(done){
+      var m = Metalsmith('test/fixtures/write-mode');
+      var files = {
+        'bin': {
+          contents: new Buffer('echo test'),
+          mode: '0777'
+        }
+      };
+
       m.write(files, function(err){
-        exec('test/fixtures/write-executable/build/test.sh', function(err, stdout, stderr){
-          if (err) return done(err)
-          assert(stdout == 'test\n');
-          done();
-        });
+        var stats = stat('test/fixtures/write-mode/build/bin');
+        var mode = Mode(stats).toOctal();
+        assert.equal(mode, '0777');
+        done();
       });
     });
   });
