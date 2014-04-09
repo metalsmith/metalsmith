@@ -166,6 +166,20 @@ rm -rf .
 
 would be built with mode ```-rwxrw-r--```, i.e. user-executable. 
 
+#### symlink
+
+Use this to mark a file as a symlink. For example, using this code to add to the
+Metalsmith files object:
+
+```js
+files['posts/post1/images'] = { symlink: 'images' };
+```
+
+would build a symlink, ```build/posts/post1/images```, that points to ```build/images```.
+
+_Nested symlinks aren't currently supported. That is, a symlink cannot currently link
+to another symlink_.
+
 
 ## License
 
