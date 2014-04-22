@@ -28,6 +28,10 @@ Metalsmith(__dirname)
 
     $ npm install metalsmith
 
+## Resources
+
+  - [Getting to Know Metalsmith](http://www.robinthrift.com/posts/getting-to-know-metalsmith/) - a series of articles that give a really nice introduction to setting up Metalsmith for a static site.
+
 ## Plugins
 
 Check out the website for a list of [plugins](http://www.metalsmith.io#the-plugins).
