@@ -30,7 +30,7 @@ Metalsmith(__dirname)
 
 ## Resources
 
-  - [Getting to Know Metalsmith](http://www.robinthrift.com/posts/getting-to-know-metalsmith/) - a series of articles that give a really nice introduction to setting up Metalsmith for a static site.
+  - [Getting to Know Metalsmith](http://www.robinthrift.com/posts/getting-to-know-metalsmith/) - a great series about how to use Metalsmith for your static site.
 
 ## Plugins
 
