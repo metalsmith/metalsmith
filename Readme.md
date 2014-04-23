@@ -79,6 +79,7 @@ Which means you could just as easily use it to make...
 
 ## Resources
 
+  - IRC Channel - it's `#metalsmith` on freenode!
   - [Getting to Know Metalsmith](http://www.robinthrift.com/posts/getting-to-know-metalsmith/) - a great series about how to use Metalsmith for your static site.
 
 ## CLI
