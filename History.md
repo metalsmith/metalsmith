@@ -1,4 +1,8 @@
 
+0.6.1 - April 24, 2014
+----------------------
+* update `ware` to `0.3.0` for passing arrays
+
 0.6.0 - April 2, 2014
 ---------------------
 * add `mode` handling for files
