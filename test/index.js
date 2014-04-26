@@ -35,6 +35,11 @@ describe('Metalsmith', function(){
     assert('build' == m._dest);
   });
 
+  it('should use an empty array as the default for cleanIgnore', function(){
+    var cleanIgnore = Metalsmith('test/tmp')._cleanIgnore;
+    assert(Array.isArray(cleanIgnore) && !cleanIgnore.length);
+  });
+
   describe('#use', function(){
     it('should add a plugin to the middleware stack', function(){
       var m = Metalsmith('test/tmp');
@@ -144,6 +149,36 @@ describe('Metalsmith', function(){
           equal('test/fixtures/write/build', 'test/fixtures/write/expected');
           done();
         });
+      });
+    });
+
+    it('should remove all from destination directory except files/dirs in cleanIgnore', function(done){
+      var m = Metalsmith('test/fixtures/write-ignore');
+      exec('mkdir -p test/fixtures/write-ignore/build/keep && ' +
+          'touch test/fixtures/write-ignore/build/keep/empty.md && ' + // Should be preserved
+          'touch test/fixtures/write-ignore/build/empty.md', // Should be removed
+        function(err){
+          if (err) return done(err);
+          var files = { 'index.md': { contents: new Buffer('body') }};
+          m.cleanIgnore('keep');
+          m.write(files, function(err){
+            if (err) return done(err);
+            equal('test/fixtures/write-ignore/build', 'test/fixtures/write-ignore/expected');
+            done();
+          });
+        }
+      );
+    });
+
+    it('should run successfully when cleanIgnore is populated and destination does not exist', function(done){
+      var m = Metalsmith('test/fixtures/write-ignore-empty');
+      rm('test/fixtures/write-ignore-empty/build');
+      var files = { 'index.md': { contents: new Buffer('body') }};
+      m.cleanIgnore('keep');
+      m.write(files, function(err){
+        if (err) return done(err);
+        equal('test/fixtures/write-ignore-empty/build', 'test/fixtures/write-ignore-empty/expected');
+        done();
       });
     });
 
