@@ -5,12 +5,27 @@ var exists = require('fs').existsSync;
 var Metalsmith = require('..');
 var resolve = require('path').resolve;
 
+var yargs = require('yargs');
+
+yargs.usage('Fashion tools or works of art out of anything.\nUsage: $0')
+    .example('$0 -c', 'metalsmith.json')
+    .describe('c', 'Use this file as the configuration')
+    .describe('h', 'Print this help text')
+
+var argv = yargs.argv;
+if (argv.h || argv.help) {
+	console.log(yargs.help());
+	process.exit(0);
+}
+
+
 /**
  * Config.
  */
-
-var config = resolve(process.cwd(), 'metalsmith.json');
-if (!exists(config)) fatal('could not find a "metalsmith.json" configuration file.');
+var configFile = argv.c ? argv.c : "metalsmith.json";
+console.log(configFile)
+var config = resolve(process.cwd(), configFile);
+if (!exists(config)) fatal('could not find a ' + configFile + ' configuration file.');
 
 try {
   var json = require(config);
