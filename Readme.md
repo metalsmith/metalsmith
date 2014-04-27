@@ -139,6 +139,11 @@ Set the relative `path` to the source directory, or get the full one if no `path
 
 Set the relative `path` to the destination directory, or get the full one if no `path` is provided. The destination directory defaults to `./build`.
 
+#### #cleanIgnore(files)
+
+Set immediate children of `destination` to skip when clearing the destination directory on a rebuild,
+or get full paths currently ignored if no `files` are provided. Defaults to an empty array.
+
 #### #metadata(json)
 
 Get the global metadata. This is useful for plugins that want to set global-level metadata that can be applied to all files.
