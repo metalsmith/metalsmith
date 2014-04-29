@@ -101,7 +101,7 @@ describe('Metalsmith', function(){
           'index.md': {
             title: 'A Title',
             contents: new Buffer('body'),
-            mode: '0644'
+            mode: fs.statSync(path.join(__dirname, 'fixtures/read/src/index.md')).mode.toString(8).slice(-4)
           }
         });
         done();
@@ -115,7 +115,7 @@ describe('Metalsmith', function(){
         assert.deepEqual(files, {
           'bin': {
             contents: new Buffer('echo test'),
-            mode: '0777'
+            mode: fs.statSync(path.join(__dirname, 'fixtures/read-mode/src/bin')).mode.toString(8).slice(-4)
           }
         });
         done();
@@ -252,6 +252,16 @@ describe('CLI', function(){
         equal('test/fixtures/cli-drafts/build', 'test/fixtures/cli-drafts/expected');
         assert(~stdout.indexOf('successfully built to '));
         assert(~stdout.indexOf('test/fixtures/cli-drafts/build'));
+        done();
+      });
+    });
+
+    it('should require plugins as an array', function(done){
+      exec('cd test/fixtures/cli-multi && ' + bin, function(err, stdout){
+        if (err) return done(err);
+        equal('test/fixtures/cli-multi/build', 'test/fixtures/cli-multi/expected');
+        assert(~stdout.indexOf('successfully built to '));
+        assert(~stdout.indexOf('test/fixtures/cli-multi/build'));
         done();
       });
     });
