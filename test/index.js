@@ -101,7 +101,7 @@ describe('Metalsmith', function(){
           'index.md': {
             title: 'A Title',
             contents: new Buffer('body'),
-            mode: '0644'
+            mode: fs.statSync(path.join(__dirname, 'fixtures/read/src/index.md')).mode.toString(8).slice(-4)
           }
         });
         done();
@@ -115,7 +115,7 @@ describe('Metalsmith', function(){
         assert.deepEqual(files, {
           'bin': {
             contents: new Buffer('echo test'),
-            mode: '0777'
+            mode: fs.statSync(path.join(__dirname, 'fixtures/read-mode/src/bin')).mode.toString(8).slice(-4)
           }
         });
         done();
