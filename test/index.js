@@ -256,6 +256,16 @@ describe('CLI', function(){
       });
     });
 
+    it('should require plugins as an array', function(done){
+      exec('cd test/fixtures/cli-multi && ' + bin, function(err, stdout){
+        if (err) return done(err);
+        equal('test/fixtures/cli-multi/build', 'test/fixtures/cli-multi/expected');
+        assert(~stdout.indexOf('successfully built to '));
+        assert(~stdout.indexOf('test/fixtures/cli-multi/build'));
+        done();
+      });
+    });
+
     it('should error when failing to require a plugin', function(done){
       exec('cd test/fixtures/cli-no-plugin && ' + bin, function(err, stdout){
         assert(err);

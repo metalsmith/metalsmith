@@ -30,19 +30,25 @@ if (json.metadata) metalsmith.metadata(json.metadata);
 /**
  * Plugins.
  */
+var pluginList = Array.isArray(json.plugins) ? json.plugins : [json.plugins];
 
-for (var key in json.plugins) {
-  var plugin;
-  var opts = json.plugins[key];
+pluginList.forEach(function (plugins) {
 
-  try {
-    plugin = require(key);
-  } catch (e) {
-    fatal('failed to require plugin "' + key + '".');
+  for (var key in plugins) {
+    var plugin;
+    var opts = plugins[key];
+
+    try {
+      plugin = require(key);
+    } catch (e) {
+      fatal('failed to require plugin "' + key + '".');
+    }
+
+    metalsmith.use(plugin(opts));
   }
 
-  metalsmith.use(plugin(opts));
-}
+});
+
 
 /**
  * Build.
