@@ -30,23 +30,22 @@ if (json.metadata) metalsmith.metadata(json.metadata);
 /**
  * Plugins.
  */
-var pluginList = Array.isArray(json.plugins) ? json.plugins : [json.plugins];
 
-pluginList.forEach(function (plugins) {
+var plugins = normalize(json.plugins);
 
-  for (var key in plugins) {
-    var plugin;
-    var opts = plugins[key];
+plugins.forEach(function(plugin){
+  for (var name in plugin) {
+    var opts = plugin[name];
+    var fn;
 
     try {
-      plugin = require(key);
+      fn = require(name);
     } catch (e) {
-      fatal('failed to require plugin "' + key + '".');
+      fatal('failed to require plugin "' + name + '".');
     }
 
-    metalsmith.use(plugin(opts));
+    metalsmith.use(fn(opts));
   }
-
 });
 
 
@@ -82,4 +81,24 @@ function log(message){
   console.log();
   console.log(chalk.gray('  Metalsmith · ') + message);
   console.log();
+}
+
+/**
+ * Normalize an `obj` of plugins.
+ *
+ * @param {Array or Object} obj
+ * @return {Array}
+ */
+
+function normalize(obj){
+  if (obj instanceof Array) return obj;
+  var ret = [];
+
+  for (var key in obj) {
+    var plugin = {};
+    plugin[key] = obj[key];
+    ret.push(plugin);
+  }
+
+  return ret;
 }

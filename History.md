@@ -1,4 +1,8 @@
 
+0.7.0 - April 29, 2014
+----------------------
+* let `plugins` be an array in `metalsmith.json`
+
 0.6.1 - April 24, 2014
 ----------------------
 * update `ware` to `0.3.0` for passing arrays

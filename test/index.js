@@ -168,7 +168,7 @@ describe('Metalsmith', function(){
   describe('#run', function(){
     it('should apply a plugin', function(done){
       var m = Metalsmith('test/tmp');
-      m.use(plugin)
+      m.use(plugin);
       m.run({ one: 'one' }, function(err, files, metalsmith){
         assert.equal(files.one, 'one');
         assert.equal(files.two, 'two');
@@ -247,21 +247,21 @@ describe('CLI', function(){
     });
 
     it('should require a plugin', function(done){
-      exec('cd test/fixtures/cli-drafts && ' + bin, function(err, stdout){
+      exec('cd test/fixtures/cli-plugin-object && ' + bin, function(err, stdout){
         if (err) return done(err);
-        equal('test/fixtures/cli-drafts/build', 'test/fixtures/cli-drafts/expected');
+        equal('test/fixtures/cli-plugin-object/build', 'test/fixtures/cli-plugin-object/expected');
         assert(~stdout.indexOf('successfully built to '));
-        assert(~stdout.indexOf('test/fixtures/cli-drafts/build'));
+        assert(~stdout.indexOf('test/fixtures/cli-plugin-object/build'));
         done();
       });
     });
 
     it('should require plugins as an array', function(done){
-      exec('cd test/fixtures/cli-multi && ' + bin, function(err, stdout){
+      exec('cd test/fixtures/cli-plugin-array && ' + bin, function(err, stdout){
         if (err) return done(err);
-        equal('test/fixtures/cli-multi/build', 'test/fixtures/cli-multi/expected');
+        equal('test/fixtures/cli-plugin-array/build', 'test/fixtures/cli-plugin-array/expected');
         assert(~stdout.indexOf('successfully built to '));
-        assert(~stdout.indexOf('test/fixtures/cli-multi/build'));
+        assert(~stdout.indexOf('test/fixtures/cli-plugin-array/build'));
         done();
       });
     });
