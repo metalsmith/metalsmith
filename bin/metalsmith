@@ -23,9 +23,9 @@ try {
  */
 
 var metalsmith = new Metalsmith(process.cwd());
-if (json.source) metalsmith.source(json.source);
-if (json.destination) metalsmith.destination(json.destination);
-if (json.metadata) metalsmith.metadata(json.metadata);
+['source', 'destination', 'cleanIgnore', 'metadata'].forEach(function(key){
+  if (json[key]) metalsmith[key](json[key]);
+});
 
 /**
  * Plugins.
