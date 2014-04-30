@@ -26,7 +26,7 @@
   "dependencies": {
     "front-matter": "~0.2.0",
     "ware": "~0.3.0",
-    "recursive-readdir": "0.0.2",
+    "recursive-readdir": "https://github.com/leeolayvar/recursive-readdir/tarball/ignores-support",
     "async": "~0.2.10",
     "fs-extra": "~0.8.1",
     "defaults": "~1.0.0",
