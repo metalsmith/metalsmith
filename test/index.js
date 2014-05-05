@@ -163,6 +163,22 @@ describe('Metalsmith', function(){
         done();
       });
     });
+
+    it('should create a symlink using the option in file metadata', function(done){
+      var m = Metalsmith('test/fixtures/write-symlink');
+      var files = {
+        'file': {},
+        'link': {
+          symlink: 'file'
+        }
+      };
+
+      m.write(files, function(err){
+        var stats = fs.lstatSync('test/fixtures/write-symlink/build/link');
+        assert(stats.isSymbolicLink());
+        done();
+      });
+    });
   });
 
   describe('#run', function(){
