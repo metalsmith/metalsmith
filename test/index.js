@@ -35,6 +35,11 @@ describe('Metalsmith', function(){
     assert('build' == m._dest);
   });
 
+  it('should set the remove build dir option by default', function(){
+    var m = Metalsmith('test/tmp');
+    assert(true == m._opts.remove);
+  });
+
   describe('#use', function(){
     it('should add a plugin to the middleware stack', function(){
       var m = Metalsmith('test/tmp');
@@ -55,6 +60,33 @@ describe('Metalsmith', function(){
       assert(-1 != m.source().indexOf('/test/tmp/src'));
     });
   });
+
+  describe('#options', function(){
+    it('should return options when called without args', function(){
+      var m = Metalsmith('test/tmp');
+      m.options({foo:'foo'});
+      var res = m.options()
+      assert.deepEqual(res, m._opts)
+    });
+
+    it('should not return a reference to the internal options', function(){
+      var m = Metalsmith('test/tmp')
+        , res = m.options();
+      res['foo'] = 'foo' 
+      assert.notDeepEqual(m._opts, res)
+    });
+
+    it('should merge the given options into the internal options', function(){
+      var m = Metalsmith('test/tmp');
+      // Set the opts to a clean state, removing defaults
+      m._opts = {}
+      m.options({foo:'foo'});
+      m.options({bar:'bar', baz: 'baz'});
+      assert.deepEqual(m._opts, {
+        foo: 'foo', bar: 'bar', baz: 'baz'
+      });
+    });
+  })
 
   describe('#destination', function(){
     it('should set a destination directory', function(){
@@ -142,6 +174,20 @@ describe('Metalsmith', function(){
         m.write(files, function(err){
           if (err) return done(err);
           equal('test/fixtures/write/build', 'test/fixtures/write/expected');
+          done();
+        });
+      });
+    });
+
+    it('should leave the dest dir alone if remove isnt true', function(done){
+      var m = Metalsmith('test/fixtures/write');
+      m.options({remove:false})
+      exec('touch test/fixtures/write/build/empty.md', function(err){
+        if (err) return done(err);
+        var files = { 'index.md': { contents: new Buffer('body') }};
+        m.write(files, function(err){
+          if (err) return done(err);
+          equal('test/fixtures/write/build', 'test/fixtures/write/original');
           done();
         });
       });
