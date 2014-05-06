@@ -1,4 +1,8 @@
 
+0.8.0 - May 6, 2014
+-------------------
+* add `clean` option
+
 0.7.0 - April 29, 2014
 ----------------------
 * let `plugins` be an array in `metalsmith.json`
