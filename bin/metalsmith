@@ -4,8 +4,54 @@ var realpathSync = require("fs").realpathSync;
 
 var path = require("path");
 
-var join = path.join;
+var resolve = path.resolve;
 
 var dirname = path.dirname;
 
-require(join(dirname(realpathSync(__filename)), "..", "lib", "cli"));
+var cli = require(resolve(dirname(realpathSync(__filename)), "..", "lib", "cli"));
+
+var metalsmith = cli(resolve(process.cwd(), 'metalsmith.json'));
+
+var chalk = require('chalk');
+
+/**
+ * Log an error and then exit the process.
+ *
+ * @param {String} message
+ */
+
+function fatal(msg){
+  console.error();
+  console.error(chalk.red('  Metalsmith') + chalk.gray(' · ') + msg);
+  console.error();
+  process.exit(1);
+}
+
+/**
+ * Log a `message`.
+ *
+ * @param {String} message
+ */
+
+function log(message){
+  console.log();
+  console.log(chalk.gray('  Metalsmith · ') + message);
+  console.log();
+}
+
+/**
+ * Build.
+ */
+
+try {
+
+  metalsmith.build(function(err){
+    if (err) return fatal(err.message);
+    log('successfully built to ' + metalsmith.destination());
+  });
+
+} catch (e) {
+
+  fatal(e.message)
+
+}
