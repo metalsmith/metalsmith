@@ -1,72 +1,18 @@
 #!/usr/bin/env node
 
+var realpathSync = require("fs").realpathSync;
+
+var path = require("path");
+
+var resolve = path.resolve;
+
+var dirname = path.dirname;
+
+var cli = require(resolve(dirname(realpathSync(__filename)), "..", "lib", "cli"));
+
+var metalsmith = cli(process.cwd());
+
 var chalk = require('chalk');
-var exists = require('fs').existsSync;
-var Metalsmith = require('..');
-var resolve = require('path').resolve;
-
-/**
- * Config.
- */
-
-var config = resolve(process.cwd(), 'metalsmith.json');
-if (!exists(config)) fatal('could not find a "metalsmith.json" configuration file.');
-
-try {
-  var json = require(config);
-} catch (e) {
-  fatal('it seems like "metalsmith.json" is malformed.');
-}
-
-/**
- * Settings.
- */
-
-var src = json.source;
-var dest = json.destination;
-var data = json.metadata;
-var clean = !! json.clean;
-
-/**
- * Metalsmith.
- */
-
-var metalsmith = new Metalsmith(process.cwd());
-if (src) metalsmith.source(src);
-if (dest) metalsmith.destination(dest);
-if (data) metalsmith.metadata(data);
-metalsmith.clean(clean);
-
-/**
- * Plugins.
- */
-
-var plugins = normalize(json.plugins);
-
-plugins.forEach(function(plugin){
-  for (var name in plugin) {
-    var opts = plugin[name];
-    var fn;
-
-    try {
-      fn = require(name);
-    } catch (e) {
-      fatal('failed to require plugin "' + name + '".');
-    }
-
-    metalsmith.use(fn(opts));
-  }
-});
-
-
-/**
- * Build.
- */
-
-metalsmith.build(function(err){
-  if (err) return fatal(err.message);
-  log('successfully built to ' + metalsmith.destination());
-});
 
 /**
  * Log an error and then exit the process.
@@ -94,21 +40,18 @@ function log(message){
 }
 
 /**
- * Normalize an `obj` of plugins.
- *
- * @param {Array or Object} obj
- * @return {Array}
+ * Build.
  */
 
-function normalize(obj){
-  if (obj instanceof Array) return obj;
-  var ret = [];
+try {
 
-  for (var key in obj) {
-    var plugin = {};
-    plugin[key] = obj[key];
-    ret.push(plugin);
-  }
+  metalsmith.build(function(err){
+    if (err) return fatal(err.message);
+    log('successfully built to ' + metalsmith.destination());
+  });
 
-  return ret;
+} catch (e) {
+
+  fatal(e.message)
+
 }
