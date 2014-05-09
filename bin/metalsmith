@@ -10,7 +10,7 @@ var dirname = path.dirname;
 
 var cli = require(resolve(dirname(realpathSync(__filename)), "..", "lib", "cli"));
 
-var metalsmith = cli(resolve(process.cwd(), 'metalsmith.json'));
+var metalsmith = cli(process.cwd());
 
 var chalk = require('chalk');
 
