@@ -2,70 +2,112 @@
 
 var chalk = require('chalk');
 var exists = require('fs').existsSync;
-var Metalsmith = require('..');
 var resolve = require('path').resolve;
+var Liftoff = require('liftoff');
 
-/**
- * Config.
- */
 
-var config = resolve(process.cwd(), 'metalsmith.json');
-if (!exists(config)) fatal('could not find a "metalsmith.json" configuration file.');
-
-try {
-  var json = require(config);
-} catch (e) {
-  fatal('it seems like "metalsmith.json" is malformed.');
-}
-
-/**
- * Settings.
- */
-
-var src = json.source;
-var dest = json.destination;
-var data = json.metadata;
-var clean = !! json.clean;
-
-/**
- * Metalsmith.
- */
-
-var metalsmith = new Metalsmith(process.cwd());
-if (src) metalsmith.source(src);
-if (dest) metalsmith.destination(dest);
-if (data) metalsmith.metadata(data);
-metalsmith.clean(clean);
-
-/**
- * Plugins.
- */
-
-var plugins = normalize(json.plugins);
-
-plugins.forEach(function(plugin){
-  for (var name in plugin) {
-    var opts = plugin[name];
-    var fn;
-
-    try {
-      fn = require(name);
-    } catch (e) {
-      fatal('failed to require plugin "' + name + '".');
-    }
-
-    metalsmith.use(fn(opts));
-  }
+var MetalsmithCLI = new Liftoff({
+  name: 'metalsmith',
+  configName: 'metalsmith',
+  configPathFlag: 'config',
+  extensions: {'.json':null, '.js':null}
 });
 
 
-/**
- * Build.
- */
+MetalsmithCLI.on('requireFail', function (name, err) {
+  fatal('failed to load "' + name + '"');
+});
 
-metalsmith.build(function(err){
-  if (err) return fatal(err.message);
-  log('successfully built to ' + metalsmith.destination());
+
+MetalsmithCLI.launch(function(env) {
+  
+  /**
+   * Config.
+   */
+
+  var config = resolve(env.configPath + "");
+  if (!exists(config)) fatal('could not find a "metalsmith.json" configuration file.');
+
+  try {
+    var json = require(config);
+  } catch (e) {
+    fatal('it seems like "metalsmith.json" is malformed.');
+  }
+
+  // make sure, we have a local installation of metalsmith
+  if (!env.modulePath) {
+    fatal('no local metalsmith installation found! Please try "npm install metalsmith"');
+  }
+
+  // if the cwd and the cwd set in the flag are not the same
+  if (process.cwd() !== env.cwd) {
+    process.chdir(env.cwd);
+    log('Working directory changed to', env.cwd);
+  }
+
+
+  /**
+   * Settings.
+   */
+
+  var src = json.source;
+  var dest = json.destination;
+  var data = json.metadata;
+  var clean = !! json.clean;
+
+  /**
+   * Metalsmith.
+   */
+
+  var metalsmith
+  if (env.argv.tests) { // for when running the tests
+    metalsmith = new require('..')(env.configBase);
+  } else {
+    metalsmith = new require(env.modulePath)(env.configBase);
+  }
+  
+  if (src) metalsmith.source(src);
+  if (dest) metalsmith.destination(dest);
+  if (data) metalsmith.metadata(data);
+  metalsmith.clean(clean);
+
+  /**
+   * Plugins.
+   */
+
+  var plugins = normalize(json.plugins);
+
+  plugins.forEach(function(plugin){
+    for (var name in plugin) {
+      var opts = plugin[name];
+      var fn;
+
+      try {
+        if (env.argv.tests) {
+          // when running the tests, liftoff gets alittle bit confused with the
+          // moduel location
+          fn = require(name);
+        } else {
+          fn = require(env.configBase + '/node_modules/' + name);
+        }
+      } catch (e) {
+        fatal('failed to require plugin "' + name + '".');
+      }
+
+      metalsmith.use(fn(opts));
+    }
+  });
+
+
+  /**
+   * Build.
+   */
+
+  metalsmith.build(function(err){
+    if (err) return fatal(err.message);
+    log('successfully built to ' + metalsmith.destination());
+  });
+
 });
 
 /**
