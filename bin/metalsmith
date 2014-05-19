@@ -47,9 +47,14 @@ plugins.forEach(function(plugin){
   for (var name in plugin) {
     var opts = plugin[name];
     var fn;
+    var localPath = resolve(process.cwd(), 'node_modules', name); 
 
     try {
-      fn = require(name);
+      if (exists(localPath)) {
+        fn = require(localPath);
+      } else {
+        fn = require(name);
+      }
     } catch (e) {
       fatal('failed to require plugin "' + name + '".');
     }
