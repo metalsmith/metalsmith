@@ -1,4 +1,8 @@
 
+0.8.1 - July 7, 2014
+--------------------
+* update dependencies
+
 0.8.0 - May 6, 2014
 -------------------
 * add `clean` option
