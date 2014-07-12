@@ -1,9 +1,21 @@
 #!/usr/bin/env node
 
 var chalk = require('chalk');
+var commander = require('commander');
 var exists = require('fs').existsSync;
 var Metalsmith = require('..');
 var resolve = require('path').resolve;
+var packageJSON = require('../package.json');
+
+/**
+ * Command line.
+ */
+var program = commander;
+program
+  .version(packageJSON.version)
+  .option('-w, --watch [pattern]', 'Watch for file modifications and re-trigger a build')
+  .parse(process.argv)
+;
 
 /**
  * Config.
@@ -65,13 +77,21 @@ plugins.forEach(function(plugin){
 
 
 /**
- * Build.
+ * Build or Watch
  */
 
 metalsmith.build(function(err){
   if (err) return fatal(err.message);
   log('successfully built to ' + metalsmith.destination());
 });
+
+if (program.watch) {
+  if (program.watch !== 'string') program.watch = json.source + '/**/*';
+  metalsmith.watch({ patterns: program.watch }, function onBuild(err) {
+    if (err) return console.log(err.message);
+    log('successfully built to ' + metalsmith.destination());
+  });
+}
 
 /**
  * Log an error and then exit the process.
