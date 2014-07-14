@@ -1,4 +1,8 @@
 
+0.9.0 - July 13, 2014
+---------------------
+* add `frontmatter` option to disable parsing frontmatter
+
 0.8.1 - July 7, 2014
 --------------------
 * update dependencies
