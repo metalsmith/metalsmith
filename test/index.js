@@ -87,6 +87,19 @@ describe('Metalsmith', function(){
     });
   });
 
+  describe('#frontmatter', function(){
+    it('should set the frontmatter option', function(){
+      var m = Metalsmith('test/tmp');
+      m.frontmatter(false);
+      assert(false === m._frontmatter);
+    });
+
+    it('should get the value of the frontmatter option', function(){
+      var m = Metalsmith('test/tmp');
+      assert(true === m.frontmatter());
+    });
+  });
+
   describe('#metadata', function(){
     it('should get metadata', function(){
       var m = Metalsmith('test/tmp');
@@ -136,6 +149,16 @@ describe('Metalsmith', function(){
             mode: fs.statSync(path.join(__dirname, 'fixtures/read-mode/src/bin')).mode.toString(8).slice(-4)
           }
         });
+        done();
+      });
+    });
+
+    it('should not parse frontmatter if frontmatter is false', function(done){
+      var m = Metalsmith('test/fixtures/read-frontmatter');
+      m.frontmatter(false);
+      m.read(function(err, files){
+        if (err) return done(err);
+        assert.equal(files['index.md'].thing, undefined);
         done();
       });
     });
