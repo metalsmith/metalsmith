@@ -27,13 +27,16 @@
     "async": "~0.9.0",
     "chalk": "^0.5.0",
     "clone": "^0.1.11",
+    "commander": "^2.2.0",
     "defaults": "~1.0.0",
     "front-matter": "~0.2.0",
     "fs-extra": "~0.10.0",
+    "gaze": "^0.6.4",
     "is-utf8": "~0.2.0",
     "recursive-readdir": "1.1.2",
     "rimraf": "^2.2.8",
     "stat-mode": "^0.2.0",
+    "underscore": "^1.6.0",
     "ware": "~0.3.0"
   },
   "devDependencies": {

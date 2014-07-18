@@ -131,6 +131,17 @@ Add the given `plugin` function to the middleware stack.
 
 Build with the given settings and call `fn(err, files)`.
 
+#### #watch(config, fn)
+
+Watch for modifications, rebuild with the given settings and call `fn(err, files)`.
+
+`config` accepts the following keys:
+- `patterns` (`String|String[]`): the files you want to watch ([minimatch style](https://github.com/isaacs/minimatch)). Default to all the files in the source directory.
+- `events` (`String|String[]`): the events you want to catch. Can be: `all`, `changed`, `added` and/or `deleted`. Default to `all`.
+- `forever` (`Boolean`): whether to continue if an error occurs during the build. Default to `true`.
+- `debounceDelay` (`Integer`): delay in milliseconds between the time of the first detected modification and the rebuild. Default to `250`.
+- `gazeOptions` (`Object`): option object passed to [Gaze](https://github.com/shama/gaze#properties). Default to an empty object.
+
 #### #source(path)
 
 Set the relative `path` to the source directory, or get the full one if no `path` is provided. The source directory defaults to `./src`.

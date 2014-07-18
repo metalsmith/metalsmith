@@ -277,6 +277,35 @@ describe('Metalsmith', function(){
         });
     });
   });
+
+  describe('#watch()', function() {
+
+    beforeEach(function() {
+      rm('test/fixtures/watch/build');
+    });
+
+    it('should watch the source directory by default', function(done) {
+      Metalsmith('test/fixtures/watch')
+        .watch(function onBuild(err, files, end) {
+          if (err) return done(err);
+          equal('test/fixtures/watch/build', 'test/fixtures/watch/expected');
+          end();
+        })
+          .on('error', function onError(err) {
+            done(err);
+          })
+          .on('ready', function onInitialized() {
+            refreshModificationTime('test/fixtures/watch/src/index.md');
+          })
+          .on('build', function onBuild(files, end) {
+            equal('test/fixtures/watch/build', 'test/fixtures/watch/expected');
+          })
+          .on('end', function onEnd() {
+            done();
+          })
+      ;
+    });
+  });
 });
 
 describe('CLI', function(){
@@ -330,3 +359,14 @@ describe('CLI', function(){
     });
   });
 });
+
+/**
+ * Set the modification time of a file as the current time. Useful to retrigger
+ * build. Equivalent of the Unix command: `touch -m <filepath>`.
+ *
+ * @param {String} filepath
+ */
+function refreshModificationTime(filepath) {
+  var content = fs.readFileSync(filepath);
+  fs.writeFileSync(filepath, content);
+}
