@@ -1,4 +1,16 @@
 
+0.9.0 - July 13, 2014
+---------------------
+* add `frontmatter` option to disable parsing frontmatter
+
+0.8.1 - July 7, 2014
+--------------------
+* update dependencies
+
+0.8.0 - May 6, 2014
+-------------------
+* add `clean` option
+
 0.7.0 - April 29, 2014
 ----------------------
 * let `plugins` be an array in `metalsmith.json`

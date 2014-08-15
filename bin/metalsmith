@@ -19,13 +19,23 @@ try {
 }
 
 /**
+ * Settings.
+ */
+
+var src = json.source;
+var dest = json.destination;
+var data = json.metadata;
+var clean = !! json.clean;
+
+/**
  * Metalsmith.
  */
 
 var metalsmith = new Metalsmith(process.cwd());
-if (json.source) metalsmith.source(json.source);
-if (json.destination) metalsmith.destination(json.destination);
-if (json.metadata) metalsmith.metadata(json.metadata);
+if (src) metalsmith.source(src);
+if (dest) metalsmith.destination(dest);
+if (data) metalsmith.metadata(data);
+metalsmith.clean(clean);
 
 /**
  * Plugins.
@@ -37,9 +47,14 @@ plugins.forEach(function(plugin){
   for (var name in plugin) {
     var opts = plugin[name];
     var fn;
+    var localPath = resolve(process.cwd(), 'node_modules', name); 
 
     try {
-      fn = require(name);
+      if (exists(localPath)) {
+        fn = require(localPath);
+      } else {
+        fn = require(name);
+      }
     } catch (e) {
       fatal('failed to require plugin "' + name + '".');
     }

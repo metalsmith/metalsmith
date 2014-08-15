@@ -35,6 +35,11 @@ describe('Metalsmith', function(){
     assert('build' == m._dest);
   });
 
+  it('should default clean to true', function(){
+    var m = Metalsmith('test/tmp');
+    assert(true === m._clean);
+  });
+
   describe('#ignore', function(){
     it('should add an ignore file to the internal ignores list', function(){
       var m = Metalsmith('test/tmp');
@@ -74,6 +79,32 @@ describe('Metalsmith', function(){
     it('should get the full path to the destination directory', function(){
       var m = Metalsmith('test/tmp');
       assert(-1 != m.destination().indexOf('/test/tmp/build'));
+    });
+  });
+
+  describe('#clean', function(){
+    it('should set the clean option', function(){
+      var m = Metalsmith('test/tmp');
+      m.clean(false);
+      assert(false === m._clean);
+    });
+
+    it('should get the value of the clean option', function(){
+      var m = Metalsmith('test/tmp');
+      assert(true === m.clean());
+    });
+  });
+
+  describe('#frontmatter', function(){
+    it('should set the frontmatter option', function(){
+      var m = Metalsmith('test/tmp');
+      m.frontmatter(false);
+      assert(false === m._frontmatter);
+    });
+
+    it('should get the value of the frontmatter option', function(){
+      var m = Metalsmith('test/tmp');
+      assert(true === m.frontmatter());
     });
   });
 
@@ -145,7 +176,16 @@ describe('Metalsmith', function(){
         });
         done();
       });
+    });
 
+    it('should not parse frontmatter if frontmatter is false', function(done){
+      var m = Metalsmith('test/fixtures/read-frontmatter');
+      m.frontmatter(false);
+      m.read(function(err, files){
+        if (err) return done(err);
+        assert.equal(files['index.md'].thing, undefined);
+        done();
+      });
     });
   });
 
@@ -168,6 +208,20 @@ describe('Metalsmith', function(){
         m.write(files, function(err){
           if (err) return done(err);
           equal('test/fixtures/write/build', 'test/fixtures/write/expected');
+          done();
+        });
+      });
+    });
+
+    it('should not remove existing destination directory if clean is false', function(done){
+      var m = Metalsmith('test/fixtures/write-noclean');
+      m.clean(false);
+      exec('mkdir -p test/fixtures/write-noclean/build && touch test/fixtures/write-noclean/build/empty.md', function(err){
+        if (err) return done(err);
+        var files = { 'index.md': { contents: new Buffer('body') }};
+        m.write(files, function(err){
+          if (err) return done(err);
+          equal('test/fixtures/write-noclean/build', 'test/fixtures/write-noclean/expected');
           done();
         });
       });
