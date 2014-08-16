@@ -31,7 +31,7 @@
     "front-matter": "~0.2.0",
     "fs-extra": "~0.10.0",
     "is-utf8": "~0.2.0",
-    "recursive-readdir": "1.1.2",
+    "recursive-readdir": "~1.1.2",
     "rimraf": "^2.2.8",
     "stat-mode": "^0.2.0",
     "ware": "~0.3.0"
