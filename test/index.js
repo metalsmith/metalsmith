@@ -126,9 +126,9 @@ describe('Metalsmith', function(){
   describe('#read', function(){
     it('should read from a source directory', function(done){
       var m = Metalsmith('test/fixtures/read');
+      var stats = fs.statSync(path.join(__dirname, 'fixtures/read/src/index.md'));
       m.read(function(err, files){
         if (err) return done(err);
-        var stats = fs.statSync(path.join(__dirname, 'fixtures/read/src/index.md'));
         assert.deepEqual(files, {
           'index.md': {
             title: 'A Title',
@@ -143,9 +143,9 @@ describe('Metalsmith', function(){
 
     it('should preserve an existing file mode', function(done){
       var m = Metalsmith('test/fixtures/read-mode');
+      var stats = fs.statSync(path.join(__dirname, 'fixtures/read-mode/src/bin'));
       m.read(function(err, files){
         if (err) return done(err);
-        var stats = fs.statSync(path.join(__dirname, 'fixtures/read-mode/src/bin'));
         assert.deepEqual(files, {
           'bin': {
             contents: new Buffer('echo test'),
