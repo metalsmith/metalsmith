@@ -1,4 +1,8 @@
 
+0.10.0 - August 19, 2014
+------------------------
+* expose `stats` on files
+
 0.9.0 - July 13, 2014
 ---------------------
 * add `frontmatter` option to disable parsing frontmatter
