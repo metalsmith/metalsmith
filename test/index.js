@@ -128,11 +128,13 @@ describe('Metalsmith', function(){
       var m = Metalsmith('test/fixtures/read');
       m.read(function(err, files){
         if (err) return done(err);
+        var stats = fs.statSync(path.join(__dirname, 'fixtures/read/src/index.md'));
         assert.deepEqual(files, {
           'index.md': {
             title: 'A Title',
             contents: new Buffer('body'),
-            mode: fs.statSync(path.join(__dirname, 'fixtures/read/src/index.md')).mode.toString(8).slice(-4)
+            mode: stats.mode.toString(8).slice(-4),
+            stats: stats
           }
         });
         done();
@@ -143,12 +145,23 @@ describe('Metalsmith', function(){
       var m = Metalsmith('test/fixtures/read-mode');
       m.read(function(err, files){
         if (err) return done(err);
+        var stats = fs.statSync(path.join(__dirname, 'fixtures/read-mode/src/bin'));
         assert.deepEqual(files, {
           'bin': {
             contents: new Buffer('echo test'),
-            mode: fs.statSync(path.join(__dirname, 'fixtures/read-mode/src/bin')).mode.toString(8).slice(-4)
+            mode: stats.mode.toString(8).slice(-4),
+            stats: stats
           }
         });
+        done();
+      });
+    });
+
+    it('should expose the stats property in each file metadata', function(done) {
+      var m = Metalsmith('test/fixtures/expose-stat');
+      m.read(function(err, files) {
+        var indexMd = files['index.md'];
+        assert(indexMd.stats instanceof fs.Stats);
         done();
       });
     });
