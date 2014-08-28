@@ -27,7 +27,6 @@
     "async": "~0.9.0",
     "chalk": "^0.5.0",
     "clone": "^0.1.11",
-    "defaults": "~1.0.0",
     "front-matter": "~0.2.0",
     "fs-extra": "~0.10.0",
     "is-utf8": "~0.2.0",
