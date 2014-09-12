@@ -1,4 +1,8 @@
 
+0.11.0 - September 12, 2014
+---------------------------
+* move `clean` logic to happen at the beginning of a build
+
 0.10.0 - August 19, 2014
 ------------------------
 * expose `stats` on files
