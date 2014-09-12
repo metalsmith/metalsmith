@@ -9,7 +9,6 @@ var noop = function(){};
 var path = require('path');
 var readdir = require('fs-readdir-recursive');
 var rm = require('rimraf').sync;
-var stat = fs.statSync;
 
 describe('Metalsmith', function(){
   beforeEach(function(){
@@ -198,7 +197,7 @@ describe('Metalsmith', function(){
       };
 
       m.write(files, function(err){
-        var stats = stat('test/fixtures/write-mode/build/bin');
+        var stats = fs.statSync('test/fixtures/write-mode/build/bin');
         var mode = Mode(stats).toOctal();
         assert.equal(mode, '0777');
         done();
@@ -265,6 +264,7 @@ describe('Metalsmith', function(){
 
     it('should remove an existing destination directory', function(done){
       var m = Metalsmith('test/fixtures/build');
+      fs.mkdirSync('test/fixtures/build/build');
       exec('touch test/fixtures/build/build/empty.md', function(err){
         if (err) return done(err);
         var files = { 'index.md': { contents: new Buffer('body') }};
