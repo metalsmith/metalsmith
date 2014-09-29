@@ -148,9 +148,9 @@ Set whether to remove the destination directory before writing to it, or get the
 
 Get the global metadata. This is useful for plugins that want to set global-level metadata that can be applied to all files.
 
-#### #join(paths...)
+#### #path(paths...)
  
-Join any amount of `paths...` to the working directory. This is useful for plugins who want to read extra assets from another directory, for example `./templates`.
+Resolve any amount of `paths...` relative to the working directory. This is useful for plugins who want to read extra assets from another directory, for example `./templates`.
 
 #### #run(files, fn)
 
