@@ -32,20 +32,14 @@ if (json.clean != null) metalsmith.clean(json.clean);
  * Plugins.
  */
 
-var plugins = normalize(json.plugins);
-
-plugins.forEach(function(plugin){
+normalize(json.plugins).forEach(function(plugin){
   for (var name in plugin) {
     var opts = plugin[name];
-    var fn;
     var localPath = resolve(process.cwd(), 'node_modules', name);
+    var fn;
 
     try {
-      if (exists(localPath)) {
-        fn = require(localPath);
-      } else {
-        fn = require(name);
-      }
+      fn = exists(localPath) ? require(localPath) : require(name);
     } catch (e) {
       fatal('failed to require plugin "' + name + '".');
     }
