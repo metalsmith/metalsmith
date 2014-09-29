@@ -1,4 +1,14 @@
 
+1.0.0 - September 29, 2014
+--------------------------
+* add generator support for node 0.11
+* change `#join` to `#path` and use `path.resolve`
+* add support for absolute `source` and `directory` paths
+* add `#directory` getter and setter method
+* add `#readFile` method to expose the core reading logic
+* add `#writeFile` method to expose the core writing logic
+* fix default `clean` setting when running the cli
+
 0.11.0 - September 12, 2014
 ---------------------------
 * move `clean` logic to happen at the beginning of a build
