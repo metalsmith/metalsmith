@@ -58,6 +58,12 @@ describe('Metalsmith', function(){
       var m = Metalsmith('test/tmp');
       assert(-1 != m.source().indexOf('/test/tmp/src'));
     });
+
+    it('should be able to be absolute', function(){
+      var m = Metalsmith('test/tmp');
+      m.source('/dir');
+      assert('/dir' == m.source());
+    });
   });
 
   describe('#destination', function(){
@@ -70,6 +76,12 @@ describe('Metalsmith', function(){
     it('should get the full path to the destination directory', function(){
       var m = Metalsmith('test/tmp');
       assert(-1 != m.destination().indexOf('/test/tmp/build'));
+    });
+
+    it('should be able to be absolute', function(){
+      var m = Metalsmith('test/tmp');
+      m.destination('/dir');
+      assert('/dir' == m.destination());
     });
   });
 
@@ -114,11 +126,17 @@ describe('Metalsmith', function(){
     });
   });
 
-  describe('#join', function(){
+  describe('#path', function(){
     it('should return a path relative to the working directory', function(){
       var m = Metalsmith('test/tmp');
       var path = m.join('one', 'two', 'three');
       assert(-1 != path.indexOf('/test/tmp/one/two/three'));
+    });
+  });
+
+  describe('#join', function(){
+    it('should be aliased to #path for backwards compatibility', function(){
+      assert.equal(Metalsmith.prototype.join, Metalsmith.prototype.path);
     });
   });
 
