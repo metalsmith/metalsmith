@@ -23,14 +23,20 @@ describe('Metalsmith', function(){
     assert(m instanceof Metalsmith);
   });
 
+  it('should error without a working directory', function(){
+    assert.throws(function(){
+      Metalsmith();
+    }, /You must pass a working directory path\./);
+  });
+
   it('should use `./src` as a default source directory', function(){
     var m = Metalsmith('test/tmp');
-    assert.equal(m._src, 'src');
+    assert.equal(m._source, 'src');
   });
 
   it('should use `./build` as a default destination directory', function(){
     var m = Metalsmith('test/tmp');
-    assert.equal(m._dest, 'build');
+    assert.equal(m._destination, 'build');
   });
 
   it('should default clean to `true`', function(){
@@ -46,11 +52,30 @@ describe('Metalsmith', function(){
     });
   });
 
+  describe('#directory', function(){
+    it('should set a working directory', function(){
+      var m = Metalsmith('test/tmp');
+      m.directory('dir');
+      assert.equal(m._directory, 'dir');
+    });
+
+    it('should get the working directory', function(){
+      var m = Metalsmith('test/tmp');
+      assert(~m.directory().indexOf('/test/tmp'));
+    });
+
+    it('should be able to be absolute', function(){
+      var m = Metalsmith('test/tmp');
+      m.directory('/dir');
+      assert.equal(m.directory(), '/dir');
+    });
+  });
+
   describe('#source', function(){
     it('should set a source directory', function(){
       var m = Metalsmith('test/tmp');
       m.source('dir');
-      assert.equal(m._src, 'dir');
+      assert.equal(m._source, 'dir');
     });
 
     it('should get the full path to the source directory', function(){
@@ -69,7 +94,7 @@ describe('Metalsmith', function(){
     it('should set a destination directory', function(){
       var m = Metalsmith('test/tmp');
       m.destination('dir');
-      assert.equal(m._dest, 'dir');
+      assert.equal(m._destination, 'dir');
     });
 
     it('should get the full path to the destination directory', function(){
@@ -130,12 +155,6 @@ describe('Metalsmith', function(){
       var m = Metalsmith('test/tmp');
       var path = m.path('one', 'two', 'three');
       assert(~path.indexOf('/test/tmp/one/two/three'));
-    });
-  });
-
-  describe('#join', function(){
-    it('should be aliased to #path for backwards compatibility', function(){
-      assert.equal(Metalsmith.prototype.join, Metalsmith.prototype.path);
     });
   });
 
