@@ -47,7 +47,7 @@ plugins.forEach(function(plugin){
   for (var name in plugin) {
     var opts = plugin[name];
     var fn;
-    var localPath = resolve(process.cwd(), 'node_modules', name); 
+    var localPath = resolve(process.cwd(), 'node_modules', name);
 
     try {
       if (exists(localPath)) {
@@ -62,7 +62,6 @@ plugins.forEach(function(plugin){
     metalsmith.use(fn(opts));
   }
 });
-
 
 /**
  * Build.
