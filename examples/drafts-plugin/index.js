@@ -8,16 +8,13 @@ module.exports = plugin;
 /**
  * A Metalsmith plugin to hide any files marked as `draft`.
  *
- * @param {Object} files
- * @param {Metalsmith} metalsmith
- * @param {Function} done
+ * @return {Function}
  */
 
 function plugin(){
-  return function(files, metalsmith, done){
+  return function(files){
     for (var file in files) {
       if (files[file].draft) delete files[file];
     }
-    done();
   };
 }
