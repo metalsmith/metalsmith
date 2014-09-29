@@ -264,6 +264,7 @@ describe('Metalsmith', function(){
 
     it('should remove an existing destination directory', function(done){
       var m = Metalsmith('test/fixtures/build');
+      rm('test/fixtures/build/build');
       fs.mkdirSync('test/fixtures/build/build');
       exec('touch test/fixtures/build/build/empty.md', function(err){
         if (err) return done(err);

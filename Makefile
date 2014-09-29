@@ -7,7 +7,7 @@ node_modules: package.json
 test: node_modules
 	@./node_modules/.bin/mocha \
 		--reporter spec \
-		--slow 300
+		--slow 300 \
 		--bail
 
 # Phony targets.
