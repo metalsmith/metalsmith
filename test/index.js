@@ -241,6 +241,22 @@ describe('Metalsmith', function(){
         done();
       }
     });
+
+    it('should support synchronous plugins', function(done){
+      var m = Metalsmith('test/tmp');
+      m.use(plugin);
+      m.run({ one: 'one' }, function(err, files, metalsmith){
+        assert.equal(files.one, 'one');
+        assert.equal(files.two, 'two');
+        done();
+      });
+
+      function plugin(files, metalsmith){
+        assert.equal(files.one, 'one');
+        assert.equal(m, metalsmith);
+        files.two = 'two';
+      }
+    });
   });
 
   describe('#build', function(){
