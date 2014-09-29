@@ -16,11 +16,11 @@ node_modules: package.json
 
 # Run the tests.
 test: node_modules
-	$(mocha)
+	@$(mocha)
 
 # Run the tests in debugging mode.
 test-debug: node_modules
-	$(mocha) debug
+	@$(mocha) debug
 
 #
 # Phonies.
