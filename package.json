@@ -33,7 +33,7 @@
     "recursive-readdir": "1.1.2",
     "rimraf": "^2.2.8",
     "stat-mode": "^0.2.0",
-    "ware": "~0.3.0"
+    "ware": "^1.2.0"
   },
   "devDependencies": {
     "mocha": "1.x",
