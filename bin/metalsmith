@@ -19,23 +19,14 @@ try {
 }
 
 /**
- * Settings.
- */
-
-var src = json.source;
-var dest = json.destination;
-var data = json.metadata;
-var clean = !! json.clean;
-
-/**
  * Metalsmith.
  */
 
 var metalsmith = new Metalsmith(process.cwd());
-if (src) metalsmith.source(src);
-if (dest) metalsmith.destination(dest);
-if (data) metalsmith.metadata(data);
-metalsmith.clean(clean);
+if (json.source) metalsmith.source(json.source);
+if (json.destination) metalsmith.destination(json.destination);
+if (json.metadata) metalsmith.metadata(json.metadata);
+if (json.clean != null) metalsmith.clean(json.clean);
 
 /**
  * Plugins.
