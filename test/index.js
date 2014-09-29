@@ -7,7 +7,6 @@ var Metalsmith = require('..');
 var Mode = require('stat-mode');
 var noop = function(){};
 var path = require('path');
-var readdir = require('fs-readdir-recursive');
 var rm = require('rimraf').sync;
 
 describe('Metalsmith', function(){
@@ -16,34 +15,34 @@ describe('Metalsmith', function(){
   });
 
   it('should expose a constructor', function(){
-    assert('function' == typeof Metalsmith);
+    assert.equal(typeof Metalsmith, 'function');
   });
 
-  it('should not require the "new" keyword', function(){
+  it('should not require the `new` keyword', function(){
     var m = Metalsmith('test/tmp');
     assert(m instanceof Metalsmith);
   });
 
-  it('should use "src" as a default source directory', function(){
+  it('should use `./src` as a default source directory', function(){
     var m = Metalsmith('test/tmp');
-    assert('src' == m._src);
+    assert.equal(m._src, 'src');
   });
 
-  it('should use "build" as a default destination directory', function(){
+  it('should use `./build` as a default destination directory', function(){
     var m = Metalsmith('test/tmp');
-    assert('build' == m._dest);
+    assert.equal(m._dest, 'build');
   });
 
-  it('should default clean to true', function(){
+  it('should default clean to `true`', function(){
     var m = Metalsmith('test/tmp');
-    assert(true === m._clean);
+    assert.equal(m._clean, true);
   });
 
   describe('#use', function(){
     it('should add a plugin to the middleware stack', function(){
       var m = Metalsmith('test/tmp');
       m.use(noop);
-      assert(1 == m.ware.fns.length);
+      assert.equal(m.ware.fns.length, 1);
     });
   });
 
@@ -51,18 +50,18 @@ describe('Metalsmith', function(){
     it('should set a source directory', function(){
       var m = Metalsmith('test/tmp');
       m.source('dir');
-      assert('dir' == m._src);
+      assert.equal(m._src, 'dir');
     });
 
     it('should get the full path to the source directory', function(){
       var m = Metalsmith('test/tmp');
-      assert(-1 != m.source().indexOf('/test/tmp/src'));
+      assert(~m.source().indexOf('/test/tmp/src'));
     });
 
     it('should be able to be absolute', function(){
       var m = Metalsmith('test/tmp');
       m.source('/dir');
-      assert('/dir' == m.source());
+      assert.equal(m.source(), '/dir');
     });
   });
 
@@ -70,18 +69,18 @@ describe('Metalsmith', function(){
     it('should set a destination directory', function(){
       var m = Metalsmith('test/tmp');
       m.destination('dir');
-      assert('dir' == m._dest);
+      assert.equal(m._dest, 'dir');
     });
 
     it('should get the full path to the destination directory', function(){
       var m = Metalsmith('test/tmp');
-      assert(-1 != m.destination().indexOf('/test/tmp/build'));
+      assert(~m.destination().indexOf('/test/tmp/build'));
     });
 
     it('should be able to be absolute', function(){
       var m = Metalsmith('test/tmp');
       m.destination('/dir');
-      assert('/dir' == m.destination());
+      assert.equal(m.destination(), '/dir');
     });
   });
 
@@ -89,12 +88,12 @@ describe('Metalsmith', function(){
     it('should set the clean option', function(){
       var m = Metalsmith('test/tmp');
       m.clean(false);
-      assert(false === m._clean);
+      assert.equal(m._clean, false);
     });
 
     it('should get the value of the clean option', function(){
       var m = Metalsmith('test/tmp');
-      assert(true === m.clean());
+      assert.equal(m.clean(), true);
     });
   });
 
@@ -102,12 +101,12 @@ describe('Metalsmith', function(){
     it('should set the frontmatter option', function(){
       var m = Metalsmith('test/tmp');
       m.frontmatter(false);
-      assert(false === m._frontmatter);
+      assert.equal(m._frontmatter, false);
     });
 
     it('should get the value of the frontmatter option', function(){
       var m = Metalsmith('test/tmp');
-      assert(true === m.frontmatter());
+      assert(m.frontmatter(), true);
     });
   });
 
@@ -129,8 +128,8 @@ describe('Metalsmith', function(){
   describe('#path', function(){
     it('should return a path relative to the working directory', function(){
       var m = Metalsmith('test/tmp');
-      var path = m.join('one', 'two', 'three');
-      assert(-1 != path.indexOf('/test/tmp/one/two/three'));
+      var path = m.path('one', 'two', 'three');
+      assert(~path.indexOf('/test/tmp/one/two/three'));
     });
   });
 
@@ -174,11 +173,11 @@ describe('Metalsmith', function(){
       });
     });
 
-    it('should expose the stats property in each file metadata', function(done) {
+    it('should expose the stats property in each file metadata', function(done){
       var m = Metalsmith('test/fixtures/expose-stat');
       m.read(function(err, files) {
-        var indexMd = files['index.md'];
-        assert(indexMd.stats instanceof fs.Stats);
+        var file = files['index.md'];
+        assert(file.stats instanceof fs.Stats);
         done();
       });
     });
@@ -236,7 +235,7 @@ describe('Metalsmith', function(){
       function plugin(files, metalsmith, done){
         assert.equal(files.one, 'one');
         assert.equal(m, metalsmith);
-        assert.equal('function', typeof done);
+        assert.equal(typeof done, 'function');
         files.two = 'two';
         done();
       }
@@ -264,7 +263,7 @@ describe('Metalsmith', function(){
       Metalsmith('test/fixtures/basic')
         .build(function(err, files){
           if (err) return done(err);
-          assert.equal('object', typeof files);
+          assert.equal(typeof files, 'object');
           equal('test/fixtures/basic/build', 'test/fixtures/basic/expected');
           done();
         });
@@ -274,7 +273,7 @@ describe('Metalsmith', function(){
       Metalsmith('test/fixtures/basic-images')
         .build(function(err, files){
           if (err) return done(err);
-          assert.equal('object', typeof files);
+          assert.equal(typeof files, 'object');
           equal('test/fixtures/basic-images/build', 'test/fixtures/basic-images/expected');
           done();
         });
