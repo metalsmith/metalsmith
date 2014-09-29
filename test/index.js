@@ -353,6 +353,7 @@ describe('CLI', function(){
     it('should error without a metalsmith.json', function(done){
       exec('cd test/fixtures/cli-no-config && ' + bin, function(err, stdout){
         assert(err);
+        debugger;
         assert(~err.message.indexOf('could not find a "metalsmith.json" configuration file.'));
         done();
       });

@@ -1,4 +1,14 @@
 
+#
+# Binaries.
+#
+
+mocha = ./node_modules/.bin/mocha
+
+#
+# Targets.
+#
+
 # Install dependencies with npm.
 node_modules: package.json
 	@npm install
@@ -6,10 +16,15 @@ node_modules: package.json
 
 # Run the tests.
 test: node_modules
-	@./node_modules/.bin/mocha \
-		--reporter spec \
-		--slow 300 \
-		--bail
+	$(mocha)
 
-# Phony targets.
+# Run the tests in debugging mode.
+test-debug: node_modules
+	$(mocha) debug
+
+#
+# Phonies.
+#
+
 .PHONY: test
+.PHONY: test-debug

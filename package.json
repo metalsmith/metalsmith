@@ -4,7 +4,6 @@
   "license": "MIT",
   "repository": "git://github.com/segmentio/metalsmith.git",
   "description": "An extremely simple, pluggable static site generator.",
-  "main": "lib/index.js",
   "bin": {
     "metalsmith": "bin/metalsmith"
   },
@@ -15,19 +14,24 @@
     "async": "~0.9.0",
     "chalk": "^0.5.0",
     "clone": "^0.1.11",
+    "co-fs-extra": "0.0.2",
     "front-matter": "~0.2.0",
     "fs-extra": "~0.10.0",
     "is-utf8": "~0.2.0",
     "recursive-readdir": "1.1.2",
     "rimraf": "^2.2.8",
     "stat-mode": "^0.2.0",
+    "thunkify": "^2.1.2",
+    "unyield": "0.0.1",
     "ware": "^1.2.0"
   },
   "devDependencies": {
-    "mocha": "1.x",
     "assert-dir-equal": "~1.0.1",
+    "co-mocha": "^1.0.1",
+    "gnode": "^0.1.0",
     "metalsmith-drafts": "0.0.1",
-    "metalsmith-markdown": "0.2.1"
+    "metalsmith-markdown": "0.2.1",
+    "mocha": "^1.21.4"
   },
   "keywords": [
     "static",

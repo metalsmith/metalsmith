@@ -1,5 +1,15 @@
 #!/usr/bin/env node
 
+/**
+ * Add backwards compatibility for Node 0.10.
+ */
+
+require('gnode');
+
+/**
+ * Dependencies.
+ */
+
 var chalk = require('chalk');
 var exists = require('fs').existsSync;
 var Metalsmith = require('..');
