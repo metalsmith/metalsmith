@@ -1,6 +1,6 @@
 {
   "name": "metalsmith",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "repository": "git://github.com/segmentio/metalsmith.git",
   "description": "An extremely simple, pluggable static site generator.",

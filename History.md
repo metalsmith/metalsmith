@@ -1,4 +1,8 @@
 
+1.0.1 - September 30, 2014
+--------------------------
+* move `gnode` to regular dependencies
+
 1.0.0 - September 29, 2014
 --------------------------
 * add generator support for node 0.11
