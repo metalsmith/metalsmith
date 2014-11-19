@@ -148,6 +148,24 @@ describe('Metalsmith', function(){
       assert.notEqual(m.metadata(), data);
       assert.deepEqual(m.metadata(), data);
     });
+
+    it('should return an object literal when undefined', function(){
+      var m = Metalsmith('test/tmp');
+      m.metadata(undefined);
+      assert(m.metadata(), {});
+    });
+
+    it('should return an object literal when setting non-object', function(){
+      var m = Metalsmith('test/tmp');
+      m.metadata(false);
+      assert(m.metadata(), {});
+
+      m.metadata([]);
+      assert(m.metadata(), {});
+
+      m.metadata('test-string');
+      assert(m.metadata(), {});
+    });
   });
 
   describe('#path', function(){
