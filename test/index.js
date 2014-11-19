@@ -149,23 +149,30 @@ describe('Metalsmith', function(){
       assert.deepEqual(m.metadata(), data);
     });
 
-    it('should return an object literal when undefined', function(){
+    it('should throw an error when metadata is not an object', function() {
       var m = Metalsmith('test/tmp');
-      m.metadata(undefined);
-      assert(m.metadata(), {});
+
+      assert.throws(function () {
+        m.metadata(false);
+      }, /Incompatible metadata type, expecting object./);
+
+      assert.throws(function () {
+        m.metadata(undefined);
+      }, /Incompatible metadata type, expecting object./);
+
+      assert.throws(function () {
+        m.metadata('string');
+      }, /Incompatible metadata type, expecting object./);
+
+      assert.throws(function () {
+        m.metadata([]);
+      }, /Incompatible metadata type, expecting object./);
+
+      assert.throws(function () {
+        m.metadata(null);
+      }, /Incompatible metadata type, expecting object./);
     });
 
-    it('should return an object literal when setting non-object', function(){
-      var m = Metalsmith('test/tmp');
-      m.metadata(false);
-      assert(m.metadata(), {});
-
-      m.metadata([]);
-      assert(m.metadata(), {});
-
-      m.metadata('test-string');
-      assert(m.metadata(), {});
-    });
   });
 
   describe('#path', function(){
