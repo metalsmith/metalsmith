@@ -148,6 +148,31 @@ describe('Metalsmith', function(){
       assert.notEqual(m.metadata(), data);
       assert.deepEqual(m.metadata(), data);
     });
+
+    it('should throw an error when metadata is not an object', function() {
+      var m = Metalsmith('test/tmp');
+
+      assert.throws(function () {
+        m.metadata(false);
+      }, /Incompatible metadata type, expecting object./);
+
+      assert.throws(function () {
+        m.metadata(undefined);
+      }, /Incompatible metadata type, expecting object./);
+
+      assert.throws(function () {
+        m.metadata('string');
+      }, /Incompatible metadata type, expecting object./);
+
+      assert.throws(function () {
+        m.metadata([]);
+      }, /Incompatible metadata type, expecting object./);
+
+      assert.throws(function () {
+        m.metadata(null);
+      }, /Incompatible metadata type, expecting object./);
+    });
+
   });
 
   describe('#path', function(){
