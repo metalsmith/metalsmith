@@ -19,6 +19,7 @@
     "fs-extra": "~0.10.0",
     "gnode": "^0.1.0",
     "is-utf8": "~0.2.0",
+    "minimist": "^1.1.0",
     "recursive-readdir": "1.1.2",
     "rimraf": "^2.2.8",
     "stat-mode": "^0.2.0",
