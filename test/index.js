@@ -69,6 +69,13 @@ describe('Metalsmith', function(){
       m.directory('/dir');
       assert.equal(m.directory(), '/dir');
     });
+
+    it('should error on non-string', function(){
+      var m = Metalsmith('test/tmp');
+      assert.throws(function(){
+        m.directory(0);
+      });
+    });
   });
 
   describe('#source', function(){
@@ -87,6 +94,13 @@ describe('Metalsmith', function(){
       var m = Metalsmith('test/tmp');
       m.source('/dir');
       assert.equal(m.source(), '/dir');
+    });
+
+    it('should error on non-string', function(){
+      var m = Metalsmith('test/tmp');
+      assert.throws(function(){
+        m.source(0);
+      });
     });
   });
 
@@ -107,6 +121,13 @@ describe('Metalsmith', function(){
       m.destination('/dir');
       assert.equal(m.destination(), '/dir');
     });
+
+    it('should error on non-string', function(){
+      var m = Metalsmith('test/tmp');
+      assert.throws(function(){
+        m.destination(0);
+      });
+    });
   });
 
   describe('#clean', function(){
@@ -120,6 +141,13 @@ describe('Metalsmith', function(){
       var m = Metalsmith('test/tmp');
       assert.equal(m.clean(), true);
     });
+
+    it('should error on non-boolean', function(){
+      var m = Metalsmith('test/tmp');
+      assert.throws(function(){
+        m.clean(0);
+      });
+    });
   });
 
   describe('#frontmatter', function(){
@@ -132,6 +160,13 @@ describe('Metalsmith', function(){
     it('should get the value of the frontmatter option', function(){
       var m = Metalsmith('test/tmp');
       assert(m.frontmatter(), true);
+    });
+
+    it('should error on non-boolean', function(){
+      var m = Metalsmith('test/tmp');
+      assert.throws(function(){
+        m.frontmatter(0);
+      });
     });
   });
 
@@ -147,6 +182,13 @@ describe('Metalsmith', function(){
       m.metadata(data);
       assert.notEqual(m.metadata(), data);
       assert.deepEqual(m.metadata(), data);
+    });
+
+    it('should error on non-object', function(){
+      var m = Metalsmith('test/tmp');
+      assert.throws(function(){
+        m.metadata(0);
+      });
     });
   });
 
