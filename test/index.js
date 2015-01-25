@@ -18,6 +18,11 @@ describe('Metalsmith', function(){
     assert.equal(typeof Metalsmith, 'function');
   });
 
+  it('should expose #create as factory method', function(){
+    var m = Metalsmith.create('test/tmp');
+    assert(m instanceof Metalsmith);
+  });
+
   it('should not require the `new` keyword', function(){
     var m = Metalsmith('test/tmp');
     assert(m instanceof Metalsmith);
