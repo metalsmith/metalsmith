@@ -14,18 +14,34 @@ var chalk = require('chalk');
 var exists = require('fs').existsSync;
 var Metalsmith = require('..');
 var resolve = require('path').resolve;
+var argv = require('minimist')(process.argv.slice(2));
 
+
+var config_file = 'metalsmith.json';
 /**
  * Config.
  */
 
-var config = resolve(process.cwd(), 'metalsmith.json');
-if (!exists(config)) fatal('could not find a "metalsmith.json" configuration file.');
+ if(argv.h || argv.help) {
+   docs();
+   process.exit(0);
+ }
+
+ if(argv.config){
+   config_file = process.argv[process.argv.indexOf('--config') + 1];
+ } else if(argv.c){
+   config_file = process.argv[process.argv.indexOf('-c') + 1];
+ } else if(process.argv[2]) {
+   config_file = process.argv[2];
+ }
+
+var config = resolve(process.cwd(), config_file);
+if (!exists(config)) fatal('could not find a "' + config_file + '" configuration file.');
 
 try {
   var json = require(config);
 } catch (e) {
-  fatal('it seems like "metalsmith.json" is malformed.');
+  fatal('it seems like "' + config_file + '" is malformed.');
 }
 
 /**
@@ -110,4 +126,13 @@ function normalize(obj){
   }
 
   return ret;
+}
+
+function docs() {
+  console.log('=============\nmetalsmith\n=============\n');
+  console.log('-h --help: show docs\n');
+  console.log('custom config name:\n')
+  console.log('-c');
+  console.log('--config');
+  console.log('\ndefault: \nmetalsmith [custom-config-file]\n\n')
 }
