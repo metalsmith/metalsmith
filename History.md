@@ -1,4 +1,10 @@
 
+1.1.0 - January 25, 2015
+------------------------
+* add type checking to getter/setters
+* allow for alternate config file path
+* add file-specific errors on writing and reading
+
 1.0.1 - September 30, 2014
 --------------------------
 * move `gnode` to regular dependencies
