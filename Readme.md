@@ -130,7 +130,11 @@ Create a new `Metalsmith` instance for a working `dir`.
 
 #### #use(plugin)
 
-Add the given `plugin` function to the middleware stack.
+Add the given `plugin` function to the middleware stack. Metalsmith uses
+[ware](https://github.com/segmentio/ware) to support middleware, so plugins
+should follow the same pattern of taking arguments of `(files, metadata, callback)`,
+modifying the `files` or `metadata` argument by reference, and then
+calling `callback` to trigger the next step.
 
 #### #build(fn)
 
@@ -180,6 +184,18 @@ rm -rf .
 
 would be built with mode ```-rwxrw-r--```, i.e. user-executable. 
 
+## Templates
+
+Templates recieve variables that come from three sources:
+
+* `contents`: the contents of the page, potentially processed with a plugin
+  between formats: for instance, Markdown contents can be transformed into
+  HTML with the [metalsmith-markdown](https://github.com/segmentio/metalsmith-markdown)
+  plugin.
+* frontmatter: any YAML data included in pages, like title & date, are parsed
+  into JavaScript.
+* plugin output: plugins like [collections](https://github.com/segmentio/metalsmith-collections)
+  add global data based on aggregating or deriving data from content.
 
 ## License
 
