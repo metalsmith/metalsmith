@@ -1,4 +1,8 @@
 
+1.1.1 - January 25, 2015
+------------------------
+* update `recursive-readdir` to `1.2.1` to fix #110
+
 1.1.0 - January 25, 2015
 ------------------------
 * add type checking to getter/setters
