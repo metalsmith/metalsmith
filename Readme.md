@@ -9,7 +9,9 @@ In Metalsmith, all of the logic is handled by plugins. You simply chain them tog
 Metalsmith(__dirname)
   .use(markdown())
   .use(templates('handlebars'))
-  .build();
+  .build(function(err) {
+    if (err) throw err;
+  });
 ```
 
 ...but what if you want to get fancier by hiding your unfinished drafts and using custom permalinks? Just add plugins...
@@ -20,7 +22,9 @@ Metalsmith(__dirname)
   .use(markdown())
   .use(permalinks('posts/:title'))
   .use(templates('handlebars'))
-  .build();
+  .build(function(err) {
+    if (err) throw err;
+  });
 ```
 
 ...it's as easy as that!
