@@ -395,8 +395,7 @@ describe('CLI', function(){
     it('should error without a metalsmith.json', function(done){
       exec('cd test/fixtures/cli-no-config && ' + bin, function(err, stdout){
         assert(err);
-        debugger;
-        assert(~err.message.indexOf('could not find a "metalsmith.json" configuration file.'));
+        assert(~err.message.indexOf('could not find a metalsmith.json configuration file.'));
         done();
       });
     });
@@ -407,6 +406,16 @@ describe('CLI', function(){
         equal('test/fixtures/cli-json/destination', 'test/fixtures/cli-json/expected');
         assert(~stdout.indexOf('successfully built to '));
         assert(~stdout.indexOf('test/fixtures/cli-json/destination'));
+        done();
+      });
+    });
+
+    it('should grab config from a config.json', function(done){
+      exec('cd test/fixtures/cli-other-config && ' + bin + ' -c config.json', function(err, stdout){
+        if (err) return done(err);
+        equal('test/fixtures/cli-other-config/destination', 'test/fixtures/cli-other-config/expected');
+        assert(~stdout.indexOf('successfully built to '));
+        assert(~stdout.indexOf('test/fixtures/cli-other-config/destination'));
         done();
       });
     });

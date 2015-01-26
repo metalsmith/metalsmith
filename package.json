@@ -15,6 +15,7 @@
     "chalk": "^0.5.0",
     "clone": "^0.1.11",
     "co-fs-extra": "0.0.2",
+    "commander": "^2.6.0",
     "front-matter": "~0.2.0",
     "fs-extra": "~0.10.0",
     "gnode": "^0.1.0",
