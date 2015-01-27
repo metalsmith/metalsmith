@@ -29,13 +29,16 @@ Metalsmith(__dirname)
 
 ...it's as easy as that!
 
+
 ## Installation
 
     $ npm install metalsmith
 
+
 ## Plugins
 
 Check out the website for a list of [plugins](http://www.metalsmith.io#the-plugins).
+
 
 ## How does it work?
 
@@ -70,6 +73,7 @@ Each plugin is invoked with the contents of the source directory, and each file 
 
 Of course they can get a lot more complicated too. That's what makes Metalsmith powerful; the plugins can do anything you want!
 
+
 ## The secret...
 
 We keep referring to Metalsmith as a "static site generator", but it's a lot more than that. Since everything is a plugin, the core library is actually just an abstraction for manipulating a directory of files.
@@ -82,10 +86,12 @@ Which means you could just as easily use it to make...
   - [A Jekyll-like static site generator.](examples/jekyll)
   - [A Wintersmith-like static site generator.](examples/wintersmith)
 
+
 ## Resources
 
   - IRC Channel - it's `#metalsmith` on freenode!
   - [Getting to Know Metalsmith](http://www.robinthrift.com/posts/getting-to-know-metalsmith/) - a great series about how to use Metalsmith for your static site.
+
 
 ## CLI
 
@@ -119,6 +125,7 @@ Or if you install them globally, you can just use:
         Metalsmith · successfully built to: /path/to/build
 
 Checkout the [static site](examples/static-site), [Jekyll](examples/jekyll) or [Wintersmith](examples/wintersmith) examples to see the CLI in action.
+
 
 ## API
 
@@ -164,9 +171,18 @@ Resolve any amount of `paths...` relative to the working directory. This is usef
 
 Run all of the middleware functions on a dictionary of `files` and callback with `fn(err, files)`, where `files` is the altered dictionary.
 
+
 ## Metadata API
 
-Add metadata to your files to access these build features. 
+Add metadata to your files to access these build features. By default, Metalsmith uses a few different metadata fields:
+
+- `contents` - The body content of the file, not including any [YAML frontmatter](https://middlemanapp.com/basics/frontmatter/).
+- `mode` - The numeric version of the [file's mode](http://en.wikipedia.org/wiki/Modes_%28Unix%29).
+
+You can add your own metadata in two ways:
+
+- Using [YAML frontmatter](https://middlemanapp.com/basics/frontmatter/) at the top of any file.
+- Enabling a plugin that adds metadata programmatically.
 
 #### mode
 
@@ -184,18 +200,6 @@ rm -rf .
 
 would be built with mode ```-rwxrw-r--```, i.e. user-executable. 
 
-## Templates
-
-Templates recieve variables that come from three sources:
-
-* `contents`: the contents of the page, potentially processed with a plugin
-  between formats: for instance, Markdown contents can be transformed into
-  HTML with the [metalsmith-markdown](https://github.com/segmentio/metalsmith-markdown)
-  plugin.
-* frontmatter: any YAML data included in pages, like title & date, are parsed
-  into JavaScript.
-* plugin output: plugins like [collections](https://github.com/segmentio/metalsmith-collections)
-  add global data based on aggregating or deriving data from content.
 
 ## License
 
