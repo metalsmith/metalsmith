@@ -182,7 +182,7 @@ Add metadata to your files to access these build features. By default, Metalsmit
 You can add your own metadata in two ways:
 
 - Using [YAML frontmatter](https://middlemanapp.com/basics/frontmatter/) at the top of any file.
-- Enabling a plugin that adds metadata programmatically.
+- Enabling [a plugin](https://github.com/segmentio/metalsmith/blob/master/Readme.md#plugins) that adds metadata programmatically.
 
 #### mode
 
