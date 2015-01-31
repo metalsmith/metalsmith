@@ -26,7 +26,8 @@
     "stat-mode": "^0.2.0",
     "thunkify": "^2.1.2",
     "unyield": "0.0.1",
-    "ware": "^1.2.0"
+    "ware": "^1.2.0",
+    "strip-bom": "^1.0.0"
   },
   "devDependencies": {
     "assert-dir-equal": "~1.0.1",
