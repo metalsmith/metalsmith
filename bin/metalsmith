@@ -95,19 +95,24 @@ normalize(json.plugins).forEach(function(plugin){
  */
 
 metalsmith.build(function(err){
-  if (err) return fatal(err.message);
+  if (err) return fatal(err.message, err.stack);
   log('successfully built to ' + metalsmith.destination());
 });
 
 /**
  * Log an error and then exit the process.
  *
- * @param {String} message
+ * @param {String} msg
+ * @param {String} [stack]  Optional stack trace to print.
  */
 
-function fatal(msg){
+function fatal(msg, stack){
   console.error();
   console.error(chalk.red('  Metalsmith') + chalk.gray(' · ') + msg);
+  if (stack) {
+    console.error();
+    console.error(chalk.gray(stack));
+  }
   console.error();
   process.exit(1);
 }
