@@ -1,4 +1,8 @@
 
+1.2.0 - February 4, 2015
+------------------------
+* add stack trace printing to cli output
+
 1.1.1 - January 25, 2015
 ------------------------
 * update `recursive-readdir` to `1.2.1` to fix #110
