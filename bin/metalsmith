@@ -35,7 +35,7 @@ program.on('--help', function(){
   console.log('    $ metalsmith');
   console.log();
   console.log('    # build from lib/config.json:');
-  console.log('    $ myth --config lib/config.json');
+  console.log('    $ metalsmith --config lib/config.json');
   console.log();
 });
 
