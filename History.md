@@ -1,4 +1,9 @@
 
+1.3.0 / 2015-02-06
+==================
+
+  * adding support for local (non-npm, but still node) plugins
+
 1.2.0 - February 4, 2015
 ------------------------
 * add stack trace printing to cli output
