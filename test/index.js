@@ -448,5 +448,14 @@ describe('CLI', function(){
         done();
       });
     });
+
+    it('should allow requiring a local plugin', function(done){
+      exec(bin, { cwd: fixture('cli-plugin-local') }, function(err, stdout, stderr){
+        equal(fixture('cli-plugin-local/build'), fixture('cli-plugin-local/expected'));
+        assert(~stdout.indexOf('successfully built to '));
+        assert(~stdout.indexOf(fixture('cli-plugin-local/build')));
+        done();
+      });
+    });
   });
 });
