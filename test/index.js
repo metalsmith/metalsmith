@@ -8,6 +8,7 @@ var Mode = require('stat-mode');
 var noop = function(){};
 var path = require('path');
 var rm = require('rimraf').sync;
+var fixture = path.resolve.bind(path, __dirname, 'fixtures');
 
 describe('Metalsmith', function(){
   beforeEach(function(){
@@ -202,8 +203,8 @@ describe('Metalsmith', function(){
 
   describe('#read', function(){
     it('should read from a source directory', function(done){
-      var m = Metalsmith('test/fixtures/read');
-      var stats = fs.statSync(path.join(__dirname, 'fixtures/read/src/index.md'));
+      var m = Metalsmith(fixture('read'));
+      var stats = fs.statSync(fixture('read/src/index.md'));
       m.read(function(err, files){
         if (err) return done(err);
         assert.deepEqual(files, {
@@ -219,8 +220,8 @@ describe('Metalsmith', function(){
     });
 
     it('should preserve an existing file mode', function(done){
-      var m = Metalsmith('test/fixtures/read-mode');
-      var stats = fs.statSync(path.join(__dirname, 'fixtures/read-mode/src/bin'));
+      var m = Metalsmith(fixture('read-mode'));
+      var stats = fs.statSync(fixture('read-mode/src/bin'));
       m.read(function(err, files){
         if (err) return done(err);
         assert.deepEqual(files, {
@@ -235,7 +236,7 @@ describe('Metalsmith', function(){
     });
 
     it('should expose the stats property in each file metadata', function(done){
-      var m = Metalsmith('test/fixtures/expose-stat');
+      var m = Metalsmith(fixture('expose-stat'));
       m.read(function(err, files) {
         var file = files['index.md'];
         assert(file.stats instanceof fs.Stats);
@@ -244,7 +245,7 @@ describe('Metalsmith', function(){
     });
 
     it('should not parse frontmatter if frontmatter is false', function(done){
-      var m = Metalsmith('test/fixtures/read-frontmatter');
+      var m = Metalsmith(fixture('read-frontmatter'));
       m.frontmatter(false);
       m.read(function(err, files){
         if (err) return done(err);
@@ -256,17 +257,17 @@ describe('Metalsmith', function(){
 
   describe('#write', function(){
     it('should write to a destination directory', function(done){
-      var m = Metalsmith('test/fixtures/write');
+      var m = Metalsmith(fixture('write'));
       var files = { 'index.md': { contents: new Buffer('body') }};
       m.write(files, function(err){
         if (err) return done(err);
-        equal('test/fixtures/write/build', 'test/fixtures/write/expected');
+        equal(fixture('write/build'), fixture('write/expected'));
         done();
       });
     });
 
     it('should chmod an optional mode from file metadata', function(done){
-      var m = Metalsmith('test/fixtures/write-mode');
+      var m = Metalsmith(fixture('write-mode'));
       var files = {
         'bin': {
           contents: new Buffer('echo test'),
@@ -275,7 +276,7 @@ describe('Metalsmith', function(){
       };
 
       m.write(files, function(err){
-        var stats = fs.statSync('test/fixtures/write-mode/build/bin');
+        var stats = fs.statSync(fixture('write-mode/build/bin'));
         var mode = Mode(stats).toOctal();
         assert.equal(mode, '0777');
         done();
@@ -321,27 +322,27 @@ describe('Metalsmith', function(){
 
   describe('#build', function(){
     it('should do a basic copy with no plugins', function(done){
-      Metalsmith('test/fixtures/basic')
+      Metalsmith(fixture('basic'))
         .build(function(err, files){
           if (err) return done(err);
           assert.equal(typeof files, 'object');
-          equal('test/fixtures/basic/build', 'test/fixtures/basic/expected');
+          equal(fixture('basic/build'), fixture('basic/expected'));
           done();
         });
     });
 
     it('should preserve binary files', function(done){
-      Metalsmith('test/fixtures/basic-images')
+      Metalsmith(fixture('basic-images'))
         .build(function(err, files){
           if (err) return done(err);
           assert.equal(typeof files, 'object');
-          equal('test/fixtures/basic-images/build', 'test/fixtures/basic-images/expected');
+          equal(fixture('basic-images/build'), fixture('basic-images/expected'));
           done();
         });
     });
 
     it('should apply a plugin', function(done){
-      Metalsmith('test/fixtures/basic-plugin')
+      Metalsmith(fixture('basic-plugin'))
         .use(function(files, metalsmith, done){
           Object.keys(files).forEach(function(file){
             var data = files[file];
@@ -351,35 +352,35 @@ describe('Metalsmith', function(){
         })
         .build(function(err){
           if (err) return done(err);
-          equal('test/fixtures/basic-plugin/build', 'test/fixtures/basic-plugin/expected');
+          equal(fixture('basic-plugin/build'), fixture('basic-plugin/expected'));
           done();
         });
     });
 
     it('should remove an existing destination directory', function(done){
-      var m = Metalsmith('test/fixtures/build');
-      rm('test/fixtures/build/build');
-      fs.mkdirSync('test/fixtures/build/build');
+      var m = Metalsmith(fixture('build'));
+      rm(fixture('build/build'));
+      fs.mkdirSync(fixture('build/build'));
       exec('touch test/fixtures/build/build/empty.md', function(err){
         if (err) return done(err);
         var files = { 'index.md': { contents: new Buffer('body') }};
         m.build(function(err){
           if (err) return done(err);
-          equal('test/fixtures/build/build', 'test/fixtures/build/expected');
+          equal(fixture('build/build'), fixture('build/expected'));
           done();
         });
       });
     });
 
     it('should not remove existing destination directory if clean is false', function(done){
-      var m = Metalsmith('test/fixtures/build-noclean');
+      var m = Metalsmith(fixture('build-noclean'));
       m.clean(false);
       exec('mkdir -p test/fixtures/build-noclean/build && touch test/fixtures/build-noclean/build/empty.md', function(err){
         if (err) return done(err);
         var files = { 'index.md': { contents: new Buffer('body') }};
         m.build(function(err){
           if (err) return done(err);
-          equal('test/fixtures/build-noclean/build', 'test/fixtures/build-noclean/expected');
+          equal(fixture('build-noclean/build'), fixture('build-noclean/expected'));
           done();
         });
       });
@@ -389,11 +390,11 @@ describe('Metalsmith', function(){
 });
 
 describe('CLI', function(){
-  var bin = __dirname + '/../bin/metalsmith';
+  var bin = path.resolve(__dirname, '../bin/metalsmith');
 
   describe('build', function(){
     it('should error without a metalsmith.json', function(done){
-      exec('cd test/fixtures/cli-no-config && ' + bin, function(err, stdout){
+      exec(bin, { cwd: fixture('cli-no-config') }, function(err, stdout){
         assert(err);
         assert(~err.message.indexOf('could not find a metalsmith.json configuration file.'));
         done();
@@ -401,49 +402,58 @@ describe('CLI', function(){
     });
 
     it('should grab config from metalsmith.json', function(done){
-      exec('cd test/fixtures/cli-json && ' + bin, function(err, stdout){
+      exec(bin, { cwd: fixture('cli-json') }, function(err, stdout){
         if (err) return done(err);
-        equal('test/fixtures/cli-json/destination', 'test/fixtures/cli-json/expected');
+        equal(fixture('cli-json/destination'), fixture('cli-json/expected'));
         assert(~stdout.indexOf('successfully built to '));
-        assert(~stdout.indexOf('test/fixtures/cli-json/destination'));
+        assert(~stdout.indexOf(fixture('cli-json/destination')));
         done();
       });
     });
 
     it('should grab config from a config.json', function(done){
-      exec('cd test/fixtures/cli-other-config && ' + bin + ' -c config.json', function(err, stdout){
+      exec(bin + ' -c config.json', { cwd: fixture('cli-other-config') }, function(err, stdout){
         if (err) return done(err);
-        equal('test/fixtures/cli-other-config/destination', 'test/fixtures/cli-other-config/expected');
+        equal(fixture('cli-other-config/destination'), fixture('cli-other-config/expected'));
         assert(~stdout.indexOf('successfully built to '));
-        assert(~stdout.indexOf('test/fixtures/cli-other-config/destination'));
+        assert(~stdout.indexOf(fixture('cli-other-config/destination')));
         done();
       });
     });
 
     it('should require a plugin', function(done){
-      exec('cd test/fixtures/cli-plugin-object && ' + bin, function(err, stdout){
+      exec(bin, { cwd: fixture('cli-plugin-object') }, function(err, stdout, stderr){
         if (err) return done(err);
-        equal('test/fixtures/cli-plugin-object/build', 'test/fixtures/cli-plugin-object/expected');
+        equal(fixture('cli-plugin-object/build'), fixture('cli-plugin-object/expected'));
         assert(~stdout.indexOf('successfully built to '));
-        assert(~stdout.indexOf('test/fixtures/cli-plugin-object/build'));
+        assert(~stdout.indexOf(fixture('cli-plugin-object/build')));
         done();
       });
     });
 
     it('should require plugins as an array', function(done){
-      exec('cd test/fixtures/cli-plugin-array && ' + bin, function(err, stdout){
+      exec(bin, { cwd: fixture('cli-plugin-array') }, function(err, stdout){
         if (err) return done(err);
-        equal('test/fixtures/cli-plugin-array/build', 'test/fixtures/cli-plugin-array/expected');
+        equal(fixture('cli-plugin-array/build'), fixture('cli-plugin-array/expected'));
         assert(~stdout.indexOf('successfully built to '));
-        assert(~stdout.indexOf('test/fixtures/cli-plugin-array/build'));
+        assert(~stdout.indexOf(fixture('cli-plugin-array/build')));
         done();
       });
     });
 
     it('should error when failing to require a plugin', function(done){
-      exec('cd test/fixtures/cli-no-plugin && ' + bin, function(err, stdout){
+      exec(bin, { cwd: fixture('cli-no-plugin') }, function(err){
         assert(err);
         assert(~err.message.indexOf('failed to require plugin "metalsmith-non-existant".'));
+        done();
+      });
+    });
+
+    it('should allow requiring a local plugin', function(done){
+      exec(bin, { cwd: fixture('cli-plugin-local') }, function(err, stdout, stderr){
+        equal(fixture('cli-plugin-local/build'), fixture('cli-plugin-local/expected'));
+        assert(~stdout.indexOf('successfully built to '));
+        assert(~stdout.indexOf(fixture('cli-plugin-local/build')));
         done();
       });
     });

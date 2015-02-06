@@ -76,17 +76,21 @@ if (json.clean != null) metalsmith.clean(json.clean);
 
 normalize(json.plugins).forEach(function(plugin){
   for (var name in plugin) {
-    var opts = plugin[name];
-    var localPath = resolve(dir, 'node_modules', name);
-    var fn;
-
     try {
-      fn = exists(localPath) ? require(localPath) : require(name);
+      var opts = plugin[name];
+      var local = resolve(dir, name);
+      var npm = resolve(dir, 'node_modules', name);
+      var mod = null;
+
+      if (exists(local))              mod = require(local);
+      else if (exists(local + '.js')) mod = require(local);
+      else if (exists(npm))           mod = require(npm);
+      else                            mod = require(name);
+
+      metalsmith.use(mod(opts));
     } catch (e) {
       fatal('failed to require plugin "' + name + '".');
     }
-
-    metalsmith.use(fn(opts));
   }
 });
 
