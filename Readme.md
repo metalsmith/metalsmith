@@ -126,6 +126,17 @@ Or if you install them globally, you can just use:
 
 Checkout the [static site](examples/static-site), [Jekyll](examples/jekyll) or [Wintersmith](examples/wintersmith) examples to see the CLI in action.
 
+If you want to use a custom plugin, but feel like it's too domain-specific to
+be published to the world, you can include plugins as local npm modules:
+(simply use a relative path from your root directory)
+
+```json
+{
+  "plugins": {
+    "./lib/metalsmith/plugin.js": true
+  }
+}
+```
 
 ## API
 
