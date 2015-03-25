@@ -1,4 +1,8 @@
 
+1.4.1 - March 25, 2015
+----------------------
+* add nicer error for invalid frontmatter
+
 1.4.0 - March 25, 2015
 ----------------------
 * add support for overriding the read and write directory
