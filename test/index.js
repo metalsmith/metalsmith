@@ -219,6 +219,24 @@ describe('Metalsmith', function(){
       });
     });
 
+    it('should read from a provided directory', function(done){
+      var m = Metalsmith(fixture('read-dir'));
+      var stats = fs.statSync(fixture('read-dir/dir/index.md'));
+      var dir = fixture('read-dir/dir');
+      m.read(dir, function(err, files){
+        if (err) return done(err);
+        assert.deepEqual(files, {
+          'index.md': {
+            title: 'A Title',
+            contents: new Buffer('body'),
+            mode: stats.mode.toString(8).slice(-4),
+            stats: stats
+          }
+        });
+        done();
+      });
+    });
+
     it('should preserve an existing file mode', function(done){
       var m = Metalsmith(fixture('read-mode'));
       var stats = fs.statSync(fixture('read-mode/src/bin'));
@@ -262,6 +280,17 @@ describe('Metalsmith', function(){
       m.write(files, function(err){
         if (err) return done(err);
         equal(fixture('write/build'), fixture('write/expected'));
+        done();
+      });
+    });
+
+    it('should write to a provided directory', function(done){
+      var m = Metalsmith(fixture('write-dir'));
+      var files = { 'index.md': { contents: new Buffer('body') }};
+      var dir = fixture('write-dir/out');
+      m.write(files, dir, function(err){
+        if (err) return done(err);
+        equal(fixture('write-dir/out'), fixture('write-dir/expected'));
         done();
       });
     });
