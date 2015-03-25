@@ -1,7 +1,7 @@
 
-2.0.0 - March 25, 2015
+1.4.0 - March 25, 2015
 ----------------------
-* add support for passing in read and write directory
+* add support for overriding the read and write directory
 
 1.3.0 - February 6, 2015
 ------------------------
