@@ -1,8 +1,11 @@
 
-1.3.0 / 2015-02-06
-==================
+2.0.0 - March 25, 2015
+----------------------
+* add support for passing in read and write directory
 
-  * adding support for local (non-npm, but still node) plugins
+1.3.0 - February 6, 2015
+------------------------
+* adding support for local (non-npm, but still node) plugins
 
 1.2.0 - February 4, 2015
 ------------------------
