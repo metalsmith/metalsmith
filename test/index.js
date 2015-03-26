@@ -210,7 +210,7 @@ describe('Metalsmith', function(){
         assert.deepEqual(files, {
           'index.md': {
             title: 'A Title',
-            contents: new Buffer('body'),
+            contents: new Buffer('\nbody'),
             mode: stats.mode.toString(8).slice(-4),
             stats: stats
           }
@@ -228,7 +228,7 @@ describe('Metalsmith', function(){
         assert.deepEqual(files, {
           'index.md': {
             title: 'A Title',
-            contents: new Buffer('body'),
+            contents: new Buffer('\nbody'),
             mode: stats.mode.toString(8).slice(-4),
             stats: stats
           }
