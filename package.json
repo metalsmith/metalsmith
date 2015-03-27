@@ -1,6 +1,6 @@
 {
   "name": "metalsmith",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "license": "MIT",
   "repository": "git://github.com/segmentio/metalsmith.git",
   "description": "An extremely simple, pluggable static site generator.",
@@ -16,9 +16,9 @@
     "clone": "^0.1.11",
     "co-fs-extra": "0.0.2",
     "commander": "^2.6.0",
-    "front-matter": "~0.2.0",
     "fs-extra": "~0.10.0",
     "gnode": "^0.1.0",
+    "gray-matter": "^2.0.0",
     "is": "^2.2.0",
     "is-utf8": "~0.2.0",
     "recursive-readdir": "^1.2.1",

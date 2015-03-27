@@ -1,4 +1,9 @@
 
+1.4.2 - March 26, 2015
+----------------------
+* switch to `gray-matter` for frontmatter parsing
+* fix bug in frontmatter parser
+
 1.4.1 - March 25, 2015
 ----------------------
 * add nicer error for invalid frontmatter
