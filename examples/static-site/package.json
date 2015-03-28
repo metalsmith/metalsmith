@@ -2,10 +2,10 @@
   "name": "static-site-example",
   "private": true,
   "dependencies": {
-    "metalsmith-templates": "^0.1.0",
+    "metalsmith-templates": "^0.6.1",
     "metalsmith-markdown": "^0.2.1",
     "metalsmith-permalinks": "^0.1.1",
-    "metalsmith": "^0.2.3",
+    "metalsmith": "^1.0.0",
     "handlebars": "^2.0.0-alpha.2"
   }
 }

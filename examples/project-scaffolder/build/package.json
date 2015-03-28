@@ -1,9 +1,9 @@
 {
-  "name": "my-project",
-  "description": "Whatever my new project does.",
-  "repository": "git://github.com/segmentio/my-project.git",
+  "name": "asd",
+  "description": "asd",
+  "repository": "git://github.com/asd.git",
   "version": "0.0.0",
-  "license": "MIT",
+  "license": "asd",
   "main": "lib/index.js",
   "dependencies": {},
   "devDependencies": {

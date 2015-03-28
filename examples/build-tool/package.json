@@ -3,6 +3,6 @@
   "private": true,
   "dependencies": {
     "myth": "^0.3.0",
-    "metalsmith": "^0.2.3"
+    "metalsmith": "^1.0.0"
   }
 }

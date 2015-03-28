@@ -6,6 +6,6 @@
     "async": "^0.2.10",
     "handlebars": "^2.0.0-alpha.2",
     "cli-prompt": "^0.3.2",
-    "metalsmith": "^0.2.3"
+    "metalsmith": "^1.0.0"
   }
 }

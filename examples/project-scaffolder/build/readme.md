@@ -1,11 +1,12 @@
-# my-project
 
-  Whatever my new project does.
+# asd
+
+  asd
 
 ## Installation
 
-    $ npm install my-project
+    $ npm install asd
 
 ## License
 
-  MIT
+  asd
