@@ -1,4 +1,8 @@
 
+1.4.5 - March 27, 2015
+----------------------
+* improve plugin error handling
+
 1.4.4 - March 27, 2015
 ----------------------
 * fix for `isAbsolute` not being in node `0.10`
