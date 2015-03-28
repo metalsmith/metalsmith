@@ -4,5 +4,5 @@
  */
 
 module.exports = function(){
-  return function(){};
+  throw new Error('Break!');
 };

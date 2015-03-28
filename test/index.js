@@ -478,6 +478,16 @@ describe('CLI', function(){
       });
     });
 
+    it('should error when failing to use a plugin', function(done){
+      exec(bin, { cwd: fixture('cli-broken-plugin') }, function(err){
+        assert(err);
+        assert(~err.message.indexOf('error using plugin "./plugin"...'));
+        assert(~err.message.indexOf('Break!'));
+        assert(~err.message.indexOf('at module.exports'));
+        done();
+      });
+    });
+
     it('should allow requiring a local plugin', function(done){
       exec(bin, { cwd: fixture('cli-plugin-local') }, function(err, stdout, stderr){
         equal(fixture('cli-plugin-local/build'), fixture('cli-plugin-local/expected'));
