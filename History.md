@@ -1,4 +1,8 @@
 
+1.4.3 - March 27, 2015
+----------------------
+* fix variable name typo
+
 1.4.2 - March 26, 2015
 ----------------------
 * switch to `gray-matter` for frontmatter parsing
