@@ -46,10 +46,10 @@ describe('Metalsmith', function(){
   });
 
   describe('#use', function(){
-    it('should add a plugin to the middleware stack', function(){
+    it('should add a plugin to the plugins stack', function(){
       var m = Metalsmith('test/tmp');
       m.use(noop);
-      assert.equal(m.ware.fns.length, 1);
+      assert.equal(m.plugins.length, 1);
     });
   });
 
@@ -318,6 +318,23 @@ describe('Metalsmith', function(){
       var m = Metalsmith('test/tmp');
       m.use(plugin);
       m.run({ one: 'one' }, function(err, files, metalsmith){
+        assert.equal(files.one, 'one');
+        assert.equal(files.two, 'two');
+        done();
+      });
+
+      function plugin(files, metalsmith, done){
+        assert.equal(files.one, 'one');
+        assert.equal(m, metalsmith);
+        assert.equal(typeof done, 'function');
+        files.two = 'two';
+        done();
+      }
+    });
+
+    it('should run with a provided plugin', function(done){
+      var m = Metalsmith('test/tmp');
+      m.run({ one: 'one' }, [plugin], function(err, files, metalsmith){
         assert.equal(files.one, 'one');
         assert.equal(files.two, 'two');
         done();
