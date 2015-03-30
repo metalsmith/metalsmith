@@ -1,4 +1,8 @@
 
+1.5.0 - March 29, 2015
+----------------------
+* add ability to pass in plugins to #run
+
 1.4.5 - March 27, 2015
 ----------------------
 * improve plugin error handling
