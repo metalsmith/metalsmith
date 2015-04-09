@@ -167,6 +167,10 @@ Set the relative `path` to the source directory, or get the full one if no `path
 
 Set the relative `path` to the destination directory, or get the full one if no `path` is provided. The destination directory defaults to `./build`.
 
+#### #concurrency(max)
+
+Set the maximum number of files to open at once when reading or writing.  Defaults to `Infinity`.  To avoid having too many files open at once (`EMFILE` errors), set the concurrency to something lower than `ulimit -n`.
+
 #### #clean(boolean)
 
 Set whether to remove the destination directory before writing to it, or get the current setting. Defaults to `true`.
