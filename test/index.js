@@ -131,6 +131,25 @@ describe('Metalsmith', function(){
     });
   });
 
+  describe('#concurrency', function(){
+    it('should set a max number for concurrency', function(){
+      var m = Metalsmith('test/tmp');
+      m.concurrency(15);
+      assert.equal(m._concurrency, 15);
+    });
+
+    it('should get the max number for concurrency', function(){
+      var m = Metalsmith('test/tmp');
+      m.concurrency(25);
+      assert.equal(m.concurrency(), 25);
+    });
+
+    it('should be infinitely concurrent by default', function(){
+      var m = Metalsmith('test/tmp');
+      assert.equal(m.concurrency(), Infinity);
+    });
+  });
+
   describe('#clean', function(){
     it('should set the clean option', function(){
       var m = Metalsmith('test/tmp');
@@ -271,6 +290,16 @@ describe('Metalsmith', function(){
         done();
       });
     });
+
+    it('should still read all when concurrency is set', function(done){
+      var m = Metalsmith('test/fixtures/concurrency');
+      m.concurrency(3);
+      m.read(function(err, files){
+        if (err) return done(err);
+        assert.equal(Object.keys(files).length, 10);
+        done();
+      });
+    });
   });
 
   describe('#write', function(){
@@ -309,6 +338,18 @@ describe('Metalsmith', function(){
         var mode = Mode(stats).toOctal();
         assert.equal(mode, '0777');
         done();
+      });
+    });
+
+    it('should write all when concurrency is set', function(done){
+      var m = Metalsmith('test/fixtures/concurrency');
+      m.read(function(err, files){
+        if (err) return done(err);
+        m.write(files, function(err){
+          if (err) return done(err);
+          equal('test/fixtures/concurrency/build', 'test/fixtures/concurrency/expected');
+          done();
+        });
       });
     });
   });
