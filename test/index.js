@@ -341,7 +341,7 @@ describe('Metalsmith', function(){
       });
     });
 
-    it('should write all when concurrency is set', function(done){
+    it('should still write all when concurrency is set', function(done){
       var m = Metalsmith('test/fixtures/concurrency');
       m.read(function(err, files){
         if (err) return done(err);
