@@ -1,4 +1,8 @@
 
+1.6.0 - April 14, 2015
+----------------------
+* add `concurrency` support
+
 1.5.0 - March 29, 2015
 ----------------------
 * add ability to pass in plugins to #run
