@@ -175,6 +175,12 @@ Set the maximum number of files to open at once when reading or writing.  Defaul
 
 Set whether to remove the destination directory before writing to it, or get the current setting. Defaults to `true`.
 
+#### #ignore(path)
+
+Ignore files from being loaded into Metalsmith. `file` can be a string,
+or an array of files. Glob syntax is supported via
+[minimatch](https://github.com/isaacs/minimatch).
+
 #### #metadata(json)
 
 Get the global metadata. This is useful for plugins that want to set global-level metadata that can be applied to all files.
