@@ -53,6 +53,14 @@ describe('Metalsmith', function(){
     });
   });
 
+  describe('#ignore', function(){
+    it('should add an ignore file to the internal ignores list', function(){
+      var m = Metalsmith('test/tmp');
+      m.ignore('dirfile')
+      assert(1 == m.ignores.length);
+    })
+  })
+
   describe('#directory', function(){
     it('should set a working directory', function(){
       var m = Metalsmith('test/tmp');
@@ -297,6 +305,25 @@ describe('Metalsmith', function(){
       m.read(function(err, files){
         if (err) return done(err);
         assert.equal(Object.keys(files).length, 10);
+        done();
+      });
+    });
+
+    it('should ignore the files specified in ignores', function(done){
+      var m = Metalsmith('test/fixtures/basic');
+      m.ignore('nested');
+      m.read(function(err, files){
+        if (err) return done(err);
+        stats = fs.statSync(path.join(__dirname, 'fixtures/basic/src/index.md'));
+        assert.deepEqual(files, {
+          'index.md': {
+            date: new Date('2013-12-02'),
+            title: 'A Title',
+            contents: new Buffer('body'),
+            mode: stats.mode.toString(8).slice(-4),
+            stats: stats
+          }
+        });
         done();
       });
     });
