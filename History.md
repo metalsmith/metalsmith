@@ -1,4 +1,8 @@
 
+1.7.0 - April 30, 2015
+----------------------
+* add `ignore` support
+
 1.6.0 - April 14, 2015
 ----------------------
 * add `concurrency` support
