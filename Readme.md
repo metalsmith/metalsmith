@@ -1,5 +1,5 @@
 
-# Metalsmith
+# Metalsmith [![Build Status](https://travis-ci.org/segmentio/metalsmith.svg)](https://travis-ci.org/segmentio/metalsmith)
 
 An extremely simple, _pluggable_ static site generator.
 
