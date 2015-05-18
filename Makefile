@@ -3,13 +3,14 @@
 # Adds --harmony-generators flag when available/necessary
 #
 
-node_flags ?= $(shell $(NODE) --v8-options | grep generators | cut -d ' ' -f 3)
+node ?= node
+node_flags ?= $(shell $(node) --v8-options | grep generators | cut -d ' ' -f 3)
 
 #
 # Binaries.
 #
 
-mocha = ./node_modules/.bin/mocha
+mocha = $(node) $(node_flags) ./node_modules/.bin/_mocha
 
 #
 # Targets.
@@ -22,11 +23,11 @@ node_modules: package.json
 
 # Run the tests.
 test: node_modules
-	@$(mocha) $(node_flags)
+	@$(mocha)
 
 # Run the tests in debugging mode.
 test-debug: node_modules
-	@$(mocha) $(node_flags) debug
+	@$(mocha) debug
 
 #
 # Phonies.

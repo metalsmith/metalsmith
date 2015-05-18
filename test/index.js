@@ -9,6 +9,7 @@ var noop = function(){};
 var path = require('path');
 var rm = require('rimraf').sync;
 var fixture = path.resolve.bind(path, __dirname, 'fixtures');
+var semver = require('semver');
 
 describe('Metalsmith', function(){
   beforeEach(function(){
@@ -505,6 +506,10 @@ describe('Metalsmith', function(){
 
 describe('CLI', function(){
   var bin = path.resolve(__dirname, '../bin/metalsmith');
+
+  var cmd = semver.satisfies(process.version, '<= 0.10')
+    ? path.resolve(__dirname, '../node_modules/.bin/gnode') + ' ' + bin
+    : bin;
 
   describe('build', function(){
     it('should error without a metalsmith.json', function(done){
