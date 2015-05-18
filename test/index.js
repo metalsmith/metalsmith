@@ -310,11 +310,11 @@ describe('Metalsmith', function(){
     });
 
     it('should ignore the files specified in ignores', function(done){
+      var stats = fs.statSync(path.join(__dirname, 'fixtures/basic/src/index.md'));
       var m = Metalsmith('test/fixtures/basic');
       m.ignore('nested');
       m.read(function(err, files){
         if (err) return done(err);
-        stats = fs.statSync(path.join(__dirname, 'fixtures/basic/src/index.md'));
         assert.deepEqual(files, {
           'index.md': {
             date: new Date('2013-12-02'),
