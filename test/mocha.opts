@@ -1,4 +1,5 @@
 --reporter spec
+--require gnode
 --require co-mocha
 --slow 500
 --bail
