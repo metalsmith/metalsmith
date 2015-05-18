@@ -5,7 +5,8 @@
   "repository": "git://github.com/segmentio/metalsmith.git",
   "description": "An extremely simple, pluggable static site generator.",
   "bin": {
-    "metalsmith": "bin/metalsmith"
+    "metalsmith": "bin/metalsmith",
+    "_metalsmith": "bin/_metalsmith"
   },
   "scripts": {
     "test": "make test"
@@ -18,8 +19,8 @@
     "co-fs-extra": "0.0.2",
     "commander": "^2.6.0",
     "fs-extra": "~0.10.0",
-    "gnode": "^0.1.0",
     "gray-matter": "^2.0.0",
+    "has-generators": "^1.0.1",
     "is": "^2.2.0",
     "is-utf8": "~0.2.0",
     "recursive-readdir": "^1.2.1",
@@ -27,11 +28,13 @@
     "stat-mode": "^0.2.0",
     "thunkify": "^2.1.2",
     "unyield": "0.0.1",
-    "ware": "^1.2.0"
+    "ware": "^1.2.0",
+    "win-fork": "^1.1.1"
   },
   "devDependencies": {
     "assert-dir-equal": "~1.0.1",
     "co-mocha": "^1.0.1",
+    "gnode": "^0.1.0",
     "metalsmith-drafts": "0.0.1",
     "metalsmith-markdown": "0.2.1",
     "mocha": "^1.21.4"
