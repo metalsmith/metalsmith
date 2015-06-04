@@ -505,11 +505,9 @@ describe('Metalsmith', function(){
 });
 
 describe('CLI', function(){
-  var bin = path.resolve(__dirname, '../bin/_metalsmith');
-
   var cmd = semver.satisfies(process.version, '<= 0.10')
-    ? path.resolve(__dirname, '../node_modules/.bin/gnode') + ' ' + bin
-    : bin;
+    ? path.resolve(__dirname, '../node_modules/.bin/gnode') + ' ' + path.resolve(__dirname, '../bin/_metalsmith')
+    : path.resolve(__dirname, '../bin/metalsmith');
 
   describe('build', function(){
     it('should error without a metalsmith.json', function(done){

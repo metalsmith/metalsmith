@@ -14,7 +14,7 @@ var resolve = require('path').resolve;
 var args = process.argv.slice(2);
 
 /**
- * If we're not talking about a sub-command, fall back on `_duo`.
+ * If we're not talking about a sub-command, fall back on `_metalsmith`.
  */
 
 args.unshift(resolve(__dirname, '_metalsmith'));
