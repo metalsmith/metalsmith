@@ -22,6 +22,7 @@
     "gray-matter": "^2.0.0",
     "is": "^2.2.0",
     "is-utf8": "~0.2.0",
+    "nconf": "^0.7.1",
     "recursive-readdir": "^1.2.1",
     "rimraf": "^2.2.8",
     "stat-mode": "^0.2.0",

@@ -15,6 +15,7 @@ var exists = require('fs').existsSync;
 var Metalsmith = require('..');
 var program = require('commander');
 var resolve = require('path').resolve;
+var nconf = require('nconf');
 
 /**
  * Usage.
@@ -22,7 +23,8 @@ var resolve = require('path').resolve;
 
 program
   .version(require('../package.json').version)
-  .option('-c, --config <path>', 'configuration file location', 'metalsmith.json');
+  .option('-c, --config <path>', 'configuration file location', 'metalsmith.json')
+  .option('-d, --working-dir <path>', 'working directory for the application', process.cwd())
 
 /**
  * Examples.
@@ -49,40 +51,35 @@ program.parse(process.argv);
  * Config.
  */
 
-var dir = process.cwd();
-var config = program.config;
-var path = resolve(dir, config);
-if (!exists(path)) fatal('could not find a ' + config + ' configuration file.');
-
-try {
-  var json = require(path);
-} catch (e) {
-  fatal('it seems like ' + config + ' is malformed.');
-}
+var json = nconf.file({
+  file: program.config,
+  dir: program.workingDir,
+  search: true
+});
 
 /**
  * Metalsmith.
  */
 
-var metalsmith = new Metalsmith(dir);
-if (json.source) metalsmith.source(json.source);
-if (json.destination) metalsmith.destination(json.destination);
-if (json.concurrency) metalsmith.concurrency(json.concurrency);
-if (json.metadata) metalsmith.metadata(json.metadata);
-if (json.clean != null) metalsmith.clean(json.clean);
+var metalsmith = new Metalsmith(program.workingDir);
+if (json.get('source')) metalsmith.source(json.get('source'));
+if (json.get('destination')) metalsmith.destination(json.get('destination'));
+if (json.get('concurrency')) metalsmith.concurrency(json.get('concurrency'));
+if (json.get('metadata')) metalsmith.metadata(json.get('metadata'));
+if (json.get('clean') != null) metalsmith.clean(json.get('clean'));
 
 /**
  * Plugins.
  */
 
-normalize(json.plugins).forEach(function(plugin){
+normalize(json.get('plugins')).forEach(function(plugin){
   for (var name in plugin) {
     var opts = plugin[name];
     var mod;
 
     try {
-      var local = resolve(dir, name);
-      var npm = resolve(dir, 'node_modules', name);
+      var local = resolve(program.workingDir, name);
+      var npm = resolve(program.workingDir, 'node_modules', name);
 
       if (exists(local) || exists(local + '.js')) {
         mod = require(local);

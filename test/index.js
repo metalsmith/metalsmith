@@ -2,6 +2,7 @@
 var assert = require('assert');
 var equal = require('assert-dir-equal');
 var exec = require('child_process').exec;
+var execFile = require('child_process').execFile;
 var fs = require('fs');
 var Metalsmith = require('..');
 var Mode = require('stat-mode');
@@ -507,10 +508,12 @@ describe('CLI', function(){
   var bin = path.resolve(__dirname, '../bin/metalsmith');
 
   describe('build', function(){
-    it('should error without a metalsmith.json', function(done){
+    it('should load defaults without a metalsmith.json', function(done){
       exec(bin, { cwd: fixture('cli-no-config') }, function(err, stdout){
-        assert(err);
-        assert(~err.message.indexOf('could not find a metalsmith.json configuration file.'));
+        if (err) return done(err);
+        equal(fixture('cli-no-config/build'), fixture('cli-no-config/expected'));
+        assert(~stdout.indexOf('successfully built to '));
+        assert(~stdout.indexOf(fixture('cli-no-config/build')));
         done();
       });
     });
@@ -531,6 +534,16 @@ describe('CLI', function(){
         equal(fixture('cli-other-config/destination'), fixture('cli-other-config/expected'));
         assert(~stdout.indexOf('successfully built to '));
         assert(~stdout.indexOf(fixture('cli-other-config/destination')));
+        done();
+      });
+    });
+
+    it('should support changing --working-dir', function(done){
+      execFile(bin, ['--working-dir', fixture('basic')], function(err, stdout){
+        if (err) return done(err);
+        equal(fixture('basic/build'), fixture('basic/expected'));
+        assert(~stdout.indexOf('successfully built to '));
+        assert(~stdout.indexOf(fixture('basic/build')));
         done();
       });
     });
