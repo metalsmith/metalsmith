@@ -504,7 +504,7 @@ describe('Metalsmith', function(){
 });
 
 describe('CLI', function(){
-  var bin = path.resolve(__dirname, '../bin/_metalsmith');
+  var bin = path.resolve(__dirname, '../bin/metalsmith');
 
   describe('build', function(){
     it('should error without a metalsmith.json', function(done){
