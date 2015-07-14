@@ -9,7 +9,6 @@ var noop = function(){};
 var path = require('path');
 var rm = require('rimraf').sync;
 var fixture = path.resolve.bind(path, __dirname, 'fixtures');
-var semver = require('semver');
 
 describe('Metalsmith', function(){
   beforeEach(function(){
@@ -505,13 +504,11 @@ describe('Metalsmith', function(){
 });
 
 describe('CLI', function(){
-  var cmd = semver.satisfies(process.version, '<= 0.10')
-    ? path.resolve(__dirname, '../node_modules/.bin/gnode') + ' ' + path.resolve(__dirname, '../bin/_metalsmith')
-    : path.resolve(__dirname, '../bin/metalsmith');
+  var bin = path.resolve(__dirname, '../bin/_metalsmith');
 
   describe('build', function(){
     it('should error without a metalsmith.json', function(done){
-      exec(cmd, { cwd: fixture('cli-no-config') }, function(err, stdout){
+      exec(bin, { cwd: fixture('cli-no-config') }, function(err, stdout){
         assert(err);
         assert(~err.message.indexOf('could not find a metalsmith.json configuration file.'));
         done();
@@ -519,7 +516,7 @@ describe('CLI', function(){
     });
 
     it('should grab config from metalsmith.json', function(done){
-      exec(cmd, { cwd: fixture('cli-json') }, function(err, stdout){
+      exec(bin, { cwd: fixture('cli-json') }, function(err, stdout){
         if (err) return done(err);
         equal(fixture('cli-json/destination'), fixture('cli-json/expected'));
         assert(~stdout.indexOf('successfully built to '));
@@ -529,7 +526,7 @@ describe('CLI', function(){
     });
 
     it('should grab config from a config.json', function(done){
-      exec(cmd + ' -c config.json', { cwd: fixture('cli-other-config') }, function(err, stdout){
+      exec(bin + ' -c config.json', { cwd: fixture('cli-other-config') }, function(err, stdout){
         if (err) return done(err);
         equal(fixture('cli-other-config/destination'), fixture('cli-other-config/expected'));
         assert(~stdout.indexOf('successfully built to '));
@@ -539,7 +536,7 @@ describe('CLI', function(){
     });
 
     it('should require a plugin', function(done){
-      exec(cmd, { cwd: fixture('cli-plugin-object') }, function(err, stdout, stderr){
+      exec(bin, { cwd: fixture('cli-plugin-object') }, function(err, stdout, stderr){
         if (err) return done(err);
         equal(fixture('cli-plugin-object/build'), fixture('cli-plugin-object/expected'));
         assert(~stdout.indexOf('successfully built to '));
@@ -549,7 +546,7 @@ describe('CLI', function(){
     });
 
     it('should require plugins as an array', function(done){
-      exec(cmd, { cwd: fixture('cli-plugin-array') }, function(err, stdout){
+      exec(bin, { cwd: fixture('cli-plugin-array') }, function(err, stdout){
         if (err) return done(err);
         equal(fixture('cli-plugin-array/build'), fixture('cli-plugin-array/expected'));
         assert(~stdout.indexOf('successfully built to '));
@@ -559,7 +556,7 @@ describe('CLI', function(){
     });
 
     it('should error when failing to require a plugin', function(done){
-      exec(cmd, { cwd: fixture('cli-no-plugin') }, function(err){
+      exec(bin, { cwd: fixture('cli-no-plugin') }, function(err){
         assert(err);
         assert(~err.message.indexOf('failed to require plugin "metalsmith-non-existant".'));
         done();
@@ -567,7 +564,7 @@ describe('CLI', function(){
     });
 
     it('should error when failing to use a plugin', function(done){
-      exec(cmd, { cwd: fixture('cli-broken-plugin') }, function(err){
+      exec(bin, { cwd: fixture('cli-broken-plugin') }, function(err){
         assert(err);
         assert(~err.message.indexOf('error using plugin "./plugin"...'));
         assert(~err.message.indexOf('Break!'));
@@ -577,7 +574,7 @@ describe('CLI', function(){
     });
 
     it('should allow requiring a local plugin', function(done){
-      exec(cmd, { cwd: fixture('cli-plugin-local') }, function(err, stdout, stderr){
+      exec(bin, { cwd: fixture('cli-plugin-local') }, function(err, stdout, stderr){
         equal(fixture('cli-plugin-local/build'), fixture('cli-plugin-local/expected'));
         assert(~stdout.indexOf('successfully built to '));
         assert(~stdout.indexOf(fixture('cli-plugin-local/build')));
