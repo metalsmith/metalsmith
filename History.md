@@ -1,4 +1,10 @@
 
+2.0.0 / 2015-07-14
+==================
+
+  * cli: adding separate `_metalsmith` bin to allow custom transpilers
+  * support: no longer supporting node 0.10 natively or in tests
+
 1.7.0 - April 30, 2015
 ----------------------
 * add `ignore` support
