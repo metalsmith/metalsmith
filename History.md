@@ -1,4 +1,9 @@
 
+2.0.1 / 2015-07-14
+==================
+
+  * meta: bumping patch because `2.0.0` was mistakenly published once before
+
 2.0.0 / 2015-07-14
 ==================
 
