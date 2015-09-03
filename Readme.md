@@ -177,8 +177,8 @@ Set whether to remove the destination directory before writing to it, or get the
 
 #### #ignore(path)
 
-Ignore files from being loaded into Metalsmith. `file` can be a string,
-or an array of files. Glob syntax is supported via
+Ignore files/paths from being loaded into Metalsmith. `path` can be a string,
+or an array of paths. Glob syntax is supported via
 [minimatch](https://github.com/isaacs/minimatch).
 
 #### #metadata(json)
