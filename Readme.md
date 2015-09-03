@@ -151,8 +151,8 @@ Create a new `Metalsmith` instance for a working `dir`.
 
 Add the given `plugin` function to the middleware stack. Metalsmith uses
 [ware](https://github.com/segmentio/ware) to support middleware, so plugins
-should follow the same pattern of taking arguments of `(files, metadata, callback)`,
-modifying the `files` or `metadata` argument by reference, and then
+should follow the same pattern of taking arguments of `(files, metalsmith, callback)`,
+modifying the `files` or `metalsmith.metadata()` argument by reference, and then
 calling `callback` to trigger the next step.
 
 #### #build(fn)
