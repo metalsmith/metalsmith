@@ -1,7 +1,7 @@
 
-# Metalsmith [![Build Status](https://travis-ci.org/segmentio/metalsmith.svg)](https://travis-ci.org/segmentio/metalsmith)
+# Metalsmith [![Build Status](https://travis-ci.org/segmentio/metalsmith.svg)](https://travis-ci.org/segmentio/metalsmith) [![Slack](https://img.shields.io/badge/Slack-Join%20Chat%20→-blue.svg?style=flat-square)](http://metalsmith-slack.herokuapp.com/)
 
-An extremely simple, _pluggable_ static site generator.
+> An extremely simple, _pluggable_ static site generator.
 
 In Metalsmith, all of the logic is handled by plugins. You simply chain them together. Here's what the simplest blog looks like...
 
