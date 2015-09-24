@@ -1,14 +1,16 @@
 
-2.0.1 / 2015-07-14
-==================
+2.1.0 - September 24, 2015
+--------------------------
+* cli: add support for `frontmatter` option
 
-  * meta: bumping patch because `2.0.0` was mistakenly published once before
+2.0.1 - July 14, 2015
+---------------------
+* meta: bumping patch because `2.0.0` was mistakenly published once before
 
-2.0.0 / 2015-07-14
-==================
-
-  * cli: adding separate `_metalsmith` bin to allow custom transpilers
-  * support: no longer supporting node 0.10 natively or in tests
+2.0.0 - July 14, 2015
+---------------------
+* cli: adding separate `_metalsmith` bin to allow custom transpilers
+* support: no longer supporting node 0.10 natively or in tests
 
 1.7.0 - April 30, 2015
 ----------------------
