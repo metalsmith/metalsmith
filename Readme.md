@@ -8,7 +8,7 @@ In Metalsmith, all of the logic is handled by plugins. You simply chain them tog
 ```js
 Metalsmith(__dirname)
   .use(markdown())
-  .use(layoutslayouts('handlebars'))
+  .use(layouts('handlebars'))
   .build(function(err) {
     if (err) throw err;
   });
@@ -21,7 +21,7 @@ Metalsmith(__dirname)
   .use(drafts())
   .use(markdown())
   .use(permalinks('posts/:title'))
-  .use(layoutslayouts('handlebars'))
+  .use(layouts('handlebars'))
   .build(function(err) {
     if (err) throw err;
   });
