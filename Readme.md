@@ -1,3 +1,4 @@
+<img align="center" width="300" src="logo/metalsmith_logo.png">
 
 # Metalsmith [![Build Status](https://travis-ci.org/segmentio/metalsmith.svg)](https://travis-ci.org/segmentio/metalsmith) [![Slack](https://img.shields.io/badge/Slack-Join%20Chat%20→-blue.svg?style=flat-square)](http://metalsmith-slack.herokuapp.com/)
 
