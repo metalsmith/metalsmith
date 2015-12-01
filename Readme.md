@@ -126,7 +126,7 @@ Or if you install them globally, you can just use:
         Metalsmith · reading configuration from: /path/to/metalsmith.json
         Metalsmith · successfully built to: /path/to/build
 
-Options recognised by `metalsmith.json` are `source`, `destination`, `concurrency`, `metadata`, `clean` and `frontmatter` - See "*API section*" below for usage.
+Options recognised by `metalsmith.json` are `source`, `destination`, `concurrency`, `metadata`, `clean` and `frontmatter` - See "*API*" section below for usage.
 
 Checkout the [static site](examples/static-site), [Jekyll](examples/jekyll) or [Wintersmith](examples/wintersmith) examples to see the CLI in action.
 
