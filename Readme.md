@@ -126,6 +126,8 @@ Or if you install them globally, you can just use:
         Metalsmith · reading configuration from: /path/to/metalsmith.json
         Metalsmith · successfully built to: /path/to/build
 
+Options recognised by `metalsmith.json` are `source`, `destination`, `concurrency`, `metadata`, `clean` and `frontmatter` - See "*API*" section below for usage.
+
 Checkout the [static site](examples/static-site), [Jekyll](examples/jekyll) or [Wintersmith](examples/wintersmith) examples to see the CLI in action.
 
 If you want to use a custom plugin, but feel like it's too domain-specific to
@@ -175,6 +177,10 @@ Set the maximum number of files to open at once when reading or writing.  Defaul
 #### #clean(boolean)
 
 Set whether to remove the destination directory before writing to it, or get the current setting. Defaults to `true`.
+
+#### #frontmatter(boolean)
+
+Set whether to parse YAML frontmatter. Defaults to `true`.
 
 #### #ignore(path)
 
