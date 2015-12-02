@@ -112,6 +112,8 @@ In addition to a simple [Javascript API](#api), the Metalsmith CLI can read conf
 }
 ```
 
+You can specify your plugins as either an object or array. Using an array would allow you to specify use of the same plugin multiple times.
+
 And then just install `metalsmith` and the plugins and run the metalsmith CLI...
 
     $ node_modules/.bin/metalsmith
