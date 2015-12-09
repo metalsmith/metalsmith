@@ -5,6 +5,7 @@ node_js:
   - "0.12"
   - "iojs"
   - "4.0"
+  - "4.1"
 
 after_script:
   make coveralls
