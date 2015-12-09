@@ -54,9 +54,9 @@ Each plugin is invoked with the contents of the source directory, and each file 
     title: A Catchy Title
     date: 2014-12-01
     ---
-    
+
     An informative article.
-  
+
   ...would be parsed into...
 
 ```js
@@ -115,14 +115,14 @@ In addition to a simple [Javascript API](#api), the Metalsmith CLI can read conf
 And then just install `metalsmith` and the plugins and run the metalsmith CLI...
 
     $ node_modules/.bin/metalsmith
-      
+
         Metalsmith · reading configuration from: /path/to/metalsmith.json
         Metalsmith · successfully built to: /path/to/build
 
 Or if you install them globally, you can just use:
 
     $ metalsmith
-      
+
         Metalsmith · reading configuration from: /path/to/metalsmith.json
         Metalsmith · successfully built to: /path/to/build
 
@@ -187,7 +187,7 @@ or an array of paths. Glob syntax is supported via
 Get the global metadata. This is useful for plugins that want to set global-level metadata that can be applied to all files.
 
 #### #path(paths...)
- 
+
 Resolve any amount of `paths...` relative to the working directory. This is useful for plugins who want to read extra assets from another directory, for example `./templates`.
 
 #### #run(files, fn)
@@ -221,7 +221,7 @@ mode: 0764
 rm -rf .
 ```
 
-would be built with mode ```-rwxrw-r--```, i.e. user-executable. 
+would be built with mode ```-rwxrw-r--```, i.e. user-executable.
 
 
 ## Troubleshooting
