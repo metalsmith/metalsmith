@@ -1,0 +1,14 @@
+{
+    "name": "static-site-example-with-gulp",
+    "private": true,
+    "dependencies": {
+        "gulp": "^3.9.0",
+        "gulp-connect": "^2.3.1",
+        "metalsmith-watch": "^1.0.1",
+        "metalsmith-templates": "^0.6.1",
+        "metalsmith-markdown": "^0.2.1",
+        "metalsmith-permalinks": "^0.1.1",
+        "metalsmith": "^1.0.0",
+        "handlebars": "^2.0.0-alpha.2"
+    }
+}
