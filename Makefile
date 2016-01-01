@@ -1,20 +1,9 @@
 
-#
+NODE ?= node
 # Adds --harmony-generators flag when available/necessary
-#
+NODE_FLAGS ?= $(shell $(NODE) --v8-options | grep generators | cut -d ' ' -f 3)
 
-node ?= node
-node_flags ?= $(shell $(node) --v8-options | grep generators | cut -d ' ' -f 3)
-
-#
-# Binaries.
-#
-
-mocha = $(node) $(node_flags) ./node_modules/.bin/_mocha
-
-#
-# Targets.
-#
+MOCHA = $(NODE) $(NODE_FLAGS) ./node_modules/.bin/_mocha
 
 # Install dependencies with npm.
 node_modules: package.json
@@ -23,15 +12,10 @@ node_modules: package.json
 
 # Run the tests.
 test: node_modules
-	@$(mocha)
+	@$(MOCHA)
 
 # Run the tests in debugging mode.
 test-debug: node_modules
-	@$(mocha) debug
+	@$(MOCHA) debug
 
-#
-# Phonies.
-#
-
-.PHONY: test
-.PHONY: test-debug
+.PHONY: test test-debug
