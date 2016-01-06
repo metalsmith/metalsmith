@@ -1,5 +1,11 @@
 
-# Metalsmith [![Build Status](https://travis-ci.org/segmentio/metalsmith.svg)](https://travis-ci.org/segmentio/metalsmith) [![Slack](https://img.shields.io/badge/Slack-Join%20Chat%20→-blue.svg?style=flat-square)](http://metalsmith-slack.herokuapp.com/)
+# Metalsmith
+
+[![npm version][npm-badge]][npm-url]
+[![Build Status][travis-badge]][travis-url]
+[![Coverage Status][coveralls-badge]][coveralls-url]
+[![Dependency Status][david-badge]][david-url]
+[![Slack chat][slack-badge]][slack-url]
 
 > An extremely simple, _pluggable_ static site generator.
 
@@ -54,9 +60,9 @@ Each plugin is invoked with the contents of the source directory, and each file 
     title: A Catchy Title
     date: 2014-12-01
     ---
-    
+
     An informative article.
-  
+
   ...would be parsed into...
 
 ```js
@@ -115,14 +121,14 @@ In addition to a simple [Javascript API](#api), the Metalsmith CLI can read conf
 And then just install `metalsmith` and the plugins and run the metalsmith CLI...
 
     $ node_modules/.bin/metalsmith
-      
+
         Metalsmith · reading configuration from: /path/to/metalsmith.json
         Metalsmith · successfully built to: /path/to/build
 
 Or if you install them globally, you can just use:
 
     $ metalsmith
-      
+
         Metalsmith · reading configuration from: /path/to/metalsmith.json
         Metalsmith · successfully built to: /path/to/build
 
@@ -193,7 +199,7 @@ or an array of paths. Glob syntax is supported via
 Get the global metadata. This is useful for plugins that want to set global-level metadata that can be applied to all files.
 
 #### #path(paths...)
- 
+
 Resolve any amount of `paths...` relative to the working directory. This is useful for plugins who want to read extra assets from another directory, for example `./templates`.
 
 #### #run(files, fn)
@@ -227,7 +233,7 @@ mode: 0764
 rm -rf .
 ```
 
-would be built with mode ```-rwxrw-r--```, i.e. user-executable. 
+would be built with mode ```-rwxrw-r--```, i.e. user-executable.
 
 
 ## Troubleshooting
@@ -262,3 +268,14 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+[npm-badge]: https://img.shields.io/npm/v/metalsmith.svg
+[npm-url]: https://www.npmjs.com/package/metalsmith
+[travis-badge]: https://travis-ci.org/metalsmith/metalsmith.svg
+[travis-url]: https://travis-ci.org/metalsmith/metalsmith
+[coveralls-badge]:https://coveralls.io/repos/metalsmith/metalsmith/badge.svg?branch=master&service=github
+[coveralls-url]: https://coveralls.io/github/metalsmith/metalsmith?branch=master
+[david-badge]: https://david-dm.org/metalsmith/metalsmith.svg
+[david-url]: https://david-dm.org/metalsmith/metalsmith
+[slack-badge]: https://img.shields.io/badge/Slack-Join%20Chat%20→-blue.svg
+[slack-url]: http://metalsmith-slack.herokuapp.com/
