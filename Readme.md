@@ -265,11 +265,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 [npm-badge]: https://img.shields.io/npm/v/metalsmith.svg
 [npm-url]: https://www.npmjs.com/package/metalsmith
-[travis-badge]: https://travis-ci.org/segmentio/metalsmith.svg
-[travis-url]: https://travis-ci.org/segmentio/metalsmith
-[coveralls-badge]:https://coveralls.io/repos/segmentio/metalsmith/badge.svg?branch=master&service=github
-[coveralls-url]: https://coveralls.io/github/segmentio/metalsmith?branch=master
-[david-badge]: https://david-dm.org/segmentio/metalsmith.svg
-[david-url]: https://david-dm.org/segmentio/metalsmith
+[travis-badge]: https://travis-ci.org/metalsmith/metalsmith.svg
+[travis-url]: https://travis-ci.org/metalsmith/metalsmith
+[coveralls-badge]:https://coveralls.io/repos/metalsmith/metalsmith/badge.svg?branch=master&service=github
+[coveralls-url]: https://coveralls.io/github/metalsmith/metalsmith?branch=master
+[david-badge]: https://david-dm.org/metalsmith/metalsmith.svg
+[david-url]: https://david-dm.org/metalsmith/metalsmith
 [slack-badge]: https://img.shields.io/badge/Slack-Join%20Chat%20→-blue.svg
 [slack-url]: http://metalsmith-slack.herokuapp.com/
