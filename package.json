@@ -11,6 +11,9 @@
   "scripts": {
     "test": "make test"
   },
+  "engines": {
+    "node": ">=4.0.0"
+  },
   "dependencies": {
     "absolute": "0.0.1",
     "async": "~0.9.0",
