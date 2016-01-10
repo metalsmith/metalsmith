@@ -327,6 +327,28 @@ describe('Metalsmith', function(){
         done();
       });
     });
+
+
+    it('should ignore the files specified in function-based ignores', function(done){
+      var stats = fs.statSync(path.join(__dirname, 'fixtures/basic/src/index.md'));
+      var m = Metalsmith('test/fixtures/basic');
+      m.ignore(function(filepath, stats) {
+        return stats.isDirectory() && path.basename(filepath) === 'nested';
+      });
+      m.read(function(err, files){
+        if (err) return done(err);
+        assert.deepEqual(files, {
+          'index.md': {
+            date: new Date('2013-12-02'),
+            title: 'A Title',
+            contents: new Buffer('body'),
+            mode: stats.mode.toString(8).slice(-4),
+            stats: stats
+          }
+        });
+        done();
+      });
+    });
   });
 
   describe('#write', function(){

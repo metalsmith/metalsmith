@@ -205,9 +205,15 @@ Set whether to parse YAML frontmatter. Defaults to `true`.
 
 #### #ignore(path)
 
-Ignore files/paths from being loaded into Metalsmith. `path` can be a string,
-or an array of paths. Glob syntax is supported via
-[minimatch](https://github.com/isaacs/minimatch).
+Ignore files/paths from being loaded into Metalsmith.
+
+`path` can be a string, a function, or an array of strings and/or functions.
+Strings use the glob syntax from
+[minimatch](https://github.com/isaacs/minimatch) to match files and directories
+to ignore. Functions are called with the full path to the file as their first
+argument, and the `lstat` object returned by Node's `fs.lstat` function as their
+second argument, and must return either `true` to ignore the file, or `false` to
+keep it.
 
 #### #metadata(json)
 
