@@ -1,3 +1,3 @@
 ---
-template: index.jade
+layout: index.jade
 ---

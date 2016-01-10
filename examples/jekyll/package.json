@@ -2,12 +2,12 @@
   "name": "jekyll-example",
   "private": true,
   "dependencies": {
+    "metalsmith": "^1.0.0",
     "metalsmith-drafts": "0.0.1",
-    "metalsmith-templates": "^0.6.1",
+    "metalsmith-layouts": "^1.4.1",
     "metalsmith-markdown": "^0.2.1",
     "metalsmith-permalinks": "^0.1.0",
-    "swig": "^1.3.2",
-    "metalsmith": "^1.0.0"
+    "swig": "^1.3.2"
   },
   "scripts": {
     "build": "metalsmith"

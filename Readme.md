@@ -14,7 +14,7 @@ In Metalsmith, all of the logic is handled by plugins. You simply chain them tog
 ```js
 Metalsmith(__dirname)
   .use(markdown())
-  .use(templates('handlebars'))
+  .use(layouts('handlebars'))
   .build(function(err) {
     if (err) throw err;
   });
@@ -27,7 +27,7 @@ Metalsmith(__dirname)
   .use(drafts())
   .use(markdown())
   .use(permalinks('posts/:title'))
-  .use(templates('handlebars'))
+  .use(layouts('handlebars'))
   .build(function(err) {
     if (err) throw err;
   });
@@ -113,7 +113,7 @@ In addition to a simple [Javascript API](#api), the Metalsmith CLI can read conf
     "metalsmith-drafts": true,
     "metalsmith-markdown": true,
     "metalsmith-permalinks": "posts/:title",
-    "metalsmith-templates": "handlebars"
+    "metalsmith-layouts": "handlebars"
   }
 }
 ```
@@ -200,7 +200,7 @@ Get the global metadata. This is useful for plugins that want to set global-leve
 
 #### #path(paths...)
 
-Resolve any amount of `paths...` relative to the working directory. This is useful for plugins who want to read extra assets from another directory, for example `./templates`.
+Resolve any amount of `paths...` relative to the working directory. This is useful for plugins who want to read extra assets from another directory, for example `./layouts`.
 
 #### #run(files, fn)
 
