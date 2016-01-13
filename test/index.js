@@ -9,7 +9,6 @@ var noop = function(){};
 var path = require('path');
 var rm = require('rimraf').sync;
 var fixture = path.resolve.bind(path, __dirname, 'fixtures');
-
 describe('Metalsmith', function(){
   beforeEach(function(){
     rm('test/tmp');

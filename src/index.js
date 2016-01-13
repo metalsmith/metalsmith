@@ -1,25 +1,27 @@
 
-var absolute = require('absolute');
-var assert = require('assert');
-var clone = require('clone');
-var fs = require('co-fs-extra');
-var is = require('is');
-var matter = require('gray-matter');
-var Mode = require('stat-mode');
-var path = require('path');
-var readdir = require('recursive-readdir');
-var rm = require('rimraf');
-var thunkify = require('thunkify');
-var unyield = require('unyield');
-var utf8 = require('is-utf8');
-var Ware = require('ware');
+import "babel-polyfill";
+
+import absolute from 'absolute';
+import assert from 'assert';
+import clone from 'clone';
+import fs from 'co-fs-extra';
+import is from 'is';
+import matter from 'gray-matter';
+import Mode from 'stat-mode';
+import path from 'path';
+import readdir from 'recursive-readdir';
+import rm from 'rimraf';
+import thunkify from 'thunkify';
+import unyield from 'unyield';
+import utf8 from 'is-utf8';
+import Ware from 'ware';
 
 /**
  * Thunks.
  */
 
-readdir = thunkify(readdir);
-rm = thunkify(rm);
+const readdirt = thunkify(readdir);
+const rmt = thunkify(rm);
 
 /**
  * Export `Metalsmith`.
@@ -190,7 +192,7 @@ Metalsmith.prototype.path = function(){
 Metalsmith.prototype.build = unyield(function*(){
   var clean = this.clean();
   var dest = this.destination();
-  if (clean) yield rm(dest);
+  if (clean) yield rmt(dest);
 
   var files = yield this.read();
   files = yield this.run(files);
@@ -226,7 +228,7 @@ Metalsmith.prototype.read = unyield(function*(dir){
   var read = this.readFile.bind(this);
   var concurrency = this.concurrency();
   var ignores = this.ignores || null;
-  var paths = yield readdir(dir, ignores);
+  var paths = yield readdirt(dir, ignores);
   var files = [];
   var complete = 0;
   var batch;
