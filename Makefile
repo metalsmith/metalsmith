@@ -1,4 +1,3 @@
-
 NODE ?= node
 # Adds --harmony-generators flag when available/necessary
 NODE_FLAGS ?= $(shell $(NODE) --v8-options | grep generators | cut -d ' ' -f 3)
@@ -12,8 +11,12 @@ node_modules: package.json
 	@npm install
 	@touch node_modules # hack to fix mtime after npm installs
 
+# Build
+build: src
+	node_modules/.bin/babel src -d lib
+
 # Run the tests.
-test: node_modules
+test: node_modules build
 	@$(MOCHA)
 
 # Run the tests in debugging mode.
@@ -28,4 +31,4 @@ coverage: node_modules
 coveralls: coverage
 	@cat coverage/lcov.info | $(COVERALLS)
 
-.PHONY: test test-debug coverage coveralls
+.PHONY: test test-debug coverage coveralls build
