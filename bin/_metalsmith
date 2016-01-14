@@ -6,7 +6,7 @@
 
 var chalk = require('chalk');
 var exists = require('fs').existsSync;
-var Metalsmith = require('..');
+var Metalsmith = require('..').Metalsmith;
 var program = require('commander');
 var resolve = require('path').resolve;
 

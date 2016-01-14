@@ -24,18 +24,12 @@ const readdirt = thunkify(readdir);
 const rmt = thunkify(rm);
 
 /**
- * Export `Metalsmith`.
- */
-
-module.exports = Metalsmith;
-
-/**
  * Initialize a new `Metalsmith` builder with a working `directory`.
  *
  * @param {String} directory
  */
 
-function Metalsmith(directory){
+export function Metalsmith(directory){
   if (!(this instanceof Metalsmith)) return new Metalsmith(directory);
   assert(directory, 'You must pass a working directory path.');
   this.plugins = [];
@@ -48,6 +42,7 @@ function Metalsmith(directory){
   this.clean(true);
   this.frontmatter(true);
 }
+// Note, can use es6 class without new
 
 /**
  * Add a `plugin` function to the stack.

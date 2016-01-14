@@ -3,12 +3,14 @@ var assert = require('assert');
 var equal = require('assert-dir-equal');
 var exec = require('child_process').exec;
 var fs = require('fs');
-var Metalsmith = require('..');
 var Mode = require('stat-mode');
 var noop = function(){};
 var path = require('path');
 var rm = require('rimraf').sync;
 var fixture = path.resolve.bind(path, __dirname, 'fixtures');
+
+var Metalsmith = require('..').Metalsmith;
+
 describe('Metalsmith', function(){
   beforeEach(function(){
     rm('test/tmp');
