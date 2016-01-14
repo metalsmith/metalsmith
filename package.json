@@ -10,7 +10,8 @@
   },
   "scripts": {
     "test": "make test",
-    "build": "make build"
+    "build": "make build",
+    "prepublish": "make build"
   },
   "engines": {
     "node": ">=4.0.0"
