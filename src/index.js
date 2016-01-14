@@ -29,7 +29,7 @@ const rmt = thunkify(rm);
  * @param {String} directory
  */
 
-export function Metalsmith(directory){
+export default function Metalsmith(directory){
   if (!(this instanceof Metalsmith)) return new Metalsmith(directory);
   assert(directory, 'You must pass a working directory path.');
   this.plugins = [];
