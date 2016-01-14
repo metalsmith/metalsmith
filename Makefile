@@ -5,6 +5,7 @@ NODE_FLAGS ?= $(shell $(NODE) --v8-options | grep generators | cut -d ' ' -f 3)
 MOCHA     = $(NODE) $(NODE_FLAGS) ./node_modules/.bin/_mocha
 ISTANBUL  = $(NODE) $(NODE_FLAGS) ./node_modules/.bin/istanbul
 COVERALLS = $(NODE) $(NODE_FLAGS) ./node_modules/.bin/coveralls
+BABEL     = $(NODE) $(NODE_FLAGS) ./node_modules/.bin/babel
 
 # Install dependencies with npm.
 node_modules: package.json
@@ -14,11 +15,12 @@ node_modules: package.json
 # Build
 build: build-src build-bin
 build-src: src
-	node_modules/.bin/babel src -d lib
+	@$(BABEL) src -d lib
 build-bin: bin-src
-	node_modules/.bin/babel bin-src/metalsmith -o bin/metalsmith
-	node_modules/.bin/babel bin-src/_metalsmith -o bin/_metalsmith
-	chmod u+x bin/*
+	@-mkdir bin
+	$(BABEL) bin-src/metalsmith > bin/metalsmith
+	$(BABEL) bin-src/_metalsmith > bin/_metalsmith
+	@chmod u+x bin/*
 
 # Run the tests.
 test: node_modules build
