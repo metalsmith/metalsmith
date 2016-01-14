@@ -14,7 +14,7 @@
     "prepublish": "make build"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=0.10.0"
   },
   "dependencies": {
     "absolute": "0.0.1",
