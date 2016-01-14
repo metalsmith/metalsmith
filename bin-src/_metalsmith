@@ -4,16 +4,15 @@
  * Dependencies.
  */
 
-var chalk = require('chalk');
-var exists = require('fs').existsSync;
-var Metalsmith = require('..').Metalsmith;
-var program = require('commander');
-var resolve = require('path').resolve;
+import chalk from 'chalk';
+import { existsSync as exists } from 'fs';
+import {Metalsmith} from '..';
+import program from 'commander';
+import {resolve} from 'path';
 
 /**
  * Usage.
  */
-
 program
   .version(require('../package.json').version)
   .option('-c, --config <path>', 'configuration file location', 'metalsmith.json');
@@ -43,13 +42,14 @@ program.parse(process.argv);
  * Config.
  */
 
-var dir = process.cwd();
-var config = program.config;
-var path = resolve(dir, config);
+const dir = process.cwd();
+const config = program.config;
+const path = resolve(dir, config);
 if (!exists(path)) fatal('could not find a ' + config + ' configuration file.');
+let json
 
 try {
-  var json = require(path);
+  json = require(path);
 } catch (e) {
   fatal('it seems like ' + config + ' is malformed.');
 }
@@ -58,7 +58,7 @@ try {
  * Metalsmith.
  */
 
-var metalsmith = new Metalsmith(dir);
+const metalsmith = new Metalsmith(dir);
 if (json.source) metalsmith.source(json.source);
 if (json.destination) metalsmith.destination(json.destination);
 if (json.concurrency) metalsmith.concurrency(json.concurrency);
@@ -71,13 +71,13 @@ if (json.frontmatter != null) metalsmith.frontmatter(json.frontmatter);
  */
 
 normalize(json.plugins).forEach(function(plugin){
-  for (var name in plugin) {
-    var opts = plugin[name];
-    var mod;
+  for (const name in plugin) {
+    const opts = plugin[name];
+    let mod;
 
     try {
-      var local = resolve(dir, name);
-      var npm = resolve(dir, 'node_modules', name);
+      const local = resolve(dir, name);
+      const npm = resolve(dir, 'node_modules', name);
 
       if (exists(local) || exists(local + '.js')) {
         mod = require(local);
@@ -146,10 +146,10 @@ function log(message){
 
 function normalize(obj){
   if (obj instanceof Array) return obj;
-  var ret = [];
+  const ret = [];
 
-  for (var key in obj) {
-    var plugin = {};
+  for (const key in obj) {
+    const plugin = {};
     plugin[key] = obj[key];
     ret.push(plugin);
   }

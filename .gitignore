@@ -1,4 +1,5 @@
 /lib
+/bin
 node_modules
 test/fixtures/*/build
 coverage

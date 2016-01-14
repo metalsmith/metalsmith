@@ -4,14 +4,14 @@
  * Module dependencies.
  */
 
-var spawn = require('win-fork');
-var resolve = require('path').resolve;
+import spawn from 'win-fork';
+import {resolve} from 'path';
 
 /**
  * Resolve.
  */
 
-var args = process.argv.slice(2);
+const args = process.argv.slice(2);
 
 /**
  * If we're not talking about a sub-command, fall back on `_metalsmith`.
@@ -29,7 +29,7 @@ if (!require('has-generators')) args.unshift('--harmony-generators');
  * Spawn.
  */
 
-var proc = spawn(process.execPath, args, { stdio: 'inherit' });
+const proc = spawn(process.execPath, args, { stdio: 'inherit' });
 
 /**
  * Exit.

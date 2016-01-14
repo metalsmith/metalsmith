@@ -12,8 +12,13 @@ node_modules: package.json
 	@touch node_modules # hack to fix mtime after npm installs
 
 # Build
-build: src
+build: build-src build-bin
+build-src: src
 	node_modules/.bin/babel src -d lib
+build-bin: bin-src
+	node_modules/.bin/babel bin-src/metalsmith -o bin/metalsmith
+	node_modules/.bin/babel bin-src/_metalsmith -o bin/_metalsmith
+	chmod u+x bin/*
 
 # Run the tests.
 test: node_modules build
@@ -31,4 +36,4 @@ coverage: node_modules
 coveralls: coverage
 	@cat coverage/lcov.info | $(COVERALLS)
 
-.PHONY: test test-debug coverage coveralls build
+.PHONY: test test-debug coverage coveralls build build-src build-bin
