@@ -12,9 +12,10 @@ module.exports = plugin;
  */
 
 function plugin(){
-  return function(files){
+  return function(files, metalsmith, done){
     for (var file in files) {
       if (files[file].draft) delete files[file];
     }
+    done();
   };
 }
