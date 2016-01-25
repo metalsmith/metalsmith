@@ -1,3 +1,6 @@
+Unreleased
+----------
+* add support for function ignore matchers (#179)
 
 2.1.0 - September 24, 2015
 --------------------------
