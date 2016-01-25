@@ -17,6 +17,7 @@ Metalsmith(__dirname)
   .use(layouts('handlebars'))
   .build(function(err) {
     if (err) throw err;
+    console.log('Build finished!');
   });
 ```
 
@@ -30,6 +31,7 @@ Metalsmith(__dirname)
   .use(layouts('handlebars'))
   .build(function(err) {
     if (err) throw err;
+    console.log('Build finished!');
   });
 ```
 
@@ -181,7 +183,7 @@ calling `callback` to trigger the next step.
 
 #### #build(fn)
 
-Build with the given settings and call `fn(err, files)`.
+Build with the given settings and a callback having signature `fn(err, files)`.
 
 #### #source(path)
 
