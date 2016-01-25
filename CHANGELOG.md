@@ -4,12 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-* add support for function ignore matchers (#179)
+* add support for function ignore matchers ([#179])
 
 ### Changed
 * only remove contents of destination directory (not the directory itself) when
   `clean` is true ([#221])
 
+[#179]: https://github.com/metalsmith/metalsmith/issues/179
 [#221]: https://github.com/metalsmith/metalsmith/pull/221
 
 
@@ -92,6 +93,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.1.1] - January 25, 2015
 ### Fixed
 * update `recursive-readdir` to `1.2.1` to fix #110
+
+[#110]: https://github.com/metalsmith/metalsmith/pull/110
 
 
 ## [1.1.0] - January 25, 2015
