@@ -4,7 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 * add support for function ignore matchers (#179)
-* only remove contents of destination directory (not the directory itself) when `clean` is true ([#221])
+* only remove contents of destination directory (not the directory itself) when
+  `clean` is true ([#221])
 
 [#221]: https://github.com/metalsmith/metalsmith/pull/221
 
