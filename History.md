@@ -1,6 +1,9 @@
 Unreleased
 ----------
 * add support for function ignore matchers (#179)
+* only remove contents of destination directory (not the directory itself) when `clean` is true ([#221])
+
+[#221]: https://github.com/metalsmith/metalsmith/pull/221
 
 2.1.0 - September 24, 2015
 --------------------------
