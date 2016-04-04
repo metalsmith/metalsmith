@@ -65,6 +65,7 @@ if (json.concurrency) metalsmith.concurrency(json.concurrency);
 if (json.metadata) metalsmith.metadata(json.metadata);
 if (json.clean != null) metalsmith.clean(json.clean);
 if (json.frontmatter != null) metalsmith.frontmatter(json.frontmatter);
+if (json.ignore != null) metalsmith.ignore(json.ignore);
 
 /**
  * Plugins.
