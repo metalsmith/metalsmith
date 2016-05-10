@@ -1,6 +1,6 @@
 
 build: node_modules
-	node_modules/.bin/metalsmith
+	node index.js
 
 node_modules: package.json
 	npm install
