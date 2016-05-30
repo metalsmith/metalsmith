@@ -3,22 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <title>My Third Post</title>
-  <meta name="description" content="It&#x27;s about saying »Hello« to the World.">
+  <meta name="description" content="It&#x27;s about saying »Hello« to the world.">
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <header>
-    <p>
+  <div class="container">
+
+    <header>
+
+      My Static Site &amp; Blog |
       <a href="/">Home</a>
-    </p>
+      |
+      <a href="/about">About</a>
+    </header>
+    <hr>
 
-  </header>
-  <h1>My Third Post</h1>
-  <time>Fri Sep 28 2012 02:00:00 GMT+0200 (Mitteleuropäische Sommerzeit)</time>
-  <p>A slightly late, less interesting piece of prose.</p>
+    <main>
+      <h1>My Third Post</h1>
+      <time>Fri Sep 28 2012 02:00:00 GMT+0200 (Mitteleuropäische Sommerzeit)</time>
+
+      <p>A slightly late, less interesting piece of prose.</p>
+
+    </main>
 
 
-  <footer>
-    <p>Generated with Metalsmith &mdash; <a href="http://www.metalsmith.io/">http://www.metalsmith.io/</a></p>
-  </footer>
+    <hr>
+    <footer>
+      <p>Generated with Metalsmith &mdash; <a href="http://metalsmith.io/">http://metalsmith.io/</a></p>
+    </footer>
+
+  </div>
+
 </body>
 </html>

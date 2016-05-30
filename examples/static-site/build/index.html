@@ -2,29 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>My Static Site &amp; Blog</title>
-  <meta name="description" content="It&#x27;s about saying »Hello« to the World.">
+  <title>My Static Site &amp; Blog &mdash; Home</title>
+  <meta name="description" content="It&#x27;s about saying »Hello« to the world.">
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <header>
-    <p>
+  <div class="container">
+
+    <header>
+
+      My Static Site &amp; Blog |
       <a href="/">Home</a>
-    </p>
-  </header>
-  <h1>My Static Site &amp; Blog</h1>
-  <p>It&#x27;s about saying »Hello« to the World.</p>
-
-  <h2>Read what I have to say</h2>
-
+      |
+      <a href="/about">About</a>
+    </header>
+    <hr>
+    <main>
+      <h1 id="hello-world">Hello World</h1>
+<p>This site is about saying »Hello« to the world.</p>
+<h1 id="blog">Blog</h1>
+<p>Read what else I have to say. Here are all my blog posts. Enjoy reading!</p>
 <p><a href="/posts/first-post/">First post</a></p>
 <p><a href="/posts/second-post/">Second post</a></p>
 <p><a href="/posts/third-post/">Third post</a></p>
 <p><a href="/posts/fourth-post/">Fourth post</a></p>
 
+    </main>
 
-  <footer>
-    <p>Generated with Metalsmith &mdash; <a href="http://www.metalsmith.io/">http://www.metalsmith.io/</a></p>
-  </footer>
+
+    <hr>
+    <footer>
+      <p>Generated with Metalsmith &mdash; <a href="http://metalsmith.io/">http://metalsmith.io/</a></p>
+    </footer>
+
+  </div>
 
 </body>
 </html>

@@ -4,20 +4,35 @@
   <meta charset="UTF-8" />
   <title>{{ title }}</title>
   <meta name="description" content="{{ description }}">
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <header>
-    <p>
+  <div class="container">
+
+    <header>
+
+      {{ sitename }} |
       <a href="/">Home</a>
-    </p>
+      |
+      <a href="/about">About</a>
+    </header>
+    <hr>
 
-  </header>
-  <h1>{{ title }}</h1>
-  <time>{{ date }}</time>
-  {{{ contents }}}
+    <main>
+      <h1>{{ title }}</h1>
+      <time>{{ date }}</time>
 
-  <footer>
-    <p>Generated with {{ generator }} &mdash; <a href="{{ url }}">{{ url }}</a></p>
-  </footer>
+      {{{ contents }}}
+    </main>
+
+
+    <hr>
+    <footer>
+      <p>Generated with {{ generator }} &mdash; <a href="{{ generatorurl }}">{{ generatorurl }}</a></p>
+    </footer>
+
+  </div>
+
 </body>
 </html>

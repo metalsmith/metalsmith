@@ -1,23 +1,25 @@
 var Metalsmith  = require('metalsmith');
-var markdown    = require('metalsmith-markdown');
 var layouts     = require('metalsmith-layouts');
+var markdown    = require('metalsmith-markdown');
 var permalinks  = require('metalsmith-permalinks');
+
 
 Metalsmith(__dirname)
   .metadata({
-    title: "My Static Site & Blog",
-    description: "It's about saying »Hello« to the World.",
+    siteurl: "http://example.com/",
+    sitename: "My Static Site & Blog",
+    description: "It's about saying »Hello« to the world.",
     generator: "Metalsmith",
-    url: "http://www.metalsmith.io/"
+    generatorurl: "http://metalsmith.io/"
   })
   .source('./src')
   .destination('./build')
-  .clean(false)
+  .clean(true)
   .use(markdown())
   .use(permalinks())
   .use(layouts({
-    engine: 'handlebars'
+    engine: 'handlebars',
   }))
   .build(function(err, files) {
-    if (err) { throw err; }
+    if (err) throw err;
   });

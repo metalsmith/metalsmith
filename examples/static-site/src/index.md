@@ -1,13 +1,21 @@
 ---
 layout: layout.html
+title: Home
 ---
 
-<h2>Read what I have to say</h2>
+# Hello World
 
-<a href="/posts/first-post/">First post</a>
+This site is about saying »Hello« to the world.
 
-<a href="/posts/second-post/">Second post</a>
 
-<a href="/posts/third-post/">Third post</a>
+# Blog
 
-<a href="/posts/fourth-post/">Fourth post</a>
+Read what else I have to say. Here are all my blog posts. Enjoy reading!
+
+[First post](/posts/first-post/)
+
+[Second post](/posts/second-post/)
+
+[Third post](/posts/third-post/)
+
+[Fourth post](/posts/fourth-post/)

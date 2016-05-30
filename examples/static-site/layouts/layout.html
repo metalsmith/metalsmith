@@ -2,23 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>{{ title }}</title>
+  <title>{{ sitename }} &mdash; {{ title }}</title>
   <meta name="description" content="{{ description }}">
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <header>
-    <p>
+  <div class="container">
+
+    <header>
+
+      {{ sitename }} |
       <a href="/">Home</a>
-    </p>
-  </header>
-  <h1>{{ title }}</h1>
-  <p>{{ description }}</p>
+      |
+      <a href="/about">About</a>
+    </header>
+    <hr>
+    <main>
+      {{{ contents }}}
+    </main>
 
-  {{{ contents }}}
 
-  <footer>
-    <p>Generated with {{ generator }} &mdash; <a href="{{ url }}">{{ url }}</a></p>
-  </footer>
+    <hr>
+    <footer>
+      <p>Generated with {{ generator }} &mdash; <a href="{{ generatorurl }}">{{ generatorurl }}</a></p>
+    </footer>
+
+  </div>
 
 </body>
 </html>
