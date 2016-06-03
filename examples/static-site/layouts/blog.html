@@ -23,18 +23,21 @@
     <hr>
 
     <main>
-      <h1>{{ title }}</h1>
-      <time>{{ date }}</time>
-
       {{{ contents }}}
 
-     <a href="/{{previous.path}}">previous post</a></li>
-     |
-     <a href="/{{next.path}}">next post</a></li>
-
+    <p>
+      <strong>All Blog Posts:</strong>
+    </p>
+      <ul>
+        {{#each collections.posts}}
+          <li><a href="/{{this.path}}">{{this.title}}</a></li>
+        {{else}}
+          <p>
+            There are no blog posts!
+          </p>
+        {{/each}}
+      </ul>
     </main>
-
-
 
 
     <hr>

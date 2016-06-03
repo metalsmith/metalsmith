@@ -11,21 +11,23 @@
   <div class="container">
 
     <header>
-
-      {{ sitename }} |
-      <a href="/">Home</a>
-      |
-      <a href="/about">About</a>
+      <nav>
+        {{ sitename }} |
+        <a href="/">Home</a>
+        |
+        <a href="/blog">Blog</a>
+        |
+        <a href="/about">About</a>
+      </nav>
     </header>
     <hr>
     <main>
       {{{ contents }}}
     </main>
 
-
     <hr>
     <footer>
-      <p>Generated with {{ generator }} &mdash; <a href="{{ generatorurl }}">{{ generatorurl }}</a></p>
+      <p>Generated with {{ generatorname }} &mdash; <a href="{{ generatorurl }}">{{ generatorurl }}</a></p>
     </footer>
 
   </div>
