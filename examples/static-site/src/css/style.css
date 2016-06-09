@@ -4,17 +4,17 @@
 }
 
 header {
-    height: 100px;
+    height: 48px;
     padding: 24px 0;
 }
 
 footer {
-    height: 200px;
+    height: 240px;
     padding: 24px 0;
 }
 
 main {
-    min-height: 500px;
+    min-height: 480px;
     padding: 24px 0;
 }
 

@@ -13,7 +13,10 @@ Metalsmith(__dirname)         // __dirname defined by node.js:
     siteurl: "http://example.com/",
     description: "It's about saying »Hello« to the world.",
     generatorname: "Metalsmith",
-    generatorurl: "http://metalsmith.io/"
+    generatorurl: "http://metalsmith.io/",
+    facebookurl: "http://facebook.com/",
+    githuburl: "http://github.com/",
+    twitterurl: "http://twitter.com/"
   })
   .source('./src')            // source directory
   .destination('./build')     // destination directory
