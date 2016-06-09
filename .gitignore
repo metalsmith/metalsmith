@@ -1,3 +1,4 @@
 node_modules
 test/fixtures/*/build
 coverage
+examples/static-site/build
