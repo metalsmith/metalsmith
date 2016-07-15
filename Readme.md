@@ -99,7 +99,7 @@ Which means you could just as easily use it to make...
 
   - IRC Channel - it's `#metalsmith` on freenode!
   - [Slack Channel](http://metalsmith-slack.herokuapp.com/)
-  - [Getting to Know Metalsmith](http://www.robinthrift.com/posts/getting-to-know-metalsmith/) - a great series about how to use Metalsmith for your static site.
+  - [Getting to Know Metalsmith](https://blog.robinthrift.com/2014/04/13/getting-to-know-metalsmith/) - a great series about how to use Metalsmith for your static site.
   - [Building a Blog With Metalsmith](https://azurelogic.com/posts/building-a-blog-with-metalsmith/) - a blog post about how to create a basic blog with Metalsmith. Check out the related [video of the talk](https://www.youtube.com/watch?v=cAq5_5Yy7Tg) too!
   - [Awesome Metalsmith](https://github.com/lambtron/awesome-metalsmith) - great collection of resources, examples, and tutorials
 
