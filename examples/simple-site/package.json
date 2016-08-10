@@ -1,0 +1,18 @@
+{
+  "name": "simple-site",
+  "version": "1.0.0",
+  "description": "This website is a dead simple example of how to use the Metalsmith CLI.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "dependencies": {
+    "handlebars": "^4.0.5",
+    "metalsmith": "*",
+    "metalsmith-layouts": "^1.6.5",
+    "metalsmith-markdown": "^0.2.1"
+  }
+}
