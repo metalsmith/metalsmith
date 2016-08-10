@@ -99,6 +99,7 @@ The next thing I did was write the content for the pages using Markdown.  The fi
 title: Something
 layout:  layout.html
 ---
+# Hey here's the regular markdown content
 ```
 
 ### 4. CSS and layout
@@ -117,6 +118,6 @@ As an exercise, try adding some functionality to the project, such as:
 
 * Make it not so dang ugly
 * Use a `color` property in each markdown file's front-matter and use it to change the color of the page's title bar
-* links to the previous and next page (using `metalsmith-collections`?)
-* use a CSS preprocessor like Less instead of just plain CSS (hint: `metalsmith-less`)
-* recreate the functionality using Metalsmith's [javascript API](https://github.com/metalsmith/metalsmith#api) and do something **really** cool.
+* Links to the previous and next page (using `metalsmith-collections`?)
+* Use a CSS preprocessor like Less instead of just plain CSS (hint: `metalsmith-less`)
+* Recreate the functionality using Metalsmith's [javascript API](https://github.com/metalsmith/metalsmith#api) and do something **really** cool.
