@@ -229,6 +229,9 @@ Resolve any amount of `paths...` relative to the working directory. This is usef
 
 Run all of the middleware functions on a dictionary of `files` and callback with `fn(err, files)`, where `files` is the altered dictionary.
 
+#### #process(fn)
+
+Process the files like build without writing any files. Callback signature `fn(err, files)`.
 
 ## Metadata API
 

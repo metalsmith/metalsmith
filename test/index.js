@@ -456,6 +456,42 @@ describe('Metalsmith', function(){
     });
   });
 
+  describe('#process', function(){
+    it('should return files object with no plugins', function(done){
+      Metalsmith(fixture('basic'))
+        .process(function(err, files){
+          if (err) return done(err);
+          assert.equal(typeof files, 'object');
+          assert.equal(typeof files['index.md'], 'object');
+          assert.equal(files['index.md'].title, 'A Title');
+          assert.equal(typeof files['nested/index.md'], 'object');
+          done();
+        });
+    });
+    it('should apply a plugin', function(done){
+      Metalsmith(fixture('basic-plugin'))
+        .use(function(files, metalsmith, done){
+          Object.keys(files).forEach(function(file){
+            var data = files[file];
+            data.contents = new Buffer(data.title);
+          });
+          done();
+        })
+        .process(function(err, files){
+          if (err) return done(err);
+          assert.equal(typeof files, 'object');
+          assert.equal(Object.keys(files).length, 2);
+          assert.equal(typeof files['one.md'], 'object');
+          assert.equal(files['one.md'].title, 'one');
+          assert.equal(files['one.md'].contents.toString('utf8'), 'one');
+          assert.equal(typeof files['two.md'], 'object');
+          assert.equal(files['two.md'].title, 'two');
+          assert.equal(files['two.md'].contents.toString('utf8'), 'two');
+          done();
+        });
+    });
+  });
+
   describe('#build', function(){
     it('should do a basic copy with no plugins', function(done){
       Metalsmith(fixture('basic'))
