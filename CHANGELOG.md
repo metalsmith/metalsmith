@@ -4,10 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.2.0] - August 11, 2016
 ### Added
-* `process` to process files and plugins without writing files out.  ([#240])
-
-### Added
-* add support for function ignore matchers ([#179])
+* Add support for function ignore matchers ([#179])
+* Exposing ignore to CLI ([#232])
+* `process` to process files and plugins without writing files out.  ([#244])
 
 ### Changed
 * only remove contents of destination directory (not the directory itself) when
@@ -15,6 +14,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 [#179]: https://github.com/metalsmith/metalsmith/issues/179
 [#221]: https://github.com/metalsmith/metalsmith/pull/221
+[#232]: https://github.com/metalsmith/metalsmith/pull/232
+[#244]: https://github.com/metalsmith/metalsmith/pull/244
 
 
 ## [2.1.0] - September 24, 2015
@@ -230,7 +231,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 :sparkles:
 
 
-[Unreleased]: https://github.com/metalsmith/metalsmith/compare/v2.1.0...HEAD
+[2.2.0]: https://github.com/metalsmith/metalsmith/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/metalsmith/metalsmith/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/metalsmith/metalsmith/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/metalsmith/metalsmith/compare/v1.7.0...v2.0.0
