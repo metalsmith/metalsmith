@@ -246,6 +246,23 @@ describe('Metalsmith', function(){
       });
     });
 
+    it('should traverse a symbolic link to a directory', function(done){
+      var m = Metalsmith(fixture('read-symbolic-link'));
+      var stats = fs.statSync(fixture('read-symbolic-link/src/dir/index.md'));
+      m.read(function(err, files){
+        if (err) return done(err);
+        assert.deepEqual(files, {
+          'dir/index.md': {
+            title: 'A Title',
+            contents: new Buffer('body'),
+            mode: stats.mode.toString(8).slice(-4),
+            stats: stats
+          }
+        });
+        done();
+      });
+    });
+
     it('should read from a provided directory', function(done){
       var m = Metalsmith(fixture('read-dir'));
       var stats = fs.statSync(fixture('read-dir/dir/index.md'));

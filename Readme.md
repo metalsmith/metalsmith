@@ -213,7 +213,7 @@ Ignore files/paths from being loaded into Metalsmith.
 Strings use the glob syntax from
 [minimatch](https://github.com/isaacs/minimatch) to match files and directories
 to ignore. Functions are called with the full path to the file as their first
-argument, and the `lstat` object returned by Node's `fs.lstat` function as their
+argument, and the `stat` object returned by Node's `fs.stat` function as their
 second argument, and must return either `true` to ignore the file, or `false` to
 keep it.
 
