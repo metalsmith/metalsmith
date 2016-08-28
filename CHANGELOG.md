@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [unreleased]
+### Changed
+* Updated dependencies
+
+### Removed
+* Unused dependencies
+
+
 ## [2.2.0] - August 11, 2016
 ### Added
 * Add support for function ignore matchers ([#179])
@@ -230,7 +238,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.0.1 - February 4, 2014
 :sparkles:
 
-
+[unreleased]: https://github.com/metalsmith/metalsmith/compare/v2.2.0...HEAD
 [2.2.0]: https://github.com/metalsmith/metalsmith/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/metalsmith/metalsmith/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/metalsmith/metalsmith/compare/v2.0.0...v2.0.1
