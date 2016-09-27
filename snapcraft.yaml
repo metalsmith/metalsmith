@@ -13,6 +13,7 @@ confinement: strict
 apps:
   metalsmith:
     command: metalsmith
+    plugs: [home]
 
 parts:
   metalsmith:
