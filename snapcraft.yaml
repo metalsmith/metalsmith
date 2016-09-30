@@ -1,0 +1,21 @@
+name: metalsmith
+version: master
+summary: An extremely simple, pluggable static site generator
+description: |
+  Metalsmith works in three simple steps:
+  1. Read all the files in a source directory.
+  2. Invoke a series of plugins that manipulate the files.
+  3. Write the results to a destination directory!
+
+grade: devel
+confinement: strict
+
+apps:
+  metalsmith:
+    command: metalsmith
+    plugs: [home]
+
+parts:
+  metalsmith:
+    source: .
+    plugin: nodejs
