@@ -1,0 +1,10 @@
+{
+  "name": "simple-website-example",
+  "private": true,
+  "dependencies": {
+    "metalsmith": "^2.2.0",
+    "metalsmith-layouts": "^1.6.5",
+    "metalsmith-markdown": "^0.2.1",
+    "pug": "^2.0.0-beta6"
+  }
+}
