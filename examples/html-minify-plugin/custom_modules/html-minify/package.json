@@ -1,0 +1,7 @@
+{
+  "name": "html-minify-plugin-example",
+  "version": "1.0.0",
+  "dependencies": {
+    "html-minifier": "^3.1.0"
+  }
+}
