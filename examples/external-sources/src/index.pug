@@ -1,0 +1,44 @@
+---
+jsonFileLocation: "./people.json"
+
+---
+
+head
+    title Metalsmith external data example
+
+    style.
+        .container{
+            margin:0 auto;
+            max-width:900px;
+        }
+
+        .people-table{
+            border-collapse: collapse;
+            width:100%;
+        }
+
+        .people-table, th, td{
+            border: 1px solid #ccc;
+        }
+
+body: .container
+    h1 Metalsmith external data example
+    h4 Really really simple directory from a JSON file.
+    p If you change any of the data in the `people.json` file, this table will be updated whenever Metalsmith rebuilds the page. 
+    
+    hr
+    
+    table.people-table
+        thead
+            tr
+                td: b First name
+                td: b Last name
+                td: b Email address
+                td: b Notes
+        tbody
+            each person in jsonData
+                tr
+                    td= person.firstname
+                    td= person.lastname
+                    td= person.email
+                    td= person.notes

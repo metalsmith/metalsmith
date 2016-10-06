@@ -1,0 +1,9 @@
+{
+  "name": "external-sources-example",
+  "description": "Incorporate data files into your Metalsmith site.",
+  "main": "index.js",
+  "dependencies": {
+    "metalsmith": "^2.2.0",
+    "metalsmith-pug": "^1.1.0"
+  }
+}

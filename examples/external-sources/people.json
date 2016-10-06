@@ -1,0 +1,20 @@
+[
+    {
+        "firstname":"Laurena",
+        "lastname":"Spiers",
+        "email":"lauspiers@gmail.com",
+        "notes":"Really good dev and Metalsmith expert."
+    },
+    {
+        "firstname":"Bob",
+        "lastname":"Jones",
+        "email":"bob.jones@boring-names.com",
+        "notes":"Not great at parties. Wears khakis."
+    },
+    {
+        "firstname":"James",
+        "lastname":"lewis",
+        "email":"j.lewis@trendy-web-design.io",
+        "notes":"Knows Rails, and has a Travis CI sticker on his laptop."
+    }
+]
