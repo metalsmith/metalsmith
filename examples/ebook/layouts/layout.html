@@ -4,10 +4,17 @@
   <meta charset="UTF-8" />
   <title>{{ title }}</title>
   <meta name="description" content="{{ description }}">
+  <meta name="layout" content="full-book">
 </head>
 <body>
-  <header>
-    <p>
-      <a href="/">Home</a>
-    </p>
-  </header>
+
+{{#each collections.chapters }}
+
+	{{{this.contents}}}
+
+	<div class="chapter-divider"></div>
+
+{{/each}}
+
+</body>
+</html>

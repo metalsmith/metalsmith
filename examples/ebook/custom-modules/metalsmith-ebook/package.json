@@ -1,0 +1,10 @@
+{
+	"name": "metalsmith-ebook",
+	"version": "1.0.0",
+	"dependencies": {
+		"html-pdf": "^2.1.0",
+		"epub-gen": "^0.0.16",
+		"kindlegen": "1.0.1",
+		"mkdirp": "^0.5.1"
+	}
+}
