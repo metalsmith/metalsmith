@@ -10,7 +10,7 @@ You should have npm and node installed. If you do not have these installed you c
 
 ##Setting Up Your Project
 
-Let's create a directory for this project and cd into it. Navigate to the folder where you usually place all your projects. In your favorite bash client make the projects directory, I'm going to name mine `html-minify-plugin-example`. 
+Let's create a directory for this project and cd into it. Navigate to the folder where you usually place all your projects. In your favorite bash client make the projects directory, I'm going to name mine `ebook-example`. 
 
 	$ mkdir ebook-example
 
