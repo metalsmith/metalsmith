@@ -70,13 +70,13 @@ describe('Metalsmith', function(){
 
     it('should get the working directory', function(){
       var m = Metalsmith('test/tmp');
-      assert(~m.directory().indexOf('/test/tmp'));
+      assert(~m.directory().indexOf(path.sep + path.join('test', 'tmp')));
     });
 
     it('should be able to be absolute', function(){
       var m = Metalsmith('test/tmp');
       m.directory('/dir');
-      assert.equal(m.directory(), '/dir');
+      assert.equal(m.directory(), path.resolve('/dir'));
     });
 
     it('should error on non-string', function(){
@@ -96,13 +96,13 @@ describe('Metalsmith', function(){
 
     it('should get the full path to the source directory', function(){
       var m = Metalsmith('test/tmp');
-      assert(~m.source().indexOf('/test/tmp/src'));
+      assert(~m.source().indexOf(path.resolve(path.join('test', 'tmp', 'src'))));
     });
 
     it('should be able to be absolute', function(){
       var m = Metalsmith('test/tmp');
       m.source('/dir');
-      assert.equal(m.source(), '/dir');
+      assert.equal(m.source(), path.resolve('/dir'));
     });
 
     it('should error on non-string', function(){
@@ -122,13 +122,13 @@ describe('Metalsmith', function(){
 
     it('should get the full path to the destination directory', function(){
       var m = Metalsmith('test/tmp');
-      assert(~m.destination().indexOf('/test/tmp/build'));
+      assert(~m.destination().indexOf(path.join('test', 'tmp', 'build')));
     });
 
     it('should be able to be absolute', function(){
       var m = Metalsmith('test/tmp');
       m.destination('/dir');
-      assert.equal(m.destination(), '/dir');
+      assert.equal(m.destination(), path.resolve('/dir'));
     });
 
     it('should error on non-string', function(){
@@ -223,8 +223,8 @@ describe('Metalsmith', function(){
   describe('#path', function(){
     it('should return a path relative to the working directory', function(){
       var m = Metalsmith('test/tmp');
-      var path = m.path('one', 'two', 'three');
-      assert(~path.indexOf('/test/tmp/one/two/three'));
+      var actualPath = m.path('one', 'two', 'three');
+      assert(~actualPath.indexOf(path.resolve('test/tmp/one/two/three')));
     });
   });
 
@@ -247,6 +247,8 @@ describe('Metalsmith', function(){
     });
 
     it('should traverse a symbolic link to a directory', function(done){
+      // symbolic links are *nix specific
+      if (process.platform === 'win32') { return done(); }
       var m = Metalsmith(fixture('read-symbolic-link'));
       var stats = fs.statSync(fixture('read-symbolic-link/src/dir/index.md'));
       m.read(function(err, files){
@@ -391,6 +393,8 @@ describe('Metalsmith', function(){
     });
 
     it('should chmod an optional mode from file metadata', function(done){
+      // chmod is not really working on windows https://github.com/nodejs/node-v0.x-archive/issues/4812#issue-11211650
+      if (process.platform === 'win32') { return done(); }
       var m = Metalsmith(fixture('write-mode'));
       var files = {
         'bin': {
@@ -481,7 +485,7 @@ describe('Metalsmith', function(){
           assert.equal(typeof files, 'object');
           assert.equal(typeof files['index.md'], 'object');
           assert.equal(files['index.md'].title, 'A Title');
-          assert.equal(typeof files['nested/index.md'], 'object');
+          assert.equal(typeof files[path.join('nested', 'index.md')], 'object');
           done();
         });
     });
@@ -562,9 +566,13 @@ describe('Metalsmith', function(){
     });
 
     it('should not remove existing destination directory if clean is false', function(done){
+      var dir = path.join('test', 'fixtures', 'build-noclean', 'build');
+      var cmd = process.platform === 'win32'
+        ? 'if not exist ' + dir + ' mkdir ' + dir + ' & type NUL > ' + dir + '\\empty.md'
+        : 'mkdir -p ' + dir + ' && touch ' + dir + '/empty.md'
       var m = Metalsmith(fixture('build-noclean'));
       m.clean(false);
-      exec('mkdir -p test/fixtures/build-noclean/build && touch test/fixtures/build-noclean/build/empty.md', function(err){
+      exec(cmd, function(err){
         if (err) return done(err);
         var files = { 'index.md': { contents: new Buffer('body') }};
         m.build(function(err){
@@ -579,7 +587,7 @@ describe('Metalsmith', function(){
 });
 
 describe('CLI', function(){
-  var bin = path.resolve(__dirname, '../bin/metalsmith');
+  var bin = 'node ' + path.resolve(__dirname, '../bin/metalsmith');
 
   describe('build', function(){
     it('should error without a metalsmith.json', function(done){
