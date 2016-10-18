@@ -247,8 +247,8 @@ describe('Metalsmith', function(){
     });
 
     it('should traverse a symbolic link to a directory', function(done){
-      // symbolic links are *nix specific
-      if (process.platform === 'win32') { return done(); }
+      // symbolic links are not really a thing on Windows
+      if (process.platform === 'win32') { this.skip(); }
       var m = Metalsmith(fixture('read-symbolic-link'));
       var stats = fs.statSync(fixture('read-symbolic-link/src/dir/index.md'));
       m.read(function(err, files){
@@ -394,7 +394,7 @@ describe('Metalsmith', function(){
 
     it('should chmod an optional mode from file metadata', function(done){
       // chmod is not really working on windows https://github.com/nodejs/node-v0.x-archive/issues/4812#issue-11211650
-      if (process.platform === 'win32') { return done(); }
+      if (process.platform === 'win32') { this.skip(); }
       var m = Metalsmith(fixture('write-mode'));
       var files = {
         'bin': {
