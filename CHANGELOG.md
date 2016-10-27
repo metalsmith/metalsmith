@@ -3,11 +3,21 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
+
+## [2.2.1]
 ### Changed
-* Updated dependencies
+* Updated dependencies ([#246])
+* Erroring test reading symbolic link to dir ([#229])
+* Add the packaging metadata to build the metalsmith snap ([#249])
+* Security vulnerability in dependency - upgraded ([#258])
 
 ### Removed
 * Unused dependencies
+
+[#229]: https://github.com/metalsmith/metalsmith/pull/229
+[#246]: https://github.com/metalsmith/metalsmith/pull/246
+[#249]: https://github.com/metalsmith/metalsmith/pull/249
+[#258]: https://github.com/metalsmith/metalsmith/pull/258
 
 
 ## [2.2.0] - August 11, 2016
@@ -238,7 +248,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.0.1 - February 4, 2014
 :sparkles:
 
-[unreleased]: https://github.com/metalsmith/metalsmith/compare/v2.2.0...HEAD
+[unreleased]: https://github.com/metalsmith/metalsmith/compare/v2.2.1...HEAD
+[2.2.1]: https://github.com/metalsmith/metalsmith/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/metalsmith/metalsmith/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/metalsmith/metalsmith/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/metalsmith/metalsmith/compare/v2.0.0...v2.0.1
