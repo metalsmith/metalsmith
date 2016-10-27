@@ -9,7 +9,10 @@
     "_metalsmith": "bin/_metalsmith"
   },
   "scripts": {
-    "test": "make test"
+    "test": "_mocha",
+    "test-debug": "_mocha debug" ,
+    "coverage": "istanbul cover _mocha" ,
+    "coveralls": "npm run coverage -- --report lcovonly && coveralls < ./coverage/lcov.info "
   },
   "dependencies": {
     "absolute": "0.0.1",
