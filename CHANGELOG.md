@@ -4,7 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-## [2.2.1]
+## [2.3.0]
 ### Changed
 * Updated dependencies ([#246])
 * Erroring test reading symbolic link to dir ([#229])
@@ -18,6 +18,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 [#246]: https://github.com/metalsmith/metalsmith/pull/246
 [#249]: https://github.com/metalsmith/metalsmith/pull/249
 [#258]: https://github.com/metalsmith/metalsmith/pull/258
+
+## [2.2.1]
+### deprecated
+Please use version <= 2.2.0 or > 2.3.0. This release contains added functionality that could have undesired behaviour.
 
 
 ## [2.2.0] - August 11, 2016
@@ -248,7 +252,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.0.1 - February 4, 2014
 :sparkles:
 
-[unreleased]: https://github.com/metalsmith/metalsmith/compare/v2.2.1...HEAD
+[unreleased]: https://github.com/metalsmith/metalsmith/compare/v2.3.0...HEAD
+[2.3.0]: https://github.com/metalsmith/metalsmith/compare/v2.2.0...v2.3.0
 [2.2.1]: https://github.com/metalsmith/metalsmith/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/metalsmith/metalsmith/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/metalsmith/metalsmith/compare/v2.0.1...v2.1.0
