@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.3.0]
 ### Changed
 * Updated dependencies ([#246])
-* Erroring test reading symbolic link to dir ([#229])
+* Erroring test reading symbolic link to dir, adds the ability to follow symlinks ([#229])
 * Add the packaging metadata to build the metalsmith snap ([#249])
 * Security vulnerability in dependency - upgraded ([#258])
 
@@ -19,7 +19,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 [#249]: https://github.com/metalsmith/metalsmith/pull/249
 [#258]: https://github.com/metalsmith/metalsmith/pull/258
 
-## [2.2.1]
+
+## 2.2.2
+This version is the same as 2.2.0. See 2.2.1.
+
+## [2.2.1] [YANKED]
 ### deprecated
 Please use version <= 2.2.0 or > 2.3.0. This release contains added functionality that could have undesired behaviour.
 
