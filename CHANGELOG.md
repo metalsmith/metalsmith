@@ -1,18 +1,30 @@
 # Change Log
 All notable changes to this project will be documented in this file.
-This project adheres to [Semantic Versioning](http://semver.org/).
+
+This project adheres to [Semantic Versioning](http://semver.org).
+
+This document follows the guidelines of [Keep A Changelog](http://keepachangelog.com).
+
+
 
 ## [unreleased]
 
-## [2.3.0]
-### Changed
-* Updated dependencies ([#246])
-* Erroring test reading symbolic link to dir, adds the ability to follow symlinks ([#229])
-* Add the packaging metadata to build the metalsmith snap ([#249])
-* Security vulnerability in dependency - upgraded ([#258])
+
+## [2.3.0] - 2016-10-28
+### Added
+* Add packaging metadata to build the metalsmith snap ([#249])
+
+### Updated
+* Update dependencies ([#246])
 
 ### Removed
-* Unused dependencies
+* Remove unused dependencies
+
+### Fixed
+* Fix error when reading a symbolic link to a dir ([#229])
+
+### Security
+* Upgrade dependency to include security fix ([#258])
 
 [#229]: https://github.com/metalsmith/metalsmith/pull/229
 [#246]: https://github.com/metalsmith/metalsmith/pull/246
@@ -20,23 +32,23 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 [#258]: https://github.com/metalsmith/metalsmith/pull/258
 
 
-## 2.2.2
-This version is the same as 2.2.0. See 2.2.1.
+## 2.2.2 - 2016-10-28
+This version is the same as [2.2.0], due to a bug. See [2.2.1].
 
 ## [2.2.1] [YANKED]
-### deprecated
-Please use version <= 2.2.0 or > 2.3.0. This release contains added functionality that could have undesired behaviour.
+### Deprecated
+**Please use version `≤ 2.2.0` or `> 2.3.0`.** 
+This release contains added functionality that could have undesired behaviour.
 
 
-## [2.2.0] - August 11, 2016
+## [2.2.0] - 2016-08-11
 ### Added
-* Add support for function ignore matchers ([#179])
-* Exposing ignore to CLI ([#232])
-* `process` to process files and plugins without writing files out.  ([#244])
+* Add support for `ignore` matchers ([#179])
+* Add CLI option: `ignore` ([#232])
+* Add `process` to process files and plugins without writing files ([#244])
 
 ### Changed
-* only remove contents of destination directory (not the directory itself) when
-  `clean` is true ([#221])
+* Only remove the contents of the `destination` directory (not the directory itself) when `clean` is `true` ([#221])
 
 [#179]: https://github.com/metalsmith/metalsmith/issues/179
 [#221]: https://github.com/metalsmith/metalsmith/pull/221
@@ -44,216 +56,216 @@ Please use version <= 2.2.0 or > 2.3.0. This release contains added functionalit
 [#244]: https://github.com/metalsmith/metalsmith/pull/244
 
 
-## [2.1.0] - September 24, 2015
+## [2.1.0] - 2015-09-24
 ### Added
-* cli: add support for `frontmatter` option
+* Add CLI option: `frontmatter`
 
 
-## [2.0.1] - July 14, 2015
+## [2.0.1] - 2015-07-14
 ### Fixed
-* meta: bumping patch because `2.0.0` was mistakenly published once before
+* META: bump patch because `2.0.0` was mistakenly already published
 
 
-## [2.0.0] - July 14, 2015
+## [2.0.0] - 2015-07-14
 ### Added
-* cli: adding separate `_metalsmith` bin to allow custom transpilers
+* CLI: Add separate `_metalsmith` bin (to allow custom transpilers)
 
 ### Removed
-* no longer supporting node 0.10 natively or in tests
+* Drop support for Node 0.10 (native and tests)
 
 
-## [1.7.0] - April 30, 2015
+## [1.7.0] - 2015-04-30
 ### Added
-* `ignore` support
+* Add `ignore`
 
 
-## [1.6.0] - April 14, 2015
+## [1.6.0] - 2015-04-14
 ### Added
-* `concurrency` support
+* Add `concurrency`
 
 
-## [1.5.0] - March 29, 2015
+## [1.5.0] - 2015-03-29
 ### Added
-* ability to pass in plugins to #run
+* Add ability to pass in plugins to `#run`
 
 
-## [1.4.5] - March 27, 2015
+## [1.4.5] - 2015-03-27
 ### Changed
-* improve plugin error handling
+* Improve plugin error handling
 
 
-## [1.4.4] - March 27, 2015
+## [1.4.4] - 2015-03-27
 ### Fixed
-* fix for `isAbsolute` not being in node `0.10`
+* Workaround the absence of `isAbsolute` from Node 0.10
 
 
-## [1.4.3] - March 27, 2015
+## [1.4.3] - 2015-03-27
 ### Fixed
-* fix variable name typo
+* Fix type in variable name
 
 
-## [1.4.2] - March 26, 2015
+## [1.4.2] - 2015-03-26
 ### Changed
-* switch to `gray-matter` for frontmatter parsing
+* Use to `gray-matter` for frontmatter parsing
 
 ### Fixed
-* fix bug in frontmatter parser
+* Fix bug in frontmatter parser
 
 
-## [1.4.1] - March 25, 2015
+## [1.4.1] - 2015-03-25
+### Changed
+* Nicer errors for invalid frontmatter
+
+
+## [1.4.0] - 2015-03-25
 ### Added
-* nicer error for invalid frontmatter
+* Add ability to override the read and write directory
 
 
-## [1.4.0] - March 25, 2015
+## [1.3.0] - 2015-02-06
 ### Added
-* support for overriding the read and write directory
+* Add support for local (non-npm, but still node) plugins
 
 
-## [1.3.0] - February 6, 2015
+## [1.2.0] - 2015-02-04
 ### Added
-* support for local (non-npm, but still node) plugins
+* Add stack trace to CLI output
 
 
-## [1.2.0] - February 4, 2015
-### Added
-* stack trace printing in cli output
-
-
-## [1.1.1] - January 25, 2015
+## [1.1.1] - 2015-01-25
 ### Fixed
-* update `recursive-readdir` to `1.2.1` to fix #110
+* Update `recursive-readdir` to `1.2.1` to fix [#110]
 
 [#110]: https://github.com/metalsmith/metalsmith/pull/110
 
 
-## [1.1.0] - January 25, 2015
+## [1.1.0] - 2015-01-25
 ### Added
-* add type checking to getter/setters
-* allow for alternate config file path
-* add file-specific errors on writing and reading
+* Add type checking to getter/setters
+* Add support for alternate config file path
+* Add file-specific errors on writing and reading
 
 
-## [1.0.1] - September 30, 2014
-### Fixed
-* move `gnode` to regular dependencies
+## [1.0.1] - 2014-09-30
+### Changed
+* Move `gnode` to regular dependencies
 
 
-## [1.0.0] - September 29, 2014
+## [1.0.0] - 2014-09-29
 ### Added
-* generator support for node 0.11
-* support for absolute `source` and `directory` paths
-* `#directory` getter and setter method
-* `#readFile` method to expose the core reading logic
-* `#writeFile` method to expose the core writing logic
+* Add generator support for Node 0.11
+* Add absolute path support for `source` and `directory`
+* Add `#directory` getter and setter method
+* Add `#readFile` method to expose the core reading logic
+* Add `#writeFile` method to expose the core writing logic
 
 ### Changed
-* change `#join` to `#path` and use `path.resolve`
+* Change `#join` to `#path` and use `path.resolve`
 
 ### Fixed
-* fix default `clean` setting when running the cli
+* CLI: Fix default `clean` setting
 
 
-## [0.11.0] - September 12, 2014
-### Fixed
-* move `clean` logic to happen at the beginning of a build
-
-
-## [0.10.0] - August 19, 2014
-### Added
-* expose `stats` on files
-
-
-## [0.9.0] - July 13, 2014
-### Added
-* add `frontmatter` option to disable parsing frontmatter
-
-
-## [0.8.1] - July 7, 2014
+## [0.11.0] - 2014-09-12
 ### Changed
-* update dependencies
+* Move `clean` logic to happen at the beginning of a build
 
 
-## [0.8.0] - May 6, 2014
+## [0.10.0] - 2014-08-19
 ### Added
-* `clean` option
+* Expose `stats` on files
 
 
-## [0.7.0] - April 29, 2014
+## [0.9.0] - 2014-070-13
 ### Added
-* let `plugins` be an array in `metalsmith.json`
+* Add `frontmatter` option (to disable frontmatter parsing, if desired)
 
 
-## [0.6.1] - April 24, 2014
+## [0.8.1] - 2014-070-07
+### Changed
+* Update dependencies
+
+
+## [0.8.0] - 2014-05-06
 ### Added
-* update `ware` to `0.3.0` for passing arrays
+* Add `clean` option
 
 
-## [0.6.0] - April 2, 2014
+## [0.7.0] - 2014-04-29
+### Changed
+* In `metalsmith.json`: Allow `plugins` be an array 
+
+
+## [0.6.1] - 2014-04-24
+### Changed
+* Update `ware` to `0.3.0` for passing arrays
+
+
+## [0.6.0] - 2014-04-02
 ### Added
 * `mode` handling for files
 
 
-## [0.5.0] - March 21, 2014
+## [0.5.0] - 2014-03-21
 ### Added
-* remove destination directory when writing
-* expose `#run` to run middleware stack
+* Remove `destination` directory when writing
+* Expose `#run` to run middleware stack
 
 ### Fixed
-* fix jade examples
+* Fix jade examples
 
 
-## [0.4.0] - March 14, 2014
+## [0.4.0] - 2014-03-14
 ### Changed
-* change #metadata to set a clone
+* Change `#metadata` to set a clone
 
 
-## [0.3.0] - March 8, 2014
+## [0.3.0] - 2014-03-08
 ### Changed
-* change to not trim file contents
+* File contents are no longer trimmed
 
 
-## [0.2.3] - March 7, 2014
+## [0.2.3] - 2014-03-07
 ### Added
-* add setting back to `#metadata`
+* Add setting back to `#metadata`
 
 
-## [0.2.2] - March 7, 2014
+## [0.2.2] - 2014-03-07
 ### Fixed
-* install error
+* Fix installation error
 
 
-## [0.2.1] - March 7, 2014
+## [0.2.1] - 2014-03-07
 ### Changed
-* change to `chalk` from `colors`
+* CLI: use `chalk` instead of `colors`
 
 
-## [0.2.0] - March 6, 2014
-### Removed
-* change to `#metadata` just being a getter
-
-
-## [0.1.0] - February 5, 2014
+## [0.2.0] - 2014-03-06
 ### Changed
-* change to `contents` always being a Buffer
+* `#metadata` is now just a getter
 
 
-## [0.0.4] - February 5, 2014
+## [0.1.0] - 2014-02-05
+### Changed
+* `contents` are now always a `Buffer`
+
+
+## [0.0.4] - 2014-02-05
 ### Fixed
-* fix corrupted non-utf8 files
+* Fix corrupted non-utf8 files
 
 
-## [0.0.3] - February 5, 2014
+## [0.0.3] - 2014-02-05
 ### Added
-* expose `files` dictionary to `build` callback
+* Expose `files` dictionary to `build` callback
 
 
-## [0.0.2] - February 5, 2014
+## [0.0.2] - 2014-02-05
 ### Changed
-* do not mix in global metadata, leave it up to plugins
+* Do not mix in global metadata; leave it up to plugins
 
 
-## 0.0.1 - February 4, 2014
+## 0.0.1 - 2014-02-04
 :sparkles:
 
 [unreleased]: https://github.com/metalsmith/metalsmith/compare/v2.3.0...HEAD
