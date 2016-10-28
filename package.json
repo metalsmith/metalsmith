@@ -9,7 +9,14 @@
     "_metalsmith": "bin/_metalsmith"
   },
   "scripts": {
-    "test": "make test"
+    "pretest": "npm install",
+    "test": "mocha $HARMONY_OPTS",
+    "pretest-debug": "npm install",
+    "test-debug": "mocha debug",
+    "precoverage": "npm install",
+    "coverage": "node $HARMONY_OPTS ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
+    "precoveralls": "npm run coverage",
+    "coveralls": "coveralls < coverage/lcov.info"
   },
   "dependencies": {
     "absolute": "0.0.1",
