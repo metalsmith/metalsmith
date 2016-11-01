@@ -20,7 +20,6 @@ Metalsmith(__dirname)
   })
   .source('./src')
   .destination('./build')
-  .clean(false)
   .use(collections({
     posts: {
         pattern: 'posts/*.md'
