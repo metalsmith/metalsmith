@@ -24,14 +24,14 @@ Now that the directory is created, I'm going to open it up with
 Once your in the projects directory, create a file called `package.json`. The `package.json` file will have information relative to your project and is necessary for npm to install different tools and modules that will help you while building your project. The contents of your `package.json` should look like this. 
 
 	{
-  		"name": "rss-feed-example",
+		"name": "rss-feed-example",
 		"version": "1.0.0",
 		"dependencies": {
-		    "handlebars": "^4.0.5",
-		    "metalsmith": "^2.1.0",
-		    "metalsmith-layouts": "^1.4.1",
-		    "metalsmith-markdown": "^0.2.1",
-		    "metalsmith-permalinks": "^0.5.0",
+			"handlebars": "^4.0.5",
+			"metalsmith": "^2.1.0",
+			"metalsmith-layouts": "^1.4.1",
+			"metalsmith-markdown": "^0.2.1",
+			"metalsmith-permalinks": "^0.5.0",
 			"metalsmith-collections": "^0.7.0",
 			"metalsmith-feed": "^0.2.0"	
 		}
