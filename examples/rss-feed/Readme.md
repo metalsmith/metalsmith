@@ -5,9 +5,7 @@ This example uses Metalsmith to create a static site and implements an rss feed 
 
 ## Install Node and Update NPM 
 
-You should have npm and node installed. If you do not have these installed you can download and install Node.js via the installer from [here](https://nodejs.org/en/download/). Once the installer is completed you must update npm. Update npm by opening up your bash client and running the line below:
-
-	$ npm install npm@latest -g
+You should have npm and node installed. If you do not have these installed we recommend using [nvm](https://github.com/creationix/nvm/blob/master/README.markdown#installation) or [nvm-windows](https://github.com/coreybutler/nvm-windows) depending on what operating system you are using. The links above will provide you will detailed installation instructions.
 
 ##Setting Up Your Project
 
@@ -80,7 +78,6 @@ Lets create a simple index.js file in our projects root directory. The file shou
 	  })
 	  .source('./src')
 	  .destination('./build')
-	  .clean(false)
 	  .use(collections({
 	    posts: {
 	        pattern: 'posts/*.md'
@@ -123,7 +120,6 @@ At the top of our `index.js` we declare our variables for metalsmith as well as 
 	  })
 	  .source('./src')
 	  .destination('./build')
-	  .clean(false)
 	  .use(collections({
 	    posts: {
 	        pattern: 'posts/*.md'
@@ -152,11 +148,10 @@ Here is our metalsmith instance, where metalsmith declares its methods sequentia
 	    }
 
 2. The `source()` method declares the directory where the files will be pre-manipulation. 
-3. The `destination()` method declares the destination directory the files will end up post-manipulation.
-4. The `clean()` method will delete the contents of the destination directory everytime metalsmith is run and the files are manipulated. 
-5. The `use()` method wraps instances of plugins we will use in our project. 
-6. The `collections()` method groups all our files from the `./posts` folder with the `.md` extension. We can now iterate through this object in our template files if we want to list all our chapters or chapters of a certain category. You can checkout this plugins docs [here](https://github.com/segmentio/metalsmith-collections).
-7. The `feed()` method grabs all the files in the `posts` collection and generates an RSS feed based on the data contained in these files. The `feeds()` method relies on the `collections()` metho and should be input into the Metalsmith instance in this order to make sure the plugins work properly.
+3. The `destination()` method declares the destination directory the files will end up post-manipulation. 
+4. The `use()` method wraps instances of plugins we will use in our project. 
+5. The `collections()` method groups all our files from the `./posts` folder with the `.md` extension. We can now iterate through this object in our template files if we want to list all our chapters or chapters of a certain category. You can checkout this plugins docs [here](https://github.com/segmentio/metalsmith-collections).
+6. The `feed()` method grabs all the files in the `posts` collection and generates an RSS feed based on the data contained in these files. The `feeds()` method relies on the `collections()` metho and should be input into the Metalsmith instance in this order to make sure the plugins work properly.
 7. The `markdown()` enables the markdown syntax for editing pre-compilation. 
 8. The `permalinks()` method nests our files in subdirectories. 
 9. The `layouts()` enables handlebars as the templating engine. 
