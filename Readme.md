@@ -45,7 +45,7 @@ Metalsmith(__dirname)
 
 ## Plugins
 
-Check out the website for a list of [plugins](http://www.metalsmith.io#the-plugins).
+Check out the website for a list of [plugins](http://www.metalsmith.io#the-community-plugins).
 
 
 ## How does it work?
