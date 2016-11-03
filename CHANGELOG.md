@@ -43,7 +43,7 @@ This release contains added functionality that could have undesired behaviour.
 
 ## [2.2.0] - 2016-08-11
 ### Added
-* Add support for `ignore` matchers ([#179])
+* Add ability to use functions for `ignore` matchers ([#179])
 * Add CLI option: `ignore` ([#232])
 * Add `process` to process files and plugins without writing files ([#244])
 
@@ -101,12 +101,12 @@ This release contains added functionality that could have undesired behaviour.
 
 ## [1.4.3] - 2015-03-27
 ### Fixed
-* Fix type in variable name
+* Fix typo in variable name
 
 
 ## [1.4.2] - 2015-03-26
 ### Changed
-* Use to `gray-matter` for frontmatter parsing
+* Use `gray-matter` to parse frontmatter
 
 ### Fixed
 * Fix bug in frontmatter parser
