@@ -17,7 +17,6 @@ matrix:
   allow_failures:
     - node_js: "node"
   include:
-    - node_js: "6"
     - env: BUILD=1
 
 before_script:
