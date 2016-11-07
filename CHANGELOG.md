@@ -5,9 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org).
 
 This document follows the guidelines of [Keep A Changelog](http://keepachangelog.com).
 
-
-
-## [unreleased]
+## [Unreleased]
+- Nothing here yet...
 
 
 ## [2.3.0] - 2016-10-28
@@ -32,13 +31,15 @@ This document follows the guidelines of [Keep A Changelog](http://keepachangelog
 [#258]: https://github.com/metalsmith/metalsmith/pull/258
 
 
-## 2.2.2 - 2016-10-28
-This version is the same as [2.2.0], due to a bug. See [2.2.1].
+## [2.2.2] - 2016-10-28
+This version is the same as 2.2.0, and was released to counteract the accidental
+release of 2.2.1. (See 2.2.1 for details.)
 
-## [2.2.1] [YANKED]
-### Deprecated
-**Please use version `≤ 2.2.0` or `> 2.3.0`.** 
-This release contains added functionality that could have undesired behaviour.
+
+## [2.2.1] - 2016-10-27 [YANKED]
+This release is identical to 2.3.0, but was mistakenly released as a
+SemVer-patch version when it should have been released as a SemVer-minor
+version. **Please use versions `<= 2.2.0` or `>= 2.2.2` instead.**
 
 
 ## [2.2.0] - 2016-08-11
@@ -193,7 +194,7 @@ This release contains added functionality that could have undesired behaviour.
 
 ## [0.7.0] - 2014-04-29
 ### Changed
-* In `metalsmith.json`: Allow `plugins` be an array 
+* In `metalsmith.json`: Allow `plugins` be an array
 
 
 ## [0.6.1] - 2014-04-24
@@ -268,8 +269,9 @@ This release contains added functionality that could have undesired behaviour.
 ## 0.0.1 - 2014-02-04
 :sparkles:
 
-[unreleased]: https://github.com/metalsmith/metalsmith/compare/v2.3.0...HEAD
-[2.3.0]: https://github.com/metalsmith/metalsmith/compare/v2.2.0...v2.3.0
+[Unreleased]: https://github.com/metalsmith/metalsmith/compare/v2.3.0...HEAD
+[2.3.0]: https://github.com/metalsmith/metalsmith/compare/v2.2.2...v2.3.0
+[2.2.2]: https://github.com/metalsmith/metalsmith/compare/v2.2.0...v2.2.2
 [2.2.1]: https://github.com/metalsmith/metalsmith/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/metalsmith/metalsmith/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/metalsmith/metalsmith/compare/v2.0.1...v2.1.0
