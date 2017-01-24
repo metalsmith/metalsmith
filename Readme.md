@@ -4,7 +4,6 @@
 [![npm version][npm-badge]][npm-url]
 [![Build Status][travis-badge]][travis-url]
 [![Coverage Status][coveralls-badge]][coveralls-url]
-[![Dependency Status][david-badge]][david-url]
 [![Slack chat][slack-badge]][slack-url]
 
 > An extremely simple, _pluggable_ static site generator.
@@ -37,6 +36,7 @@ Metalsmith(__dirname)
 
 ...it's as easy as that!
 
+Special thanks to [Ian Storm Taylor](https://github.com/ianstormtaylor), [Andrew Meyer](https://github.com/Ajedi32), [Dominic Barnes](https://github.com/dominicbarnes), [Andrew Goodricke](https://github.com/woodyrew) and [others](https://github.com/segmentio/metalsmith/graphs/contributors) for their contributions!
 
 ## Installation
 
@@ -287,7 +287,7 @@ You have three options:
 
 The MIT License (MIT)
 
-Copyright &copy; 2014, Segment.io \<friends@segment.io\>
+Copyright &copy; Segment \<friends@segment.com\>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -297,11 +297,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 [npm-badge]: https://img.shields.io/npm/v/metalsmith.svg
 [npm-url]: https://www.npmjs.com/package/metalsmith
-[travis-badge]: https://travis-ci.org/metalsmith/metalsmith.svg
-[travis-url]: https://travis-ci.org/metalsmith/metalsmith
-[coveralls-badge]:https://coveralls.io/repos/metalsmith/metalsmith/badge.svg?branch=master&service=github
-[coveralls-url]: https://coveralls.io/github/metalsmith/metalsmith?branch=master
-[david-badge]: https://david-dm.org/metalsmith/metalsmith.svg
-[david-url]: https://david-dm.org/metalsmith/metalsmith
+[travis-badge]: https://travis-ci.org/segmentio/metalsmith.svg
+[travis-url]: https://travis-ci.org/segmentio/metalsmith
+[coveralls-badge]:https://coveralls.io/repos/segmentio/metalsmith/badge.svg?branch=master&service=github
+[coveralls-url]: https://coveralls.io/github/segmentio/metalsmith?branch=master
 [slack-badge]: https://img.shields.io/badge/Slack-Join%20Chat%20→-blue.svg
 [slack-url]: http://metalsmith-slack.herokuapp.com/
