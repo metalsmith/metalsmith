@@ -239,7 +239,8 @@ describe('Metalsmith', function(){
             title: 'A Title',
             contents: new Buffer('body'),
             mode: stats.mode.toString(8).slice(-4),
-            stats: stats
+            stats: stats,
+            file: fixture('read/src/index.md')
           }
         });
         done();
@@ -276,7 +277,8 @@ describe('Metalsmith', function(){
             title: 'A Title',
             contents: new Buffer('body'),
             mode: stats.mode.toString(8).slice(-4),
-            stats: stats
+            stats: stats,
+            file: fixture('read-dir/dir/index.md')
           }
         });
         done();
@@ -292,7 +294,8 @@ describe('Metalsmith', function(){
           'bin': {
             contents: new Buffer('echo test'),
             mode: stats.mode.toString(8).slice(-4),
-            stats: stats
+            stats: stats,
+            file: fixture('read-mode/src/bin')
           }
         });
         done();
@@ -329,7 +332,7 @@ describe('Metalsmith', function(){
     });
 
     it('should ignore the files specified in ignores', function(done){
-      var stats = fs.statSync(path.join(__dirname, 'fixtures/basic/src/index.md'));
+      var stats = fs.statSync(fixture('basic/src/index.md'));
       var m = Metalsmith('test/fixtures/basic');
       m.ignore('nested');
       m.read(function(err, files){
@@ -340,7 +343,8 @@ describe('Metalsmith', function(){
             title: 'A Title',
             contents: new Buffer('body'),
             mode: stats.mode.toString(8).slice(-4),
-            stats: stats
+            stats: stats,
+            file: fixture('basic/src/index.md')
           }
         });
         done();
