@@ -2,3 +2,4 @@ node_modules
 test/fixtures/*/build
 coverage
 .vscode/
+.idea/
