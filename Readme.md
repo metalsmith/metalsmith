@@ -1,3 +1,4 @@
+<img align="center" width="300" src="logo/metalsmith_logo.png">
 
 # Metalsmith
 
