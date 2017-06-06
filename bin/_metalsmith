@@ -11,6 +11,7 @@ var Metalsmith = require('..');
 var program = require('commander');
 var resolve = require('path').resolve;
 var basename = require('path').basename;
+var dirname = require('path').dirname;
 var format = require('path').format;
 var yaml = require('js-yaml').safeLoad;
 
@@ -51,9 +52,9 @@ var config = program.config;
 var json;
 
 ['.json', '.yml', '.yaml'].forEach(function(ext) {
-  var conf = format({ name: basename(config, '.json'), ext });
+  var conf = format({ dir: dirname(config), name: basename(config, '.json'), ext });
   var path = resolve(dir, conf);
-
+);
   if (!exists(path) || json) return;
 
   try {
