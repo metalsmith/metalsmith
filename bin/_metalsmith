@@ -6,26 +6,28 @@
 
 var chalk = require('chalk');
 var exists = require('fs').existsSync;
+var read = require('fs').readFileSync;
 var Metalsmith = require('..');
 var program = require('commander');
 var resolve = require('path').resolve;
+var basename = require('path').basename;
+var format = require('path').format;
+var yaml = require('js-yaml').safeLoad;
 
 /**
  * Usage.
  */
 
-program
-  .version(require('../package.json').version)
-  .option('-c, --config <path>', 'configuration file location', 'metalsmith.json');
+program.version(require('../package.json').version).option('-c, --config <path>', 'configuration file location', 'metalsmith.json');
 
 /**
  * Examples.
  */
 
-program.on('--help', function(){
+program.on('--help', function() {
   console.log('  Examples:');
   console.log();
-  console.log('    # build from metalsmith.json:');
+  console.log('    # build from metalsmith.json / .yml / .yaml :');
   console.log('    $ metalsmith');
   console.log();
   console.log('    # build from lib/config.json:');
@@ -45,14 +47,28 @@ program.parse(process.argv);
 
 var dir = process.cwd();
 var config = program.config;
-var path = resolve(dir, config);
-if (!exists(path)) fatal('could not find a ' + config + ' configuration file.');
 
-try {
-  var json = require(path);
-} catch (e) {
-  fatal('it seems like ' + config + ' is malformed.');
-}
+var json;
+
+['.json', '.yml', '.yaml'].forEach(function(ext) {
+  var conf = format({ name: basename(config, '.json'), ext });
+  var path = resolve(dir, conf);
+
+  if (!exists(path) || json) return;
+
+  try {
+    if (ext === '.json') {
+      json = require(path);
+    } else if (['.yml', '.yaml'].includes(ext)) {
+      json = yaml(read(path, 'utf8'));
+    }
+  } catch (e) {
+    console.log(e);
+    fatal('it seems like ' + conf + ' is malformed.');
+  }
+});
+
+if (!json) fatal('could not find a ' + config + '.json / .yml / .yaml configuration file.');
 
 /**
  * Metalsmith.
@@ -71,7 +87,7 @@ if (json.ignore != null) metalsmith.ignore(json.ignore);
  * Plugins.
  */
 
-normalize(json.plugins).forEach(function(plugin){
+normalize(json.plugins).forEach(function(plugin) {
   for (var name in plugin) {
     var opts = plugin[name];
     var mod;
@@ -103,7 +119,7 @@ normalize(json.plugins).forEach(function(plugin){
  * Build.
  */
 
-metalsmith.build(function(err){
+metalsmith.build(function(err) {
   if (err) return fatal(err.message, err.stack);
   log('successfully built to ' + metalsmith.destination());
 });
@@ -115,7 +131,7 @@ metalsmith.build(function(err){
  * @param {String} [stack]  Optional stack trace to print.
  */
 
-function fatal(msg, stack){
+function fatal(msg, stack) {
   console.error();
   console.error(chalk.red('  Metalsmith') + chalk.gray(' · ') + msg);
   if (stack) {
@@ -132,7 +148,7 @@ function fatal(msg, stack){
  * @param {String} message
  */
 
-function log(message){
+function log(message) {
   console.log();
   console.log(chalk.gray('  Metalsmith · ') + message);
   console.log();
@@ -145,7 +161,7 @@ function log(message){
  * @return {Array}
  */
 
-function normalize(obj){
+function normalize(obj) {
   if (obj instanceof Array) return obj;
   var ret = [];
 
