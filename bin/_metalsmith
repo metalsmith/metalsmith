@@ -52,7 +52,7 @@ var config = program.config;
 var json;
 
 ['.json', '.yml', '.yaml'].forEach(function(ext) {
-  var conf = format({ dir: dirname(config), name: basename(config, '.json'), ext });
+  var conf = format({ dir: dirname(config), name: basename(config, '.json'), ext: ext });
   var path = resolve(dir, conf);
 
   if (!exists(path) || json) return;
