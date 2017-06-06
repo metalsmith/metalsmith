@@ -11,6 +11,7 @@ var Metalsmith = require('..');
 var program = require('commander');
 var resolve = require('path').resolve;
 var basename = require('path').basename;
+var extname = require('path').extname;
 var dirname = require('path').dirname;
 var format = require('path').format;
 var yaml = require('js-yaml').safeLoad;
@@ -46,30 +47,29 @@ program.parse(process.argv);
  * Config.
  */
 
-var dir = process.cwd();
 var config = program.config;
+var name = basename(config, extname(config));
+var dir = resolve(process.cwd(), dirname(config));
 
 var json;
 
 ['.json', '.yml', '.yaml'].forEach(function(ext) {
-  var conf = format({ dir: dirname(config), name: basename(config, '.json'), ext: ext });
-  var path = resolve(dir, conf);
+  var conf = format({ root: '/', dir: dir, base: name + ext });
+  var path = resolve(dir, dirname(config), conf);
 
   if (!exists(path) || json) return;
-
   try {
     if (ext === '.json') {
       json = require(path);
-    } else if (['.yml', '.yaml'].includes(ext)) {
+    } else if (ext === '.yml' || ext === '.yaml') {
       json = yaml(read(path, 'utf8'));
     }
   } catch (e) {
-    console.log(e);
     fatal('it seems like ' + conf + ' is malformed.');
   }
 });
 
-if (!json) fatal('could not find a ' + config + '.json / .yml / .yaml configuration file.');
+if (!json) fatal('could not find a ' + config.replace('.json', '') + '.json / .yml / .yaml configuration file.');
 
 /**
  * Metalsmith.
