@@ -4,6 +4,7 @@
   "dependencies": {
     "metalsmith": "^2.3.0",
     "metalsmith-assets": "^0.1.0",
+    "metalsmith-auto-collections": "^0.1.1",
     "metalsmith-autotoc": "^0.1.5",
     "metalsmith-headings-identifier": "^0.0.11",
     "metalsmith-markdown": "^0.2.1",

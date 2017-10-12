@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Writing A Plugin</title>
+	<link href="http://fonts.googleapis.com/css?family=Roboto:400,300|Arvo:400" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+	<link rel="stylesheet" type="text/css" href="../media/style.css">
+</head>
+<body>
+	<header>
+		<div class="container">
+			Version: 1.3.5
+		</div>
+	</header>
+
+		
+	<div class="container content">
+		<aside>
+			<h2>Navigation</h2>
+			<ul>
+				<li><a href="../index.html">Startseite</a></li>
+							<li>
+					API
+					<ul>
+											<li>
+							<a href="../api/api.html">Metalsmith</a>
+						</li>
+											<li>
+							<a href="../api/metadata.html">Metadata</a>
+						</li>
+										</ul>
+				</li>
+							<li>
+					Documentation
+					<ul>
+											<li>
+							<a href="../documentation/matching.html">Matching</a>
+						</li>
+											<li>
+							<a href="../documentation/works.html">How does it work</a>
+						</li>
+										</ul>
+				</li>
+							<li>
+					Installation
+					<ul>
+											<li>
+							<a href="../install/index.html">Installation</a>
+						</li>
+										</ul>
+				</li>
+							<li>
+					Plugins
+					<ul>
+											<li>
+							<a href="../plugins/add.html">The Community Plugins</a>
+						</li>
+											<li>
+							<a href="../plugins/write.html">Writing A Plugin</a>
+						</li>
+										</ul>
+				</li>
+							<li>
+					Getting Started
+					<ul>
+											<li>
+							<a href="../started/install.html">Installation</a>
+						</li>
+											<li>
+							<a href="../started/intro.html">Introduction</a>
+						</li>
+											<li>
+							<a href="../started/metadata.html">Metadata & debugging</a>
+						</li>
+											<li>
+							<a href="../started/plugins.html">Plugins</a>
+						</li>
+											<li>
+							<a href="../started/trouble.html">Troubleshooting</a>
+						</li>
+										</ul>
+				</li>
+						</ul>
+		</aside>
+		<article>
+			
+			<h1 id="writing-a-plugin"><a class="anchor" href="#writing-a-plugin"><span></span></a>Writing A Plugin</h1>
+<p>Writing a plugin is not difficult as you have seen above with the <code>metalsmith-drafts</code> plugin. In order to achieve more complicated tasks you will most likely find and can use <code>npm</code>-packages. Look at how others have done it. Here is an example using <code>debug</code> (which we appreciate if you use it) and <code>multimatch</code>:</p>
+<p><code>metalsmith-myplugin</code>:</p>
+<pre><code class="lang-JavaScript">// we would like you to use debug
+var debug = require(&apos;debug&apos;)(&apos;metalsmith-myplugin&apos;);
+var multimatch = require(&apos;multimatch&apos;);
+
+
+// Expose `plugin`.
+module.exports = plugin;
+
+
+function plugin(opts){
+  opts.pattern = opts.pattern || [];
+
+  return function (files, metalsmith, done){
+
+    setImmediate(done);
+    Object.keys(files).forEach(function(file){
+      if(multimatch(file, opts.pattern).length) {
+        debug(&apos;myplugin working on: %s&apos;, file);
+
+        //
+        // here would be your code
+        //
+
+      }
+
+    });
+
+  };
+}
+</code></pre>
+
+		</article>
+		<div class="clear"></div>
+		<footer>
+			<p>Generated with Metalsmith &mdash; <a href="http://www.metalsmith.io/">http://www.metalsmith.io/</a></p>
+		</footer>
+	</div>
+</body>
+</html>

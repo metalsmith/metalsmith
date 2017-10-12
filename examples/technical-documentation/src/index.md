@@ -1,123 +1,91 @@
 ---
+title: "Metalsmith"
+description: "An extremely simple, pluggable static site generator."
 autotoc: true
 view: layout.twig
-title: Installation
 ---
 
-## Installation
+# Welcome
 
-> Are you a visual learner? Laracasts provides a free, thorough introduction to Laravel for newcomers to the framework. It's a great place to start your journey.
+You want to build a website or blog with a static site generator. Well, here is our elevator pitch. It's as easy as that:
 
-### Server Requirements
+```JavaScript
+var Metalsmith  = require('metalsmith');
+var collections = require('metalsmith-collections');
+var layouts     = require('metalsmith-layouts');
+var markdown    = require('metalsmith-markdown');
+var permalinks  = require('metalsmith-permalinks');
 
-The Laravel framework has a few system requirements. Of course, all of these requirements are satisfied by the Laravel Homestead virtual machine, so it's highly recommended that you use Homestead as your local Laravel development environment.
 
-However, if you are not using Homestead, you will need to make sure your server meets the following requirements:
+Metalsmith(__dirname)         // __dirname defined by node.js:
+                              // name of current working directory
+  .metadata({                 // add any variable you want
+                              // use them in layout-files
+    sitename: "My Static Site & Blog",
+    siteurl: "http://example.com/",
+    description: "It's about saying »Hello« to the world.",
+    generatorname: "Metalsmith",
+    generatorurl: "http://metalsmith.io/"
+  })
+  .source('./src')            // source directory
+  .destination('./build')     // destination directory
+  .clean(true)                // clean destination before
+  .use(collections({          // group all blog posts by internally
+    posts: 'posts/*.md'       // adding key 'collections':'posts'
+  }))                         // use `collections.posts` in layouts
+  .use(markdown())            // transpile all md into html
+  .use(permalinks({           // change URLs to permalink URLs
+    relative: false           // put css only in /css
+  }))
+  .use(layouts({              // wrap layouts around html
+    engine: 'handlebars',     // use the layout engine you like
+  }))
+  .build(function(err) {      // build process
+    if (err) throw err;       // error handling is required
+  });
+```
 
-- PHP >= 7.0.0
-- OpenSSL PHP Extension
-- PDO PHP Extension
-- Mbstring PHP Extension
-- Tokenizer PHP Extension
-- XML PHP Extension
-
-### Installing Laravel
-Laravel utilizes Composer to manage its dependencies. So, before using Laravel, make sure you have Composer installed on your machine.
-
-#### Via Laravel Installer
-
-First, download the Laravel installer using Composer:
+You want to try yourself, if it is really this easy. Have a go:
 
 ```bash
-composer global require "laravel/installer"
+$ git clone https://github.com/metalsmith/metalsmith.git
+$ cd metalsmith/examples/static-site
+$ make
 ```
 
-Make sure to place the `$HOME/.composer/vendor/bin` directory (or the equivalent directory for your OS) in your $PATH so the `laravel` executable can be located by your system.
+## A Little Secret
 
-Once installed, the `laravel new` command will create a fresh Laravel installation in the directory you specify. For instance, `laravel new blog` will create a directory named blog containing a fresh Laravel installation with all of Laravel's dependencies already installed:
+We keep referring to Metalsmith as a "static site generator", but it's a lot more than that. Since everything is a plugin, the core library is actually just an abstraction for manipulating a directory of files.
 
-```bash
-laravel new blog
-```
-
-#### Via Composer Create-Project
-
-Alternatively, you may also install Laravel by issuing the Composer create-project command in your terminal:
-
-```bash
-composer create-project --prefer-dist laravel/laravel blog
-```
-
-
-#### Local Development Server
-
-If you have PHP installed locally and you would like to use PHP's built-in development server to serve your application, you may use the serve Artisan command. This command will start a development server at http://localhost:8000:
-
-```bash
-php artisan serve
-```
-
-Of course, more robust local development options are available via Homestead and Valet.
-
-
-### Configuration
-
-#### Public Directory
-
-After installing Laravel, you should configure your web server's document / web root to be the  public directory. The index.php in this directory serves as the front controller for all HTTP requests entering your application.
-
-#### Configuration Files
-
-All of the configuration files for the Laravel framework are stored in the config directory. Each option is documented, so feel free to look through the files and get familiar with the options available to you.
-
-#### Directory Permissions
-
-After installing Laravel, you may need to configure some permissions. Directories within the  storage and the bootstrap/cache directories should be writable by your web server or Laravel will not run. If you are using the Homestead virtual machine, these permissions should already be set.
-
-#### Application Key
-
-The next thing you should do after installing Laravel is set your application key to a random string. If you installed Laravel via Composer or the Laravel installer, this key has already been set for you by the php artisan key:generate command.
-
-Typically, this string should be 32 characters long. The key can be set in the .env environment file. If you have not renamed the .env.example file to .env, you should do that now. If the application key is not set, your user sessions and other encrypted data will not be secure!
-
-#### Additional Configuration
-
-Laravel needs almost no other configuration out of the box. You are free to get started developing! However, you may wish to review the config/app.php file and its documentation. It contains several options such as timezone and locale that you may wish to change according to your application.
-
-You may also want to configure a few additional components of Laravel, such as:
-
-- Cache
-- Database
-- Session
-
-## Web Server Configuration
-
-
-### Pretty URLs
-
-#### Apache
-
-Laravel includes a public/.htaccess file that is used to provide URLs without the index.php front controller in the path. Before serving Laravel with Apache, be sure to enable the mod_rewrite module so the .htaccess file will be honored by the server.
-
-If the .htaccess file that ships with Laravel does not work with your Apache installation, try this alternative:
+Which means you could just as easily use it to make...
 
 ```
-Options +FollowSymLinks
-RewriteEngine On
-
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^ index.php [L]
+<ul class="Example-list">
+{% for example in examples %}
+  <li class="Example">
+    <h1 class="Example-title">{{ example.name }}</h1>
+    <ol class="Example-step-list">
+    {% for step in example.steps %}
+      <li class="Example-step ss-{{ step.icon }}">{{ step.text }}</li>
+    {% endfor %}
+    </ol>
+  </li>
+{% endfor %}
+</ul>
 ```
 
-#### Nginx
+The plugins are all reusable. That PDF generator plugin for eBooks? Use it to generate PDFs for each of your blog posts too!
 
-If you are using Nginx, the following directive in your site configuration will direct all requests to the  index.php front controller:
+Check out [the code examples](https://github.com/segmentio/metalsmith/tree/master/examples) to get an idea for what's possible.
 
-```
-location / {
-    try_files $uri $uri/ /index.php?$query_string;
-}
-```
+## License
 
-Of course, when using Homestead or Valet, pretty URLs will be automatically configured.
+The MIT License (MIT)
+
+Copyright &copy; 2014, Segment.io \<friends@segment.io\>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

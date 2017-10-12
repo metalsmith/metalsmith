@@ -9,7 +9,9 @@
 </head>
 <body>
 	<header>
-		Version: {{ _metadata.version }}
+		<div class="container">
+			Version: {{ metadata.version }}
+		</div>
 	</header>
 
 	{% import _self as forms %}
@@ -21,27 +23,40 @@
 			{% import _self as forms %}
 			{{ forms.renderToc(item.children) }}
 		{% endif %}
+		</li>
     {% endfor %}
 	</ol>
 	{% endmacro %}
 
-	<div class="wrapper">
+	<div class="container content">
 		<aside>
 			<h2>Navigation</h2>
+			<ul>
+				<li><a href="{{relativePath}}index.html">Startseite</a></li>
+			{% for key in metadata.collections|keys %}
+				<li>
+					{{ key }}
+					<ul>
+					{% for item in metadata.collections[key] %}
+						<li>
+							<a href="{{relativePath}}{{ item.path }}">{{ item.title }}</a>
+						</li>
+					{% endfor %}
+					</ul>
+				</li>
+			{% endfor %}
+			</ul>
 		</aside>
 		<article>
-			<h1>{{ title }}</h1>
 			{% if toc %}
 				{{ forms.renderToc(toc) }}
 			{% endif %}
-
-			{{ _self }}
 
 			{{ contents }}
 		</article>
 		<div class="clear"></div>
 		<footer>
-			<p>Generated with {{ generator }} &mdash; <a href="{{ url }}">{{ url }}</a></p>
+			<p>Generated with {{ metadata.generator }} &mdash; <a href="{{ metadata.url }}">{{ metadata.url }}</a></p>
 		</footer>
 	</div>
 </body>

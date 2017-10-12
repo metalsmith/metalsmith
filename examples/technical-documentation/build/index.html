@@ -2,134 +2,165 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Installation</title>
+	<title>Metalsmith</title>
 	<link href="http://fonts.googleapis.com/css?family=Roboto:400,300|Arvo:400" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
 	<link rel="stylesheet" type="text/css" href="media/style.css">
 </head>
 <body>
 	<header>
-		Version: 
+		<div class="container">
+			Version: 1.3.5
+		</div>
 	</header>
 
 		
-	<div class="wrapper">
+	<div class="container content">
 		<aside>
 			<h2>Navigation</h2>
+			<ul>
+				<li><a href="index.html">Startseite</a></li>
+							<li>
+					API
+					<ul>
+											<li>
+							<a href="api/api.html">Metalsmith</a>
+						</li>
+											<li>
+							<a href="api/metadata.html">Metadata</a>
+						</li>
+										</ul>
+				</li>
+							<li>
+					Documentation
+					<ul>
+											<li>
+							<a href="documentation/matching.html">Matching</a>
+						</li>
+											<li>
+							<a href="documentation/works.html">How does it work</a>
+						</li>
+										</ul>
+				</li>
+							<li>
+					Installation
+					<ul>
+											<li>
+							<a href="install/index.html">Installation</a>
+						</li>
+										</ul>
+				</li>
+							<li>
+					Plugins
+					<ul>
+											<li>
+							<a href="plugins/add.html">The Community Plugins</a>
+						</li>
+											<li>
+							<a href="plugins/write.html">Writing A Plugin</a>
+						</li>
+										</ul>
+				</li>
+							<li>
+					Getting Started
+					<ul>
+											<li>
+							<a href="started/install.html">Installation</a>
+						</li>
+											<li>
+							<a href="started/intro.html">Introduction</a>
+						</li>
+											<li>
+							<a href="started/metadata.html">Metadata & debugging</a>
+						</li>
+											<li>
+							<a href="started/plugins.html">Plugins</a>
+						</li>
+											<li>
+							<a href="started/trouble.html">Troubleshooting</a>
+						</li>
+										</ul>
+				</li>
+						</ul>
 		</aside>
 		<article>
-			<h1>Installation</h1>
 								<ol class="toc">
-			<li><a href="#installation">Installation</a>
-									<ol class="toc">
-			<li><a href="#server-requirements">Server Requirements</a>
-		    		<li><a href="#installing-laravel">Installing Laravel</a>
-									<ol class="toc">
-			<li><a href="#via-laravel-installer">Via Laravel Installer</a>
-		    		<li><a href="#via-composer-create-project">Via Composer Create-Project</a>
-		    		<li><a href="#local-development-server">Local Development Server</a>
-		    	</ol>
-	
-		    		<li><a href="#configuration">Configuration</a>
-									<ol class="toc">
-			<li><a href="#public-directory">Public Directory</a>
-		    		<li><a href="#configuration-files">Configuration Files</a>
-		    		<li><a href="#directory-permissions">Directory Permissions</a>
-		    		<li><a href="#application-key">Application Key</a>
-		    		<li><a href="#additional-configuration">Additional Configuration</a>
-		    	</ol>
-	
-		    	</ol>
-	
-		    		<li><a href="#web-server-configuration">Web Server Configuration</a>
-									<ol class="toc">
-			<li><a href="#pretty-urls">Pretty URLs</a>
-									<ol class="toc">
-			<li><a href="#apache">Apache</a>
-		    		<li><a href="#nginx">Nginx</a>
-		    	</ol>
-	
-		    	</ol>
-	
-		    	</ol>
+			<li><a href="#a-little-secret">A Little Secret</a>
+				</li>
+    		<li><a href="#license">License</a>
+				</li>
+    	</ol>
 	
 			
-			
+			<h1 id="welcome"><a class="anchor" href="#welcome"><span></span></a>Welcome</h1>
+<p>You want to build a website or blog with a static site generator. Well, here is our elevator pitch. It&apos;s as easy as that:</p>
+<pre><code class="lang-JavaScript">var Metalsmith  = require(&apos;metalsmith&apos;);
+var collections = require(&apos;metalsmith-collections&apos;);
+var layouts     = require(&apos;metalsmith-layouts&apos;);
+var markdown    = require(&apos;metalsmith-markdown&apos;);
+var permalinks  = require(&apos;metalsmith-permalinks&apos;);
 
-			<h2 id="installation"><a class="anchor" href="#installation"><span></span></a>Installation</h2>
-<blockquote>
-<p>Are you a visual learner? Laracasts provides a free, thorough introduction to Laravel for newcomers to the framework. It&apos;s a great place to start your journey.</p>
-</blockquote>
-<h3 id="server-requirements"><a class="anchor" href="#server-requirements"><span></span></a>Server Requirements</h3>
-<p>The Laravel framework has a few system requirements. Of course, all of these requirements are satisfied by the Laravel Homestead virtual machine, so it&apos;s highly recommended that you use Homestead as your local Laravel development environment.</p>
-<p>However, if you are not using Homestead, you will need to make sure your server meets the following requirements:</p>
-<ul>
-<li>PHP &gt;= 7.0.0</li>
-<li>OpenSSL PHP Extension</li>
-<li>PDO PHP Extension</li>
-<li>Mbstring PHP Extension</li>
-<li>Tokenizer PHP Extension</li>
-<li>XML PHP Extension</li>
-</ul>
-<h3 id="installing-laravel"><a class="anchor" href="#installing-laravel"><span></span></a>Installing Laravel</h3>
-<p>Laravel utilizes Composer to manage its dependencies. So, before using Laravel, make sure you have Composer installed on your machine.</p>
-<h4 id="via-laravel-installer"><a class="anchor" href="#via-laravel-installer"><span></span></a>Via Laravel Installer</h4>
-<p>First, download the Laravel installer using Composer:</p>
-<pre><code class="lang-bash">composer global require &quot;laravel/installer&quot;
-</code></pre>
-<p>Make sure to place the <code>$HOME/.composer/vendor/bin</code> directory (or the equivalent directory for your OS) in your $PATH so the <code>laravel</code> executable can be located by your system.</p>
-<p>Once installed, the <code>laravel new</code> command will create a fresh Laravel installation in the directory you specify. For instance, <code>laravel new blog</code> will create a directory named blog containing a fresh Laravel installation with all of Laravel&apos;s dependencies already installed:</p>
-<pre><code class="lang-bash">laravel new blog
-</code></pre>
-<h4 id="via-composer-create-project"><a class="anchor" href="#via-composer-create-project"><span></span></a>Via Composer Create-Project</h4>
-<p>Alternatively, you may also install Laravel by issuing the Composer create-project command in your terminal:</p>
-<pre><code class="lang-bash">composer create-project --prefer-dist laravel/laravel blog
-</code></pre>
-<h4 id="local-development-server"><a class="anchor" href="#local-development-server"><span></span></a>Local Development Server</h4>
-<p>If you have PHP installed locally and you would like to use PHP&apos;s built-in development server to serve your application, you may use the serve Artisan command. This command will start a development server at <a href="http://localhost:8000">http://localhost:8000</a>:</p>
-<pre><code class="lang-bash">php artisan serve
-</code></pre>
-<p>Of course, more robust local development options are available via Homestead and Valet.</p>
-<h3 id="configuration"><a class="anchor" href="#configuration"><span></span></a>Configuration</h3>
-<h4 id="public-directory"><a class="anchor" href="#public-directory"><span></span></a>Public Directory</h4>
-<p>After installing Laravel, you should configure your web server&apos;s document / web root to be the  public directory. The index.php in this directory serves as the front controller for all HTTP requests entering your application.</p>
-<h4 id="configuration-files"><a class="anchor" href="#configuration-files"><span></span></a>Configuration Files</h4>
-<p>All of the configuration files for the Laravel framework are stored in the config directory. Each option is documented, so feel free to look through the files and get familiar with the options available to you.</p>
-<h4 id="directory-permissions"><a class="anchor" href="#directory-permissions"><span></span></a>Directory Permissions</h4>
-<p>After installing Laravel, you may need to configure some permissions. Directories within the  storage and the bootstrap/cache directories should be writable by your web server or Laravel will not run. If you are using the Homestead virtual machine, these permissions should already be set.</p>
-<h4 id="application-key"><a class="anchor" href="#application-key"><span></span></a>Application Key</h4>
-<p>The next thing you should do after installing Laravel is set your application key to a random string. If you installed Laravel via Composer or the Laravel installer, this key has already been set for you by the php artisan key:generate command.</p>
-<p>Typically, this string should be 32 characters long. The key can be set in the .env environment file. If you have not renamed the .env.example file to .env, you should do that now. If the application key is not set, your user sessions and other encrypted data will not be secure!</p>
-<h4 id="additional-configuration"><a class="anchor" href="#additional-configuration"><span></span></a>Additional Configuration</h4>
-<p>Laravel needs almost no other configuration out of the box. You are free to get started developing! However, you may wish to review the config/app.php file and its documentation. It contains several options such as timezone and locale that you may wish to change according to your application.</p>
-<p>You may also want to configure a few additional components of Laravel, such as:</p>
-<ul>
-<li>Cache</li>
-<li>Database</li>
-<li>Session</li>
-</ul>
-<h2 id="web-server-configuration"><a class="anchor" href="#web-server-configuration"><span></span></a>Web Server Configuration</h2>
-<h3 id="pretty-urls"><a class="anchor" href="#pretty-urls"><span></span></a>Pretty URLs</h3>
-<h4 id="apache"><a class="anchor" href="#apache"><span></span></a>Apache</h4>
-<p>Laravel includes a public/.htaccess file that is used to provide URLs without the index.php front controller in the path. Before serving Laravel with Apache, be sure to enable the mod_rewrite module so the .htaccess file will be honored by the server.</p>
-<p>If the .htaccess file that ships with Laravel does not work with your Apache installation, try this alternative:</p>
-<pre><code>Options +FollowSymLinks
-RewriteEngine On
 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^ index.php [L]
-</code></pre><h4 id="nginx"><a class="anchor" href="#nginx"><span></span></a>Nginx</h4>
-<p>If you are using Nginx, the following directive in your site configuration will direct all requests to the  index.php front controller:</p>
-<pre><code>location / {
-    try_files $uri $uri/ /index.php?$query_string;
-}
-</code></pre><p>Of course, when using Homestead or Valet, pretty URLs will be automatically configured.</p>
+Metalsmith(__dirname)         // __dirname defined by node.js:
+                              // name of current working directory
+  .metadata({                 // add any variable you want
+                              // use them in layout-files
+    sitename: &quot;My Static Site &amp; Blog&quot;,
+    siteurl: &quot;http://example.com/&quot;,
+    description: &quot;It&apos;s about saying &#xBB;Hello&#xAB; to the world.&quot;,
+    generatorname: &quot;Metalsmith&quot;,
+    generatorurl: &quot;http://metalsmith.io/&quot;
+  })
+  .source(&apos;./src&apos;)            // source directory
+  .destination(&apos;./build&apos;)     // destination directory
+  .clean(true)                // clean destination before
+  .use(collections({          // group all blog posts by internally
+    posts: &apos;posts/*.md&apos;       // adding key &apos;collections&apos;:&apos;posts&apos;
+  }))                         // use `collections.posts` in layouts
+  .use(markdown())            // transpile all md into html
+  .use(permalinks({           // change URLs to permalink URLs
+    relative: false           // put css only in /css
+  }))
+  .use(layouts({              // wrap layouts around html
+    engine: &apos;handlebars&apos;,     // use the layout engine you like
+  }))
+  .build(function(err) {      // build process
+    if (err) throw err;       // error handling is required
+  });
+</code></pre>
+<p>You want to try yourself, if it is really this easy. Have a go:</p>
+<pre><code class="lang-bash">$ git clone https://github.com/metalsmith/metalsmith.git
+$ cd metalsmith/examples/static-site
+$ make
+</code></pre>
+<h2 id="a-little-secret"><a class="anchor" href="#a-little-secret"><span></span></a>A Little Secret</h2>
+<p>We keep referring to Metalsmith as a &quot;static site generator&quot;, but it&apos;s a lot more than that. Since everything is a plugin, the core library is actually just an abstraction for manipulating a directory of files.</p>
+<p>Which means you could just as easily use it to make...</p>
+<pre><code>&lt;ul class=&quot;Example-list&quot;&gt;
+{% for example in examples %}
+  &lt;li class=&quot;Example&quot;&gt;
+    &lt;h1 class=&quot;Example-title&quot;&gt;{{ example.name }}&lt;/h1&gt;
+    &lt;ol class=&quot;Example-step-list&quot;&gt;
+    {% for step in example.steps %}
+      &lt;li class=&quot;Example-step ss-{{ step.icon }}&quot;&gt;{{ step.text }}&lt;/li&gt;
+    {% endfor %}
+    &lt;/ol&gt;
+  &lt;/li&gt;
+{% endfor %}
+&lt;/ul&gt;
+</code></pre><p>The plugins are all reusable. That PDF generator plugin for eBooks? Use it to generate PDFs for each of your blog posts too!</p>
+<p>Check out <a href="https://github.com/segmentio/metalsmith/tree/master/examples">the code examples</a> to get an idea for what&apos;s possible.</p>
+<h2 id="license"><a class="anchor" href="#license"><span></span></a>License</h2>
+<p>The MIT License (MIT)</p>
+<p>Copyright &#xA9; 2014, Segment.io \<a href="mailto:friends@segment.io\">friends@segment.io\</a></p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
 
 		</article>
 		<div class="clear"></div>
 		<footer>
-			<p>Generated with  &mdash; <a href=""></a></p>
+			<p>Generated with Metalsmith &mdash; <a href="http://www.metalsmith.io/">http://www.metalsmith.io/</a></p>
 		</footer>
 	</div>
 </body>

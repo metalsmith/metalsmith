@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Matching</title>
+	<link href="http://fonts.googleapis.com/css?family=Roboto:400,300|Arvo:400" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+	<link rel="stylesheet" type="text/css" href="../media/style.css">
+</head>
+<body>
+	<header>
+		<div class="container">
+			Version: 1.3.5
+		</div>
+	</header>
+
+		
+	<div class="container content">
+		<aside>
+			<h2>Navigation</h2>
+			<ul>
+				<li><a href="../index.html">Startseite</a></li>
+							<li>
+					API
+					<ul>
+											<li>
+							<a href="../api/api.html">Metalsmith</a>
+						</li>
+											<li>
+							<a href="../api/metadata.html">Metadata</a>
+						</li>
+										</ul>
+				</li>
+							<li>
+					Documentation
+					<ul>
+											<li>
+							<a href="../documentation/matching.html">Matching</a>
+						</li>
+											<li>
+							<a href="../documentation/works.html">How does it work</a>
+						</li>
+										</ul>
+				</li>
+							<li>
+					Installation
+					<ul>
+											<li>
+							<a href="../install/index.html">Installation</a>
+						</li>
+										</ul>
+				</li>
+							<li>
+					Plugins
+					<ul>
+											<li>
+							<a href="../plugins/add.html">The Community Plugins</a>
+						</li>
+											<li>
+							<a href="../plugins/write.html">Writing A Plugin</a>
+						</li>
+										</ul>
+				</li>
+							<li>
+					Getting Started
+					<ul>
+											<li>
+							<a href="../started/install.html">Installation</a>
+						</li>
+											<li>
+							<a href="../started/intro.html">Introduction</a>
+						</li>
+											<li>
+							<a href="../started/metadata.html">Metadata & debugging</a>
+						</li>
+											<li>
+							<a href="../started/plugins.html">Plugins</a>
+						</li>
+											<li>
+							<a href="../started/trouble.html">Troubleshooting</a>
+						</li>
+										</ul>
+				</li>
+						</ul>
+		</aside>
+		<article>
+			
+			<h1 id="matching"><a class="anchor" href="#matching"><span></span></a>Matching</h1>
+<p>Even though we touched on the topic already, we did not tackle it explicitly. We mentioned that plugins usually run through all files presented to <code>metalsmith</code>. This happens in a loop like this:</p>
+<pre><code class="lang-JavaScript">Object.keys(files).forEach(function(file){
+  //
+  // here would be your code
+  //
+});
+</code></pre>
+<p>The question now is, how does for instance a markdown-engine know, which files to transpile? The answer is easy. Per default, <code>metalsmith-markdown</code> is checking if <code>file</code> has a <code>.md</code> or <code>.markdown</code> extension. Remember, <code>file</code> is a JavaScript object that has its full filename (including its path) as a value.
+If the check is not true it jumps over it, otherwise it is passing the file to the engine. After processing it, <code>metalsmith-markdown</code> replaces the <code>.md</code> extension with an <code>.html</code> and the next plugin can now check against the new filename and so on.</p>
+<p>A process such as this is called check for pattern matching. Many <code>metalsmith</code>-plugins employ such matching. Either they check against internally set requirements or patterns or they offer an explicit option to check against user defined matches, like we have already seen in the <code>writemetadata</code>-plugin:</p>
+<pre><code class="lang-JavaScript">.use(writemetadata({            // write the JS object
+  pattern: [&apos;**/*&apos;],            // for each file into .json
+  ignorekeys: [&apos;next&apos;, &apos;previous&apos;],
+  bufferencoding: &apos;utf8&apos;        // also put &apos;content&apos; into .json
+}))
+</code></pre>
+<p>Pattern matching is normally based on <a href="https://github.com/isaacs/node-glob">glob</a> pattern. Many plugins employ either own functions or rely on <a href="https://www.npmjs.com/package/minimatch"><code>minimatch</code></a> or <a href="https://www.npmjs.com/package/multimatch"><code>multimatch</code></a>.</p>
+<pre><code class="lang-JavaScript">var multimatch = require(&apos;multimatch&apos;);
+
+[...]
+
+  // Checks whether files should be processed
+  // length is zero if no matching pattern was found
+  if (multimatch(file, opts.pattern).length) {
+
+    // process file
+
+  }
+</code></pre>
+
+		</article>
+		<div class="clear"></div>
+		<footer>
+			<p>Generated with Metalsmith &mdash; <a href="http://www.metalsmith.io/">http://www.metalsmith.io/</a></p>
+		</footer>
+	</div>
+</body>
+</html>

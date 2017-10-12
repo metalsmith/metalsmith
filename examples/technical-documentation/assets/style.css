@@ -7,9 +7,13 @@ body {
   margin: 0px;
 }
 
-.wrapper {
+.container {
   width: 80%;
-  margin: 10% auto 5%;
+  margin: auto;
+}
+
+.container.content {
+  margin: 5% auto 5%;
 }
 
 aside {
