@@ -24,40 +24,7 @@
 					API
 					<ul>
 											<li>
-							<a href="../api/api.html">Metalsmith</a>
-						</li>
-											<li>
-							<a href="../api/metadata.html">Metadata</a>
-						</li>
-										</ul>
-				</li>
-							<li>
-					Documentation
-					<ul>
-											<li>
-							<a href="../documentation/matching.html">Matching</a>
-						</li>
-											<li>
-							<a href="../documentation/works.html">How does it work</a>
-						</li>
-										</ul>
-				</li>
-							<li>
-					Installation
-					<ul>
-											<li>
-							<a href="../install/index.html">Installation</a>
-						</li>
-										</ul>
-				</li>
-							<li>
-					Plugins
-					<ul>
-											<li>
-							<a href="../plugins/add.html">The Community Plugins</a>
-						</li>
-											<li>
-							<a href="../plugins/write.html">Writing A Plugin</a>
+							<a href="../api/api.html">API</a>
 						</li>
 										</ul>
 				</li>
@@ -66,12 +33,6 @@
 					<ul>
 											<li>
 							<a href="../started/install.html">Installation</a>
-						</li>
-											<li>
-							<a href="../started/intro.html">Introduction</a>
-						</li>
-											<li>
-							<a href="../started/metadata.html">Metadata & debugging</a>
 						</li>
 											<li>
 							<a href="../started/plugins.html">Plugins</a>
@@ -85,37 +46,15 @@
 		</aside>
 		<article>
 			
-			<h1 id="everything-is-a-plugin-a-first-example"><a class="anchor" href="#everything-is-a-plugin-a-first-example"><span></span></a>Everything is a Plugin - A first example</h1>
-<p>All of the logic in Metalsmith is handled by plugins. You simply chain them together. Here&apos;s what the simplest blog looks like. It uses only two plugins, <strong><code>markdown()</code></strong> and <strong><code>layouts()</code></strong>...</p>
-<pre><code class="lang-js">Metalsmith(__dirname)          // instantiate Metalsmith in the cwd
-  .source(&apos;sourcepath&apos;)        // specify source directory
-  .destination(&apos;destpath&apos;)     // specify destination directory
-  .use(markdown())             // transpile markdown into html
-  .use(layouts({               // wrap a handlebars-layout
-    engine: &apos;handlebars&apos;       // around transpiled html-files
-  }))    
-  .build(function(err) {       // this is the actual build process
-    if (err) throw err;    // throwing errors is required
-  });
-</code></pre>
-<p>... and by the way, if you do not want your destination directory to be cleaned before a new build, just add <b><code>.clean(false)</code></b>. But what if you want to get fancier by hiding your unfinished drafts and using permalinks? Just add plugins...</p>
-<pre><code class="lang-js">Metalsmith(__dirname)
-  .source(&apos;sourcepath&apos;)      
-  .destination(&apos;destpath&apos;)
-  .clean(false)                  // do not clean destination
-                                 // directory before new build   
-  .use(drafts())                 // only files that are NOT drafts
-  .use(markdown())
-  .use(permalinks())             // make a permalink output path
-  .use(layouts({
-    engine: &apos;handlebars&apos;
+			<h1 id="plugin"><a class="anchor" href="#plugin"><span></span></a>Plugin</h1>
+<p>All of the logic in the Client is handled by plugins. You simply chain them together.</p>
+<pre><code class="lang-js">Client()
+  .use(ssh({
+    port: &apos;22&apos;
   }))
-  .build(function(err) {    
-    if (err) throw err;
-  });
+  .connect(&apos;/var/socket&apos;)
 </code></pre>
 <p>...it&apos;s as easy as that!</p>
-<p>A small comment. Instead of <a href="http://handlebarsjs.com/">Handlebars</a> you can also use other templating languages such as <a href="http://jade-lang.com/">Jade/Pug</a>.</p>
 
 		</article>
 		<div class="clear"></div>

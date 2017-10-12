@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Metalsmith</title>
+	<title>Fancy Documentation</title>
 	<link href="http://fonts.googleapis.com/css?family=Roboto:400,300|Arvo:400" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
 	<link rel="stylesheet" type="text/css" href="media/style.css">
@@ -24,40 +24,7 @@
 					API
 					<ul>
 											<li>
-							<a href="api/api.html">Metalsmith</a>
-						</li>
-											<li>
-							<a href="api/metadata.html">Metadata</a>
-						</li>
-										</ul>
-				</li>
-							<li>
-					Documentation
-					<ul>
-											<li>
-							<a href="documentation/matching.html">Matching</a>
-						</li>
-											<li>
-							<a href="documentation/works.html">How does it work</a>
-						</li>
-										</ul>
-				</li>
-							<li>
-					Installation
-					<ul>
-											<li>
-							<a href="install/index.html">Installation</a>
-						</li>
-										</ul>
-				</li>
-							<li>
-					Plugins
-					<ul>
-											<li>
-							<a href="plugins/add.html">The Community Plugins</a>
-						</li>
-											<li>
-							<a href="plugins/write.html">Writing A Plugin</a>
+							<a href="api/api.html">API</a>
 						</li>
 										</ul>
 				</li>
@@ -66,12 +33,6 @@
 					<ul>
 											<li>
 							<a href="started/install.html">Installation</a>
-						</li>
-											<li>
-							<a href="started/intro.html">Introduction</a>
-						</li>
-											<li>
-							<a href="started/metadata.html">Metadata & debugging</a>
 						</li>
 											<li>
 							<a href="started/plugins.html">Plugins</a>
@@ -85,74 +46,15 @@
 		</aside>
 		<article>
 								<ol class="toc">
-			<li><a href="#a-little-secret">A Little Secret</a>
-				</li>
-    		<li><a href="#license">License</a>
+			<li><a href="#license">License</a>
 				</li>
     	</ol>
 	
 			
 			<h1 id="welcome"><a class="anchor" href="#welcome"><span></span></a>Welcome</h1>
-<p>You want to build a website or blog with a static site generator. Well, here is our elevator pitch. It&apos;s as easy as that:</p>
-<pre><code class="lang-JavaScript">var Metalsmith  = require(&apos;metalsmith&apos;);
-var collections = require(&apos;metalsmith-collections&apos;);
-var layouts     = require(&apos;metalsmith-layouts&apos;);
-var markdown    = require(&apos;metalsmith-markdown&apos;);
-var permalinks  = require(&apos;metalsmith-permalinks&apos;);
-
-
-Metalsmith(__dirname)         // __dirname defined by node.js:
-                              // name of current working directory
-  .metadata({                 // add any variable you want
-                              // use them in layout-files
-    sitename: &quot;My Static Site &amp; Blog&quot;,
-    siteurl: &quot;http://example.com/&quot;,
-    description: &quot;It&apos;s about saying &#xBB;Hello&#xAB; to the world.&quot;,
-    generatorname: &quot;Metalsmith&quot;,
-    generatorurl: &quot;http://metalsmith.io/&quot;
-  })
-  .source(&apos;./src&apos;)            // source directory
-  .destination(&apos;./build&apos;)     // destination directory
-  .clean(true)                // clean destination before
-  .use(collections({          // group all blog posts by internally
-    posts: &apos;posts/*.md&apos;       // adding key &apos;collections&apos;:&apos;posts&apos;
-  }))                         // use `collections.posts` in layouts
-  .use(markdown())            // transpile all md into html
-  .use(permalinks({           // change URLs to permalink URLs
-    relative: false           // put css only in /css
-  }))
-  .use(layouts({              // wrap layouts around html
-    engine: &apos;handlebars&apos;,     // use the layout engine you like
-  }))
-  .build(function(err) {      // build process
-    if (err) throw err;       // error handling is required
-  });
-</code></pre>
-<p>You want to try yourself, if it is really this easy. Have a go:</p>
-<pre><code class="lang-bash">$ git clone https://github.com/metalsmith/metalsmith.git
-$ cd metalsmith/examples/static-site
-$ make
-</code></pre>
-<h2 id="a-little-secret"><a class="anchor" href="#a-little-secret"><span></span></a>A Little Secret</h2>
-<p>We keep referring to Metalsmith as a &quot;static site generator&quot;, but it&apos;s a lot more than that. Since everything is a plugin, the core library is actually just an abstraction for manipulating a directory of files.</p>
-<p>Which means you could just as easily use it to make...</p>
-<pre><code>&lt;ul class=&quot;Example-list&quot;&gt;
-{% for example in examples %}
-  &lt;li class=&quot;Example&quot;&gt;
-    &lt;h1 class=&quot;Example-title&quot;&gt;{{ example.name }}&lt;/h1&gt;
-    &lt;ol class=&quot;Example-step-list&quot;&gt;
-    {% for step in example.steps %}
-      &lt;li class=&quot;Example-step ss-{{ step.icon }}&quot;&gt;{{ step.text }}&lt;/li&gt;
-    {% endfor %}
-    &lt;/ol&gt;
-  &lt;/li&gt;
-{% endfor %}
-&lt;/ul&gt;
-</code></pre><p>The plugins are all reusable. That PDF generator plugin for eBooks? Use it to generate PDFs for each of your blog posts too!</p>
-<p>Check out <a href="https://github.com/segmentio/metalsmith/tree/master/examples">the code examples</a> to get an idea for what&apos;s possible.</p>
+<p>Fancy documentation from gitlab docs.</p>
 <h2 id="license"><a class="anchor" href="#license"><span></span></a>License</h2>
 <p>The MIT License (MIT)</p>
-<p>Copyright &#xA9; 2014, Segment.io \<a href="mailto:friends@segment.io\">friends@segment.io\</a></p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
 <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
 <p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>

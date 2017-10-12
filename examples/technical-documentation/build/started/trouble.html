@@ -24,40 +24,7 @@
 					API
 					<ul>
 											<li>
-							<a href="../api/api.html">Metalsmith</a>
-						</li>
-											<li>
-							<a href="../api/metadata.html">Metadata</a>
-						</li>
-										</ul>
-				</li>
-							<li>
-					Documentation
-					<ul>
-											<li>
-							<a href="../documentation/matching.html">Matching</a>
-						</li>
-											<li>
-							<a href="../documentation/works.html">How does it work</a>
-						</li>
-										</ul>
-				</li>
-							<li>
-					Installation
-					<ul>
-											<li>
-							<a href="../install/index.html">Installation</a>
-						</li>
-										</ul>
-				</li>
-							<li>
-					Plugins
-					<ul>
-											<li>
-							<a href="../plugins/add.html">The Community Plugins</a>
-						</li>
-											<li>
-							<a href="../plugins/write.html">Writing A Plugin</a>
+							<a href="../api/api.html">API</a>
 						</li>
 										</ul>
 				</li>
@@ -66,12 +33,6 @@
 					<ul>
 											<li>
 							<a href="../started/install.html">Installation</a>
-						</li>
-											<li>
-							<a href="../started/intro.html">Introduction</a>
-						</li>
-											<li>
-							<a href="../started/metadata.html">Metadata & debugging</a>
 						</li>
 											<li>
 							<a href="../started/plugins.html">Plugins</a>
@@ -89,8 +50,6 @@
 									<ol class="toc">
 			<li><a href="#using-node-js-0-10-x">Using node.js 0.10.x</a>
 				</li>
-    		<li><a href="#using-node-js-0-12-x">Using node.js 0.12.x</a>
-				</li>
     	</ol>
 	
 				</li>
@@ -99,24 +58,9 @@
 			
 			<h1 id="troubleshooting"><a class="anchor" href="#troubleshooting"><span></span></a>Troubleshooting</h1>
 <h2 id="node-version-requirements"><a class="anchor" href="#node-version-requirements"><span></span></a>Node Version Requirements</h2>
-<p>Metalsmith v2.0 and above uses <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator">generators</a> which has some considerations for <code>node.js 0.12.x</code> and below.</p>
+<p>Client v2.0 and above uses <code>node.js 0.12.x</code> and below.</p>
 <h3 id="using-node-js-0-10-x"><a class="anchor" href="#using-node-js-0-10-x"><span></span></a>Using node.js 0.10.x</h3>
-<p>You have two options:</p>
-<ol>
-<li>Upgrade to latest stable version of <code>node.js</code> (&gt;= <code>0.12.x</code> &#x2014; see &quot;<em>Using <code>node.js 0.12.x</code></em>&quot; section below)</li>
-<li>Use Metalsmith v1.7. Put <code>&quot;metalsmith&quot;: &quot;^1.7.0&quot;</code> in your <code>package.json</code> and <code>npm install</code> that version.</li>
-</ol>
-<h3 id="using-node-js-0-12-x"><a class="anchor" href="#using-node-js-0-12-x"><span></span></a>Using node.js 0.12.x</h3>
-<p>You have three options:</p>
-<ol>
-<li>Run <code>node.js</code> with <code>--harmony_generators</code> flag set.<ol>
-<li><code>node --harmony_generators my_script.js</code></li>
-<li>Using <code>package.json</code>: <code>&quot;scripts&quot;: {&quot;start&quot;: &quot;node --harmony_generators my_script.js&quot;}</code>. Run with <code>npm run</code></li>
-</ol>
-</li>
-<li><code>npm install</code> <a href="https://www.npmjs.com/package/harmonize">harmonize</a> and require before Metalsmith is used. e.g. <code>require(&quot;harmonize&quot;)([&quot;harmony-generators&quot;]);</code></li>
-<li>Use Metalsmith v1.7. Put <code>&quot;metalsmith&quot;: &quot;^1.7.0&quot;</code> in your <code>package.json</code> and <code>npm install</code> that version.</li>
-</ol>
+<p>Upgrade to latest stable version of <code>node.js</code> (&gt;= <code>0.12.x</code> &#x2014; see &quot;<em>Using <code>node.js 0.12.x</code></em>&quot; section below)</p>
 
 		</article>
 		<div class="clear"></div>

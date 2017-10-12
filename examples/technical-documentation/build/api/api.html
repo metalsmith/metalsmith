@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Metalsmith</title>
+	<title>API</title>
 	<link href="http://fonts.googleapis.com/css?family=Roboto:400,300|Arvo:400" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
 	<link rel="stylesheet" type="text/css" href="../media/style.css">
@@ -24,40 +24,7 @@
 					API
 					<ul>
 											<li>
-							<a href="../api/api.html">Metalsmith</a>
-						</li>
-											<li>
-							<a href="../api/metadata.html">Metadata</a>
-						</li>
-										</ul>
-				</li>
-							<li>
-					Documentation
-					<ul>
-											<li>
-							<a href="../documentation/matching.html">Matching</a>
-						</li>
-											<li>
-							<a href="../documentation/works.html">How does it work</a>
-						</li>
-										</ul>
-				</li>
-							<li>
-					Installation
-					<ul>
-											<li>
-							<a href="../install/index.html">Installation</a>
-						</li>
-										</ul>
-				</li>
-							<li>
-					Plugins
-					<ul>
-											<li>
-							<a href="../plugins/add.html">The Community Plugins</a>
-						</li>
-											<li>
-							<a href="../plugins/write.html">Writing A Plugin</a>
+							<a href="../api/api.html">API</a>
 						</li>
 										</ul>
 				</li>
@@ -66,12 +33,6 @@
 					<ul>
 											<li>
 							<a href="../started/install.html">Installation</a>
-						</li>
-											<li>
-							<a href="../started/intro.html">Introduction</a>
-						</li>
-											<li>
-							<a href="../started/metadata.html">Metadata & debugging</a>
 						</li>
 											<li>
 							<a href="../started/plugins.html">Plugins</a>
@@ -85,70 +46,22 @@
 		</aside>
 		<article>
 								<ol class="toc">
-			<li><a href="#new-metalsmith-dir-">new Metalsmith(dir)</a>
+			<li><a href="#new-client-">new Client()</a>
 				</li>
     		<li><a href="#-use-plugin-">.use(plugin)</a>
 				</li>
-    		<li><a href="#-build-fn-">.build(fn)</a>
-				</li>
-    		<li><a href="#-source-path-">.source(path)</a>
-				</li>
-    		<li><a href="#-destination-path-">.destination(path)</a>
-				</li>
-    		<li><a href="#-concurrency-max-">.concurrency(max)</a>
-				</li>
-    		<li><a href="#-clean-boolean-">.clean(boolean)</a>
-				</li>
-    		<li><a href="#-frontmatter-boolean-">.frontmatter(boolean)</a>
-				</li>
-    		<li><a href="#-ignore-path-">.ignore(path)</a>
-				</li>
-    		<li><a href="#-metadata-json-">.metadata(json)</a>
-				</li>
-    		<li><a href="#-path-paths-">.path(paths...)</a>
-				</li>
-    		<li><a href="#-run-files-fn-">.run(files, fn)</a>
+    		<li><a href="#-connect-path-">.connect(path)</a>
 				</li>
     	</ol>
 	
 			
 			<h1 id="api"><a class="anchor" href="#api"><span></span></a>API</h1>
-<p>Checkout the <a href="https://github.com/metalsmith/metalsmith/tree/master/examples/project-scaffolder">project scaffolder</a> or <a href="https://github.com/metalsmith/metalsmith/tree/master/examples/build-tool">build tool</a> examples to see a real example of the Javascript API in use.</p>
-<h3 id="new-metalsmith-dir-"><a class="anchor" href="#new-metalsmith-dir-"><span></span></a>new Metalsmith(dir)</h3>
-<p>Create a new <code>Metalsmith</code> instance for a working <code>dir</code>.</p>
-<h3 id="-use-plugin-"><a class="anchor" href="#-use-plugin-"><span></span></a>.use(plugin)</h3>
-<p>Add the given <code>plugin</code> function to the middleware stack. Metalsmith uses
-<a href="https://github.com/segmentio/ware">ware</a> to support middleware, so plugins
-should follow the same pattern of taking arguments of <code>(files, metalsmith, callback)</code>,
-modifying the <code>files</code> or <code>metalsmith.metadata()</code> argument by reference, and then
-calling <code>callback</code> to trigger the next step.</p>
-<h3 id="-build-fn-"><a class="anchor" href="#-build-fn-"><span></span></a>.build(fn)</h3>
-<p>Build with the given settings and a callback having signature <code>fn(err, files)</code>.</p>
-<h3 id="-source-path-"><a class="anchor" href="#-source-path-"><span></span></a>.source(path)</h3>
-<p>Set the relative <code>path</code> to the source directory, or get the full one if no <code>path</code> is provided. The source directory defaults to <code>./src</code>.</p>
-<h3 id="-destination-path-"><a class="anchor" href="#-destination-path-"><span></span></a>.destination(path)</h3>
-<p>Set the relative <code>path</code> to the destination directory, or get the full one if no <code>path</code> is provided. The destination directory defaults to <code>./build</code>.</p>
-<h3 id="-concurrency-max-"><a class="anchor" href="#-concurrency-max-"><span></span></a>.concurrency(max)</h3>
-<p>Set the maximum number of files to open at once when reading or writing.  Defaults to <code>Infinity</code>.  To avoid having too many files open at once (<code>EMFILE</code> errors), set the concurrency to something lower than <code>ulimit -n</code>.</p>
-<h3 id="-clean-boolean-"><a class="anchor" href="#-clean-boolean-"><span></span></a>.clean(boolean)</h3>
-<p>Set whether to remove the destination directory before writing to it, or get the current setting. Defaults to <code>true</code>.</p>
-<h3 id="-frontmatter-boolean-"><a class="anchor" href="#-frontmatter-boolean-"><span></span></a>.frontmatter(boolean)</h3>
-<p>Set whether to parse YAML frontmatter. Defaults to <code>true</code>.</p>
-<h3 id="-ignore-path-"><a class="anchor" href="#-ignore-path-"><span></span></a>.ignore(path)</h3>
-<p>Ignore files/paths from being loaded into Metalsmith.</p>
-<p><code>path</code> can be a string, a function, or an array of strings and/or functions.
-Strings use the glob syntax from
-<a href="https://github.com/isaacs/minimatch">minimatch</a> to match files and directories
-to ignore. Functions are called with the full path to the file as their first
-argument, and the <code>lstat</code> object returned by Node&apos;s <code>fs.lstat</code> function as their
-second argument, and must return either <code>true</code> to ignore the file, or <code>false</code> to
-keep it.</p>
-<h3 id="-metadata-json-"><a class="anchor" href="#-metadata-json-"><span></span></a>.metadata(json)</h3>
-<p>Get the global metadata. This is useful for plugins that want to set global-level metadata that can be applied to all files.</p>
-<h3 id="-path-paths-"><a class="anchor" href="#-path-paths-"><span></span></a>.path(paths...)</h3>
-<p>Resolve any amount of <code>paths...</code> relative to the working directory. This is useful for plugins who want to read extra assets from another directory, for example <code>./layouts</code>.</p>
-<h3 id="-run-files-fn-"><a class="anchor" href="#-run-files-fn-"><span></span></a>.run(files, fn)</h3>
-<p>Run all of the middleware functions on a dictionary of <code>files</code> and callback with <code>fn(err, files)</code>, where <code>files</code> is the altered dictionary.</p>
+<h2 id="new-client-"><a class="anchor" href="#new-client-"><span></span></a>new Client()</h2>
+<p>Create a new <code>Client</code> instance.</p>
+<h2 id="-use-plugin-"><a class="anchor" href="#-use-plugin-"><span></span></a>.use(plugin)</h2>
+<p>Add the given <code>plugin</code> function to the middleware stack.</p>
+<h2 id="-connect-path-"><a class="anchor" href="#-connect-path-"><span></span></a>.connect(path)</h2>
+<p>Set the <code>path</code> to the destination socket.</p>
 
 		</article>
 		<div class="clear"></div>
