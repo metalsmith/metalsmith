@@ -1,0 +1,16 @@
+{
+  "name": "technical-documentation",
+  "private": true,
+  "dependencies": {
+    "metalsmith": "^2.3.0",
+    "metalsmith-assets": "^0.1.0",
+    "metalsmith-autotoc": "^0.1.5",
+    "metalsmith-headings-identifier": "^0.0.11",
+    "metalsmith-markdown": "^0.2.1",
+    "metalsmith-metallic": "^2.0.2",
+    "metalsmith-twig": "^1.1.0"
+  },
+  "scripts": {
+    "build": "node index.js"
+  }
+}
