@@ -262,6 +262,11 @@ rm -rf .
 would be built with mode ```-rwxrw-r--```, i.e. user-executable.
 
 
+## TypeScript
+
+The TypeScript Declaration file for Metalsmith is now included as part of the package, enabling a fully typed experience in ts-node project types. 
+
+
 ## Troubleshooting
 
 ### Node Version Requirements

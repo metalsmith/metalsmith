@@ -3,3 +3,12 @@ test/fixtures/*/build
 coverage
 .vscode/
 .idea/
+.vs/
+*.njsproj
+*.user
+/bin/Microsoft.NodejsTools.WebRole.dll
+/obj/Debug/metalsmith.njsproj.CoreCompileInputs.cache
+/obj/Debug/metalsmith.njsproj.FileListAbsolute.txt
+/obj/Debug/metalsmith.njsprojResolveAssemblyReference.cache
+/obj/Debug/Tsc.out
+/test/typescript.js
