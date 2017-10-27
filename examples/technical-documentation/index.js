@@ -1,10 +1,8 @@
 var Metalsmith = require("metalsmith");
 var markdown = require("metalsmith-markdown");
 var twig = require("metalsmith-twig");
-var autotoc = require("metalsmith-autotoc");
 var headings = require("metalsmith-headings-identifier");
 var metallic = require("metalsmith-metallic");
-var assets = require("metalsmith-assets");
 var collections = require("metalsmith-auto-collections");
 
 Metalsmith(__dirname)
@@ -29,8 +27,6 @@ Metalsmith(__dirname)
       pattern: ['**/*.md', '!*.md']
     })
   )
-  // generate toc
-  .use(autotoc({ selector: "h2, h3" }))
   // link to headlines and icon
   .use(
     headings({
@@ -41,13 +37,6 @@ Metalsmith(__dirname)
   .use(metallic())
   // twig templates (default: ./views)
   .use(twig())
-  // copy css
-  .use(
-    assets({
-      source: "./assets", // relative to the working directory
-      destination: "./media" // relative to the build directory
-    })
-  )
   // run
   .build(function(err, files) {
     if (err) {

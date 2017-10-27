@@ -3,61 +3,34 @@
 <head>
 	<meta charset="utf-8">
 	<title>{{ title }}</title>
-	<link href="http://fonts.googleapis.com/css?family=Roboto:400,300|Arvo:400" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
-	<link rel="stylesheet" type="text/css" href="{{relativePath}}media/style.css">
 </head>
 <body>
-	<header>
-		<div class="container">
-			Version: {{ metadata.version }}
-		</div>
-	</header>
+	Version: {{ metadata.version }}
 
-	{% import _self as forms %}
-	{% macro renderToc(items) %}
-	<ol class="toc">
-	{% for item in items %}
-		<li><a href="#{{ item.id }}">{{ item.text }}</a>
-		{% if item.children.length > 0 %}
-			{% import _self as forms %}
-			{{ forms.renderToc(item.children) }}
-		{% endif %}
-		</li>
-    {% endfor %}
-	</ol>
-	{% endmacro %}
-
-	<div class="container content">
-		<aside>
-			<h2>Navigation</h2>
-			<ul>
-				<li><a href="{{relativePath}}index.html">Startseite</a></li>
-			{% for key in metadata.collections|keys %}
-				<li>
-					{{ key }}
-					<ul>
-					{% for item in metadata.collections[key] %}
-						<li>
-							<a href="{{relativePath}}{{ item.path }}">{{ item.title }}</a>
-						</li>
-					{% endfor %}
-					</ul>
-				</li>
-			{% endfor %}
-			</ul>
-		</aside>
-		<article>
-			{% if toc %}
-				{{ forms.renderToc(toc) }}
-			{% endif %}
-
-			{{ contents }}
-		</article>
-		<div class="clear"></div>
-		<footer>
-			<p>Generated with {{ metadata.generator }} &mdash; <a href="{{ metadata.url }}">{{ metadata.url }}</a></p>
-		</footer>
-	</div>
+	<nav>
+		<h2>Navigation</h2>
+		<ul>
+			<li><a href="{{relativePath}}index.html">Startseite</a></li>
+		{% for key in metadata.collections|keys %}
+			<li>
+				{{ key }}
+				<ul>
+				{% for item in metadata.collections[key] %}
+					<li>
+						<a href="{{relativePath}}{{ item.path }}">{{ item.title }}</a>
+					</li>
+				{% endfor %}
+				</ul>
+			</li>
+		{% endfor %}
+		</ul>
+	</nav>
+	<article>
+		{{ contents }}
+	</article>
+	<footer>
+		<p>Generated with {{ metadata.generator }} &mdash; <a href="{{ metadata.url }}">{{ metadata.url }}</a></p>
+	</footer>
 </body>
 </html>
