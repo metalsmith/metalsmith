@@ -34,7 +34,8 @@
     "thunkify": "^2.1.2",
     "unyield": "0.0.1",
     "ware": "^1.2.0",
-    "win-fork": "^1.1.1"
+    "win-fork": "^1.1.1",
+    "myth": "1.1.0"
   },
   "devDependencies": {
     "assert-dir-equal": "~1.0.1",
