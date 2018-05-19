@@ -13,6 +13,7 @@
             "error",
             "unix"
         ],
+        "no-console": "off",
         "no-var": "error",
         "quotes": [
             "error",
