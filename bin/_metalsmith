@@ -4,11 +4,11 @@
  * Dependencies.
  */
 
-var chalk = require('chalk');
-var exists = require('fs').existsSync;
-var Metalsmith = require('..');
-var program = require('commander');
-var resolve = require('path').resolve;
+const chalk = require('chalk');
+const exists = require('fs').existsSync;
+const Metalsmith = require('..');
+const program = require('commander');
+const resolve = require('path').resolve;
 
 /**
  * Usage.
@@ -43,13 +43,14 @@ program.parse(process.argv);
  * Config.
  */
 
-var dir = process.cwd();
-var config = program.config;
-var path = resolve(dir, config);
+let dir = process.cwd();
+let config = program.config;
+let path = resolve(dir, config);
 if (!exists(path)) fatal('could not find a ' + config + ' configuration file.');
 
+let json
 try {
-  var json = require(path);
+  json = require(path);
 } catch (e) {
   fatal('it seems like ' + config + ' is malformed.');
 }
@@ -58,7 +59,7 @@ try {
  * Metalsmith.
  */
 
-var metalsmith = new Metalsmith(dir);
+let metalsmith = new Metalsmith(dir);
 if (json.source) metalsmith.source(json.source);
 if (json.destination) metalsmith.destination(json.destination);
 if (json.concurrency) metalsmith.concurrency(json.concurrency);
@@ -72,13 +73,13 @@ if (json.ignore != null) metalsmith.ignore(json.ignore);
  */
 
 normalize(json.plugins).forEach(function(plugin){
-  for (var name in plugin) {
-    var opts = plugin[name];
-    var mod;
+  for (let name in plugin) {
+    let opts = plugin[name];
+    let mod;
 
     try {
-      var local = resolve(dir, name);
-      var npm = resolve(dir, 'node_modules', name);
+      let local = resolve(dir, name);
+      let npm = resolve(dir, 'node_modules', name);
 
       if (exists(local) || exists(local + '.js')) {
         mod = require(local);
@@ -147,10 +148,10 @@ function log(message){
 
 function normalize(obj){
   if (obj instanceof Array) return obj;
-  var ret = [];
+  let ret = [];
 
-  for (var key in obj) {
-    var plugin = {};
+  for (let key in obj) {
+    let plugin = {};
     plugin[key] = obj[key];
     ret.push(plugin);
   }
