@@ -3,4 +3,8 @@
  * Export `Metalsmith`.
  */
 
-module.exports = require('./lib')
+const _Metalsmith = require('./lib')
+
+module.exports = function Metalsmith(directory) {
+  return new _Metalsmith(directory)
+}

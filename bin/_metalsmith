@@ -59,7 +59,7 @@ try {
  * Metalsmith.
  */
 
-let metalsmith = new Metalsmith(dir)
+let metalsmith = Metalsmith(dir)
 if (json.source) metalsmith.source(json.source)
 if (json.destination) metalsmith.destination(json.destination)
 if (json.concurrency) metalsmith.concurrency(json.concurrency)
@@ -104,10 +104,13 @@ normalize(json.plugins).forEach(function(plugin){
  * Build.
  */
 
-metalsmith.build(function(err){
-  if (err) return fatal(err.message, err.stack)
-  log('successfully built to ' + metalsmith.destination())
-})
+metalsmith.build()
+  .then(function(){
+    log('successfully built to ' + metalsmith.destination())
+  })
+  .catch(function(err){
+    return fatal(err.message, err.stack)
+  })
 
 /**
  * Log an error and then exit the process.
