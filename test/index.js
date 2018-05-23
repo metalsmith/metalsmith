@@ -534,7 +534,7 @@ describe('Metalsmith', function(){
 })
 
 describe('CLI', function(){
-  let bin = 'node ' + path.resolve(__dirname, '../bin/metalsmith')
+  let bin = process.argv0 + ' ' + path.resolve(__dirname, '../bin/metalsmith')
 
   describe('build', function(){
     it('should error without a metalsmith.json', async function(){
