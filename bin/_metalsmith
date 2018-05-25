@@ -105,11 +105,11 @@ normalize(json.plugins).forEach(function(plugin){
  */
 
 metalsmith.build()
-  .then(function(){
+  .then( () => {
     log('successfully built to ' + metalsmith.destination())
   })
-  .catch(function(err){
-    return fatal(err.message, err.stack)
+  .catch( (err) => {
+    fatal(err.message, err.stack)
   })
 
 /**
