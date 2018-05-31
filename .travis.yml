@@ -20,5 +20,9 @@ matrix:
 before_script:
   - export HARMONY_OPTS=$(node --v8-options | grep --only-matching -- '--harmony_generators')
 
+script:
+  - npm run lint
+  - npm test
+
 after_script:
-  npm run coveralls
+  - npm run coveralls
