@@ -22,7 +22,7 @@ before_script:
 
 script:
   - echo "---\nTRAVIS_NODE_VERSION = ${TRAVIS_NODE_VERSION}\n---"
-  - if [ $TRAVIS_NODE_VERSION eq "10" ]; then npm run lint; fi
+  - "if [ $TRAVIS_NODE_VERSION -eq \"10\" ]; then npm run lint; fi"
   - npm test
 
 after_script:
