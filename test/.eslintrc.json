@@ -1,39 +1,13 @@
 {
-  "extends": "eslint:recommended",
   "env": {
-    "es6": true,
-    "node": true,
     "mocha": true
   },
-  "parserOptions": {
-    "ecmaVersion": 2017
-  },
   "rules": {
-    "indent": [
-      "error",
-      2
-    ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "no-console": "off",
     "no-unused-vars": [
         "error", { 
           //  suppress errors for unused args that match this pattern
           "argsIgnorePattern": "err|metalsmith|std(out|err)" 
         }
-    ],
-    "no-var": "error",
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "never"
-    ],
-    "require-await": "error"
+    ]
   }
 }
-
