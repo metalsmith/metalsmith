@@ -21,7 +21,8 @@ before_script:
   - export HARMONY_OPTS=$(node --v8-options | grep --only-matching -- '--harmony_generators')
 
 script:
-  - npm run lint
+  - echo "---\nTRAVIS_NODE_VERSION = ${TRAVIS_NODE_VERSION}\n---"
+  - if [ $TRAVIS_NODE_VERSION eq "10" ]; then npm run lint; fi
   - npm test
 
 after_script:
