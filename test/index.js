@@ -556,6 +556,7 @@ describe('Metalsmith', function(){
       fs.mkdirSync(fixture('build/build'))
       exec('touch test/fixtures/build/build/empty.md', function(err){
         if (err) return done(err)
+        // eslint-disable-next-line
         var files = { 'index.md': { contents: new Buffer('body') }}
         m.build(function(err){
           if (err) return done(err)
@@ -574,6 +575,7 @@ describe('Metalsmith', function(){
       m.clean(false)
       exec(cmd, function(err){
         if (err) return done(err)
+        // eslint-disable-next-line
         var files = { 'index.md': { contents: new Buffer('body') }}
         m.build(function(err){
           if (err) return done(err)
