@@ -40,7 +40,7 @@
   "devDependencies": {
     "assert-dir-equal": "~1.0.1",
     "co-mocha": "^1.0.1",
-    "coveralls": "^2.11.6",
+    "coveralls": "^3.0.1",
     "eslint": "^4.19.1",
     "istanbul": "^0.4.1",
     "metalsmith-drafts": "0.0.1",
