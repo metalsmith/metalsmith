@@ -1,0 +1,13 @@
+{
+  "env": {
+    "mocha": true
+  },
+  "rules": {
+    "no-unused-vars": [
+        "error", { 
+          //  suppress errors for unused args that match this pattern
+          "argsIgnorePattern": "err|metalsmith|std(out|err)" 
+        }
+    ]
+  }
+}

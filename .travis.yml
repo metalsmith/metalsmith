@@ -7,6 +7,10 @@ node_js:
   - "4"
   - "5"
   - "6"
+  - "7"
+  - "8"
+  - "9"
+  - "10"
   - "node"
 
 matrix:
@@ -16,5 +20,9 @@ matrix:
 before_script:
   - export HARMONY_OPTS=$(node --v8-options | grep --only-matching -- '--harmony_generators')
 
+script:
+  - if [ $TRAVIS_NODE_VERSION -eq '10' ]; then npm run lint; fi
+  - npm test
+
 after_script:
-  npm run coveralls
+  - npm run coveralls

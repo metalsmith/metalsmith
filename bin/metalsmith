@@ -4,37 +4,37 @@
  * Module dependencies.
  */
 
-var spawn = require('win-fork');
-var resolve = require('path').resolve;
+var spawn = require('win-fork')
+var resolve = require('path').resolve
 
 /**
  * Resolve.
  */
 
-var args = process.argv.slice(2);
+var args = process.argv.slice(2)
 
 /**
  * If we're not talking about a sub-command, fall back on `_metalsmith`.
  */
 
-args.unshift(resolve(__dirname, '_metalsmith'));
+args.unshift(resolve(__dirname, '_metalsmith'))
 
 /**
  * Add the necessary node flag.
  */
 
-if (!require('has-generators')) args.unshift('--harmony-generators');
+if (!require('has-generators')) args.unshift('--harmony-generators')
 
 /**
  * Spawn.
  */
 
-var proc = spawn(process.execPath, args, { stdio: 'inherit' });
+var proc = spawn(process.execPath, args, { stdio: 'inherit' })
 
 /**
  * Exit.
  */
 
 proc.on('exit', function (code) {
-  process.exit(code);
-});
+  process.exit(code)
+})
