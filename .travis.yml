@@ -13,7 +13,14 @@ node_js:
   - "10"
   - "node"
 
+env:
+  TASK: test
+
 matrix:
+  include:
+    - node_js: "10"
+      env:
+        TASK: lint
   allow_failures:
     - node_js: "node"
 
@@ -21,8 +28,7 @@ before_script:
   - export HARMONY_OPTS=$(node --v8-options | grep --only-matching -- '--harmony_generators')
 
 script:
-  - if [ $TRAVIS_NODE_VERSION -eq '10' ]; then npm run lint; fi
-  - npm test
+  - npm run $TASK
 
 after_script:
   - npm run coveralls
