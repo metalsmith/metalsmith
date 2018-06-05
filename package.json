@@ -26,7 +26,6 @@
     "commander": "^2.6.0",
     "gray-matter": "^2.1.0",
     "has-generators": "^1.0.1",
-    "is": "^3.1.0",
     "is-utf8": "~0.2.0",
     "recursive-readdir": "^2.1.0",
     "rimraf": "^2.2.8",
