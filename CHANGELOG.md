@@ -6,7 +6,39 @@ This project adheres to [Semantic Versioning](http://semver.org).
 This document follows the guidelines of [Keep A Changelog](http://keepachangelog.com).
 
 ## [Unreleased]
-- Nothing here yet...
+
+
+### Added
+* ESLint (...finally!) (#305) (@Zearin)
+
+
+### Removed
+* Dependency `absolute` (save ≈21k!) (c05f9e2) (@Zearin)
+
+
+### Updated
+Thanks to ESLint, we’ve tidied up Metalsmith’s source code a bit.
+
+* **Dependencies:**
+    - `graymatter`: 2.0.0 ▶︎ 2.1.0 (030cd8c, 5446866) (@moozzyk)
+
+* Update `CHANGELOG.md` format to follow “[Keep A Changelog](http://keepachangelog.com)” (#266) (@Zearin)
+
+
+### Fixed
+* Fix test error on Windows (#158) (@moozzyk)
+
+
+### Security
+**The new `npm audit` command is awesome.**  You should use it in your own projects!
+
+#### `npm audit` vulnerability fixes
+* **Development Dependencies:**
+    - `coveralls`: 2.11.6 ▶︎ 3.0.1 (#308) (@Zearin)
+        Fix 5 “Moderate” vulnerabilities
+    - `metalsmith-markdown`: 0.2.1 ▶︎ 0.2.2 (#312) (@Zearin)
+        Fix 1 “Low” vulnerability
+
 
 
 ## [2.3.0] - 2016-10-28
