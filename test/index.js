@@ -12,17 +12,16 @@ var fixture = path.resolve.bind(path, __dirname, 'fixtures')
 
 
 /* Use `Buffer.from` whenever possible.
- * For old Node.js versions, just alias `Buffer.from` to the old constructor 
- * so nobody needs to remember to add conditionals.
- *
  * See:
  *    - https://nodejs.org/api/buffer.html#buffer_new_buffer_string_encoding
  *    - https://nodejs.org/api/buffer.html#buffer_class_method_buffer_from_string_encoding
  */
-if (!Buffer.hasOwnProperty('from')) {
-  Buffer.prototype.from = Buffer.prototype.constructor
+function getBuffer(arg) {
+  if (Buffer.hasOwnProperty('from')){
+    return Buffer.from(arg)
+  }
+  return new Buffer(arg)
 }
-
 
 describe('Metalsmith', function(){
   beforeEach(function(){
@@ -251,7 +250,7 @@ describe('Metalsmith', function(){
         assert.deepEqual(files, {
           'index.md': {
             title: 'A Title',
-            contents: Buffer.from('body'),
+            contents: getBuffer('body'),
             mode: stats.mode.toString(8).slice(-4),
             stats: stats
           }
@@ -270,7 +269,7 @@ describe('Metalsmith', function(){
         assert.deepEqual(files, {
           'dir/index.md': {
             title: 'A Title',
-            contents: Buffer.from('body'),
+            contents: getBuffer('body'),
             mode: stats.mode.toString(8).slice(-4),
             stats: stats
           }
@@ -288,7 +287,7 @@ describe('Metalsmith', function(){
         assert.deepEqual(files, {
           'index.md': {
             title: 'A Title',
-            contents: Buffer.from('body'),
+            contents: getBuffer('body'),
             mode: stats.mode.toString(8).slice(-4),
             stats: stats
           }
@@ -304,7 +303,7 @@ describe('Metalsmith', function(){
         if (err) return done(err)
         assert.deepEqual(files, {
           'bin': {
-            contents: Buffer.from('echo test'),
+            contents: getBuffer('echo test'),
             mode: stats.mode.toString(8).slice(-4),
             stats: stats
           }
@@ -352,7 +351,7 @@ describe('Metalsmith', function(){
           'index.md': {
             date: new Date('2013-12-02'),
             title: 'A Title',
-            contents: Buffer.from('body'),
+            contents: getBuffer('body'),
             mode: stats.mode.toString(8).slice(-4),
             stats: stats
           }
@@ -374,7 +373,7 @@ describe('Metalsmith', function(){
           'index.md': {
             date: new Date('2013-12-02'),
             title: 'A Title',
-            contents: Buffer.from('body'),
+            contents: getBuffer('body'),
             mode: stats.mode.toString(8).slice(-4),
             stats: stats
           }
@@ -387,7 +386,7 @@ describe('Metalsmith', function(){
   describe('#write', function(){
     it('should write to a destination directory', function(done){
       var m = Metalsmith(fixture('write'))
-      var files = { 'index.md': { contents: Buffer.from('body') }}
+      var files = { 'index.md': { contents: getBuffer('body') }}
       m.write(files, function(err){
         if (err) return done(err)
         equal(fixture('write/build'), fixture('write/expected'))
@@ -397,7 +396,7 @@ describe('Metalsmith', function(){
 
     it('should write to a provided directory', function(done){
       var m = Metalsmith(fixture('write-dir'))
-      var files = { 'index.md': { contents: Buffer.from('body') }}
+      var files = { 'index.md': { contents: getBuffer('body') }}
       var dir = fixture('write-dir/out')
       m.write(files, dir, function(err){
         if (err) return done(err)
@@ -412,7 +411,7 @@ describe('Metalsmith', function(){
       var m = Metalsmith(fixture('write-mode'))
       var files = {
         'bin': {
-          contents: Buffer.from('echo test'),
+          contents: getBuffer('echo test'),
           mode: '0777'
         }
       }
@@ -508,7 +507,7 @@ describe('Metalsmith', function(){
         .use(function(files, metalsmith, done){
           Object.keys(files).forEach(function(file){
             var data = files[file]
-            data.contents = Buffer.from(data.title)
+            data.contents = getBuffer(data.title)
           })
           done()
         })
@@ -553,7 +552,7 @@ describe('Metalsmith', function(){
         .use(function(files, metalsmith, done){
           Object.keys(files).forEach(function(file){
             var data = files[file]
-            data.contents = Buffer.from(data.title)
+            data.contents = getBuffer(data.title)
           })
           done()
         })
