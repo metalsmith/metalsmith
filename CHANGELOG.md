@@ -16,11 +16,6 @@ This document follows the guidelines of [Keep A Changelog](http://keepachangelog
   - `absolute` (save ≈21k!) (c05f9e2) (@Zearin)
   - `is` (save ≈74k!) (7eaac9e2, 54dba0c1) (@Zearin)
 
-### Changed
-* When a `Metalsmith` setter receives an invalid argument, it now throws 
-  a `TypeError` instead of an `AssertionError` (but error messages 
-  are unchanged) (@Zearin)
-
 ### Updated
 Thanks to ESLint, we’ve tidied up Metalsmith’s source code a bit.
 
