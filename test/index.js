@@ -10,6 +10,19 @@ var path = require('path')
 var rm = require('rimraf').sync
 var fixture = path.resolve.bind(path, __dirname, 'fixtures')
 
+
+/* Use `Buffer.from` whenever possible.
+ * See:
+ *    - https://nodejs.org/api/buffer.html#buffer_new_buffer_string_encoding
+ *    - https://nodejs.org/api/buffer.html#buffer_class_method_buffer_from_string_encoding
+ */
+function getBuffer(arg) {
+  if (Buffer.hasOwnProperty('from')){
+    return Buffer.from(arg)
+  }
+  return new Buffer(arg)
+}
+
 describe('Metalsmith', function(){
   beforeEach(function(){
     rm('test/tmp')
@@ -58,6 +71,12 @@ describe('Metalsmith', function(){
       var m = Metalsmith('test/tmp')
       m.ignore('dirfile')
       assert(1 == m.ignores.length)
+    })
+
+    it('should return the ignore list without arguments', function() {
+      var m = Metalsmith('test/tmp')
+      m.ignore('dirfile')
+      assert(m.ignore()[0] === 'dirfile')
     })
   })
 
@@ -156,6 +175,18 @@ describe('Metalsmith', function(){
       var m = Metalsmith('test/tmp')
       assert.equal(m.concurrency(), Infinity)
     })
+
+    it('should error on non-number', function() {
+      var m = Metalsmith('test/tmp')
+      var badArgs = [NaN, 'hi', process, false, '1', '2', '3']
+      badArgs.forEach( function(bad) {
+        assert.throws(function() {
+          m.concurrency(bad),
+          TypeError
+        })
+      })
+    })
+
   })
 
   describe('#clean', function(){
@@ -237,7 +268,7 @@ describe('Metalsmith', function(){
         assert.deepEqual(files, {
           'index.md': {
             title: 'A Title',
-            contents: new Buffer('body'),
+            contents: getBuffer('body'),
             mode: stats.mode.toString(8).slice(-4),
             stats: stats
           }
@@ -256,7 +287,7 @@ describe('Metalsmith', function(){
         assert.deepEqual(files, {
           'dir/index.md': {
             title: 'A Title',
-            contents: new Buffer('body'),
+            contents: getBuffer('body'),
             mode: stats.mode.toString(8).slice(-4),
             stats: stats
           }
@@ -274,7 +305,7 @@ describe('Metalsmith', function(){
         assert.deepEqual(files, {
           'index.md': {
             title: 'A Title',
-            contents: new Buffer('body'),
+            contents: getBuffer('body'),
             mode: stats.mode.toString(8).slice(-4),
             stats: stats
           }
@@ -290,7 +321,7 @@ describe('Metalsmith', function(){
         if (err) return done(err)
         assert.deepEqual(files, {
           'bin': {
-            contents: new Buffer('echo test'),
+            contents: getBuffer('echo test'),
             mode: stats.mode.toString(8).slice(-4),
             stats: stats
           }
@@ -338,7 +369,7 @@ describe('Metalsmith', function(){
           'index.md': {
             date: new Date('2013-12-02'),
             title: 'A Title',
-            contents: new Buffer('body'),
+            contents: getBuffer('body'),
             mode: stats.mode.toString(8).slice(-4),
             stats: stats
           }
@@ -360,7 +391,7 @@ describe('Metalsmith', function(){
           'index.md': {
             date: new Date('2013-12-02'),
             title: 'A Title',
-            contents: new Buffer('body'),
+            contents: getBuffer('body'),
             mode: stats.mode.toString(8).slice(-4),
             stats: stats
           }
@@ -370,10 +401,46 @@ describe('Metalsmith', function(){
     })
   })
 
+  describe('#readFile', function() {
+
+    it('should read non-absolute files', function(done) {
+      var m = Metalsmith(fixture('read'))
+      var stats = fs.statSync(fixture('read/src/index.md'))
+      var expected = {
+        title: 'A Title',
+        contents: getBuffer('body'),
+        mode: stats.mode.toString(8).slice(-4),
+        stats: stats
+      }
+      m.readFile('index.md', function(err, file) {
+        if (err) return done(err)
+        assert.deepEqual(file, expected)
+        done()
+      })
+    })
+
+    it('should error when reading invalid frontmatter', function(done) {
+      var m = Metalsmith(fixture('read-invalid-frontmatter'))
+      m.frontmatter(true)
+      m.readFile('index.md', function(err, file) {
+        if (err) {
+          assert(err instanceof Error)
+          assert.throws(
+            function () { throw err },
+            /invalid frontmatter/i
+          )
+          return file
+        }
+        throw new Error('This should not execute!')
+      })
+      done()
+    })
+  })
+
   describe('#write', function(){
     it('should write to a destination directory', function(done){
       var m = Metalsmith(fixture('write'))
-      var files = { 'index.md': { contents: new Buffer('body') }}
+      var files = { 'index.md': { contents: getBuffer('body') }}
       m.write(files, function(err){
         if (err) return done(err)
         equal(fixture('write/build'), fixture('write/expected'))
@@ -383,7 +450,7 @@ describe('Metalsmith', function(){
 
     it('should write to a provided directory', function(done){
       var m = Metalsmith(fixture('write-dir'))
-      var files = { 'index.md': { contents: new Buffer('body') }}
+      var files = { 'index.md': { contents: getBuffer('body') }}
       var dir = fixture('write-dir/out')
       m.write(files, dir, function(err){
         if (err) return done(err)
@@ -398,7 +465,7 @@ describe('Metalsmith', function(){
       var m = Metalsmith(fixture('write-mode'))
       var files = {
         'bin': {
-          contents: new Buffer('echo test'),
+          contents: getBuffer('echo test'),
           mode: '0777'
         }
       }
@@ -420,6 +487,26 @@ describe('Metalsmith', function(){
           equal('test/fixtures/concurrency/build', 'test/fixtures/concurrency/expected')
           done()
         })
+      })
+    })
+  })
+
+  describe('#writeFile', function() {
+    it('should write non-absolute files', function(done) {
+      var m = Metalsmith(fixture('write-file'))
+      var file = 'index.md'
+      var data = { contents: getBuffer('body') }
+
+      var expected = fixture('write-file/expected')
+
+      m.writeFile(file, data, function(err) {
+        if (err) return done(err)
+        equal(fixture('write-file/build'), expected)
+        assert.equal(
+          fs.readFileSync(fixture('write-file/build/index.md'),    'utf8'),
+          fs.readFileSync(fixture('write-file/expected/index.md'), 'utf8')
+        )
+        done()
       })
     })
   })
@@ -494,7 +581,7 @@ describe('Metalsmith', function(){
         .use(function(files, metalsmith, done){
           Object.keys(files).forEach(function(file){
             var data = files[file]
-            data.contents = new Buffer(data.title)
+            data.contents = getBuffer(data.title)
           })
           done()
         })
@@ -539,7 +626,7 @@ describe('Metalsmith', function(){
         .use(function(files, metalsmith, done){
           Object.keys(files).forEach(function(file){
             var data = files[file]
-            data.contents = new Buffer(data.title)
+            data.contents = getBuffer(data.title)
           })
           done()
         })

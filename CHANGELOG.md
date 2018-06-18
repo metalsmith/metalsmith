@@ -11,10 +11,10 @@ This document follows the guidelines of [Keep A Changelog](http://keepachangelog
 ### Added
 * ESLint (...finally!) (#305) (@Zearin)
 
-
 ### Removed
-* Dependency `absolute` (save ≈21k!) (c05f9e2) (@Zearin)
-
+* **Remove Dependencies:**
+  - `absolute` (save ≈21k!) (c05f9e2) (@Zearin)
+  - `is` (save ≈74k!) (7eaac9e2, 54dba0c1) (@Zearin)
 
 ### Updated
 Thanks to ESLint, we’ve tidied up Metalsmith’s source code a bit.
@@ -30,6 +30,8 @@ Thanks to ESLint, we’ve tidied up Metalsmith’s source code a bit.
 
 
 ### Security
+* Use `Buffer.from()` in supporting versions of Node.js possible (@Zearin)
+
 **The new `npm audit` command is awesome.**  You should use it in your own projects!
 
 #### `npm audit` vulnerability fixes
