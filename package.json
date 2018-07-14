@@ -20,7 +20,7 @@
     "lint": "./node_modules/.bin/eslint index.js lib/* bin/* test/*.js"
   },
   "dependencies": {
-    "turbocolor": "^1.0.0",
+    "turbocolor": "^2.0.1",
     "clone": "^2.1.1",
     "co-fs-extra": "^1.2.1",
     "commander": "^2.6.0",
