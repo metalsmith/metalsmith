@@ -6,7 +6,7 @@
  * Dependencies.
  */
 
-var chalk = require('chalk')
+var color = require('turbocolor').color
 var exists = require('fs').existsSync
 var Metalsmith = require('..')
 var program = require('commander')
@@ -119,10 +119,10 @@ metalsmith.build(function(err){
 
 function fatal(msg, stack){
   console.error()
-  console.error(chalk.red('  Metalsmith') + chalk.gray(' · ') + msg)
+  console.error(color.red('  Metalsmith') + color.gray(' · ') + msg)
   if (stack) {
     console.error()
-    console.error(chalk.gray(stack))
+    console.error(color.gray(stack))
   }
   console.error()
   process.exit(1)
@@ -136,7 +136,7 @@ function fatal(msg, stack){
 
 function log(message){
   console.log()
-  console.log(chalk.gray('  Metalsmith · ') + message)
+  console.log(color.gray('  Metalsmith · ') + message)
   console.log()
 }
 
