@@ -1,0 +1,7 @@
+{
+  "source": "src",
+  "destination": "build",
+  "plugins": {
+    "metalsmith-in-place": true
+  }
+}

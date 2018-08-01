@@ -2,12 +2,12 @@
 layout: layout.html
 ---
 
-<h2>Read what I have to say</h2>
+## Read what I have to say
 
-<a href="/posts/first-post/">First post</a>
+[First post](posts/first-post.html)
 
-<a href="/posts/second-post/">Second post</a>
+[Second post](posts/second-post.html)
 
-<a href="/posts/third-post/">Third post</a>
+[Third post](posts/third-post.html)
 
-<a href="/posts/fourth-post/">Fourth post</a>
+[Fourth post](posts/fourth-post.html)
