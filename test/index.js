@@ -639,13 +639,18 @@ describe('Metalsmith', function(){
 
     it('should remove an existing destination directory', function(done){
       var m = Metalsmith(fixture('build'))
-      rm(fixture('build/build'))
+      var cmd =
+        'touch test/fixtures/build/build/empty.md' +
+        ' test/fixtures/build/build/.dotfile'
+      rm(fixture('build/build'), { glob: { dot: true } })
       fs.mkdirSync(fixture('build/build'))
-      exec('touch test/fixtures/build/build/empty.md', function(err){
+      exec(cmd, function (err) {
         if (err) return done(err)
         m.build(function(err){
           if (err) return done(err)
-          equal(fixture('build/build'), fixture('build/expected'))
+          equal(fixture('build/build'), fixture('build/expected'), {
+            filter: function () { return true }
+          })
           done()
         })
       })
