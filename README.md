@@ -285,6 +285,9 @@ You have three options:
 
 ## [License](LICENSE.md)
 
+## Maintenance
+This project is no longer maintained by Segment. Instead, [Andrew Goodricke](https://github.com/woodyrew), [Andrew Meyer](https://github.com/Ajedi32) and [Ismay](https://github.com/ismay) are maintaining the project.
+
 
 [npm-badge]: https://img.shields.io/npm/v/metalsmith.svg
 [npm-url]: https://www.npmjs.com/package/metalsmith
