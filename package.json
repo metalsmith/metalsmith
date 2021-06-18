@@ -24,7 +24,7 @@
     "clone": "^2.1.1",
     "co-fs-extra": "^1.2.1",
     "commander": "~2.15.1",
-    "gray-matter": "^2.1.1",
+    "gray-matter": "^4.0.3",
     "has-generators": "^1.0.1",
     "is-utf8": "~0.2.0",
     "recursive-readdir": "^2.1.0",
