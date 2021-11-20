@@ -1,5 +1,6 @@
 {
-  "source": "./contents",
+  "source": "src",
+  "destination": "build",
   "metadata": {
     "title": "My Wintersmith-Powered Blog",
     "description": "My second, super-cool, Wintersmith-powered blog."
@@ -10,8 +11,7 @@
       "pattern": ":title"
     },
     "metalsmith-layouts": {
-      "engine": "jade",
-      "directory": "./templates"
+      "directory": "layouts"
     }
   }
 }
