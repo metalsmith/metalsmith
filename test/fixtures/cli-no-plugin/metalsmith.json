@@ -1,5 +1,7 @@
 {
-  "plugins": {
-    "metalsmith-non-existant": {}
-  }
+  "plugins": [
+    {
+      "metalsmith-non-existant": {}
+    }
+  ]
 }

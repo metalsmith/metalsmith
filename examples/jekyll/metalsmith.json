@@ -5,15 +5,23 @@
     "title": "My Jekyll-Powered Blog",
     "description": "My second, super-cool, Jekyll-powered blog."
   },
-  "plugins": {
-    "metalsmith-drafts": {},
-    "metalsmith-markdown": {},
-    "metalsmith-permalinks": {
-      "pattern": ":title"
+  "plugins": [
+    {
+      "metalsmith-drafts": {}
     },
-    "metalsmith-layouts": {
-      "engine": "swig",
-      "directory": "_layouts"
+    {
+      "metalsmith-markdown": {}
+    },
+    {
+      "metalsmith-permalinks": {
+        "pattern": ":title"
+      }
+    },
+    {
+      "metalsmith-layouts": {
+        "engine": "swig",
+        "directory": "_layouts"
+      }
     }
-  }
+  ]
 }

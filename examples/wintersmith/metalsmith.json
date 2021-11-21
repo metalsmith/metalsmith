@@ -4,14 +4,19 @@
     "title": "My Wintersmith-Powered Blog",
     "description": "My second, super-cool, Wintersmith-powered blog."
   },
-  "plugins": {
-    "metalsmith-markdown": {},
-    "metalsmith-permalinks": {
-      "pattern": ":title"
+  "plugins": [
+    {
+      "metalsmith-markdown": {}
     },
-    "metalsmith-layouts": {
-      "engine": "jade",
-      "directory": "./templates"
+    {
+      "metalsmith-permalinks": {
+        "pattern": ":title"
+      }
+    },
+    {
+      "metalsmith-layouts": {
+        "directory": "layouts"
+      }
     }
-  }
+  ]
 }

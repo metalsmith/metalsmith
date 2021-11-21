@@ -158,9 +158,11 @@ be published to the world, you can include plugins as local npm modules:
 
 ```json
 {
-  "plugins": {
-    "./lib/metalsmith/plugin.js": true
-  }
+  "plugins": [
+    {
+      "./lib/metalsmith/plugin.js": true
+    }
+  ]
 }
 ```
 
