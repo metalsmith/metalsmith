@@ -1,9 +1,9 @@
 {
-  "name": "asd",
-  "description": "asd",
-  "repository": "git://github.com/asd.git",
+  "name": "test",
+  "description": "a taxonomy plugin",
+  "repository": "git://github.com/webketje/metalsmith-taxonomy.git",
   "version": "0.0.0",
-  "license": "asd",
+  "license": "MIT",
   "main": "lib/index.js",
   "dependencies": {},
   "devDependencies": {

@@ -25,7 +25,7 @@ function concat(files, metalsmith, done){
   var css = '';
 
   for (var file in files) {
-    if ('.css' != extname(file)) continue;
+    if ('.css' !== extname(file)) continue;
     css += files[file].contents.toString();
     delete files[file];
   }
@@ -33,7 +33,7 @@ function concat(files, metalsmith, done){
   css = myth(css);
 
   files['index.css'] = {
-    contents: new Buffer(css)
+    contents: Buffer.from(css)
   };
 
   done();

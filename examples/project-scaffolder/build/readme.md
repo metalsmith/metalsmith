@@ -1,12 +1,12 @@
 
-# asd
+# test
 
-  asd
+  a taxonomy plugin
 
 ## Installation
 
-    $ npm install asd
+    $ npm install test
 
 ## License
 
-  asd
+  MIT

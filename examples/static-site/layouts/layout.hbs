@@ -1,23 +1,32 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8" >
   <title>{{ title }}</title>
   <meta name="description" content="{{ description }}">
+  <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
   <header>
     <p>
       <a href="/">Home</a>
     </p>
-
   </header>
   <h1>{{ title }}</h1>
-  <time>{{ date }}</time>
+  <p>{{ description }}</p>
   {{{ contents }}}
+
+  <ul>
+  {{#each posts}}
+    <li>
+      <a href="/{{ path }}">{{ title }}</a>
+    </li>
+  {{/each}}
+  </ul>
 
   <footer>
     <p>Generated with {{ generator }} &mdash; <a href="{{ url }}">{{ url }}</a></p>
   </footer>
+
 </body>
 </html>

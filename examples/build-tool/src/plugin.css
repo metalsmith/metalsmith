@@ -21,7 +21,7 @@
 
 .Plugin-icon {
   font-size: .7em;
-  color: var(gold);
+  color: var(--gold);
   margin-left: .4em;
 }
 
@@ -43,7 +43,7 @@
 }
 
 .Plugin-arrow::before {
-  color: var(gray);
+  color: var(--gray);
 }
 
 .Plugin:hover .Plugin-arrow {

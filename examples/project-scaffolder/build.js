@@ -55,7 +55,7 @@ function template(files, metalsmith, done){
     var str = files[file].contents.toString();
     render(str, metadata, function(err, res){
       if (err) return done(err);
-      files[file].contents = new Buffer(res);
+      files[file].contents = Buffer.from(res);
       done();
     });
   }

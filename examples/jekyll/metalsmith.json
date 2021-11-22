@@ -2,18 +2,29 @@
   "source": "./_posts",
   "destination": "./_site",
   "metadata": {
-    "title": "My Jekyll-Powered Blog",
-    "description": "My second, super-cool, Jekyll-powered blog."
+    "site_title": "My Jekyll-Powered Blog",
+    "site_description": "My second, super-cool, Jekyll-powered blog."
   },
-  "plugins": {
-    "metalsmith-drafts": {},
-    "metalsmith-markdown": {},
-    "metalsmith-permalinks": {
-      "pattern": ":title"
+  "plugins": [
+    {"@metalsmith/drafts": {}},
+    {"@metalsmith/markdown": {}},
+    {"metalsmith-excerpts": true },
+    {
+      "metalsmith-collections": {
+        "posts": {
+          "pattern": "*[!index].html"
+        }
+      }
     },
-    "metalsmith-layouts": {
-      "engine": "swig",
-      "directory": "_layouts"
+    {
+      "@metalsmith/permalinks": {
+        "pattern": ":title"
+      }
+    },
+    {
+      "metalsmith-layouts": {
+        "directory": "_layouts"
+      }
     }
-  }
+  ]
 }

@@ -2,7 +2,10 @@
   "name": "build-tool-example",
   "private": true,
   "dependencies": {
-    "myth": "^0.3.0",
-    "metalsmith": "^1.0.0"
+    "myth": "^1.5.0",
+    "metalsmith": "^2.3.0"
+  },
+  "scripts": {
+    "start": "node build.js"
   }
 }

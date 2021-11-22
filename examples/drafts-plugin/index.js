@@ -1,10 +1,3 @@
-
-/**
- * Expose `plugin`.
- */
-
-module.exports = plugin;
-
 /**
  * A Metalsmith plugin to hide any files marked as `draft`.
  *
@@ -18,3 +11,8 @@ function plugin(){
     }
   };
 }
+/**
+ * Expose `plugin`.
+ */
+
+module.exports = plugin;
