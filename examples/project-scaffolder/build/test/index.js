@@ -1,6 +1,6 @@
 
 var assert = require('assert');
 
-describe('test', function(){
+describe('My package', function(){
 
 });

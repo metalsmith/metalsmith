@@ -1,7 +1,7 @@
 {
-  "name": "test",
-  "description": "a taxonomy plugin",
-  "repository": "git://github.com/webketje/metalsmith-taxonomy.git",
+  "name": "My package",
+  "description": "A package generated with metalsmith",
+  "repository": "git://github.com/https://github.com/user/repo.git",
   "version": "0.0.0",
   "license": "MIT",
   "main": "lib/index.js",

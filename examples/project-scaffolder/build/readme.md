@@ -1,11 +1,11 @@
 
-# test
+# My package
 
-  a taxonomy plugin
+  A package generated with metalsmith
 
 ## Installation
 
-    $ npm install test
+    $ npm install My package
 
 ## License
 

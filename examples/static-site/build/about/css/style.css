@@ -1,0 +1,27 @@
+.container {
+    margin: auto;
+    width: 1000px;
+}
+
+header {
+    padding: 24px 0;
+    border-bottom: 1px solid;
+}
+
+header nav {
+  margin-bottom: 2rem;
+}
+
+footer {
+    height: 200px;
+    padding: 24px 0;
+}
+
+main {
+    min-height: 500px;
+    padding: 24px 0;
+}
+
+time {
+    font-size: small;
+}

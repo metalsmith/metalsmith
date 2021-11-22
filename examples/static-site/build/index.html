@@ -2,39 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" >
-  <title>My Static Site &amp; Blog</title>
+  <title>My Static Site &amp; Blog &mdash; Hello World</title>
   <meta name="description" content="It&#x27;s about saying »Hello« to the World.">
+  <meta name="viewport" content="device-width, initial-scale=1.0">
   <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <meta name="generator" content="metalsmith">
 </head>
 <body>
-  <header>
-    <p>
-      <a href="/">Home</a>
-    </p>
-  </header>
-  <h1>My Static Site &amp; Blog</h1>
-  <p>It&#x27;s about saying »Hello« to the World.</p>
-  <h2>Read what I have to say</h2>
+  <div class="container">
 
+    <header>
+      <nav>
+        My Static Site &amp; Blog |
+        <a href="/">Home</a> |
+        <a href="/about">About</a>
+      </nav>
+      <h1>Hello World</h1>
+    </header>
 
-  <ul>
-    <li>
-      <a href="/posts/first-post">My First Post</a>
-    </li>
-    <li>
-      <a href="/posts/second-post">My Second Post</a>
-    </li>
-    <li>
-      <a href="/posts/third-post">My Third Post</a>
-    </li>
-    <li>
-      <a href="/posts/fourth-post">My Fourth Post</a>
-    </li>
-  </ul>
+    <main>
+      <p>This site is about saying »Hello« to the world.</p>
+<h1 id="blog">Blog</h1>
+<p>Read what else I have to say. Here are all my blog posts. Enjoy reading!</p>
 
-  <footer>
-    <p>Generated with Metalsmith &mdash; <a href="http://www.metalsmith.io/">http://www.metalsmith.io/</a></p>
-  </footer>
+        <ul>
+          <li>
+            <a href="/posts/first-post">My First Post</a>
+          </li>
+          <li>
+            <a href="/posts/second-post">My Second Post</a>
+          </li>
+          <li>
+            <a href="/posts/third-post">My Third Post</a>
+          </li>
+          <li>
+            <a href="/posts/fourth-post">My Fourth Post</a>
+          </li>
+        </ul>
+    </main>
+
+    <footer>
+      <p>Generated with Metalsmith &mdash; <a href="https://metalsmith.io/">https://metalsmith.io/</a></p>
+    </footer>
+
+  </div>
 
 </body>
 </html>

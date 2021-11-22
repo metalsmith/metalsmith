@@ -2,31 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" >
-  <title>{{ title }}</title>
+  <title>{{ sitename }} &mdash; {{ title }}</title>
   <meta name="description" content="{{ description }}">
+  <meta name="viewport" content="device-width, initial-scale=1.0">
   <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <meta name="generator" content="metalsmith">
 </head>
 <body>
-  <header>
-    <p>
-      <a href="/">Home</a>
-    </p>
-  </header>
-  <h1>{{ title }}</h1>
-  <p>{{ description }}</p>
-  {{{ contents }}}
+  <div class="container">
 
-  <ul>
-  {{#each posts}}
-    <li>
-      <a href="/{{ path }}">{{ title }}</a>
-    </li>
-  {{/each}}
-  </ul>
+    <header>
+      <nav>
+        {{ sitename }} |
+        <a href="/">Home</a> |
+        <a href="/about">About</a>
+      </nav>
+      <h1>{{ title }}</h1>
+    </header>
 
-  <footer>
-    <p>Generated with {{ generator }} &mdash; <a href="{{ url }}">{{ url }}</a></p>
-  </footer>
+    <main>
+      {{{ contents }}}
+      {{#if postlist}}
+        <ul>
+        {{#each posts}}
+          <li>
+            <a href="/{{ path }}">{{ title }}</a>
+          </li>
+        {{/each}}
+        </ul>
+      {{/if}}
+    </main>
+
+    <footer>
+      <p>Generated with {{ generator }} &mdash; <a href="{{ url }}">{{ url }}</a></p>
+    </footer>
+
+  </div>
 
 </body>
 </html>

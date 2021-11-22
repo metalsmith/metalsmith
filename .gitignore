@@ -4,3 +4,4 @@ coverage
 .vscode/
 .idea/
 .DS_Store
+examples/package-lock.json

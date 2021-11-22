@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="{{ site_description }}">
+  <meta name="generator" content="metalsmith">
 </head>
 <body>
   <h1>{{ site_title | safe }}</h1>
