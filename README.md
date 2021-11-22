@@ -126,10 +126,10 @@ You can specify your plugins as either an object or array. Using an array would 
   "source": "src",
   "destination": "build",
   "plugins": [
-    {"metalsmith-drafts": true},
-    {"metalsmith-markdown": true},
-    {"metalsmith-permalinks": "posts/:title"},
-    {"metalsmith-templates": "handlebars"}
+    { "metalsmith-drafts": true },
+    { "metalsmith-markdown": true },
+    { "metalsmith-permalinks": "posts/:title" },
+    { "metalsmith-layouts": true }
   ]
 }
 ```
