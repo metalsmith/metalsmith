@@ -251,6 +251,66 @@ describe('Metalsmith', function(){
     })
   })
 
+  describe('#match', function(){
+    it('should match a glob pattern', function(done){
+      var m = Metalsmith(fixture('match'))
+      m
+        .process(function(err) {
+          if (err) done(err)
+          var matches = m.match('**/*.md').join(',')
+          assert.equal(matches, `index.md,${path.join('nested', 'index.md')}`)
+          done()
+        })
+    })
+
+    it('should support negation & OR patterns', function(done){
+      var m = Metalsmith(fixture('match'))
+      m
+        .process(function(err) {
+          if (err) done(err)
+          var negationMatches = m.match('!index.md').join(',')
+          var orMatches = m.match('*.{jpg,md}').join(',')
+          assert.equal(negationMatches, `.htaccess,team.jpg,${path.join('nested', 'index.md')}`)
+          assert.equal(orMatches, 'index.md,team.jpg')
+          done()
+        })
+    })
+
+    it('should include dotfiles, unless specified otherwise', function(done){
+      var m = Metalsmith(fixture('match'))
+      m
+        .process(function(err) {
+          if (err) done(err)
+          var matchesAll = m.match('**').join(',')
+          var matchesNoDot = m.match('**', { dot: false }).join(',')
+          assert.equal(matchesAll, `.htaccess,index.md,team.jpg,${path.join('nested', 'index.md')}`)
+          assert.equal(matchesNoDot, `index.md,team.jpg,${path.join('nested', 'index.md')}`)
+          done()
+        })
+    })
+
+
+    // this test is included because micromatch has an obscure option called "windows",
+    // which is set to true by default on Windows. Maintains compat with how Metalsmith 2.x functions
+    it('should not transform backslashes to forward slashes in the returned matches', function(done){
+      var m = Metalsmith(fixture('match'))
+      m
+        .use(function windowsPaths(files) {
+          Object.keys(files).forEach(key => {
+            if (key.indexOf('/') === -1) return
+            files[key.replace(/\//g, '\\')] = files[key]
+            delete files[key]
+          })
+        })
+        .process(function(err) {
+          if (err) done(err)
+          var matches = m.match('**/*.md').join(',')
+          assert.equal(matches, 'index.md,nested\\index.md')
+          done()
+        })
+    })
+  })
+
   describe('#read', function(){
     it('should read from a source directory', function(done){
       var m = Metalsmith(fixture('read'))
