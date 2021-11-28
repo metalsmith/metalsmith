@@ -1,6 +1,7 @@
 node_modules
 test/fixtures/*/build
-coverage
+coverage.info
+.nyc_output/
 .vscode/
 .idea/
 .DS_Store

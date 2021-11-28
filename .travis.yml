@@ -1,31 +1,24 @@
 language: node_js
-sudo: false
+dist: xenial
 
 node_js:
-  - "0.12"
-  - "iojs"
-  - "4"
-  - "5"
-  - "6"
-  - "7"
-  - "8"
-  - "9"
-  - "10"
-  - "node"
+  - node
+  - 16
+  - 14
+  - 12
+  - 10
+  - 8
 
-env:
-  TASK: test
+os: 
+  - linux
+  - windows
 
-matrix:
+jobs:
   include:
-    - node_js: "10"
-      env:
-        TASK: lint
-  allow_failures:
-    - node_js: "node"
+    - name: lint
+      script: npm run lint
+    - name: coveralls
+      script: npm run test && npm run coveralls
 
-script:
-  - npm run $TASK
-
-after_script:
-  - npm run coveralls
+install: npm install
+script: npm run test

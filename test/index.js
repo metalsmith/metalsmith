@@ -335,6 +335,17 @@ describe('Metalsmith', function(){
       })
     })
 
+    it('should be able to read frontmatter in JSON format', function(done) {
+      var files
+      Metalsmith(fixture('read-frontmatter'))
+        .use(fileObj => { files = fileObj })
+        .process(function(err) {
+          if (err) throw err
+          assert.equal(files['json.md'].json, true)
+          done()
+        })
+    })
+
     it('should still read all when concurrency is set', function(done){
       var m = Metalsmith('test/fixtures/concurrency')
       m.concurrency(3)

@@ -111,8 +111,8 @@ In addition to a simple [Javascript API](#api), the Metalsmith CLI can read conf
   "source": "src",
   "destination": "build",
   "plugins": {
-    "metalsmith-drafts": true,
-    "metalsmith-markdown": true,
+    "@metalsmith/drafts": true,
+    "@metalsmith/markdown": true,
     "metalsmith-permalinks": "posts/:title",
     "metalsmith-layouts": "handlebars"
   }
@@ -126,8 +126,8 @@ You can specify your plugins as either an object or array. Using an array would 
   "source": "src",
   "destination": "build",
   "plugins": [
-    { "metalsmith-drafts": true },
-    { "metalsmith-markdown": true },
+    { "@metalsmith/drafts": true },
+    { "@metalsmith/markdown": true },
     { "metalsmith-permalinks": "posts/:title" },
     { "metalsmith-layouts": true }
   ]

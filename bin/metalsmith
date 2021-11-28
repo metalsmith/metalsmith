@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var spawn = require('win-fork')
+var spawn = require('cross-spawn')
 var resolve = require('path').resolve
 
 /**

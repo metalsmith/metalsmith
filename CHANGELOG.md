@@ -20,7 +20,7 @@ This document follows the guidelines of [Keep A Changelog](http://keepachangelog
 Thanks to ESLint, we’ve tidied up Metalsmith’s source code a bit.
 
 * **Dependencies:**
-    - `graymatter`: 2.0.0 ▶︎ 2.1.0 (030cd8c, 5446866) (@moozzyk)
+    - `gray-matter`: 2.0.0 ▶︎ 2.1.0 (030cd8c, 5446866) (@moozzyk)
 
 * Update `CHANGELOG.md` format to follow “[Keep A Changelog](http://keepachangelog.com)” (#266) (@Zearin)
 

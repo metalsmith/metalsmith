@@ -1,5 +1,5 @@
 {
   "plugins": {
-    "metalsmith-drafts": {}
+    "@metalsmith/drafts": {}
   }
 }

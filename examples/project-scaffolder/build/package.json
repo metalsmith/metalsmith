@@ -1,5 +1,5 @@
 {
-  "name": "My package",
+  "name": "my-package",
   "description": "A package generated with metalsmith",
   "repository": "git://github.com/https://github.com/user/repo.git",
   "version": "0.0.0",
