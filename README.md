@@ -4,7 +4,7 @@
 [![npm version][npm-badge]][npm-url]
 [![Build Status][travis-badge]][travis-url]
 [![Coverage Status][coveralls-badge]][coveralls-url]
-[![Slack chat][slack-badge]][slack-url]
+[![Gitter chat][gitter-badge]][gitter-url]
 
 > An extremely simple, _pluggable_ static site generator.
 
@@ -290,5 +290,5 @@ You have three options:
 [travis-url]: https://app.travis-ci.com/github/metalsmith/metalsmith
 [coveralls-badge]:https://coveralls.io/repos/github/metalsmith/metalsmith/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/metalsmith/metalsmith?branch=master
-[slack-badge]: https://img.shields.io/badge/GITTER-Join-blue.svg
+[gitter-badge]: https://img.shields.io/badge/GITTER-Join-blue.svg
 [gitter-url]: https://gitter.im/metalsmith/community
