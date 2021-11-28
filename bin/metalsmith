@@ -20,12 +20,6 @@ var args = process.argv.slice(2)
 args.unshift(resolve(__dirname, '_metalsmith'))
 
 /**
- * Add the necessary node flag.
- */
-
-if (!require('has-generators')) args.unshift('--harmony-generators')
-
-/**
  * Spawn.
  */
 

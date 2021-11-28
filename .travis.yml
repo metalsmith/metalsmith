@@ -24,9 +24,6 @@ matrix:
   allow_failures:
     - node_js: "node"
 
-before_script:
-  - export HARMONY_OPTS=$(node --v8-options | grep --only-matching -- '--harmony_generators')
-
 script:
   - npm run $TASK
 

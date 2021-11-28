@@ -10,11 +10,11 @@
   },
   "scripts": {
     "pretest": "npm install",
-    "test": "mocha $HARMONY_OPTS",
+    "test": "mocha",
     "pretest-debug": "npm install",
     "test-debug": "mocha debug",
     "precoverage": "npm install",
-    "coverage": "node $HARMONY_OPTS ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
+    "coverage": "node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
     "precoveralls": "npm run coverage",
     "coveralls": "coveralls < coverage/lcov.info",
     "lint": "./node_modules/.bin/eslint index.js lib/* bin/* test/*.js"
@@ -25,7 +25,6 @@
     "co-fs-extra": "^1.2.1",
     "commander": "~2.15.1",
     "gray-matter": "^2.1.1",
-    "has-generators": "^1.0.1",
     "is-utf8": "~0.2.0",
     "recursive-readdir": "^2.1.0",
     "rimraf": "^2.2.8",
@@ -44,6 +43,9 @@
     "metalsmith-drafts": "0.0.1",
     "metalsmith-markdown": "^0.2.2",
     "mocha": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=8"
   },
   "keywords": [
     "static",
