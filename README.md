@@ -60,7 +60,7 @@ Each plugin is invoked with the contents of the source directory, and each file 
 
     ---
     title: A Catchy Title
-    date: 2014-12-01
+    date: 2021-12-01
     ---
 
     An informative article.
@@ -71,7 +71,7 @@ Each plugin is invoked with the contents of the source directory, and each file 
 {
   'path/to/my-file.md': {
     title: 'A Catchy Title',
-    date: new Date('2014-12-01'),
+    date: new Date('2021-12-01'),
     contents: new Buffer('An informative article.')
   }
 }
@@ -282,17 +282,13 @@ You have three options:
 3. Use Metalsmith v1.7. Put `"metalsmith": "^1.7.0"` in your `package.json` and `npm install` that version.
 
 
-## [License](LICENSE.md)
-
-## Maintenance
-This project is no longer maintained by Segment. Instead, [Andrew Goodricke](https://github.com/woodyrew), [Andrew Meyer](https://github.com/Ajedi32) and [Ismay](https://github.com/ismay) are maintaining the project.
-
+## [License](LICENSE)
 
 [npm-badge]: https://img.shields.io/npm/v/metalsmith.svg
 [npm-url]: https://www.npmjs.com/package/metalsmith
-[travis-badge]: https://travis-ci.org/segmentio/metalsmith.svg
-[travis-url]: https://travis-ci.org/segmentio/metalsmith
-[coveralls-badge]:https://coveralls.io/repos/segmentio/metalsmith/badge.svg?branch=master&service=github
-[coveralls-url]: https://coveralls.io/github/segmentio/metalsmith?branch=master
-[slack-badge]: https://img.shields.io/badge/Slack-Join%20Chat%20→-blue.svg
-[slack-url]: http://metalsmith-slack.herokuapp.com/
+[travis-badge]: https://app.travis-ci.com/metalsmith/metalsmith.svg?branch=master
+[travis-url]: https://app.travis-ci.com/github/metalsmith/metalsmith
+[coveralls-badge]:https://coveralls.io/repos/github/metalsmith/metalsmith/badge.svg?branch=master
+[coveralls-url]: https://coveralls.io/github/metalsmith/metalsmith?branch=master
+[slack-badge]: https://img.shields.io/badge/GITTER-Join-blue.svg
+[gitter-url]: https://gitter.im/metalsmith/community
