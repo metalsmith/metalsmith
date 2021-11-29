@@ -6,12 +6,17 @@ var Metalsmith = require('..')
 var Mode = require('stat-mode')
 var noop = function(){}
 var path = require('path')
-var rm = require('rimraf').sync
+var rm = require('../lib/helpers').rm
 var fixture = path.resolve.bind(path, __dirname, 'fixtures')
 
 describe('Metalsmith', function(){
   beforeEach(function(){
-    rm('test/tmp')
+    return new Promise((resolve, reject) => {
+      rm('test/tmp', (err) => {
+        if (err) reject(err)
+        else resolve()
+      })
+    })
   })
 
   it('should expose a constructor', function(){
@@ -639,16 +644,17 @@ describe('Metalsmith', function(){
       var cmd =
         'touch test/fixtures/build/build/empty.md' +
         ' test/fixtures/build/build/.dotfile'
-      rm(fixture('build/build'), { glob: { dot: true } })
-      fs.mkdirSync(fixture('build/build'))
-      exec(cmd, function (err) {
-        if (err) return done(err)
-        m.build(function(err){
+      rm(fixture('build/build'), () => {
+        fs.mkdirSync(fixture('build/build'))
+        exec(cmd, function (err) {
           if (err) return done(err)
-          equal(fixture('build/build'), fixture('build/expected'), {
-            filter: function () { return true }
+          m.build(function(err){
+            if (err) return done(err)
+            equal(fixture('build/build'), fixture('build/expected'), {
+              filter: function () { return true }
+            })
+            done()
           })
-          done()
         })
       })
     })
