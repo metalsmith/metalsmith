@@ -608,6 +608,23 @@ describe('Metalsmith', function(){
         })
     })
 
+    it('should return a promise', function(done){
+      Metalsmith(fixture('basic'))
+        .build()
+        .then(files => {
+          assert.equal(typeof files, 'object')
+          done()
+        })
+    })
+
+    it('should execute a callback if one is supplied', function(done){
+      Metalsmith(fixture('basic'))
+        .build((err, files) => {
+          assert.equal(typeof files, 'object')
+          done()
+        })
+    })
+
     it('should preserve binary files', function(done){
       Metalsmith(fixture('basic-images'))
         .build(function(err, files){
