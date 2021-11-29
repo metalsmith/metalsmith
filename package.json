@@ -50,6 +50,14 @@
   "engines": {
     "node": ">=8"
   },
+  "directories": {
+    "lib": "lib/*",
+    "test": "test/**"
+  },
+  "files": [
+    "lib/**",
+    "snapcraft.yaml"
+  ],
   "keywords": [
     "static",
     "file",
