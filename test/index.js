@@ -11,12 +11,7 @@ var fixture = path.resolve.bind(path, __dirname, 'fixtures')
 
 describe('Metalsmith', function(){
   beforeEach(function(){
-    return new Promise((resolve, reject) => {
-      rm('test/tmp', (err) => {
-        if (err) reject(err)
-        else resolve()
-      })
-    })
+    return rm('test/tmp')
   })
 
   it('should expose a constructor', function(){
@@ -644,7 +639,7 @@ describe('Metalsmith', function(){
       var cmd =
         'touch test/fixtures/build/build/empty.md' +
         ' test/fixtures/build/build/.dotfile'
-      rm(fixture('build/build'), () => {
+      rm(fixture('build/build')).then(() => {
         fs.mkdirSync(fixture('build/build'))
         exec(cmd, function (err) {
           if (err) return done(err)
