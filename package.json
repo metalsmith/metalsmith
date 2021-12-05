@@ -14,7 +14,7 @@
     "_metalsmith": "bin/_metalsmith"
   },
   "scripts": {
-    "test": "nyc mocha --timeout 3000",
+    "test": "nyc mocha",
     "pretest-debug": "npm install",
     "test-debug": "mocha debug",
     "precoverage": "npm install",
@@ -69,5 +69,11 @@
     "jekyll",
     "wintersmith",
     "blacksmith"
-  ]
+  ],
+  "mocha": {
+    "timeout": 3000,
+    "reporter": "spec",
+    "require": "co-mocha",
+    "slow": 500
+  }
 }
