@@ -639,7 +639,8 @@ describe('Metalsmith', function(){
       var cmd =
         'touch test/fixtures/build/build/empty.md' +
         ' test/fixtures/build/build/.dotfile'
-      rm(fixture('build/build')).then(() => {
+      rm(fixture('build/build')).then((err) => {
+        if (err) return done(err)
         fs.mkdirSync(fixture('build/build'))
         exec(cmd, function (err) {
           if (err) return done(err)
