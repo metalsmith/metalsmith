@@ -1,9 +1,10 @@
 
 # Metalsmith
 
-[![npm version][npm-badge]][npm-url]
-[![Build Status][travis-badge]][travis-url]
-[![Coverage Status][coveralls-badge]][coveralls-url]
+[![npm: version][npm-badge]][npm-url]
+[![ci: build][ci-badge]][ci-url]
+[![code coverage][codecov-badge]][codecov-url]
+[![license: MIT][license-badge]][license-url]
 [![Gitter chat][gitter-badge]][gitter-url]
 
 > An extremely simple, _pluggable_ static site generator.
@@ -97,7 +98,7 @@ Which means you could just as easily use it to make...
 
 ## Resources
 
-  - IRC Channel - it's `#metalsmith` on freenode!
+  - [Gitter community chat](https://gitter.im/metalsmith/community)
   - [Getting to Know Metalsmith](http://robinthrift.com/post/getting-to-know-metalsmith/) - a great series about how to use Metalsmith for your static site.
   - [Building a Blog With Metalsmith](https://azurelogic.com/posts/building-a-blog-with-metalsmith/) - a blog post about how to create a basic blog with Metalsmith. Check out the related [video of the talk](https://www.youtube.com/watch?v=cAq5_5Yy7Tg) too!
   - [Awesome Metalsmith](https://github.com/lambtron/awesome-metalsmith) - great collection of resources, examples, and tutorials
@@ -113,7 +114,7 @@ In addition to a simple [Javascript API](#api), the Metalsmith CLI can read conf
   "plugins": {
     "@metalsmith/drafts": true,
     "@metalsmith/markdown": true,
-    "metalsmith-permalinks": "posts/:title",
+    "@metalsmith/permalinks": "posts/:title",
     "metalsmith-layouts": "handlebars"
   }
 }
@@ -128,7 +129,7 @@ You can specify your plugins as either an object or array. Using an array would 
   "plugins": [
     { "@metalsmith/drafts": true },
     { "@metalsmith/markdown": true },
-    { "metalsmith-permalinks": "posts/:title" },
+    { "@metalsmith/permalinks": "posts/:title" },
     { "metalsmith-layouts": true }
   ]
 }
@@ -136,17 +137,12 @@ You can specify your plugins as either an object or array. Using an array would 
 
 And then just install `metalsmith` and the plugins and run the metalsmith CLI...
 
-    $ node_modules/.bin/metalsmith
+```sh
+node_modules/.bin/metalsmith
 
-        Metalsmith · reading configuration from: /path/to/metalsmith.json
-        Metalsmith · successfully built to: /path/to/build
-
-Or if you install them globally, you can just use:
-
-    $ metalsmith
-
-        Metalsmith · reading configuration from: /path/to/metalsmith.json
-        Metalsmith · successfully built to: /path/to/build
+Metalsmith · reading configuration from: /path/to/metalsmith.json
+Metalsmith · successfully built to: /path/to/build
+```
 
 Options recognised by `metalsmith.json` are `source`, `destination`, `concurrency`, `metadata`, `clean` and `frontmatter` - See "*API*" section below for usage.
 
@@ -158,9 +154,9 @@ be published to the world, you can include plugins as local npm modules:
 
 ```json
 {
-  "plugins": {
-    "./lib/metalsmith/plugin.js": true
-  }
+  "plugins": [
+    { "./lib/metalsmith/plugin.js": true }
+  ]
 }
 ```
 
@@ -242,18 +238,17 @@ Add metadata to your files to access these build features. By default, Metalsmit
 You can add your own metadata in two ways:
 
 - Using [YAML frontmatter](https://middlemanapp.com/basics/frontmatter/) at the top of any file.
-- Enabling [a plugin](https://github.com/segmentio/metalsmith/blob/master/Readme.md#plugins) that adds metadata programmatically.
+- Enabling [a plugin](https://github.com/metalsmith/metalsmith/blob/master/README.md#plugins) that adds metadata programmatically.
 
 #### mode
 
-Set the mode of the file. For example,
+Set the mode of the file. For example, a `cleanup.sh` file with the contents
 
-```
-$ cat cleanup.sh
-
---
+```md
+---
 mode: 0764
---
+---
+#!/bin/sh
 
 rm -rf .
 ```
@@ -264,31 +259,19 @@ would be built with mode ```-rwxrw-r--```, i.e. user-executable.
 ## Troubleshooting
 
 ### Node Version Requirements
-Metalsmith v2.0 and above uses [generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator) which has some considerations for `node.js 0.12.x` and below.
 
-#### Using `node.js 0.10.x`
-You have two options:
-
-1. Upgrade to latest stable version of `node.js` (>= `0.12.x` — see "*Using `node.js 0.12.x`*" section below)
-2. Use Metalsmith v1.7. Put `"metalsmith": "^1.7.0"` in your `package.json` and `npm install` that version.
-
-#### Using `node.js 0.12.x`
-You have three options:
-
-1. Run `node.js` with `--harmony_generators` flag set.
-    1. `node --harmony_generators my_script.js`
-    2. Using `package.json`: `"scripts": {"start": "node --harmony_generators my_script.js"}`. Run with `npm run`
-2. `npm install` [harmonize](https://www.npmjs.com/package/harmonize) and require before Metalsmith is used. e.g. `require("harmonize")(["harmony-generators"]);`
-3. Use Metalsmith v1.7. Put `"metalsmith": "^1.7.0"` in your `package.json` and `npm install` that version.
-
-
+Metalsmith 3.0.0 will support NodeJS versions 12 and higher.
+Metalsmith 2.4.0 supports NodeJS versions 8 and higher.
+Metalsmith 2.3.0 and below support NodeJS versions all the way back to 0.12.
 ## [License](LICENSE)
 
 [npm-badge]: https://img.shields.io/npm/v/metalsmith.svg
 [npm-url]: https://www.npmjs.com/package/metalsmith
-[travis-badge]: https://app.travis-ci.com/metalsmith/metalsmith.svg?branch=master
-[travis-url]: https://app.travis-ci.com/github/metalsmith/metalsmith
-[coveralls-badge]:https://coveralls.io/repos/github/metalsmith/metalsmith/badge.svg?branch=master
-[coveralls-url]: https://coveralls.io/github/metalsmith/metalsmith?branch=master
+[ci-badge]: https://app.travis-ci.com/metalsmith/metalsmith.svg?branch=master
+[ci-url]: https://app.travis-ci.com/github/metalsmith/metalsmith
+[codecov-badge]:https://coveralls.io/repos/github/metalsmith/metalsmith/badge.svg?branch=master
+[codecov-url]: https://coveralls.io/github/metalsmith/metalsmith?branch=master
+[license-badge]: https://img.shields.io/github/license/metalsmith/metalsmith
+[license-url]: LICENSE
 [gitter-badge]: https://img.shields.io/badge/GITTER-Join-blue.svg
 [gitter-url]: https://gitter.im/metalsmith/community
