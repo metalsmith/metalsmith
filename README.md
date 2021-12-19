@@ -37,16 +37,24 @@ Metalsmith(__dirname)
 
 ...it's as easy as that!
 
-Special thanks to [Ian Storm Taylor](https://github.com/ianstormtaylor), [Andrew Meyer](https://github.com/Ajedi32), [Dominic Barnes](https://github.com/dominicbarnes), [Andrew Goodricke](https://github.com/woodyrew) and [others](https://github.com/segmentio/metalsmith/graphs/contributors) for their contributions!
+Special thanks to [Ian Storm Taylor](https://github.com/ianstormtaylor), [Andrew Meyer](https://github.com/Ajedi32), [Dominic Barnes](https://github.com/dominicbarnes), [Andrew Goodricke](https://github.com/woodyrew), [Kevin Van Lierde](https://github.com/webketje) and [others](https://github.com/segmentio/metalsmith/graphs/contributors) for their contributions!
 
 ## Installation
 
-    $ npm install metalsmith
+NPM:
+```
+npm install metalsmith
+```
+
+Yarn
+```
+yarn add metalsmith
+```
 
 
 ## Plugins
 
-Check out the website for a list of [plugins](http://www.metalsmith.io#the-community-plugins).
+Check out the website for a list of [plugins](https://metalsmith.io/plugins).
 
 
 ## How does it work?
@@ -59,21 +67,21 @@ Metalsmith works in three simple steps:
 
 Each plugin is invoked with the contents of the source directory, and each file can contain YAML front-matter that will be attached as metadata, so a simple file like...
 
-    ---
-    title: A Catchy Title
-    date: 2021-12-01
-    ---
+```md
+---
+title: A Catchy Title
+date: 2021-12-01
+---
+An informative article.
+```
+...would be parsed into...
 
-    An informative article.
-
-  ...would be parsed into...
-
-```js
+```
 {
   'path/to/my-file.md': {
     title: 'A Catchy Title',
-    date: new Date('2021-12-01'),
-    contents: new Buffer('An informative article.')
+    date: <Date >,
+    contents: <Buffer 7a 66 7a 67...>
   }
 }
 ```
