@@ -33,3 +33,10 @@ jobs:
       node_js: node
       os: linux
       script: npm run test && npm run coveralls
+
+notifications:
+  email: false
+  webhooks:
+    urls: 
+      - https://webhooks.gitter.im/e/de552aa9082bfddb180d
+    on_cancel: never
