@@ -419,18 +419,21 @@ describe('Metalsmith', function(){
     it('should error when reading invalid frontmatter', function(done) {
       var m = Metalsmith(fixture('read-invalid-frontmatter'))
       m.frontmatter(true)
-      m.readFile('index.md', function(err, file) {
-        if (err) {
-          assert(err instanceof Error)
-          assert.throws(
-            function () { throw err },
-            /invalid frontmatter/i
-          )
-          return file
-        }
-        throw new Error('This should not execute!')
+      m.readFile('index.md', function(err) {
+        assert(err instanceof Error)
+        assert(err.code === 'invalid_frontmatter')
+        done()
       })
-      done()
+    })
+
+    it('should error when failing to read files', function(done) {
+      if (process.platform === 'win32') { this.skip() }
+      var m = Metalsmith(fixture('read-failure'))
+      m.readFile('chmodded-000.md', function(err) {
+        assert(err instanceof Error)
+        assert(err.code === 'failed_read')
+        done()
+      })
     })
   })
 
@@ -503,6 +506,18 @@ describe('Metalsmith', function(){
           fs.readFileSync(fixture('write-file/build/index.md'),    'utf8'),
           fs.readFileSync(fixture('write-file/expected/index.md'), 'utf8')
         )
+        done()
+      })
+    })
+
+    it('should error on write failure', function(done){
+      // chmodded files arer unpredictable at best on Windows
+      if (process.platform === 'win32') { this.skip() }
+      // the unwritable dir is chmodded 555 (no writes)
+      var m = Metalsmith(fixture('write-failure')).destination('unwritable/build')
+      m.writeFile('index.md', { contents: Buffer.from('test') }, function(err){
+        assert(err instanceof Error)
+        assert(err.code === 'failed_write')
         done()
       })
     })
@@ -621,6 +636,14 @@ describe('Metalsmith', function(){
       Metalsmith(fixture('basic'))
         .build((err, files) => {
           assert.equal(typeof files, 'object')
+          done()
+        })
+    })
+
+    it('should return errors in the build callback/.catch', function(done) {
+      Metalsmith(fixture('inexistant-source-dir'))
+        .build((err) => {
+          assert(err instanceof Error)
           done()
         })
     })
