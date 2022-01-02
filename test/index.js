@@ -202,12 +202,18 @@ describe('Metalsmith', function(){
       assert.equal(m._frontmatter, false)
     })
 
+    it('should allow a gray-matter options object as input', function() {
+      var m = Metalsmith('test/tmp')
+      m.frontmatter({ delimiters: '~~~' })
+      assert.deepEqual(m._frontmatter, { delimiters: '~~~' })
+    })
+
     it('should get the value of the frontmatter option', function(){
       var m = Metalsmith('test/tmp')
       assert(m.frontmatter(), true)
     })
 
-    it('should error on non-boolean', function(){
+    it('should error on non-boolean or non-object', function(){
       var m = Metalsmith('test/tmp')
       assert.throws(function(){
         m.frontmatter(0)
@@ -342,6 +348,28 @@ describe('Metalsmith', function(){
         .process(function(err) {
           if (err) throw err
           assert.equal(files['json.md'].json, true)
+          done()
+        })
+    })
+
+    it('should handle custom gray-matter frontmatter options', function(done) {
+      const toml = require('toml')
+      let files
+      Metalsmith(fixture('read-frontmatter-custom'))
+        .frontmatter({
+          engines: {
+            toml: toml.parse.bind(toml)
+          },
+          language: 'toml',
+          excerpt_separator: '~~~',
+          delimiters: '~~~',
+          excerpt: true
+        })
+        .use(fileObj => { files = fileObj })
+        .process(function(err) {
+          if (err) throw err
+          assert.equal(files['index.md'].thing, true)
+          assert.equal(files['index.md'].excerpt.trim(), 'An excerpt')
           done()
         })
     })
