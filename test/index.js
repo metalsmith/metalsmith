@@ -456,8 +456,11 @@ describe('Metalsmith', function(){
 
     it('should error when failing to read files', function(done) {
       if (process.platform === 'win32') { this.skip() }
+
+      fs.chmodSync(path.resolve(fixture('read-failure'), 'chmodded-000.md'), '000')
       var m = Metalsmith(fixture('read-failure'))
       m.readFile('chmodded-000.md', function(err) {
+        fs.chmodSync(path.resolve(fixture('read-failure'), 'chmodded-000.md'), '644')
         assert(err instanceof Error)
         assert(err.code === 'failed_read')
         done()
@@ -541,9 +544,10 @@ describe('Metalsmith', function(){
     it('should error on write failure', function(done){
       // chmodded files arer unpredictable at best on Windows
       if (process.platform === 'win32') { this.skip() }
-      // the unwritable dir is chmodded 555 (no writes)
+      fs.chmodSync(path.resolve(fixture('write-failure'), 'unwritable'), '555')
       var m = Metalsmith(fixture('write-failure')).destination('unwritable/build')
       m.writeFile('index.md', { contents: Buffer.from('test') }, function(err){
+        fs.chmodSync(path.resolve(fixture('write-failure'), 'unwritable'), '755')
         assert(err instanceof Error)
         assert(err.code === 'failed_write')
         done()
