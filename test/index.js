@@ -1,4 +1,5 @@
 var assert = require('assert')
+var { it, describe, beforeEach } = require('mocha')
 var equal = require('assert-dir-equal')
 var exec = require('child_process').exec
 var fs = require('fs')

@@ -2,25 +2,53 @@
   "name": "metalsmith",
   "version": "2.3.0",
   "description": "An extremely simple, pluggable static site generator.",
-  "license": "MIT",
+  "keywords": [
+    "static",
+    "jamstack",
+    "file",
+    "site",
+    "website",
+    "blog",
+    "generator",
+    "markdown",
+    "jekyll",
+    "metalsmith",
+    "yaml"
+  ],
   "homepage": "https://metalsmith.io",
   "bugs": "https://github.com/metalsmith/metalsmith/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/metalsmith/metalsmith.git"
   },
+  "license": "MIT",
   "bin": {
-    "metalsmith": "bin/metalsmith",
-    "_metalsmith": "bin/_metalsmith"
+    "_metalsmith": "bin/_metalsmith",
+    "metalsmith": "bin/metalsmith"
   },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "files": [
+    "lib/**",
+    "CHANGELOG.md",
+    "snapcraft.yaml"
+  ],
   "scripts": {
+    "coverage": "nyc report --reporter=text-lcov > ./coverage.info",
+    "coveralls": "npm run coverage && cat ./coverage.info | coveralls",
+    "lint": "eslint --cache --fix-dry-run index.js lib/* bin/* test/*.js",
+    "format": "prettier --write \"**/*.{yml,md,js,json}\"",
     "test": "nyc mocha",
     "pretest-debug": "npm install",
     "test-debug": "mocha debug",
-    "precoverage": "npm install",
-    "coverage": "nyc report --reporter=text-lcov > ./coverage.info",
-    "coveralls": "npm run coverage && cat ./coverage.info | coveralls",
-    "lint": "eslint index.js lib/* bin/* test/*.js"
+    "release": "release-it"
+  },
+  "mocha": {
+    "reporter": "spec",
+    "slow": 500,
+    "timeout": 3000
   },
   "dependencies": {
     "chalk": "^3.0.0",
@@ -42,40 +70,16 @@
     "@metalsmith/drafts": "^1.1.0",
     "@metalsmith/markdown": "^1.3.0",
     "assert-dir-equal": "^1.1.0",
-    "co-mocha": "^1.0.1",
     "coveralls": "^3.1.1",
-    "eslint": "^6.8.0",
+    "eslint": "^8.6.0",
+    "eslint-config-prettier": "^8.3.0",
     "mocha": "^7.2.0",
     "nyc": "^15.1.0",
+    "prettier": "^2.5.1",
+    "release-it": "^14.11.8",
     "toml": "^3.0.0"
   },
   "engines": {
-    "node": ">=8"
-  },
-  "directories": {
-    "lib": "lib/*",
-    "test": "test/**"
-  },
-  "files": [
-    "lib/**",
-    "snapcraft.yaml"
-  ],
-  "keywords": [
-    "static",
-    "file",
-    "site",
-    "website",
-    "blog",
-    "generator",
-    "markdown",
-    "jekyll",
-    "wintersmith",
-    "blacksmith"
-  ],
-  "mocha": {
-    "timeout": 3000,
-    "reporter": "spec",
-    "require": "co-mocha",
-    "slow": 500
+    "node": ">=8.6"
   }
 }

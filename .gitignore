@@ -6,3 +6,5 @@ coverage.info
 .idea/
 .DS_Store
 examples/package-lock.json
+*.tgz
+.eslintcache

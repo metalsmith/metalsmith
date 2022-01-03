@@ -8,7 +8,7 @@ node_js:
   - 16
   - node
 
-os: 
+os:
   - linux
 
 stages:
@@ -37,6 +37,6 @@ jobs:
 notifications:
   email: false
   webhooks:
-    urls: 
+    urls:
       - https://webhooks.gitter.im/e/de552aa9082bfddb180d
     on_cancel: never
