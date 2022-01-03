@@ -285,8 +285,6 @@ describe('Metalsmith', function () {
       })
     })
 
-    // this test is included because micromatch has an obscure option called "windows",
-    // which is set to true by default on Windows. Maintains compat with how Metalsmith 2.x functions
     it('should not transform backslashes to forward slashes in the returned matches', function (done) {
       const m = Metalsmith(fixture('match'))
       m.use(function windowsPaths(files) {
