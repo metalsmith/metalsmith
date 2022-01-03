@@ -6,9 +6,9 @@
     "site_description": "My second, super-cool, Jekyll-powered blog."
   },
   "plugins": [
-    {"@metalsmith/drafts": {}},
-    {"@metalsmith/markdown": {}},
-    {"metalsmith-excerpts": true },
+    { "@metalsmith/drafts": {} },
+    { "@metalsmith/markdown": {} },
+    { "metalsmith-excerpts": true },
     {
       "metalsmith-collections": {
         "posts": {

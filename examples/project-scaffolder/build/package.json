@@ -7,6 +7,6 @@
   "main": "lib/index.js",
   "dependencies": {},
   "devDependencies": {
-    "mocha": "1.x"
+    "mocha": "*"
   }
 }

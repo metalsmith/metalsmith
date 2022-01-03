@@ -4,15 +4,15 @@
  * @return {Function}
  */
 
-function plugin(){
-  return function(files){
+function plugin() {
+  return function (files) {
     for (var file in files) {
-      if (files[file].draft) delete files[file];
+      if (files[file].draft) delete files[file]
     }
-  };
+  }
 }
 /**
  * Expose `plugin`.
  */
 
-module.exports = plugin;
+module.exports = plugin

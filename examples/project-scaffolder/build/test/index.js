@@ -1,6 +1,4 @@
+var { describe } = require('mocha')
+var assert = require('assert')
 
-var assert = require('assert');
-
-describe('My package', function(){
-
-});
+describe('My package', function () {})

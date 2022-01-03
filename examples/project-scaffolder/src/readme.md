@@ -1,7 +1,6 @@
-
 # {{name}}
 
-  {{description}}
+{{description}}
 
 ## Installation
 
@@ -9,4 +8,4 @@
 
 ## License
 
-  {{license}}
+{{license}}

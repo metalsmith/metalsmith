@@ -1,7 +1,6 @@
-
 # My package
 
-  A package generated with metalsmith
+A package generated with metalsmith
 
 ## Installation
 
@@ -9,4 +8,4 @@
 
 ## License
 
-  MIT
+MIT

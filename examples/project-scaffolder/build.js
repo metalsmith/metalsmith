@@ -1,8 +1,7 @@
-
-var async = require('async');
-var Metalsmith = require('metalsmith');
-var prompt = require('cli-prompt');
-var render = require('consolidate').handlebars.render;
+var async = require('async')
+var Metalsmith = require('metalsmith')
+var prompt = require('cli-prompt')
+var render = require('consolidate').handlebars.render
 
 /**
  * Build.
@@ -11,9 +10,9 @@ var render = require('consolidate').handlebars.render;
 var metalsmith = Metalsmith(__dirname)
   .use(ask)
   .use(template)
-  .build(function(err){
-    if (err) throw err;
-  });
+  .build(function (err) {
+    if (err) throw err
+  })
 
 /**
  * Prompt plugin.
@@ -23,17 +22,17 @@ var metalsmith = Metalsmith(__dirname)
  * @param {Function} done
  */
 
-function ask(files, metalsmith, done){
-  var prompts = ['name', 'repository', 'description', 'license'];
-  var metadata = metalsmith.metadata();
+function ask(files, metalsmith, done) {
+  var prompts = ['name', 'repository', 'description', 'license']
+  var metadata = metalsmith.metadata()
 
-  async.eachSeries(prompts, run, done);
+  async.eachSeries(prompts, run, done)
 
-  function run(key, done){
-    prompt('  ' + key + ': ', function(val){
-      metadata[key] = val;
-      done();
-    });
+  function run(key, done) {
+    prompt('  ' + key + ': ', function (val) {
+      metadata[key] = val
+      done()
+    })
   }
 }
 
@@ -45,18 +44,18 @@ function ask(files, metalsmith, done){
  * @param {Function} done
  */
 
-function template(files, metalsmith, done){
-  var keys = Object.keys(files);
-  var metadata = metalsmith.metadata();
+function template(files, metalsmith, done) {
+  var keys = Object.keys(files)
+  var metadata = metalsmith.metadata()
 
-  async.each(keys, run, done);
+  async.each(keys, run, done)
 
-  function run(file, done){
-    var str = files[file].contents.toString();
-    render(str, metadata, function(err, res){
-      if (err) return done(err);
-      files[file].contents = Buffer.from(res);
-      done();
-    });
+  function run(file, done) {
+    var str = files[file].contents.toString()
+    render(str, metadata, function (err, res) {
+      if (err) return done(err)
+      files[file].contents = Buffer.from(res)
+      done()
+    })
   }
 }

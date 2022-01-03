@@ -1,4 +1,3 @@
-
 # Metalsmith
 
 [![npm: version][npm-badge]][npm-url]
@@ -15,10 +14,10 @@ In Metalsmith, all of the logic is handled by plugins. You simply chain them tog
 Metalsmith(__dirname)
   .use(markdown())
   .use(layouts('handlebars'))
-  .build(function(err) {
-    if (err) throw err;
-    console.log('Build finished!');
-  });
+  .build(function (err) {
+    if (err) throw err
+    console.log('Build finished!')
+  })
 ```
 
 ...but what if you want to get fancier by hiding your unfinished drafts and using custom permalinks? Just add plugins...
@@ -29,10 +28,10 @@ Metalsmith(__dirname)
   .use(markdown())
   .use(permalinks('posts/:title'))
   .use(layouts('handlebars'))
-  .build(function(err) {
-    if (err) throw err;
-    console.log('Build finished!');
-  });
+  .build(function (err) {
+    if (err) throw err
+    console.log('Build finished!')
+  })
 ```
 
 ...it's as easy as that!
@@ -42,28 +41,28 @@ Special thanks to [Ian Storm Taylor](https://github.com/ianstormtaylor), [Andrew
 ## Installation
 
 NPM:
+
 ```
 npm install metalsmith
 ```
 
-Yarn
+Yarn:
+
 ```
 yarn add metalsmith
 ```
-
 
 ## Plugins
 
 Check out the website for a list of [plugins](https://metalsmith.io/plugins).
 
-
 ## How does it work?
 
 Metalsmith works in three simple steps:
 
-  1. Read all the files in a source directory.
-  2. Invoke a series of plugins that manipulate the files.
-  3. Write the results to a destination directory!
+1. Read all the files in a source directory.
+2. Invoke a series of plugins that manipulate the files.
+3. Write the results to a destination directory!
 
 Each plugin is invoked with the contents of the source directory, and each file can contain YAML front-matter that will be attached as metadata, so a simple file like...
 
@@ -72,8 +71,10 @@ Each plugin is invoked with the contents of the source directory, and each file 
 title: A Catchy Title
 date: 2021-12-01
 ---
+
 An informative article.
 ```
+
 ...would be parsed into...
 
 ```
@@ -90,26 +91,24 @@ An informative article.
 
 Of course they can get a lot more complicated too. That's what makes Metalsmith powerful; the plugins can do anything you want!
 
-
 ## The secret...
 
 We keep referring to Metalsmith as a "static site generator", but it's a lot more than that. Since everything is a plugin, the core library is actually just an abstraction for manipulating a directory of files.
 
 Which means you could just as easily use it to make...
 
-  - [A simple project scaffolder.](examples/project-scaffolder)
-  - [A simple build tool for Sass files.](examples/build-tool)
-  - [A simple static site generator.](examples/static-site)
-  - [A Jekyll-like static site generator.](examples/jekyll)
-  - [A Wintersmith-like static site generator.](examples/wintersmith)
-
+- [A simple project scaffolder.](examples/project-scaffolder)
+- [A simple build tool for Sass files.](examples/build-tool)
+- [A simple static site generator.](examples/static-site)
+- [A Jekyll-like static site generator.](examples/jekyll)
+- [A Wintersmith-like static site generator.](examples/wintersmith)
 
 ## Resources
 
-  - [Gitter community chat](https://gitter.im/metalsmith/community)
-  - [Getting to Know Metalsmith](http://robinthrift.com/post/getting-to-know-metalsmith/) - a great series about how to use Metalsmith for your static site.
-  - [Building a Blog With Metalsmith](https://azurelogic.com/posts/building-a-blog-with-metalsmith/) - a blog post about how to create a basic blog with Metalsmith. Check out the related [video of the talk](https://www.youtube.com/watch?v=cAq5_5Yy7Tg) too!
-  - [Awesome Metalsmith](https://github.com/lambtron/awesome-metalsmith) - great collection of resources, examples, and tutorials
+- [Gitter community chat](https://gitter.im/metalsmith/community)
+- [Getting to Know Metalsmith](http://robinthrift.com/post/getting-to-know-metalsmith/) - a great series about how to use Metalsmith for your static site.
+- [Building a Blog With Metalsmith](https://azurelogic.com/posts/building-a-blog-with-metalsmith/) - a blog post about how to create a basic blog with Metalsmith. Check out the related [video of the talk](https://www.youtube.com/watch?v=cAq5_5Yy7Tg) too!
+- [Awesome Metalsmith](https://github.com/lambtron/awesome-metalsmith) - great collection of resources, examples, and tutorials
 
 ## CLI
 
@@ -119,12 +118,12 @@ In addition to a simple [Javascript API](#api), the Metalsmith CLI can read conf
 {
   "source": "src",
   "destination": "build",
-  "plugins": {
-    "@metalsmith/drafts": true,
-    "@metalsmith/markdown": true,
-    "@metalsmith/permalinks": "posts/:title",
-    "metalsmith-layouts": "handlebars"
-  }
+  "plugins": [
+    { "@metalsmith/drafts": true },
+    { "@metalsmith/markdown": true },
+    { "@metalsmith/permalinks": "posts/:title" },
+    { "@metalsmith/layouts": {} }
+  ]
 }
 ```
 
@@ -145,14 +144,14 @@ You can specify your plugins as either an object or array. Using an array would 
 
 And then just install `metalsmith` and the plugins and run the metalsmith CLI...
 
-```sh
-node_modules/.bin/metalsmith
+```bash
+metalsmith
 
-Metalsmith · reading configuration from: /path/to/metalsmith.json
-Metalsmith · successfully built to: /path/to/build
+# Metalsmith · reading configuration from: /path/to/metalsmith.json
+# Metalsmith · successfully built to: /path/to/build
 ```
 
-Options recognised by `metalsmith.json` are `source`, `destination`, `concurrency`, `metadata`, `clean` and `frontmatter` - See "*API*" section below for usage.
+Options recognised by `metalsmith.json` are `source`, `destination`, `concurrency`, `metadata`, `clean` and `frontmatter` - See "_API_" section below for usage.
 
 Checkout the [static site](examples/static-site), [Jekyll](examples/jekyll) or [Wintersmith](examples/wintersmith) examples to see the CLI in action.
 
@@ -162,9 +161,7 @@ be published to the world, you can include plugins as local npm modules:
 
 ```json
 {
-  "plugins": [
-    { "./lib/metalsmith/plugin.js": true }
-  ]
+  "plugins": [{ "./lib/metalsmith/plugin.js": true }]
 }
 ```
 
@@ -198,7 +195,7 @@ Set the relative `path` to the destination directory, or get the full one if no 
 
 #### #concurrency(max)
 
-Set the maximum number of files to open at once when reading or writing.  Defaults to `Infinity`.  To avoid having too many files open at once (`EMFILE` errors), set the concurrency to something lower than `ulimit -n`.
+Set the maximum number of files to open at once when reading or writing. Defaults to `Infinity`. To avoid having too many files open at once (`EMFILE` errors), set the concurrency to something lower than `ulimit -n`.
 
 #### #clean(boolean)
 
@@ -256,13 +253,13 @@ Set the mode of the file. For example, a `cleanup.sh` file with the contents
 ---
 mode: 0764
 ---
+
 #!/bin/sh
 
 rm -rf .
 ```
 
-would be built with mode ```-rwxrw-r--```, i.e. user-executable.
-
+would be built with mode `-rwxrw-r--`, i.e. user-executable.
 
 ## Troubleshooting
 
@@ -271,13 +268,14 @@ would be built with mode ```-rwxrw-r--```, i.e. user-executable.
 Metalsmith 3.0.0 will support NodeJS versions 12 and higher.
 Metalsmith 2.4.0 supports NodeJS versions 8 and higher.
 Metalsmith 2.3.0 and below support NodeJS versions all the way back to 0.12.
+
 ## [License](LICENSE)
 
 [npm-badge]: https://img.shields.io/npm/v/metalsmith.svg
 [npm-url]: https://www.npmjs.com/package/metalsmith
 [ci-badge]: https://app.travis-ci.com/metalsmith/metalsmith.svg?branch=master
 [ci-url]: https://app.travis-ci.com/github/metalsmith/metalsmith
-[codecov-badge]:https://coveralls.io/repos/github/metalsmith/metalsmith/badge.svg?branch=master
+[codecov-badge]: https://coveralls.io/repos/github/metalsmith/metalsmith/badge.svg?branch=master
 [codecov-url]: https://coveralls.io/github/metalsmith/metalsmith?branch=master
 [license-badge]: https://img.shields.io/github/license/metalsmith/metalsmith
 [license-url]: LICENSE

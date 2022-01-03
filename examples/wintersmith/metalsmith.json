@@ -10,8 +10,8 @@
         "posts": "*-post.md"
       }
     },
-    {"@metalsmith/markdown": {}},
-    {"@metalsmith/permalinks": {}},
+    { "@metalsmith/markdown": {} },
+    { "@metalsmith/permalinks": {} },
     {
       "metalsmith-layouts": {
         "directory": "./templates"
