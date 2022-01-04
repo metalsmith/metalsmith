@@ -510,6 +510,33 @@ describe('Metalsmith', function () {
         done()
       })
     })
+
+    it('should properly handle both path & glob ignore args (relative to Metalsmith.source directory)', function(done) {
+      Promise.all([
+        new Promise((resolve, reject) => {
+          const m = Metalsmith('test/fixtures/ignore-complex')
+          m.ignore(['./some_dir'])
+          m.read(function (err, files) {
+            if (err) return reject(err)
+            resolve(files)
+          })
+        }),
+        new Promise((resolve, reject) => {
+          const m = Metalsmith('test/fixtures/ignore-complex')
+          m.ignore('**/some_dir/**/*.html')
+          m.read(function (err, files) {
+            if (err) return reject(err)
+            resolve(files)
+          })
+        })
+      ])
+      .then(([relpathfiles, globfiles, mixed]) => {
+          assert.strictEqual(Object.keys(relpathfiles).length, 2)
+          assert.strictEqual(Object.keys(globfiles).length, 0)
+          done()
+      })
+      .catch(done)
+    })
   })
 
   describe('#readFile', function () {
