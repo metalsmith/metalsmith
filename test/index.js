@@ -265,22 +265,22 @@ describe('Metalsmith', function () {
       const m = Metalsmith(fixture('match'))
       m.process(function (err) {
         if (err) done(err)
-        const negationMatches = m.match('!index.md').join(',')
-        const orMatches = m.match('*.{jpg,md}').join(',')
-        assert.equal(negationMatches, `.htaccess,team.jpg,${path.join('nested', 'index.md')}`)
-        assert.equal(orMatches, 'index.md,team.jpg')
+        const negationMatches = m.match('!index.md')
+        const orMatches = m.match('*.{jpg,md}')
+        assert.deepStrictEqual(negationMatches, ['.htaccess',path.join('nested', 'index.md'),'team.jpg'])
+        assert.deepStrictEqual(orMatches, ['index.md','team.jpg'])
         done()
       })
     })
 
     it('should include dotfiles, unless specified otherwise', function (done) {
       const m = Metalsmith(fixture('match'))
-      m.process(function (err) {
+      m.process(function (err, files) {
         if (err) done(err)
         const matchesAll = m.match('**')
-        const matchesNoDot = m.match('**', { dot: false })
-        assert.deepStrictEqual(matchesAll.sort(), ['.htaccess','index.md',path.join('nested', 'index.md'),'team.jpg'])
-        assert.deepStrictEqual(matchesNoDot.sort(), ['index.md',path.join('nested', 'index.md'),'team.jpg'])
+        const matchesNoDot = m.match('**', Object.keys(files), { dot: false })
+        assert.deepStrictEqual(matchesAll, ['.htaccess','index.md',path.join('nested', 'index.md'),'team.jpg'])
+        assert.deepStrictEqual(matchesNoDot, ['index.md',path.join('nested', 'index.md'),'team.jpg'])
         done()
       })
     })
@@ -295,8 +295,8 @@ describe('Metalsmith', function () {
         })
       }).process(function (err) {
         if (err) done(err)
-        const matches = m.match('**/*.md').join(',')
-        assert.equal(matches, 'index.md,nested\\index.md')
+        const matches = m.match('**/*.md')
+        assert.deepStrictEqual(matches, ['index.md','nested\\index.md'])
         done()
       })
     })
