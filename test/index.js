@@ -341,6 +341,36 @@ describe('Metalsmith', function () {
       })
     })
 
+    it('should properly handle broken symbolic links', function (done) {
+      // symbolic links are not really a thing on Windows
+      if (process.platform === 'win32') {
+        this.skip()
+      }
+      const m = Metalsmith(fixture('read-symbolic-link-broken'))
+      const ignored = Metalsmith(fixture('read-symbolic-link-broken'))
+        .ignore('dir')
+
+      Promise.all([
+        new Promise((resolve, reject) => {
+          m.read((err, files) => {
+            resolve(err)
+            reject(new Error('Metalsmith#read should throw when it encounters a broken symbolic link that is not ignored'))
+          })
+        }),
+        new Promise((resolve, reject) => {
+          ignored.read((err, files) => {
+            resolve(files)
+            reject(err)
+          })
+        })
+      ])
+      .then(([regular, ignored]) => {
+        assert.strictEqual(regular instanceof Error, true)
+        assert.deepStrictEqual(ignored, {})
+        done()
+      })
+    })
+
     it('should read from a provided directory', function (done) {
       const m = Metalsmith(fixture('read-dir'))
       const stats = fs.statSync(fixture('read-dir/dir/index.md'))
