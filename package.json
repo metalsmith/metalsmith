@@ -31,6 +31,7 @@
     "test": "test"
   },
   "files": [
+    "index.js",
     "lib/**",
     "CHANGELOG.md",
     "snapcraft.yaml"

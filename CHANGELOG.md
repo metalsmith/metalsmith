@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org).
 
 This document follows the guidelines of [Keep A Changelog](http://keepachangelog.com).
 
+## [2.4.1] - 2022-01-31
+
+Bugfix: include index.js in package.json files
 ## [2.4.0] - 2022-01-31
 ### Added
 
