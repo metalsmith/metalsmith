@@ -267,8 +267,8 @@ describe('Metalsmith', function () {
         if (err) done(err)
         const negationMatches = m.match('!index.md')
         const orMatches = m.match('*.{jpg,md}')
-        assert.deepStrictEqual(negationMatches, ['.htaccess',path.join('nested', 'index.md'),'team.jpg'])
-        assert.deepStrictEqual(orMatches, ['index.md','team.jpg'])
+        assert.deepStrictEqual(negationMatches, ['.htaccess', path.join('nested', 'index.md'), 'team.jpg'])
+        assert.deepStrictEqual(orMatches, ['index.md', 'team.jpg'])
         done()
       })
     })
@@ -279,8 +279,8 @@ describe('Metalsmith', function () {
         if (err) done(err)
         const matchesAll = m.match('**')
         const matchesNoDot = m.match('**', Object.keys(files), { dot: false })
-        assert.deepStrictEqual(matchesAll, ['.htaccess','index.md',path.join('nested', 'index.md'),'team.jpg'])
-        assert.deepStrictEqual(matchesNoDot, ['index.md',path.join('nested', 'index.md'),'team.jpg'])
+        assert.deepStrictEqual(matchesAll, ['.htaccess', 'index.md', path.join('nested', 'index.md'), 'team.jpg'])
+        assert.deepStrictEqual(matchesNoDot, ['index.md', path.join('nested', 'index.md'), 'team.jpg'])
         done()
       })
     })
@@ -296,7 +296,7 @@ describe('Metalsmith', function () {
       }).process(function (err) {
         if (err) done(err)
         const matches = m.match('**/*.md')
-        assert.deepStrictEqual(matches, ['index.md','nested\\index.md'])
+        assert.deepStrictEqual(matches, ['index.md', 'nested\\index.md'])
         done()
       })
     })
@@ -347,14 +347,15 @@ describe('Metalsmith', function () {
         this.skip()
       }
       const m = Metalsmith(fixture('read-symbolic-link-broken'))
-      const ignored = Metalsmith(fixture('read-symbolic-link-broken'))
-        .ignore('dir')
+      const ignored = Metalsmith(fixture('read-symbolic-link-broken')).ignore('dir')
 
       Promise.all([
         new Promise((resolve, reject) => {
           m.read((err, files) => {
             resolve(err)
-            reject(new Error('Metalsmith#read should throw when it encounters a broken symbolic link that is not ignored'))
+            reject(
+              new Error('Metalsmith#read should throw when it encounters a broken symbolic link that is not ignored')
+            )
           })
         }),
         new Promise((resolve, reject) => {
@@ -363,8 +364,7 @@ describe('Metalsmith', function () {
             reject(err)
           })
         })
-      ])
-      .then(([regular, ignored]) => {
+      ]).then(([regular, ignored]) => {
         assert.strictEqual(regular instanceof Error, true)
         assert.deepStrictEqual(ignored, {})
         done()
@@ -511,7 +511,7 @@ describe('Metalsmith', function () {
       })
     })
 
-    it('should properly handle both path & glob ignore args (relative to Metalsmith.source directory)', function(done) {
+    it('should properly handle both path & glob ignore args (relative to Metalsmith.source directory)', function (done) {
       Promise.all([
         new Promise((resolve, reject) => {
           const m = Metalsmith('test/fixtures/ignore-complex')
@@ -530,12 +530,12 @@ describe('Metalsmith', function () {
           })
         })
       ])
-      .then(([relpathfiles, globfiles, mixed]) => {
+        .then(([relpathfiles, globfiles, mixed]) => {
           assert.strictEqual(Object.keys(relpathfiles).length, 2)
           assert.strictEqual(Object.keys(globfiles).length, 0)
           done()
-      })
-      .catch(done)
+        })
+        .catch(done)
     })
   })
 

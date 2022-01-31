@@ -6,10 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org).
 
 This document follows the guidelines of [Keep A Changelog](http://keepachangelog.com).
 
-## [Unreleased]
-
-Next release will contain over 100 commits.
-
+## [2.4.0] - 2022-01-31
 ### Added
 
 - [#338] Added `Metalsmith#match` method. Plugins no longer need to require a matching library [`705c4bb`](https://github.com/metalsmith/metalsmith/commit/705c4bb), [`f01c724`](https://github.com/metalsmith/metalsmith/commit/f01c724)
@@ -33,6 +30,7 @@ Next release will contain over 100 commits.
 ### Updated
 
 - **Dependencies:** [`75e6878`](https://github.com/metalsmith/metalsmith/commit/75e6878)
+
   - `chalk`: 1.1.3 ▶︎ 3.0.0
   - `gray-matter`: 2.0.0 ▶︎ 4.0.3
   - `stat-mode`: 0.2.0 ▶︎ 1.0.0
@@ -49,7 +47,7 @@ Next release will contain over 100 commits.
 - [#226] Metalsmith will no longer 'swallow' errors on invalid front-matter, they will be passed to `Metalsmith#build` [`a6438d2`](https://github.com/metalsmith/metalsmith/commit/a6438d2)
 - Fix test error on Windows [#158] (@moozzyk)
 - [#281] Metalsmith now properly handles symbolic links (will throw an ENOENT error or they can be `Metalsmith#ignore`'d) [`4eb1184`](https://github.com/metalsmith/metalsmith/commit/4eb1184)
-- [#178] `Metalsmith#ignore` now removes the matched files *before* they are `statted` for glob-based ignores (saving some perf & potential errors).
+- [#178] `Metalsmith#ignore` now removes the matched files _before_ they are `statted` for glob-based ignores (saving some perf & potential errors).
 - [#295] Metalsmith now catches all FS errors and passes them to the build callback/ thenable appropriately.
 
 ### Security
@@ -63,7 +61,6 @@ Next release will contain over 100 commits.
     Fix 5 “Moderate” vulnerabilities
   - `metalsmith-markdown`: 0.2.1 ▶︎ 0.2.2 (#312) (@Zearin)
     Fix 1 “Low” vulnerability
-
 
 [#158]: https://github.com/metalsmith/metalsmith/issues/158
 [#178]: https://github.com/metalsmith/metalsmith/issues/178
@@ -387,6 +384,7 @@ version. **Please use versions `<= 2.2.0` or `>= 2.2.2` instead.**
 :sparkles:
 
 [unreleased]: https://github.com/metalsmith/metalsmith/compare/v2.3.0...HEAD
+[2.4.0]: https://github.com/metalsmith/metalsmith/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/metalsmith/metalsmith/compare/v2.2.2...v2.3.0
 [2.2.2]: https://github.com/metalsmith/metalsmith/compare/v2.2.0...v2.2.2
 [2.2.1]: https://github.com/metalsmith/metalsmith/compare/v2.2.0...v2.2.1
