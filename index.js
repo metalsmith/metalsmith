@@ -2,4 +2,6 @@
  * Export `Metalsmith`.
  */
 
-module.exports = require('./lib')
+const Metalsmith = require('./lib')
+
+module.exports = Metalsmith;
