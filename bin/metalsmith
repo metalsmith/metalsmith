@@ -30,5 +30,6 @@ var proc = spawn(process.execPath, args, { stdio: 'inherit' })
  */
 
 proc.on('exit', function (code) {
+  // eslint-disable-next-line no-process-exit
   process.exit(code)
 })

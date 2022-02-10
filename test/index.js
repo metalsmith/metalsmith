@@ -1,3 +1,4 @@
+/* eslint-disable */
 const assert = require('assert')
 const { it, describe, beforeEach } = require('mocha')
 const equal = require('assert-dir-equal')

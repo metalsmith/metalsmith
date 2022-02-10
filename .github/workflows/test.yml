@@ -1,0 +1,63 @@
+name: CI
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: ['master']
+
+jobs:
+  pre-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          cache: 'npm'
+
+      - run: npm install
+      - run: npm run format:check
+      - run: npm run lint:check
+
+  branch-test:
+    if: github.ref_name != 'master' && success()
+    needs: pre-test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'windows-latest']
+        node: ['8.6']
+    name: Testing Node ${{ matrix.node }} on ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          cache: 'npm'
+
+      - run: npm install
+      - run: npm test
+
+  test:
+    if: github.ref_name == 'master' && success()
+    needs: pre-test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'windows-latest']
+        node: ['8.6', '12.0', '14.0', '16.0']
+    name: Testing Node ${{ matrix.node }} on ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+
+      - run: npm install
+      - run: npm test
+      - if: matrix.os == 'ubuntu-latest' && matrix.node == '16.0'
+        run: npm run coverage
+      - if: matrix.os == 'ubuntu-latest' && matrix.node == '16.0'
+        uses: coverallsapp/github-action@v1.1.2
+        with:
+          github-token: ${{ github.token }}
+          path-to-lcov: ./coverage.info

@@ -126,6 +126,7 @@ function fatal(msg, stack){
     console.error(chalk.gray(stack))
   }
   console.error()
+  // eslint-disable-next-line no-process-exit
   process.exit(1)
 }
 
