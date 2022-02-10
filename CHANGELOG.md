@@ -9,7 +9,9 @@ This document follows the guidelines of [Keep A Changelog](http://keepachangelog
 ## [2.4.1] - 2022-01-31
 
 Bugfix: include index.js in package.json files
+
 ## [2.4.0] - 2022-01-31
+
 ### Added
 
 - [#338] Added `Metalsmith#match` method. Plugins no longer need to require a matching library [`705c4bb`](https://github.com/metalsmith/metalsmith/commit/705c4bb), [`f01c724`](https://github.com/metalsmith/metalsmith/commit/f01c724)

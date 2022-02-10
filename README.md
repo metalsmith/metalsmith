@@ -36,8 +36,6 @@ Metalsmith(__dirname)
 
 ...it's as easy as that!
 
-Special thanks to [Ian Storm Taylor](https://github.com/ianstormtaylor), [Andrew Meyer](https://github.com/Ajedi32), [Dominic Barnes](https://github.com/dominicbarnes), [Andrew Goodricke](https://github.com/woodyrew), [Kevin Van Lierde](https://github.com/webketje) and [others](https://github.com/segmentio/metalsmith/graphs/contributors) for their contributions!
-
 ## Installation
 
 NPM:
@@ -167,71 +165,7 @@ be published to the world, you can include plugins as local npm modules:
 
 ## API
 
-Checkout the [project scaffolder](examples/project-scaffolder) or [build tool](examples/build-tool) examples to see a real example of the Javascript API in use.
-
-#### new Metalsmith(dir)
-
-Create a new `Metalsmith` instance for a working `dir`.
-
-#### #use(plugin)
-
-Add the given `plugin` function to the middleware stack. Metalsmith uses
-[ware](https://github.com/segmentio/ware) to support middleware, so plugins
-should follow the same pattern of taking arguments of `(files, metalsmith, callback)`,
-modifying the `files` or `metalsmith.metadata()` argument by reference, and then
-calling `callback` to trigger the next step.
-
-#### #build(fn)
-
-Build with the given settings and a callback having signature `fn(err, files)`.
-
-#### #source(path)
-
-Set the relative `path` to the source directory, or get the full one if no `path` is provided. The source directory defaults to `./src`.
-
-#### #destination(path)
-
-Set the relative `path` to the destination directory, or get the full one if no `path` is provided. The destination directory defaults to `./build`.
-
-#### #concurrency(max)
-
-Set the maximum number of files to open at once when reading or writing. Defaults to `Infinity`. To avoid having too many files open at once (`EMFILE` errors), set the concurrency to something lower than `ulimit -n`.
-
-#### #clean(boolean)
-
-Set whether to remove the destination directory before writing to it, or get the current setting. Defaults to `true`.
-
-#### #frontmatter(boolean)
-
-Set whether to parse YAML frontmatter. Defaults to `true`.
-
-#### #ignore(path)
-
-Ignore files/paths from being loaded into Metalsmith.
-
-`path` can be a string, a function, or an array of strings and/or functions.
-Strings use the glob syntax from
-[minimatch](https://github.com/isaacs/minimatch) to match files and directories
-to ignore. Functions are called with the full path to the file as their first
-argument, and the `stat` object returned by Node's `fs.stat` function as their
-second argument, and must return either `true` to ignore the file, or `false` to
-keep it.
-
-#### #metadata(json)
-
-Get the global metadata. This is useful for plugins that want to set global-level metadata that can be applied to all files.
-
-#### #path(paths...)
-
-Resolve any amount of `paths...` relative to the working directory. This is useful for plugins who want to read extra assets from another directory, for example `./layouts`.
-
-#### #run(files, fn)
-
-Run all of the middleware functions on a dictionary of `files` and callback with `fn(err, files)`, where `files` is the altered dictionary.
-
-#### #process(fn)
-
-Process the files like build without writing any files. Callback signature `fn(err, files)`.
+See [API reference at metalsmith.io](https://metalsmith.io/api)
 
 ## Metadata API
 
@@ -269,12 +203,16 @@ Metalsmith 3.0.0 will support NodeJS versions 12 and higher.
 Metalsmith 2.4.0 supports NodeJS versions 8 and higher.
 Metalsmith 2.3.0 and below support NodeJS versions all the way back to 0.12.
 
+## Credits
+
+Special thanks to [Ian Storm Taylor](https://github.com/ianstormtaylor), [Andrew Meyer](https://github.com/Ajedi32), [Dominic Barnes](https://github.com/dominicbarnes), [Andrew Goodricke](https://github.com/woodyrew), [Ismay Wolff](https://github.com/ismay), [Kevin Van Lierde](https://github.com/webketje) and [others](https://github.com/segmentio/metalsmith/graphs/contributors) for their contributions!
+
 ## [License](LICENSE)
 
 [npm-badge]: https://img.shields.io/npm/v/metalsmith.svg
 [npm-url]: https://www.npmjs.com/package/metalsmith
-[ci-badge]: https://app.travis-ci.com/metalsmith/metalsmith.svg?branch=master
-[ci-url]: https://app.travis-ci.com/github/metalsmith/metalsmith
+[ci-badge]: https://github.com/metalsmith/metalsmith/actions/workflows/test.yml/badge.svg
+[ci-url]: https://github.com/metalsmith/metalsmith/actions/workflows/test.yml
 [codecov-badge]: https://coveralls.io/repos/github/metalsmith/metalsmith/badge.svg?branch=master
 [codecov-url]: https://coveralls.io/github/metalsmith/metalsmith?branch=master
 [license-badge]: https://img.shields.io/github/license/metalsmith/metalsmith

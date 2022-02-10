@@ -4,4 +4,4 @@
 
 const Metalsmith = require('./lib')
 
-module.exports = Metalsmith;
+module.exports = Metalsmith
