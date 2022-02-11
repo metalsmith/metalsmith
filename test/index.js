@@ -9,7 +9,9 @@ const Mode = require('stat-mode')
 const noop = function () {}
 const path = require('path')
 const rm = require('../lib/helpers').rm
+const { fileLogHandler } = require('../lib/debug')
 const fixture = path.resolve.bind(path, __dirname, 'fixtures')
+const d = require('debug')
 
 describe('Metalsmith', function () {
   beforeEach(function () {
@@ -356,6 +358,79 @@ describe('Metalsmith', function () {
     })
   })
 
+  describe('#debug', function () {
+    it('should allow plugins to use debug instances', function (done) {
+      const m = Metalsmith(fixture('basic'))
+      let fakeStream = []
+      m.debug.handle = fileLogHandler({
+        write(arg) {
+          fakeStream.push(arg)
+        }
+      })
+
+      m.env('debug', true)
+        .use(function plugin(files, m, next) {
+          const debug = m.debug('metalsmith:test')
+          debug('A log')
+          debug.warn('A warning')
+          debug.error('An error')
+          debug.info('An info')
+          next()
+        })
+        .process(() => {
+          assert.deepStrictEqual(fakeStream, [
+            '  \x1B[38;5;247;1mmetalsmith:test \x1B[0mA log \x1B[38;5;247m+0ms\x1B[0m\n',
+            '  \x1B[38;5;178;1mmetalsmith:test:warn \x1B[0mA warning \x1B[38;5;178m+0ms\x1B[0m\n',
+            '  \x1B[38;5;196;1mmetalsmith:test:error \x1B[0mAn error \x1B[38;5;196m+0ms\x1B[0m\n',
+            '  \x1B[38;5;247;1mmetalsmith:test:info \x1B[0mAn info \x1B[38;5;247m+0ms\x1B[0m\n'
+          ])
+          done()
+        })
+    })
+
+    it("should convert metalsmith.env('debug', true) to debug all namespaces", function (done) {
+      const m = Metalsmith(fixture('basic'))
+
+      let fakeStream
+      m.debug.handle = fileLogHandler({
+        write(arg) {
+          fakeStream = arg
+        }
+      })
+
+      m.use(function plugin(files, m, next) {
+        const debug = m.debug('metalsmith:test')
+        debug('A log')
+        next()
+      }).process(() => {
+        assert.strictEqual(fakeStream, '  \x1B[38;5;247;1mmetalsmith:test \x1B[0mA log \x1B[38;5;247m+0ms\x1B[0m\n')
+        assert.strictEqual(m.env('debug'), '*')
+        done()
+      })
+    })
+
+    it("should be disabled when metalsmith.env('debug') === false", function (done) {
+      const m = Metalsmith(fixture('basic'))
+      let fakeStream = null
+      m.debug.handle = fileLogHandler({
+        write(arg) {
+          fakeStream = arg
+        }
+      })
+
+      m.env('debug', false)
+        .use(function plugin(files, m, next) {
+          const debug = m.debug('metalsmith:test')
+          debug('A log')
+          next()
+        })
+        .process(() => {
+          assert.strictEqual(fakeStream, null)
+          done()
+        })
+    })
+  })
+
   describe('#read', function () {
     it('should read from a source directory', function (done) {
       const m = Metalsmith(fixture('read'))
@@ -373,6 +448,7 @@ describe('Metalsmith', function () {
         done()
       })
     })
+
     it('should only return a promise when callback is omitted', function (done) {
       const m = Metalsmith(fixture('read'))
 
