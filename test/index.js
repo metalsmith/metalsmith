@@ -320,6 +320,29 @@ describe('Metalsmith', function () {
         done()
       })
     })
+    it('should only return a promise when callback is omitted', function (done) {
+      const m = Metalsmith(fixture('read'))
+
+      assert.strictEqual(
+        m.read(() => {}),
+        undefined
+      )
+
+      const stats = fs.statSync(fixture('read/src/index.md'))
+      m.read()
+        .then((files) => {
+          assert.deepEqual(files, {
+            'index.md': {
+              title: 'A Title',
+              contents: Buffer.from('body'),
+              mode: stats.mode.toString(8).slice(-4),
+              stats: stats
+            }
+          })
+          done()
+        })
+        .catch(done)
+    })
 
     it('should traverse a symbolic link to a directory', function (done) {
       // symbolic links are not really a thing on Windows
@@ -581,10 +604,50 @@ describe('Metalsmith', function () {
         done()
       })
     })
+
+    it('should only return a promise when callback is omitted', function (done) {
+      const m = Metalsmith(fixture('read'))
+
+      assert.strictEqual(
+        m.readFile('index.md', () => {}),
+        undefined
+      )
+
+      const stats = fs.statSync(fixture('read/src/index.md'))
+      const expected = {
+        title: 'A Title',
+        contents: Buffer.from('body'),
+        mode: stats.mode.toString(8).slice(-4),
+        stats: stats
+      }
+      m.readFile('index.md')
+        .then((file) => {
+          assert.deepEqual(file, expected)
+          done()
+        })
+        .catch(done)
+    })
   })
 
   describe('#write', function () {
     it('should write to a destination directory', function (done) {
+      const m = Metalsmith(fixture('write'))
+
+      assert.strictEqual(
+        m.write([], () => {}),
+        undefined
+      )
+
+      const files = { 'index.md': { contents: Buffer.from('body') } }
+      m.write(files)
+        .then(() => {
+          equal(fixture('write/build'), fixture('write/expected'))
+          done()
+        })
+        .catch(done)
+    })
+
+    it('should only return a promise when callback is omitted', function (done) {
       const m = Metalsmith(fixture('write'))
       const files = { 'index.md': { contents: Buffer.from('body') } }
       m.write(files, function (err) {
@@ -628,6 +691,7 @@ describe('Metalsmith', function () {
 
     it('should still write all when concurrency is set', function (done) {
       const m = Metalsmith('test/fixtures/concurrency')
+      m.concurrency(3)
       m.read(function (err, files) {
         if (err) return done(err)
         m.write(files, function (err) {
@@ -658,6 +722,30 @@ describe('Metalsmith', function () {
       })
     })
 
+    it('should only return a promise when callback is omitted', function (done) {
+      const m = Metalsmith(fixture('write-file'))
+      const file = 'index.md'
+      const data = { contents: Buffer.from('body') }
+
+      assert.strictEqual(
+        m.writeFile(file, data, () => {}),
+        undefined
+      )
+
+      const expected = fixture('write-file/expected')
+
+      m.writeFile(file, data)
+        .then(() => {
+          equal(fixture('write-file/build'), expected)
+          assert.equal(
+            fs.readFileSync(fixture('write-file/build/index.md'), 'utf8'),
+            fs.readFileSync(fixture('write-file/expected/index.md'), 'utf8')
+          )
+          done()
+        })
+        .catch(done)
+    })
+
     it('should error on write failure', function (done) {
       // chmodded files arer unpredictable at best on Windows
       if (process.platform === 'win32') {
@@ -675,6 +763,33 @@ describe('Metalsmith', function () {
   })
 
   describe('#run', function () {
+    it('should only return a promise when callback is omitted', function (done) {
+      const m = Metalsmith(fixture('test/tmp'))
+      m.use(plugin)
+
+      function plugin(files, metalsmith, done) {
+        assert.equal(files.one, 'one')
+        assert.equal(m, metalsmith)
+        assert.equal(typeof done, 'function')
+        files.two = 'two'
+        done()
+      }
+
+      assert.strictEqual(
+        m.run({ one: 'one' }, () => {}),
+        undefined
+      )
+
+      m.run({ one: 'one' })
+        .then((files) => {
+          console.log(files)
+          assert.equal(files.one, 'one')
+          assert.equal(files.two, 'two')
+          done()
+        })
+        .catch(done)
+    })
+
     it('should apply a plugin', function (done) {
       const m = Metalsmith('test/tmp')
       m.use(plugin)
@@ -728,6 +843,24 @@ describe('Metalsmith', function () {
   })
 
   describe('#process', function () {
+    it('should only return a promise when callback is omitted', function (done) {
+      const m = Metalsmith(fixture('basic'))
+
+      assert.strictEqual(
+        m.process(() => {}),
+        undefined
+      )
+
+      m.process()
+        .then((files) => {
+          assert.equal(typeof files, 'object')
+          assert.equal(typeof files['index.md'], 'object')
+          assert.equal(files['index.md'].title, 'A Title')
+          assert.equal(typeof files[path.join('nested', 'index.md')], 'object')
+          done()
+        })
+        .catch(done)
+    })
     it('should return files object with no plugins', function (done) {
       Metalsmith(fixture('basic')).process(function (err, files) {
         if (err) return done(err)
@@ -772,13 +905,20 @@ describe('Metalsmith', function () {
       })
     })
 
-    it('should return a promise', function (done) {
-      Metalsmith(fixture('basic'))
-        .build()
+    it('should return a promise only when callback is omitted', function (done) {
+      const m = Metalsmith(fixture('basic'))
+
+      assert.strictEqual(
+        m.build(() => {}),
+        undefined
+      )
+
+      m.build()
         .then((files) => {
           assert.equal(typeof files, 'object')
           done()
         })
+        .catch(done)
     })
 
     it('should execute a callback if one is supplied', function (done) {
