@@ -782,7 +782,6 @@ describe('Metalsmith', function () {
 
       m.run({ one: 'one' })
         .then((files) => {
-          console.log(files)
           assert.equal(files.one, 'one')
           assert.equal(files.two, 'two')
           done()
