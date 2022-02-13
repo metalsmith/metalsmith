@@ -6,7 +6,22 @@ This project adheres to [Semantic Versioning](http://semver.org).
 
 This document follows the guidelines of [Keep A Changelog](http://keepachangelog.com).
 
+## [2.4.2] - 2022-02-13
+
+### Updated
+
+- **Dependencies:** [`af9dec0`](https://github.com/metalsmith/metalsmith/commit/af9dec0)
+  - `chalk`: 3.0.0 ▶︎ 4.1.2
+- Updated README.md
+
+### Fixed
+
+- Fixed Metalsmith JSDoc type hints in VS code [`ebf82f4`](https://github.com/metalsmith/metalsmith/commit/ebf82f4)
+- Added package integrity test [`c539c67`](https://github.com/metalsmith/metalsmith/commit/c539c67)
+
 ## [2.4.1] - 2022-01-31
+
+### Fixed
 
 Bugfix: include index.js in package.json files
 
