@@ -52,7 +52,7 @@
     "timeout": 3000
   },
   "dependencies": {
-    "chalk": "^3.0.0",
+    "chalk": "^4.1.2",
     "clone": "^2.1.2",
     "co-fs-extra": "^1.2.1",
     "commander": "^6.2.1",
