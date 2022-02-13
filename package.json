@@ -43,7 +43,7 @@
     "lint": "eslint --fix index.js lib/* bin/* test/*.js",
     "format:check": "prettier --list-different \"**/*.{yml,md,js,json}\"",
     "format": "prettier --write \"**/*.{yml,md,js,json}\"",
-    "test": "nyc mocha",
+    "test": "npm i && nyc mocha",
     "release": "release-it"
   },
   "mocha": {
@@ -74,6 +74,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
+    "metalsmith": "file:.",
     "mocha": "^7.2.0",
     "nyc": "^15.1.0",
     "prettier": "^2.5.1",

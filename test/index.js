@@ -4,7 +4,9 @@ const { it, describe, beforeEach } = require('mocha')
 const equal = require('assert-dir-equal')
 const exec = require('child_process').exec
 const fs = require('fs')
-const Metalsmith = require('..')
+// not require('..')! metalsmith pkg is installed as file:. installed as NPM dependency
+// this is useful to make sure the published package works as expected
+const Metalsmith = require('metalsmith')
 const Mode = require('stat-mode')
 const noop = function () {}
 const path = require('path')
