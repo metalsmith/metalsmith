@@ -146,6 +146,37 @@ describe('Metalsmith', function () {
     })
   })
 
+  describe('#env', function () {
+    it('should initialize an empty object as environment', function () {
+      const m = Metalsmith('test/tmp')
+      assert(m.env().hasOwnProperty === undefined)
+      assert(Object.keys(m.env()).length === 0)
+    })
+
+    it('should allow getting & chainable setting single environment variables', function () {
+      const m = Metalsmith('test/tmp').env('DEBUG', true).env('ENV', 'development')
+
+      assert(m.env('DEBUG'))
+      assert(m.env('ENV') === 'development')
+    })
+
+    it('should allow setting a batch of environment variables', function () {
+      const m = Metalsmith('test/tmp').env({ DEBUG: true, ENV: 'development' })
+
+      assert.deepStrictEqual(m.env(), Object.assign(Object.create(null), { DEBUG: true, ENV: 'development' }))
+    })
+
+    it('should provide out of the box support for process.env', function () {
+      const npmvar = process.env.npm_config_shell
+      const m = Metalsmith('test/tmp').env(process.env)
+
+      assert.deepStrictEqual(m.env(), Object.assign(Object.create(null), process.env))
+
+      m.env('npm_config_shell', '/bin/not-really')
+      assert.strictEqual(process.env.npm_config_shell, npmvar)
+    })
+  })
+
   describe('#concurrency', function () {
     it('should set a max number for concurrency', function () {
       const m = Metalsmith('test/tmp')
