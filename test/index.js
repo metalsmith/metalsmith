@@ -278,11 +278,13 @@ describe('Metalsmith', function () {
       assert.deepEqual(m.metadata(), {})
     })
 
-    it('should set a clone of metadata', function () {
+    it('should assign to existing metadata', function () {
       const m = Metalsmith('test/tmp')
-      const data = { property: true }
-      m.metadata(data)
-      assert.notEqual(m.metadata(), data)
+      m.metadata({ property: true })
+      const data = m.metadata()
+      m.metadata({ otherProperty: false })
+      assert.strictEqual(m.metadata(), data)
+      m.metadata({})
       assert.deepEqual(m.metadata(), data)
     })
 
