@@ -17,7 +17,7 @@ describe('Metalsmith', function () {
   })
 
   it('should expose a constructor', function () {
-    assert.equal(typeof Metalsmith, 'function')
+    assert.strictEqual(typeof Metalsmith, 'function')
   })
 
   it('should not require the `new` keyword', function () {
@@ -33,24 +33,24 @@ describe('Metalsmith', function () {
 
   it('should use `./src` as a default source directory', function () {
     const m = Metalsmith('test/tmp')
-    assert.equal(m._source, 'src')
+    assert.strictEqual(m._source, 'src')
   })
 
   it('should use `./build` as a default destination directory', function () {
     const m = Metalsmith('test/tmp')
-    assert.equal(m._destination, 'build')
+    assert.strictEqual(m._destination, 'build')
   })
 
   it('should default clean to `true`', function () {
     const m = Metalsmith('test/tmp')
-    assert.equal(m._clean, true)
+    assert.strictEqual(m._clean, true)
   })
 
   describe('#use', function () {
     it('should add a plugin to the plugins stack', function () {
       const m = Metalsmith('test/tmp')
       m.use(noop)
-      assert.equal(m.plugins.length, 1)
+      assert.strictEqual(m.plugins.length, 1)
     })
   })
 
@@ -72,7 +72,7 @@ describe('Metalsmith', function () {
     it('should set a working directory', function () {
       const m = Metalsmith('test/tmp')
       m.directory('dir')
-      assert.equal(m._directory, 'dir')
+      assert.strictEqual(m._directory, 'dir')
     })
 
     it('should get the working directory', function () {
@@ -83,7 +83,7 @@ describe('Metalsmith', function () {
     it('should be able to be absolute', function () {
       const m = Metalsmith('test/tmp')
       m.directory('/dir')
-      assert.equal(m.directory(), path.resolve('/dir'))
+      assert.strictEqual(m.directory(), path.resolve('/dir'))
     })
 
     it('should error on non-string', function () {
@@ -98,7 +98,7 @@ describe('Metalsmith', function () {
     it('should set a source directory', function () {
       const m = Metalsmith('test/tmp')
       m.source('dir')
-      assert.equal(m._source, 'dir')
+      assert.strictEqual(m._source, 'dir')
     })
 
     it('should get the full path to the source directory', function () {
@@ -109,7 +109,7 @@ describe('Metalsmith', function () {
     it('should be able to be absolute', function () {
       const m = Metalsmith('test/tmp')
       m.source('/dir')
-      assert.equal(m.source(), path.resolve('/dir'))
+      assert.strictEqual(m.source(), path.resolve('/dir'))
     })
 
     it('should error on non-string', function () {
@@ -124,7 +124,7 @@ describe('Metalsmith', function () {
     it('should set a destination directory', function () {
       const m = Metalsmith('test/tmp')
       m.destination('dir')
-      assert.equal(m._destination, 'dir')
+      assert.strictEqual(m._destination, 'dir')
     })
 
     it('should get the full path to the destination directory', function () {
@@ -135,7 +135,7 @@ describe('Metalsmith', function () {
     it('should be able to be absolute', function () {
       const m = Metalsmith('test/tmp')
       m.destination('/dir')
-      assert.equal(m.destination(), path.resolve('/dir'))
+      assert.strictEqual(m.destination(), path.resolve('/dir'))
     })
 
     it('should error on non-string', function () {
@@ -201,18 +201,18 @@ describe('Metalsmith', function () {
     it('should set a max number for concurrency', function () {
       const m = Metalsmith('test/tmp')
       m.concurrency(15)
-      assert.equal(m._concurrency, 15)
+      assert.strictEqual(m._concurrency, 15)
     })
 
     it('should get the max number for concurrency', function () {
       const m = Metalsmith('test/tmp')
       m.concurrency(25)
-      assert.equal(m.concurrency(), 25)
+      assert.strictEqual(m.concurrency(), 25)
     })
 
     it('should be infinitely concurrent by default', function () {
       const m = Metalsmith('test/tmp')
-      assert.equal(m.concurrency(), Infinity)
+      assert.strictEqual(m.concurrency(), Infinity)
     })
 
     it('should error on non-number', function () {
@@ -230,12 +230,12 @@ describe('Metalsmith', function () {
     it('should set the clean option', function () {
       const m = Metalsmith('test/tmp')
       m.clean(false)
-      assert.equal(m._clean, false)
+      assert.strictEqual(m._clean, false)
     })
 
     it('should get the value of the clean option', function () {
       const m = Metalsmith('test/tmp')
-      assert.equal(m.clean(), true)
+      assert.strictEqual(m.clean(), true)
     })
 
     it('should error on non-boolean', function () {
@@ -250,7 +250,7 @@ describe('Metalsmith', function () {
     it('should set the frontmatter option', function () {
       const m = Metalsmith('test/tmp')
       m.frontmatter(false)
-      assert.equal(m._frontmatter, false)
+      assert.strictEqual(m._frontmatter, false)
     })
 
     it('should allow a gray-matter options object as input', function () {
@@ -308,7 +308,7 @@ describe('Metalsmith', function () {
       m.process(function (err) {
         if (err) done(err)
         const matches = m.match('**/*.md').join(',')
-        assert.equal(matches, `index.md,${path.join('nested', 'index.md')}`)
+        assert.strictEqual(matches, `index.md,${path.join('nested', 'index.md')}`)
         done()
       })
     })
@@ -494,7 +494,7 @@ describe('Metalsmith', function () {
       m.frontmatter(false)
       m.read(function (err, files) {
         if (err) return done(err)
-        assert.equal(files['index.md'].thing, undefined)
+        assert.strictEqual(files['index.md'].thing, undefined)
         done()
       })
     })
@@ -507,7 +507,7 @@ describe('Metalsmith', function () {
         })
         .process(function (err) {
           if (err) throw err
-          assert.equal(files['json.md'].json, true)
+          assert.strictEqual(files['json.md'].json, true)
           done()
         })
     })
@@ -530,8 +530,8 @@ describe('Metalsmith', function () {
         })
         .process(function (err) {
           if (err) throw err
-          assert.equal(files['index.md'].thing, true)
-          assert.equal(files['index.md'].excerpt.trim(), 'An excerpt')
+          assert.strictEqual(files['index.md'].thing, true)
+          assert.strictEqual(files['index.md'].excerpt.trim(), 'An excerpt')
           done()
         })
     })
@@ -541,7 +541,7 @@ describe('Metalsmith', function () {
       m.concurrency(3)
       m.read(function (err, files) {
         if (err) return done(err)
-        assert.equal(Object.keys(files).length, 10)
+        assert.strictEqual(Object.keys(files).length, 10)
         done()
       })
     })
@@ -735,7 +735,7 @@ describe('Metalsmith', function () {
       m.write(files, function (err) {
         const stats = fs.statSync(fixture('write-mode/build/bin'))
         const mode = Mode(stats).toOctal()
-        assert.equal(mode, '0777')
+        assert.strictEqual(mode, '0777')
         done()
       })
     })
@@ -765,7 +765,7 @@ describe('Metalsmith', function () {
       m.writeFile(file, data, function (err) {
         if (err) return done(err)
         equal(fixture('write-file/build'), expected)
-        assert.equal(
+        assert.strictEqual(
           fs.readFileSync(fixture('write-file/build/index.md'), 'utf8'),
           fs.readFileSync(fixture('write-file/expected/index.md'), 'utf8')
         )
@@ -788,7 +788,7 @@ describe('Metalsmith', function () {
       m.writeFile(file, data)
         .then(() => {
           equal(fixture('write-file/build'), expected)
-          assert.equal(
+          assert.strictEqual(
             fs.readFileSync(fixture('write-file/build/index.md'), 'utf8'),
             fs.readFileSync(fixture('write-file/expected/index.md'), 'utf8')
           )
@@ -819,9 +819,9 @@ describe('Metalsmith', function () {
       m.use(plugin)
 
       function plugin(files, metalsmith, done) {
-        assert.equal(files.one, 'one')
-        assert.equal(m, metalsmith)
-        assert.equal(typeof done, 'function')
+        assert.strictEqual(files.one, 'one')
+        assert.strictEqual(m, metalsmith)
+        assert.strictEqual(typeof done, 'function')
         files.two = 'two'
         done()
       }
@@ -833,8 +833,8 @@ describe('Metalsmith', function () {
 
       m.run({ one: 'one' })
         .then((files) => {
-          assert.equal(files.one, 'one')
-          assert.equal(files.two, 'two')
+          assert.strictEqual(files.one, 'one')
+          assert.strictEqual(files.two, 'two')
           done()
         })
         .catch(done)
@@ -844,15 +844,15 @@ describe('Metalsmith', function () {
       const m = Metalsmith('test/tmp')
       m.use(plugin)
       m.run({ one: 'one' }, function (err, files, metalsmith) {
-        assert.equal(files.one, 'one')
-        assert.equal(files.two, 'two')
+        assert.strictEqual(files.one, 'one')
+        assert.strictEqual(files.two, 'two')
         done()
       })
 
       function plugin(files, metalsmith, done) {
-        assert.equal(files.one, 'one')
-        assert.equal(m, metalsmith)
-        assert.equal(typeof done, 'function')
+        assert.strictEqual(files.one, 'one')
+        assert.strictEqual(m, metalsmith)
+        assert.strictEqual(typeof done, 'function')
         files.two = 'two'
         done()
       }
@@ -861,15 +861,15 @@ describe('Metalsmith', function () {
     it('should run with a provided plugin', function (done) {
       const m = Metalsmith('test/tmp')
       m.run({ one: 'one' }, [plugin], function (err, files, metalsmith) {
-        assert.equal(files.one, 'one')
-        assert.equal(files.two, 'two')
+        assert.strictEqual(files.one, 'one')
+        assert.strictEqual(files.two, 'two')
         done()
       })
 
       function plugin(files, metalsmith, done) {
-        assert.equal(files.one, 'one')
-        assert.equal(m, metalsmith)
-        assert.equal(typeof done, 'function')
+        assert.strictEqual(files.one, 'one')
+        assert.strictEqual(m, metalsmith)
+        assert.strictEqual(typeof done, 'function')
         files.two = 'two'
         done()
       }
@@ -879,14 +879,14 @@ describe('Metalsmith', function () {
       const m = Metalsmith('test/tmp')
       m.use(plugin)
       m.run({ one: 'one' }, function (err, files, metalsmith) {
-        assert.equal(files.one, 'one')
-        assert.equal(files.two, 'two')
+        assert.strictEqual(files.one, 'one')
+        assert.strictEqual(files.two, 'two')
         done()
       })
 
       function plugin(files, metalsmith) {
-        assert.equal(files.one, 'one')
-        assert.equal(m, metalsmith)
+        assert.strictEqual(files.one, 'one')
+        assert.strictEqual(m, metalsmith)
         files.two = 'two'
       }
     })
@@ -903,10 +903,10 @@ describe('Metalsmith', function () {
 
       m.process()
         .then((files) => {
-          assert.equal(typeof files, 'object')
-          assert.equal(typeof files['index.md'], 'object')
-          assert.equal(files['index.md'].title, 'A Title')
-          assert.equal(typeof files[path.join('nested', 'index.md')], 'object')
+          assert.strictEqual(typeof files, 'object')
+          assert.strictEqual(typeof files['index.md'], 'object')
+          assert.strictEqual(files['index.md'].title, 'A Title')
+          assert.strictEqual(typeof files[path.join('nested', 'index.md')], 'object')
           done()
         })
         .catch(done)
@@ -914,10 +914,10 @@ describe('Metalsmith', function () {
     it('should return files object with no plugins', function (done) {
       Metalsmith(fixture('basic')).process(function (err, files) {
         if (err) return done(err)
-        assert.equal(typeof files, 'object')
-        assert.equal(typeof files['index.md'], 'object')
-        assert.equal(files['index.md'].title, 'A Title')
-        assert.equal(typeof files[path.join('nested', 'index.md')], 'object')
+        assert.strictEqual(typeof files, 'object')
+        assert.strictEqual(typeof files['index.md'], 'object')
+        assert.strictEqual(files['index.md'].title, 'A Title')
+        assert.strictEqual(typeof files[path.join('nested', 'index.md')], 'object')
         done()
       })
     })
@@ -932,14 +932,14 @@ describe('Metalsmith', function () {
         })
         .process(function (err, files) {
           if (err) return done(err)
-          assert.equal(typeof files, 'object')
-          assert.equal(Object.keys(files).length, 2)
-          assert.equal(typeof files['one.md'], 'object')
-          assert.equal(files['one.md'].title, 'one')
-          assert.equal(files['one.md'].contents.toString('utf8'), 'one')
-          assert.equal(typeof files['two.md'], 'object')
-          assert.equal(files['two.md'].title, 'two')
-          assert.equal(files['two.md'].contents.toString('utf8'), 'two')
+          assert.strictEqual(typeof files, 'object')
+          assert.strictEqual(Object.keys(files).length, 2)
+          assert.strictEqual(typeof files['one.md'], 'object')
+          assert.strictEqual(files['one.md'].title, 'one')
+          assert.strictEqual(files['one.md'].contents.toString('utf8'), 'one')
+          assert.strictEqual(typeof files['two.md'], 'object')
+          assert.strictEqual(files['two.md'].title, 'two')
+          assert.strictEqual(files['two.md'].contents.toString('utf8'), 'two')
           done()
         })
     })
@@ -949,7 +949,7 @@ describe('Metalsmith', function () {
     it('should do a basic copy with no plugins', function (done) {
       Metalsmith(fixture('basic')).build(function (err, files) {
         if (err) return done(err)
-        assert.equal(typeof files, 'object')
+        assert.strictEqual(typeof files, 'object')
         equal(fixture('basic/build'), fixture('basic/expected'))
         done()
       })
@@ -965,7 +965,7 @@ describe('Metalsmith', function () {
 
       m.build()
         .then((files) => {
-          assert.equal(typeof files, 'object')
+          assert.strictEqual(typeof files, 'object')
           done()
         })
         .catch(done)
@@ -973,7 +973,7 @@ describe('Metalsmith', function () {
 
     it('should execute a callback if one is supplied', function (done) {
       Metalsmith(fixture('basic')).build((err, files) => {
-        assert.equal(typeof files, 'object')
+        assert.strictEqual(typeof files, 'object')
         done()
       })
     })
@@ -988,7 +988,7 @@ describe('Metalsmith', function () {
     it('should preserve binary files', function (done) {
       Metalsmith(fixture('basic-images')).build(function (err, files) {
         if (err) return done(err)
-        assert.equal(typeof files, 'object')
+        assert.strictEqual(typeof files, 'object')
         equal(fixture('basic-images/build'), fixture('basic-images/expected'))
         done()
       })
