@@ -153,11 +153,28 @@ describe('Metalsmith', function () {
       assert(Object.keys(m.env()).length === 0)
     })
 
+    it('should not be accessible directly from the Metalsmith instance', function () {
+      const m = Metalsmith('test/tmp')
+      assert(!Object.keys(m).includes('env') && !Object.keys(m).includes('_env'))
+    })
+
     it('should allow getting & chainable setting single environment variables', function () {
       const m = Metalsmith('test/tmp').env('DEBUG', true).env('ENV', 'development')
 
       assert(m.env('DEBUG'))
       assert(m.env('ENV') === 'development')
+    })
+
+    it('should throw on non-primitive values', function () {
+      assert.throws(() => Metalsmith('test/tmp').env('DEBUG', {}))
+      assert.throws(() => Metalsmith('test/tmp').env('DEBUG', () => {}))
+    })
+
+    it('should treat a lowercase and uppercase variable as the same', function () {
+      const m = Metalsmith('test/tmp')
+      m.env('debug', true)
+      m.env('DEBUG', false)
+      assert(m.env('debug') === m.env('DEBUG'))
     })
 
     it('should allow setting a batch of environment variables', function () {
@@ -169,8 +186,11 @@ describe('Metalsmith', function () {
     it('should provide out of the box support for process.env', function () {
       const npmvar = process.env.npm_config_shell
       const m = Metalsmith('test/tmp').env(process.env)
-
-      assert.deepStrictEqual(m.env(), Object.assign(Object.create(null), process.env))
+      const uppercased = Object.entries(process.env).reduce((vars, [name, value]) => {
+        vars[name.toUpperCase()] = value
+        return vars
+      }, {})
+      assert.deepStrictEqual(m.env(), Object.assign(Object.create(null), uppercased))
 
       m.env('npm_config_shell', '/bin/not-really')
       assert.strictEqual(process.env.npm_config_shell, npmvar)
