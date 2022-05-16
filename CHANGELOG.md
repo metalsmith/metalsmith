@@ -6,6 +6,18 @@ This project adheres to [Semantic Versioning](http://semver.org).
 
 This document follows the guidelines of [Keep A Changelog](http://keepachangelog.com).
 
+## [2.4.3] - 2022-05-16
+
+### Updated
+
+- **Dependencies:** [`774a164`](https://github.com/metalsmith/metalsmith/commit/774a164)
+  - `micromatch`: 4.0.4 ▶︎ 4.0.5
+- Updated README.md
+
+### Fixed
+
+- Fixes repeat `metalsmith.match` file cache in repeat runs without re-read, see https://github.com/metalsmith/layouts/issues/183 [`a727309`](https://github.com/metalsmith/metalsmith/commit/a727309)
+
 ## [2.4.2] - 2022-02-13
 
 ### Updated
