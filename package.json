@@ -59,7 +59,7 @@
     "cross-spawn": "^7.0.3",
     "gray-matter": "^4.0.3",
     "is-utf8": "~0.2.0",
-    "micromatch": "^4.0.4",
+    "micromatch": "^4.0.5",
     "rimraf": "^3.0.2",
     "stat-mode": "^1.0.0",
     "thunkify": "^2.1.2",
