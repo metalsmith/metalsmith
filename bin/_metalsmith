@@ -2,16 +2,19 @@
 
 /* eslint-disable no-console */
 
-/**
- * Dependencies.
- */
-
-const chalk = require('chalk')
 const exists = require('fs').existsSync
 const Metalsmith = require('..')
 const program = require('commander')
 const resolve = require('path').resolve
 const { isString, isObject } = require('../lib/helpers')
+
+const color = {
+  error: '\x1b[31m',
+  warn: '\x1b[33m',
+  info: '\x1b[36m',
+  success: '\x1b[32m',
+  log: '\x1b[0m'
+}
 
 /**
  * Usage.
@@ -49,13 +52,13 @@ program.parse(process.argv)
 const dir = process.cwd()
 const config = program.config
 const path = resolve(dir, config)
-if (!exists(path)) fatal('could not find a ' + config + ' configuration file.')
+if (!exists(path)) fatal(`could not find a ${config} configuration file.`)
 
 let json
 try {
   json = require(path)
 } catch (e) {
-  fatal('it seems like ' + config + ' is malformed.')
+  fatal(`it seems like ${config} is malformed.`)
 }
 
 /**
@@ -88,7 +91,7 @@ normalize(json.plugins).forEach(function (plugin) {
       const local = resolve(dir, name)
       const npm = resolve(dir, 'node_modules', name)
 
-      if (exists(local) || exists(local + '.js')) {
+      if (exists(local) || exists(`${local}.js`)) {
         mod = require(local)
       } else if (exists(npm)) {
         mod = require(npm)
@@ -96,13 +99,13 @@ normalize(json.plugins).forEach(function (plugin) {
         mod = require(name)
       }
     } catch (e) {
-      fatal('failed to require plugin "' + name + '".')
+      fatal(`failed to require plugin "${name}".`)
     }
 
     try {
       metalsmith.use(mod(opts))
     } catch (e) {
-      fatal('error using plugin "' + name + '"...', e.message + '\n\n' + e.stack)
+      fatal(`error using plugin "${name}"...`, `${e.message}\n\n${e.stack}`)
     }
   }
 })
@@ -112,8 +115,8 @@ normalize(json.plugins).forEach(function (plugin) {
  */
 
 metalsmith.build(function (err) {
-  if (err) return fatal(err.message, err.stack)
-  log('successfully built to ' + metalsmith.destination())
+  if (err) fatal(err.message, err.stack)
+  log('success', `successfully built to ${metalsmith.destination()}`)
 })
 
 /**
@@ -124,27 +127,22 @@ metalsmith.build(function (err) {
  */
 
 function fatal(msg, stack) {
-  console.error()
-  console.error(chalk.red('  Metalsmith') + chalk.gray(' · ') + msg)
+  log('error', msg)
   if (stack) {
-    console.error()
-    console.error(chalk.gray(stack))
+    log('error', stack)
   }
-  console.error()
   // eslint-disable-next-line no-process-exit
   process.exit(1)
 }
 
-/**
- * Log a `message`.
- *
- * @param {String} message
- */
-
-function log(message) {
-  console.log()
-  console.log(chalk.gray('  Metalsmith · ') + message)
-  console.log()
+function log(type, msg) {
+  if (!msg) {
+    msg = type
+  }
+  const fn = console[type] || console.log
+  let args = [`Metalsmith · ${msg}`,'\x1b[0m']
+  if (color[type]) args = [color[type], ...args]
+  fn(...args)
 }
 
 /**

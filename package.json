@@ -52,7 +52,6 @@
     "timeout": 3000
   },
   "dependencies": {
-    "chalk": "^4.1.2",
     "commander": "^6.2.1",
     "cross-spawn": "^7.0.3",
     "gray-matter": "^4.0.3",
