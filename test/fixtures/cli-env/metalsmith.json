@@ -1,0 +1,9 @@
+{
+  "env": {
+    "debug": true,
+    "name": "$NODE_ENV"
+  },
+  "plugins": {
+    "./plugin": true
+  }
+}

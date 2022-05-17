@@ -16,4 +16,7 @@ rules:
   import/first: error
   import/no-anonymous-default-export: error
   import/no-unassigned-import: error
-  import/no-internal-modules: error
+  import/no-internal-modules:
+    - error
+    - allow:
+        - '**/lib/*'

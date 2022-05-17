@@ -11,6 +11,7 @@ const exists = require('fs').existsSync
 const Metalsmith = require('..')
 const program = require('commander')
 const resolve = require('path').resolve
+const { isString, isObject } = require('../lib/helpers')
 
 /**
  * Usage.
@@ -24,7 +25,7 @@ program
  * Examples.
  */
 
-program.on('--help', function(){
+program.on('--help', function () {
   console.log('  Examples:')
   console.log()
   console.log('    # build from metalsmith.json:')
@@ -69,12 +70,16 @@ if (json.metadata) metalsmith.metadata(json.metadata)
 if (json.clean != null) metalsmith.clean(json.clean)
 if (json.frontmatter != null) metalsmith.frontmatter(json.frontmatter)
 if (json.ignore != null) metalsmith.ignore(json.ignore)
+if (isObject(json.env)) metalsmith.env(expandEnvVars(json.env, process.env))
+
+// set a flag plugins can check to target CLI-specific behavior
+metalsmith.env('CLI', true)
 
 /**
  * Plugins.
  */
 
-normalize(json.plugins).forEach(function(plugin){
+normalize(json.plugins).forEach(function (plugin) {
   for (const name in plugin) {
     const opts = plugin[name]
     let mod
@@ -106,7 +111,7 @@ normalize(json.plugins).forEach(function(plugin){
  * Build.
  */
 
-metalsmith.build(function(err){
+metalsmith.build(function (err) {
   if (err) return fatal(err.message, err.stack)
   log('successfully built to ' + metalsmith.destination())
 })
@@ -118,7 +123,7 @@ metalsmith.build(function(err){
  * @param {String} [stack]  Optional stack trace to print.
  */
 
-function fatal(msg, stack){
+function fatal(msg, stack) {
   console.error()
   console.error(chalk.red('  Metalsmith') + chalk.gray(' · ') + msg)
   if (stack) {
@@ -136,7 +141,7 @@ function fatal(msg, stack){
  * @param {String} message
  */
 
-function log(message){
+function log(message) {
   console.log()
   console.log(chalk.gray('  Metalsmith · ') + message)
   console.log()
@@ -149,7 +154,7 @@ function log(message){
  * @return {Array}
  */
 
-function normalize(obj){
+function normalize(obj) {
   if (obj instanceof Array) return obj
   const ret = []
 
@@ -160,4 +165,19 @@ function normalize(obj){
   }
 
   return ret
+}
+
+/**
+ * Expand env var values in env with values in expansionSource
+ * @param {Object} env 
+ * @param {Object} expansionSource 
+ * @returns {Object}
+ */
+function expandEnvVars(env, expansionSource) {
+  Object.entries(env).forEach(([name, value]) => {
+    if (isString(value) && value.startsWith('$')) {
+      env[name] = expansionSource[value.slice(1)]
+    }
+  }, env)
+  return env
 }

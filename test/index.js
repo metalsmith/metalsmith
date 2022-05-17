@@ -800,7 +800,7 @@ describe('Metalsmith', function () {
     })
 
     it('should error on write failure', function (done) {
-      // chmodded files arer unpredictable at best on Windows
+      // chmodded files are unpredictable at best on Windows
       if (process.platform === 'win32') {
         this.skip()
       }
@@ -1128,6 +1128,16 @@ describe('CLI', function () {
         equal(fixture('cli-plugin-local/build'), fixture('cli-plugin-local/expected'))
         assert(~stdout.indexOf('successfully built to '))
         assert(~stdout.indexOf(fixture('cli-plugin-local/build')))
+        done()
+      })
+    })
+
+    it('should support the env method', function (done) {
+      exec(bin, { cwd: fixture('cli-env'), env: { NODE_ENV: 'development' } }, function (err, stdout, stderr) {
+        console.log(stderr)
+        equal(fixture('cli-env/build'), fixture('cli-env/expected'))
+        assert(~stdout.indexOf('successfully built to '))
+        assert(~stdout.indexOf(fixture('cli-env/build')))
         done()
       })
     })
