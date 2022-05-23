@@ -10,22 +10,6 @@
 
 In Metalsmith, all of the logic is handled by plugins. You simply chain them together.
 
-## Installation
-
-NPM:
-
-```
-npm install metalsmith
-```
-
-Yarn:
-
-```
-yarn add metalsmith
-```
-
-## Quickstart
-
 Here's what the simplest blog looks like:
 
 ```js
@@ -42,6 +26,22 @@ Metalsmith(__dirname)
   })
 ```
 
+## Installation
+
+NPM:
+
+```
+npm install metalsmith
+```
+
+Yarn:
+
+```
+yarn add metalsmith
+```
+
+## Quickstart
+
 What if you want to get fancier by hiding unfinished drafts, grouping posts in collections, and using custom permalinks? Just add plugins...
 
 ```js
@@ -51,37 +51,39 @@ const layouts = require('@metalsmith/layouts')
 const markdown = require('@metalsmith/markdown')
 const permalinks = require('@metalsmith/permalinks')
 
-Metalsmith(__dirname) // __dirname defined by node.js:
-  // name of the directory of this file
+Metalsmith(__dirname)
+  .source('./src')
+  .destination('./build')
+  .clean(true)
+  .frontmatter({
+    excerpt: true
+  })
+  .env({
+    PRODUCTION: (process.env.NODE_ENV = 'production'),
+    DEBUG: '@metalsmith/*',
+    DEBUG_LOG: 'metalsmith.log'
+  })
   .metadata({
-    // add any variable you want
-    // use them in layout-files
     sitename: 'My Static Site & Blog',
     siteurl: 'https://example.com/',
     description: "It's about saying »Hello« to the world.",
     generatorname: 'Metalsmith',
     generatorurl: 'https://metalsmith.io/'
   })
-  .source('./src') // source directory
-  .destination('./build') // destination directory
-  .clean(true) // clean destination before
   .use(
     collections({
-      // group all blog posts by internally
-      posts: 'posts/*.md' // adding key 'collections':'posts'
-    })
-  ) // use `collections.posts` in layouts
-  .use(markdown()) // transpile all md into html
-  .use(
-    permalinks({
-      // change URLs to permalink URLs
-      relative: false // put css only in /css
+      posts: 'posts/*.md'
     })
   )
-  .use(layouts()) // wrap layouts around html
+  .use(markdown())
+  .use(
+    permalinks({
+      relative: false
+    })
+  )
+  .use(layouts())
   .build(function (err) {
-    // build process
-    if (err) throw err // error handling is required
+    if (err) throw err
   })
 ```
 
@@ -128,8 +130,8 @@ Of course they can get a lot more complicated too. That's what makes Metalsmith 
 A [Metalsmith plugin](https://metalsmith.io/api/#Plugin) is a function that is passed the file list, the metalsmith instance, and a done callback.
 It is often wrapped in a plugin initializer that accepts configuration options.
 
-Check out the official plugin registry at: https://metalsmith.io/plugins.
-Find all the core plugins at: https://github.com/search?q=org%3Ametalsmith+metalsmith-plugin
+Check out the official plugin registry at: https://metalsmith.io/plugins.  
+Find all the core plugins at: https://github.com/search?q=org%3Ametalsmith+metalsmith-plugin  
 See [the draft plugin](examples/drafts-plugin) for a simple plugin example.
 
 ## API
