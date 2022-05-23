@@ -1134,10 +1134,18 @@ describe('CLI', function () {
 
     it('should support the env method', function (done) {
       exec(bin, { cwd: fixture('cli-env'), env: { NODE_ENV: 'development' } }, function (err, stdout, stderr) {
-        console.log(stderr)
         equal(fixture('cli-env/build'), fixture('cli-env/expected'))
         assert(~stdout.indexOf('successfully built to '))
         assert(~stdout.indexOf(fixture('cli-env/build')))
+        done()
+      })
+    })
+
+    it('should work when run from a directory that is not Metalsmith#directory', function (done) {
+      exec(bin, { cwd: fixture('cli-from-unexpected-folder') }, function (err, stdout, stderr) {
+        equal(fixture('cli-from-unexpected-folder/build'), fixture('cli-from-unexpected-folder/expected'))
+        assert(~stdout.indexOf('successfully built to '))
+        assert(~stdout.indexOf(fixture('cli-from-unexpected-folder/build')))
         done()
       })
     })

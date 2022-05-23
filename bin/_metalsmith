@@ -5,7 +5,7 @@
 const exists = require('fs').existsSync
 const Metalsmith = require('..')
 const program = require('commander')
-const resolve = require('path').resolve
+const { resolve, isAbsolute, dirname } = require('path')
 const { isString, isObject } = require('../lib/helpers')
 
 const color = {
@@ -51,11 +51,18 @@ program.parse(process.argv)
 
 const dir = process.cwd()
 const config = program.config
-const path = resolve(dir, config)
+const path = isAbsolute(config) ? config : resolve(dir, config)
+
+// Important addition of 2.5.x. Given local plugins with a relative path are written with __dirname in mind,
+// having a config-relative dir path makes sure the CLI runs properly
+// when the command is executed from a subfolder or outside of the ms directory
+const confRelativeDir = dirname(path)
 if (!exists(path)) fatal(`could not find a ${config} configuration file.`)
 
 let json
 try {
+  // requiring json is incompatible with ESM, however given the metalsmith CLI is not meant to be "imported" or used in an ESM flow,
+  // it is ok to keep it here for now
   json = require(path)
 } catch (e) {
   fatal(`it seems like ${config} is malformed.`)
@@ -65,7 +72,7 @@ try {
  * Metalsmith.
  */
 
-const metalsmith = new Metalsmith(dir)
+const metalsmith = new Metalsmith(confRelativeDir)
 if (json.source) metalsmith.source(json.source)
 if (json.destination) metalsmith.destination(json.destination)
 if (json.concurrency) metalsmith.concurrency(json.concurrency)
@@ -88,8 +95,8 @@ normalize(json.plugins).forEach(function (plugin) {
     let mod
 
     try {
-      const local = resolve(dir, name)
-      const npm = resolve(dir, 'node_modules', name)
+      const local = resolve(confRelativeDir, name)
+      const npm = resolve(confRelativeDir, 'node_modules', name)
 
       if (exists(local) || exists(`${local}.js`)) {
         mod = require(local)
