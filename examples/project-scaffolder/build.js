@@ -1,13 +1,13 @@
-var async = require('async')
-var Metalsmith = require('metalsmith')
-var prompt = require('cli-prompt')
-var render = require('consolidate').handlebars.render
+const async = require('async')
+const Metalsmith = require('metalsmith')
+const prompt = require('cli-prompt')
+const render = require('consolidate').handlebars.render
 
 /**
  * Build.
  */
 
-var metalsmith = Metalsmith(__dirname)
+Metalsmith(__dirname)
   .use(ask)
   .use(template)
   .build(function (err) {
@@ -23,8 +23,8 @@ var metalsmith = Metalsmith(__dirname)
  */
 
 function ask(files, metalsmith, done) {
-  var prompts = ['name', 'repository', 'description', 'license']
-  var metadata = metalsmith.metadata()
+  const prompts = ['name', 'repository', 'description', 'license']
+  const metadata = metalsmith.metadata()
 
   async.eachSeries(prompts, run, done)
 
@@ -45,13 +45,13 @@ function ask(files, metalsmith, done) {
  */
 
 function template(files, metalsmith, done) {
-  var keys = Object.keys(files)
-  var metadata = metalsmith.metadata()
+  const keys = Object.keys(files)
+  const metadata = metalsmith.metadata()
 
   async.each(keys, run, done)
 
   function run(file, done) {
-    var str = files[file].contents.toString()
+    const str = files[file].contents.toString()
     render(str, metadata, function (err, res) {
       if (err) return done(err)
       files[file].contents = Buffer.from(res)

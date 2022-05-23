@@ -1,16 +1,6 @@
-var extname = require('path').extname
-var Metalsmith = require('metalsmith')
-var myth = require('myth')
-
-/**
- * Build.
- */
-
-var metalsmith = Metalsmith(__dirname)
-  .use(concat)
-  .build(function (err) {
-    if (err) throw err
-  })
+const extname = require('path').extname
+const Metalsmith = require('metalsmith')
+const myth = require('myth')
 
 /**
  * Concat plugin.
@@ -21,9 +11,9 @@ var metalsmith = Metalsmith(__dirname)
  */
 
 function concat(files, metalsmith, done) {
-  var css = ''
+  let css = ''
 
-  for (var file in files) {
+  for (const file in files) {
     if ('.css' !== extname(file)) continue
     css += files[file].contents.toString()
     delete files[file]
@@ -37,3 +27,13 @@ function concat(files, metalsmith, done) {
 
   done()
 }
+
+/**
+ * Build.
+ */
+
+Metalsmith(__dirname)
+  .use(concat)
+  .build(function (err) {
+    if (err) throw err
+  })

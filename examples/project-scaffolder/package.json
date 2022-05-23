@@ -2,11 +2,11 @@
   "name": "project-scaffolder-example",
   "private": true,
   "dependencies": {
-    "async": "^3.2.2",
+    "async": "^3.2.3",
     "cli-prompt": "^0.6.0",
     "consolidate": "^0.16.0",
     "handlebars": "^4.7.7",
-    "metalsmith": "^2.3.0"
+    "metalsmith": "^2.5.0"
   },
   "scripts": {
     "start": "node build"
