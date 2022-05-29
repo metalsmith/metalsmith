@@ -9,10 +9,15 @@ const Mode = require('stat-mode')
 const noop = function () {}
 const path = require('path')
 const rm = require('../lib/helpers').rm
+const { fileLogHandler } = require('../lib/debug')
 const fixture = path.resolve.bind(path, __dirname, 'fixtures')
+const d = require('debug')
 
 describe('Metalsmith', function () {
+  const cachedDebugLog = d.log
   beforeEach(function () {
+    d.colors = true
+    d.log = cachedDebugLog
     return rm('test/tmp')
   })
 
@@ -356,6 +361,177 @@ describe('Metalsmith', function () {
     })
   })
 
+  describe('#debug', function () {
+    it('should allow plugins to use debug instances', function (done) {
+      const m = Metalsmith(fixture('basic'))
+      let fakeStream = []
+      m.debug.colors = true
+      m.debug.handle = fileLogHandler({
+        write(arg) {
+          fakeStream.push(arg)
+        }
+      })
+
+      m.env('debug', true)
+        .use(function plugin(files, m, next) {
+          const debug = m.debug('metalsmith:test')
+          debug('A log')
+          debug.warn('A warning')
+          debug.error('An error')
+          debug.info('An info')
+          next()
+        })
+        .process(() => {
+          assert.deepStrictEqual(fakeStream, [
+            '  \x1B[38;5;247;1mmetalsmith:test \x1B[0mA log \x1B[38;5;247m+0ms\x1B[0m\n',
+            '  \x1B[38;5;178;1mmetalsmith:test:warn \x1B[0mA warning \x1B[38;5;178m+0ms\x1B[0m\n',
+            '  \x1B[38;5;196;1mmetalsmith:test:error \x1B[0mAn error \x1B[38;5;196m+0ms\x1B[0m\n',
+            '  \x1B[38;5;51;1mmetalsmith:test:info \x1B[0mAn info \x1B[38;5;51m+0ms\x1B[0m\n'
+          ])
+          done()
+        })
+    })
+
+    it('should error when an invalid namespace is passed', function () {
+      const m = Metalsmith(fixture('test/tmp'))
+      try {
+        m.debug(new Error())
+      } catch (err) {
+        assert.strictEqual(err.code, 'invalid_debugger_namespace')
+      }
+    })
+
+    it('should error when an invalid namespace is passed', function () {
+      const m = Metalsmith(fixture('test/tmp'))
+      try {
+        m.debug(new Error())
+      } catch (err) {
+        assert.strictEqual(err.code, 'invalid_debugger_namespace')
+      }
+    })
+
+    it("should convert metalsmith.env('debug', true) to debug all namespaces", function (done) {
+      const m = Metalsmith(fixture('basic'))
+      m.debug.colors = true
+
+      let fakeStream
+      m.debug.handle = fileLogHandler({
+        write(arg) {
+          fakeStream = arg
+        }
+      })
+      m.env({
+        debug: true
+      })
+      m.use(function plugin(files, m, next) {
+        const debug = m.debug('metalsmith:test')
+        debug('A log')
+        next()
+      }).process((err) => {
+        if (err) done(err)
+        assert.strictEqual(fakeStream, '  \x1B[38;5;247;1mmetalsmith:test \x1B[0mA log \x1B[38;5;247m+0ms\x1B[0m\n')
+        done()
+      })
+    })
+
+    it("should be disabled when metalsmith.env('debug') === false", function (done) {
+      const m = Metalsmith(fixture('basic'))
+      let fakeStream = null
+      m.debug.handle = fileLogHandler({
+        write(arg) {
+          fakeStream = arg
+        }
+      })
+
+      m.env('debug', false)
+        .use(function plugin(files, m, next) {
+          const debug = m.debug('metalsmith:test')
+          debug('A log')
+          next()
+        })
+        .process(() => {
+          assert.strictEqual(fakeStream, null)
+          done()
+        })
+    })
+
+    it("should write a log file when metalsmith.env('debug_log') is set to a valid path", function (done) {
+      const m = Metalsmith(fixture('debug-log'))
+
+      m.env('debug', true)
+        .env('debug_log', fixture('debug-log/metalsmith.log'))
+        .use(function plugin(files, m, next) {
+          const debug = m.debug('metalsmith:test')
+          debug('A log')
+          next()
+        })
+        .build((err, files) => {
+          if (err) {
+            done(err)
+          } else {
+            assert(
+              require('fs')
+                .readFileSync(fixture('debug-log/metalsmith.log'), 'utf-8')
+                .match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z metalsmith:test A log\n/),
+              true
+            )
+            done()
+          }
+        })
+    })
+
+    it("should error when metalsmith.env('debug_log') dir does not exist", function (done) {
+      const m = Metalsmith(fixture('debug-log'))
+
+      m.env('debug', true)
+        .env('debug_log', fixture('debug-log/inexistant/metalsmith.log'))
+        .use(function plugin(files, m, next) {
+          const debug = m.debug('metalsmith:test')
+          debug('A log')
+          next()
+        })
+        .build((err, files) => {
+          if (err) {
+            assert.strictEqual(err.code, 'invalid_logpath')
+            assert(err.message.match(/Inexistant directory path ".*" given for DEBUG_LOG/))
+            done()
+          } else {
+            done(new Error('No error was thrown'))
+          }
+        })
+    })
+
+    it('should provide a debug %b formatter', function (done) {
+      const m = Metalsmith(fixture('debug-log'))
+      let fakeStream = null
+      m.debug.handle = fileLogHandler({
+        write(arg) {
+          fakeStream = arg
+        }
+      })
+
+      m.env('debug', true)
+        .use(function plugin(files, m, next) {
+          const debug = m.debug('metalsmith:test')
+          debug(
+            '%b',
+            Buffer.from(
+              'We keep referring to Metalsmith as a "static site generator", but it\'s a lot more than that. Since everything is a plugin, the core library is actually just an abstraction for manipulating a directory of files.'
+            )
+          )
+          next()
+        })
+        .process(() => {
+          assert(
+            fakeStream.endsWith(
+              'We keep referring to Metalsmith as a "static site generator", but it\'s a lot more than that. Since everything is a plugin, the core library is actually just an abstraction for manipulating a directory...\n'
+            )
+          )
+          done()
+        })
+    })
+  })
+
   describe('#read', function () {
     it('should read from a source directory', function (done) {
       const m = Metalsmith(fixture('read'))
@@ -373,6 +549,7 @@ describe('Metalsmith', function () {
         done()
       })
     })
+
     it('should only return a promise when callback is omitted', function (done) {
       const m = Metalsmith(fixture('read'))
 

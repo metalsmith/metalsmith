@@ -32,7 +32,9 @@
   },
   "files": [
     "index.js",
-    "lib/**",
+    "lib/index.js",
+    "lib/debug.js",
+    "lib/helpers.js",
     "bin/**",
     "CHANGELOG.md",
     "snapcraft.yaml"
@@ -54,6 +56,7 @@
   "dependencies": {
     "commander": "^6.2.1",
     "cross-spawn": "^7.0.3",
+    "debug": "^4.3.3",
     "gray-matter": "^4.0.3",
     "is-utf8": "~0.2.0",
     "micromatch": "^4.0.5",
