@@ -1,4 +1,3 @@
-/* eslint-disable */
 const assert = require('assert')
 const { it, describe, beforeEach } = require('mocha')
 const equal = require('assert-dir-equal')
@@ -364,7 +363,7 @@ describe('Metalsmith', function () {
   describe('#debug', function () {
     it('should allow plugins to use debug instances', function (done) {
       const m = Metalsmith(fixture('basic'))
-      let fakeStream = []
+      const fakeStream = []
       m.debug.colors = true
       m.debug.handle = fileLogHandler({
         write(arg) {
@@ -465,7 +464,7 @@ describe('Metalsmith', function () {
           debug('A log')
           next()
         })
-        .build((err, files) => {
+        .build(err => {
           if (err) {
             done(err)
           } else {
@@ -490,7 +489,7 @@ describe('Metalsmith', function () {
           debug('A log')
           next()
         })
-        .build((err, files) => {
+        .build(err => {
           if (err) {
             assert.strictEqual(err.code, 'invalid_logpath')
             assert(err.message.match(/Inexistant directory path ".*" given for DEBUG_LOG/))
@@ -605,7 +604,7 @@ describe('Metalsmith', function () {
 
       Promise.all([
         new Promise((resolve, reject) => {
-          m.read((err, files) => {
+          m.read(err => {
             resolve(err)
             reject(
               new Error('Metalsmith#read should throw when it encounters a broken symbolic link that is not ignored')
@@ -784,7 +783,7 @@ describe('Metalsmith', function () {
           })
         })
       ])
-        .then(([relpathfiles, globfiles, mixed]) => {
+        .then(([relpathfiles, globfiles]) => {
           assert.strictEqual(Object.keys(relpathfiles).length, 2)
           assert.strictEqual(Object.keys(globfiles).length, 0)
           done()
@@ -911,7 +910,7 @@ describe('Metalsmith', function () {
         }
       }
 
-      m.write(files, function (err) {
+      m.write(files, function () {
         const stats = fs.statSync(fixture('write-mode/build/bin'))
         const mode = Mode(stats).toOctal()
         assert.strictEqual(mode, '0777')
@@ -1022,7 +1021,7 @@ describe('Metalsmith', function () {
     it('should apply a plugin', function (done) {
       const m = Metalsmith('test/tmp')
       m.use(plugin)
-      m.run({ one: 'one' }, function (err, files, metalsmith) {
+      m.run({ one: 'one' }, function (err, files) {
         assert.strictEqual(files.one, 'one')
         assert.strictEqual(files.two, 'two')
         done()
@@ -1039,7 +1038,7 @@ describe('Metalsmith', function () {
 
     it('should run with a provided plugin', function (done) {
       const m = Metalsmith('test/tmp')
-      m.run({ one: 'one' }, [plugin], function (err, files, metalsmith) {
+      m.run({ one: 'one' }, [plugin], function (err, files) {
         assert.strictEqual(files.one, 'one')
         assert.strictEqual(files.two, 'two')
         done()
@@ -1057,7 +1056,7 @@ describe('Metalsmith', function () {
     it('should support synchronous plugins', function (done) {
       const m = Metalsmith('test/tmp')
       m.use(plugin)
-      m.run({ one: 'one' }, function (err, files, metalsmith) {
+      m.run({ one: 'one' }, function (err, files) {
         assert.strictEqual(files.one, 'one')
         assert.strictEqual(files.two, 'two')
         done()
@@ -1235,7 +1234,7 @@ describe('CLI', function () {
 
   describe('build', function () {
     it('should error without a metalsmith.json', function (done) {
-      exec(bin, { cwd: fixture('cli-no-config') }, function (err, stdout) {
+      exec(bin, { cwd: fixture('cli-no-config') }, function (err) {
         assert(err)
         assert(~err.message.indexOf('could not find a metalsmith.json configuration file.'))
         done()
@@ -1263,7 +1262,7 @@ describe('CLI', function () {
     })
 
     it('should require a plugin', function (done) {
-      exec(bin, { cwd: fixture('cli-plugin-object') }, function (err, stdout, stderr) {
+      exec(bin, { cwd: fixture('cli-plugin-object') }, function (err, stdout) {
         if (err) return done(err)
         equal(fixture('cli-plugin-object/build'), fixture('cli-plugin-object/expected'))
         assert(~stdout.indexOf('successfully built to '))
@@ -1301,7 +1300,7 @@ describe('CLI', function () {
     })
 
     it('should allow requiring a local plugin', function (done) {
-      exec(bin, { cwd: fixture('cli-plugin-local') }, function (err, stdout, stderr) {
+      exec(bin, { cwd: fixture('cli-plugin-local') }, function (err, stdout) {
         equal(fixture('cli-plugin-local/build'), fixture('cli-plugin-local/expected'))
         assert(~stdout.indexOf('successfully built to '))
         assert(~stdout.indexOf(fixture('cli-plugin-local/build')))
@@ -1310,7 +1309,7 @@ describe('CLI', function () {
     })
 
     it('should support the env method', function (done) {
-      exec(bin, { cwd: fixture('cli-env'), env: { NODE_ENV: 'development' } }, function (err, stdout, stderr) {
+      exec(bin, { cwd: fixture('cli-env'), env: { NODE_ENV: 'development' } }, function (err, stdout) {
         equal(fixture('cli-env/build'), fixture('cli-env/expected'))
         assert(~stdout.indexOf('successfully built to '))
         assert(~stdout.indexOf(fixture('cli-env/build')))
@@ -1319,7 +1318,7 @@ describe('CLI', function () {
     })
 
     it('should work when run from a directory that is not Metalsmith#directory', function (done) {
-      exec(bin, { cwd: fixture('cli-from-unexpected-folder') }, function (err, stdout, stderr) {
+      exec(bin, { cwd: fixture('cli-from-unexpected-folder') }, function (err, stdout) {
         equal(fixture('cli-from-unexpected-folder/build'), fixture('cli-from-unexpected-folder/expected'))
         assert(~stdout.indexOf('successfully built to '))
         assert(~stdout.indexOf(fixture('cli-from-unexpected-folder/build')))
