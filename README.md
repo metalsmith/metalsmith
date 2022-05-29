@@ -59,7 +59,7 @@ Metalsmith(__dirname)
     excerpt: true
   })
   .env({
-    PRODUCTION: (process.env.NODE_ENV = 'production'),
+    NAME: process.env.NODE_ENV,
     DEBUG: '@metalsmith/*',
     DEBUG_LOG: 'metalsmith.log'
   })

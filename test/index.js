@@ -464,7 +464,7 @@ describe('Metalsmith', function () {
           debug('A log')
           next()
         })
-        .build(err => {
+        .build((err) => {
           if (err) {
             done(err)
           } else {
@@ -489,7 +489,7 @@ describe('Metalsmith', function () {
           debug('A log')
           next()
         })
-        .build(err => {
+        .build((err) => {
           if (err) {
             assert.strictEqual(err.code, 'invalid_logpath')
             assert(err.message.match(/Inexistant directory path ".*" given for DEBUG_LOG/))
@@ -604,7 +604,7 @@ describe('Metalsmith', function () {
 
       Promise.all([
         new Promise((resolve, reject) => {
-          m.read(err => {
+          m.read((err) => {
             resolve(err)
             reject(
               new Error('Metalsmith#read should throw when it encounters a broken symbolic link that is not ignored')
