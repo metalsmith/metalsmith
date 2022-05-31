@@ -35,6 +35,7 @@
     "lib/index.js",
     "lib/debug.js",
     "lib/helpers.js",
+    "metalsmith-migrated-plugins.js",
     "bin/**",
     "CHANGELOG.md",
     "snapcraft.yaml"
@@ -46,7 +47,8 @@
     "format:check": "prettier --list-different \"**/*.{yml,md,js,json}\"",
     "format": "prettier --write \"**/*.{yml,md,js,json}\"",
     "test": "nyc mocha",
-    "release": "release-it"
+    "release": "release-it",
+    "postinstall": "node metalsmith-migrated-plugins.js"
   },
   "mocha": {
     "reporter": "spec",
