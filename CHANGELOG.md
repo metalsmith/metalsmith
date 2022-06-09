@@ -6,6 +6,43 @@ This project adheres to [Semantic Versioning](http://semver.org).
 
 This document follows the guidelines of [Keep A Changelog](http://keepachangelog.com).
 
+## [2.5.0] - 2022-06-10
+
+### Added
+
+- [#354] Added `Metalsmith#env` method. Supports passing `DEBUG` and `DEBUG_LOG` amongst others. Sets `CLI: true` when run from the metalsmith CLI. [`b42df8c`](https://github.com/metalsmith/metalsmith/commit/b42df8c), [`446c676`](https://github.com/metalsmith/metalsmith/commit/446c676), [`33d936b`](https://github.com/metalsmith/metalsmith/commit/33d936b), [`4c483a3`](https://github.com/metalsmith/metalsmith/commit/4c483a3)
+- [#356] Added `Metalsmith#debug` method for creating plugin debuggers
+- [#362] Upgraded all generator-based methods (`Metalsmith#read`,`Metalsmith#readFile`,`Metalsmith#write`,`Metalsmith#writeFile` and `Metalsmith#run`) to dual callback-/ promise-based methods [`16a91c5`](https://github.com/metalsmith/metalsmith/commit/16a91c5), [`faf6ab6`](https://github.com/metalsmith/metalsmith/commit/faf6ab6), [`6cb6229`](https://github.com/metalsmith/metalsmith/commit/6cb6229)
+- Added org migration notification to postinstall script to encourage users to upgrade [`3a11a24`](https://github.com/metalsmith/metalsmith/commit/3a11a24)
+- [#355] Proper path resolution for edge-cases using CLI, running metalsmith from outside or subfolder of `metalsmith.directory()`[`5d75539`](https://github.com/metalsmith/metalsmith/commit/5d75539)
+- [#247] Calling `Metalsmith#metadata` no longer clones the object passed to it, overwriting the previous metadata, but merges it into existing metadata.
+
+### Removed
+
+- [#231] Dropped support for Node < 12 [`0a53007`](https://github.com/metalsmith/metalsmith/commit/0a53007)
+- **Dependencies:**
+  - `thunkify`: replaced with promise-based implementation [`faf6ab6`](https://github.com/metalsmith/metalsmith/commit/faf6ab6)
+  - `unyield` replaced with promise-based implementation [`faf6ab6`](https://github.com/metalsmith/metalsmith/commit/faf6ab6)
+  - `co-fs-extra`: replaced with native Node.js methods [`faf6ab6`](https://github.com/metalsmith/metalsmith/commit/faf6ab6)
+  - `chalk`: not necessary for the few colors used by Metalsmith CLI [`1dae1cb`](https://github.com/metalsmith/metalsmith/commit/a1dae1cb)
+  - `clone`: see [#247] [`a871af6`](https://github.com/metalsmith/metalsmith/commit/a871af6)
+
+### Updated
+
+- Restructured and updated `README.md` [`0da0c4d`](https://github.com/metalsmith/metalsmith/commit/0da0c4d)
+
+[#362]: https://github.com/metalsmith/metalsmith/issues/362
+[#354]: https://github.com/metalsmith/metalsmith/issues/354
+[#355]: https://github.com/metalsmith/metalsmith/issues/355
+[#356]: https://github.com/metalsmith/metalsmith/issues/356
+[#247]: https://github.com/metalsmith/metalsmith/issues/247
+
+### Updated
+
+- **Dependencies:** [`774a164`](https://github.com/metalsmith/metalsmith/commit/774a164)
+  - `micromatch`: 4.0.4 ▶︎ 4.0.5
+- Updated README.md
+
 ## [2.4.3] - 2022-05-16
 
 ### Updated
