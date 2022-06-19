@@ -8,6 +8,9 @@ This document follows the guidelines of [Keep A Changelog](http://keepachangelog
 
 ## [2.5.0] - 2022-06-10
 
+Important note to [metalsmith-watch](https://github.com/FWeinb/metalsmith-watch#readme) users:
+Although 2.5.0 is a semver-minor release, it breaks compatibility with metalsmith-watch, which relies on the Metalsmith < 2.4.x private method signature using the outdated unyield package. See [issue #374](https://github.com/metalsmith/metalsmith/issues/374) for more details.
+
 ### Added
 
 - [#354] Added `Metalsmith#env` method. Supports passing `DEBUG` and `DEBUG_LOG` amongst others. Sets `CLI: true` when run from the metalsmith CLI. [`b42df8c`](https://github.com/metalsmith/metalsmith/commit/b42df8c), [`446c676`](https://github.com/metalsmith/metalsmith/commit/446c676), [`33d936b`](https://github.com/metalsmith/metalsmith/commit/33d936b), [`4c483a3`](https://github.com/metalsmith/metalsmith/commit/4c483a3)

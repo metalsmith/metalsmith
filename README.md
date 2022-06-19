@@ -215,9 +215,19 @@ Use the excellent [metalsmith-debug-ui plugin](https://github.com/leviwheatcroft
 
 ### Node Version Requirements
 
+Future Metalsmith releases will at least support the oldest supported Node LTS versions.
+
 Metalsmith 2.5.x supports NodeJS versions 12 and higher.  
 Metalsmith 2.4.x supports NodeJS versions 8 and higher.  
 Metalsmith 2.3.0 and below support NodeJS versions all the way back to 0.12.
+
+### Compatibility & support policy
+
+Metalsmith is supported on all common operating systems (Windows, Linux, Mac).
+Metalsmith releases adhere to [semver (semantic versioning)](https://semver.org/) with 2 minor gray-area exceptions for what could be considered breaking changes:
+
+- Major Node version support for EOL (End of Life) versions can be dropped in minor releases
+- If a change represents a major improvement that is backwards-compatible with 99% of use cases (not considering outdated plugins), they will be considered eligible for inclusion in minor version updates.
 
 ## Credits
 
