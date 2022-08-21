@@ -48,7 +48,7 @@
     "format": "prettier --write \"**/*.{yml,md,js,json}\"",
     "test": "nyc mocha",
     "release": "release-it",
-    "postinstall": "node metalsmith-migrated-plugins.js"
+    "postinstall": "node metalsmith-migrated-plugins.js || exit 0"
   },
   "mocha": {
     "reporter": "spec",
