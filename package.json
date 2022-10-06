@@ -70,14 +70,14 @@
     "@metalsmith/drafts": "^1.2.0",
     "@metalsmith/markdown": "^1.5.0",
     "assert-dir-equal": "^1.1.0",
-    "eslint": "^8.22.0",
+    "eslint": "^8.24.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-node": "^11.1.0",
     "mocha": "^9.2.2",
     "nyc": "^15.1.0",
     "prettier": "^2.7.1",
-    "release-it": "^15.3.0",
+    "release-it": "^15.5.0",
     "toml": "^3.0.0"
   },
   "engines": {
