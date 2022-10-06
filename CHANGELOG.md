@@ -6,6 +6,19 @@ This project adheres to [Semantic Versioning](http://semver.org).
 
 This document follows the guidelines of [Keep A Changelog](http://keepachangelog.com).
 
+## [2.5.1] - 2022-10-07
+
+### Updated
+
+- **Dependencies:** [`774a164`](https://github.com/metalsmith/metalsmith/commit/774a164)
+  - `debug`: 4.3.3 ▶︎ 4.3.4
+- Clarified semver policy in README.md
+- Added SECURITY.md
+
+### Fixed
+
+- Fixes [#373](https://github.com/metalsmith/metalsmith/issues/374): do not crash when postinstall script fails in specific environments
+
 ## [2.5.0] - 2022-06-10
 
 Important note to [metalsmith-watch](https://github.com/FWeinb/metalsmith-watch#readme) users:
