@@ -35,6 +35,7 @@
     "lib/debug.js",
     "lib/helpers.js",
     "types/index.d.ts",
+    "lib/watcher.js",
     "metalsmith-migrated-plugins.js",
     "bin/metalsmith",
     "CHANGELOG.md",
@@ -58,11 +59,13 @@
     "timeout": 3000
   },
   "dependencies": {
+    "chokidar": "^3.5.3",
     "commander": "^8.3.0",
     "cross-spawn": "^7.0.3",
     "debug": "^4.3.4",
     "gray-matter": "^4.0.3",
     "is-utf8": "~0.2.0",
+    "lodash.clonedeep": "^4.5.0",
     "micromatch": "^4.0.5",
     "rimraf": "^3.0.2",
     "stat-mode": "^1.0.0",
