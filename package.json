@@ -23,7 +23,6 @@
   },
   "license": "MIT",
   "bin": {
-    "_metalsmith": "bin/_metalsmith",
     "metalsmith": "bin/metalsmith"
   },
   "directories": {
@@ -36,7 +35,7 @@
     "lib/debug.js",
     "lib/helpers.js",
     "metalsmith-migrated-plugins.js",
-    "bin/**",
+    "bin/metalsmith",
     "CHANGELOG.md",
     "snapcraft.yaml"
   ],
