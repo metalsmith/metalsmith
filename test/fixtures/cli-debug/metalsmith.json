@@ -1,0 +1,8 @@
+{
+  "env": {
+    "debug": false
+  },
+  "plugins": {
+    "@metalsmith/markdown": {}
+  }
+}

@@ -33,9 +33,13 @@ program
   .command('build', { isDefault: true })
   .description('Run a metalsmith build')
   .option('-c, --config <path>', 'configuration file location', 'metalsmith.json')
+  .option('--debug', 'Set or override debug namespaces')
+  .option('--dry-run', 'Process metalsmith files without outputting to the file system')
   .action(buildCommand)
 
-function buildCommand({ config }) {
+program.parse(process.argv)
+
+function buildCommand({ config, ...options }) {
   const dir = process.cwd()
   const path = isAbsolute(config) ? config : resolve(dir, config)
 
@@ -67,6 +71,7 @@ function buildCommand({ config }) {
   if (json.frontmatter != null) metalsmith.frontmatter(json.frontmatter)
   if (json.ignore != null) metalsmith.ignore(json.ignore)
   if (isObject(json.env)) metalsmith.env(expandEnvVars(json.env, process.env))
+  if (options.debug) metalsmith.env('DEBUG', options.debug)
 
   // set a flag plugins can check to target CLI-specific behavior
   metalsmith.env('CLI', true)
@@ -103,15 +108,18 @@ function buildCommand({ config }) {
     }
   })
 
-  /**
-   * Build.
-   */
+  function onBuild(message) {
+    return (err) => {
+      if (err) fatal(err.message, err.stack)
+      log('success', message)
+    }
+  }
 
-  metalsmith.build(function (err) {
-    if (err) fatal(err.message, err.stack)
-    log('success', `successfully built to ${metalsmith.destination()}`)
-  })
-
+  if (options.dryRun) {
+    metalsmith.process(onBuild(`successfully ran a dry-run of the ${config} build`))
+  } else {
+    metalsmith.build(onBuild(`successfully built to ${metalsmith.destination()}`))
+  }
 }
 
 /**

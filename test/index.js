@@ -1325,5 +1325,23 @@ describe('CLI', function () {
         done()
       })
     })
+
+    it('should not output a build when the --dry-run option is used', function (done) {
+      exec(`${bin} --dry-run`, { cwd: fixture('cli-dry-run') }, function (err) {
+        assert.strictEqual(err, null)
+        fs.stat(fixture('cli-dry-run/build'), (err) => {
+          assert.strictEqual(err.code, 'ENOENT')
+          done()
+        })
+      })
+    })
+
+    it('should override metalsmith.json DEBUG env var when --debug option is used', function (done) {
+      exec(`${bin} --debug @metalsmith/markdown`, { cwd: fixture('cli-debug') }, function (err, stdout, stderr) {
+        const match = stderr.split('\n')[1].slice(stderr.indexOf(' ') + 1)
+        assert.strictEqual(match, '@metalsmith/markdown converting file: index.md')
+        done()
+      })
+    })
   })
 })
