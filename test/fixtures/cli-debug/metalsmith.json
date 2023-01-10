@@ -1,8 +1,10 @@
 {
   "env": {
-    "debug": false
+    "debug": false,
+    "node_env": "production"
   },
   "plugins": {
-    "@metalsmith/markdown": {}
+    "@metalsmith/markdown": {},
+    "./log-env.js": {}
   }
 }

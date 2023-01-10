@@ -1336,12 +1336,24 @@ describe('CLI', function () {
       })
     })
 
-    it('should override metalsmith.json DEBUG env var when --debug option is used', function (done) {
-      exec(`${bin} --debug @metalsmith/markdown`, { cwd: fixture('cli-debug') }, function (err, stdout, stderr) {
-        const match = stderr.split('\n')[1].slice(stderr.indexOf(' ') + 1)
-        assert.strictEqual(match, '@metalsmith/markdown converting file: index.md')
+    it('should override metalsmith.json env vars when resp. --env vars are provided', function (done) {
+      exec(`${bin} --env NODE_ENV=development`, { cwd: fixture('cli-debug') }, function (err, stdout) {
+        const match = stdout.split('\n')[0]
+        assert.strictEqual(match, '{"DEBUG":false,"NODE_ENV":"development","CLI":true}')
         done()
       })
+    })
+
+    it('should override metalsmith.json and --env DEBUG env var when --debug option is used', function (done) {
+      exec(
+        `${bin} --env DEBUG= --debug @metalsmith/markdown`,
+        { cwd: fixture('cli-debug') },
+        function (err, stdout, stderr) {
+          const match = stderr.split('\n')[1].slice(stderr.indexOf(' ') + 1)
+          assert.strictEqual(match, '@metalsmith/markdown converting file: index.md')
+          done()
+        }
+      )
     })
   })
 })

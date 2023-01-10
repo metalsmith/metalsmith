@@ -21,18 +21,27 @@ program
   .name('metalsmith')
   .description('Metalsmith CLI')
   .version(require('../package.json').version)
-  .addHelpText('after', `Examples:
+  .addHelpText('after', `
+  Examples:
 
   # build from metalsmith.json:
-  $ metalsmith
+  metalsmith
 
   # build from lib/config.json:
-  $ metalsmith --config lib/config.json`)
+  metalsmith --config lib/config.json
+
+  # override env vars
+  metalsmith --env NODE_ENV=production TZ=Europe/London
+
+  # override debug en var (shortcut)
+  metalsmith --debug @metalsmith/*
+  `)
 
 program
   .command('build', { isDefault: true })
   .description('Run a metalsmith build')
   .option('-c, --config <path>', 'configuration file location', 'metalsmith.json')
+  .option('--env <setting...>', 'Set or override one or more metalsmith environment variables.')
   .option('--debug', 'Set or override debug namespaces')
   .option('--dry-run', 'Process metalsmith files without outputting to the file system')
   .action(buildCommand)
@@ -71,6 +80,10 @@ function buildCommand({ config, ...options }) {
   if (json.frontmatter != null) metalsmith.frontmatter(json.frontmatter)
   if (json.ignore != null) metalsmith.ignore(json.ignore)
   if (isObject(json.env)) metalsmith.env(expandEnvVars(json.env, process.env))
+  if (options.env) options.env.forEach(envVar => {
+    const [name, value] = envVar.split('=')
+    metalsmith.env(name, value)
+  })
   if (options.debug) metalsmith.env('DEBUG', options.debug)
 
   // set a flag plugins can check to target CLI-specific behavior
