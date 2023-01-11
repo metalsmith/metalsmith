@@ -3,6 +3,7 @@
 /* eslint-disable no-console */
 
 const exists = require('fs').existsSync
+const readFileSync = require('fs').readFileSync
 const Metalsmith = require('..')
 const { Command } = require('commander')
 const program = new Command()
@@ -62,7 +63,7 @@ function buildCommand({ config, ...options }) {
   try {
     // requiring json is incompatible with ESM, however given the metalsmith CLI is not meant to be "imported" or used in an ESM flow,
     // it is ok to keep it here for now
-    json = require(path)
+    json = JSON.parse(readFileSync(path, 'utf-8'))
   } catch (e) {
     fatal(`it seems like ${config} is malformed.`)
   }
