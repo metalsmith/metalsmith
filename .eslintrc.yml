@@ -3,7 +3,7 @@ env:
   es6: true
 extends:
   - 'eslint:recommended'
-  - 'plugin:node/recommended'
+  - 'plugin:n/recommended'
   - 'plugin:import/recommended'
   - 'prettier'
 parserOptions:
@@ -12,7 +12,7 @@ rules:
   no-console: error
   prefer-const: error
   no-var: error
-  node/exports-style: [0, error]
+  n/exports-style: [0, error]
   import/first: error
   import/no-anonymous-default-export: error
   import/no-unassigned-import: error

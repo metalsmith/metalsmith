@@ -1387,8 +1387,8 @@ describe('CLI', function () {
         `${bin} --env DEBUG= --debug @metalsmith/markdown`,
         { cwd: fixture('cli-debug') },
         function (err, stdout, stderr) {
-          const match = stderr.split('\n')[1].slice(stderr.indexOf(' ') + 1)
-          assert.strictEqual(match, '@metalsmith/markdown converting file: index.md')
+          const match = stderr.split('\n')[2].slice(stderr.indexOf(' ') + 1)
+          assert.strictEqual(match, '@metalsmith/markdown:info Rendering file "index.md" as "index.html"')
           done()
         }
       )
