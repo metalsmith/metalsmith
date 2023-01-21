@@ -1261,6 +1261,34 @@ describe('CLI', function () {
       })
     })
 
+    it('should grab config from <configname>.(c)js', function (done) {
+      let doneCounter = 0
+      exec(bin, { cwd: fixture('cli-js') }, function (err, stdout) {
+        if (err) return done(err)
+        equal(fixture('cli-js/destination'), fixture('cli-js/expected'))
+        assert(~stdout.indexOf('successfully built to '))
+        assert(~stdout.indexOf(fixture('cli-js/destination')))
+        if (doneCounter === 2) done()
+        else doneCounter += 1
+      })
+      exec(bin + ' -c config.cjs', { cwd: fixture('cli-js') }, function (err, stdout) {
+        if (err) return done(err)
+        equal(fixture('cli-js/destination'), fixture('cli-js/expected'))
+        assert(~stdout.indexOf('successfully built to '))
+        assert(~stdout.indexOf(fixture('cli-js/destination')))
+        if (doneCounter === 2) done()
+        else doneCounter += 1
+      })
+      exec(bin + ' -c other-config.cjs', { cwd: fixture('cli-js') }, function (err, stdout) {
+        if (err) return done(err)
+        equal(fixture('cli-js/destination'), fixture('cli-js/expected'))
+        assert(~stdout.indexOf('successfully built to '))
+        assert(~stdout.indexOf(fixture('cli-js/destination')))
+        if (doneCounter === 2) done()
+        else doneCounter += 1
+      })
+    })
+
     it('should require a plugin', function (done) {
       exec(bin, { cwd: fixture('cli-plugin-object') }, function (err, stdout) {
         if (err) return done(err)

@@ -7,7 +7,7 @@ const readFileSync = require('fs').readFileSync
 const Metalsmith = require('..')
 const { Command } = require('commander')
 const program = new Command()
-const { resolve, isAbsolute, dirname } = require('path')
+const { resolve, isAbsolute, dirname, extname } = require('path')
 const { isString, isObject } = require('../lib/helpers')
 
 const color = {
@@ -51,21 +51,38 @@ program.parse(process.argv)
 
 function buildCommand({ config, ...options }) {
   const dir = process.cwd()
-  const path = isAbsolute(config) ? config : resolve(dir, config)
+  let path = isAbsolute(config) ? config : resolve(dir, config)
 
   // Important addition of 2.5.x. Given local plugins with a relative path are written with __dirname in mind,
   // having a config-relative dir path makes sure the CLI runs properly
   // when the command is executed from a subfolder or outside of the ms directory
   const confRelativeDir = dirname(path)
-  if (!exists(path)) fatal(`could not find a ${config} configuration file.`)
+  if (!exists(path)) {
+    // commander only supports a single default, so we must set default manually here
+    if (exists(resolve(confRelativeDir, 'metalsmith.js'))) {
+      path = resolve(confRelativeDir, 'metalsmith.js')
+    } else {
+      fatal(`could not find a ${config} configuration file.`)
+    }
+  }
+
+  const format = extname(path).slice(1)
 
   let json
   try {
-    // requiring json is incompatible with ESM, however given the metalsmith CLI is not meant to be "imported" or used in an ESM flow,
-    // it is ok to keep it here for now
-    json = JSON.parse(readFileSync(path, 'utf-8'))
+    if (format === 'js' || format === 'cjs') {
+      json = require(path)
+      // when a JS file is required that forgets to export using exports or module.exports,
+      // node instead returns an empty object. Though Metalsmith should in theory consider this a valid config
+      // for a simple copy -> paste it is highly likely that this was not the user's intension
+      if (isObject(json) && Object.keys(json).length === 0) {
+        fatal(`it seems like ${config} is empty. Make sure it exports a metalsmith config object.`)
+      }
+    } else {
+      json = JSON.parse(readFileSync(path, 'utf-8'))
+    }
   } catch (e) {
-    fatal(`it seems like ${config} is malformed.`)
+    fatal(`it seems like ${config} is malformed or unsupported (ESM).`)
   }
 
   /**
