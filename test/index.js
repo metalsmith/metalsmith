@@ -1272,31 +1272,54 @@ describe('CLI', function () {
     })
 
     it('should grab config from <configname>.(c)js', function (done) {
-      let doneCounter = 0
-      exec(bin, { cwd: fixture('cli-js') }, function (err, stdout) {
-        if (err) return done(err)
-        equal(fixture('cli-js/destination'), fixture('cli-js/expected'))
-        assert(~stdout.indexOf('successfully built to '))
-        assert(~stdout.indexOf(fixture('cli-js/destination')))
-        if (doneCounter === 2) done()
-        else doneCounter += 1
+      // below tests belong together, they need to be sequential because they operate on the same dirs
+      new Promise((resolve, reject) => {
+        exec(bin, { cwd: fixture('cli-js') }, function (err, stdout) {
+          if (err) reject(err)
+          try {
+            equal(fixture('cli-js/destination'), fixture('cli-js/expected'))
+            assert(~stdout.indexOf('successfully built to '))
+            assert(~stdout.indexOf(fixture('cli-js/destination')))
+          } catch (err) {
+            reject(err)
+          }
+          resolve()
+        })
       })
-      exec(bin + ' -c config.cjs', { cwd: fixture('cli-js') }, function (err, stdout) {
-        if (err) return done(err)
-        equal(fixture('cli-js/destination'), fixture('cli-js/expected'))
-        assert(~stdout.indexOf('successfully built to '))
-        assert(~stdout.indexOf(fixture('cli-js/destination')))
-        if (doneCounter === 2) done()
-        else doneCounter += 1
-      })
-      exec(bin + ' -c other-config.cjs', { cwd: fixture('cli-js') }, function (err, stdout) {
-        if (err) return done(err)
-        equal(fixture('cli-js/destination'), fixture('cli-js/expected'))
-        assert(~stdout.indexOf('successfully built to '))
-        assert(~stdout.indexOf(fixture('cli-js/destination')))
-        if (doneCounter === 2) done()
-        else doneCounter += 1
-      })
+        .then(
+          () =>
+            new Promise((resolve, reject) => {
+              exec(bin + ' -c config.cjs', { cwd: fixture('cli-js') }, function (err, stdout) {
+                if (err) reject(err)
+                try {
+                  equal(fixture('cli-js/destination'), fixture('cli-js/expected'))
+                  assert(~stdout.indexOf('successfully built to '))
+                  assert(~stdout.indexOf(fixture('cli-js/destination')))
+                } catch (err) {
+                  reject(err)
+                }
+                resolve()
+              })
+            })
+        )
+        .then(
+          () =>
+            new Promise((resolve, reject) => {
+              exec(bin + ' -c other-config.cjs', { cwd: fixture('cli-js') }, function (err, stdout) {
+                if (err) reject(err)
+                try {
+                  equal(fixture('cli-js/destination'), fixture('cli-js/expected'))
+                  assert(~stdout.indexOf('successfully built to '))
+                  assert(~stdout.indexOf(fixture('cli-js/destination')))
+                } catch (err) {
+                  reject(err)
+                }
+                resolve()
+              })
+            })
+        )
+        .then(done)
+        .catch(done)
     })
 
     it('should require a plugin', function (done) {
