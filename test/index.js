@@ -319,6 +319,16 @@ describe('Metalsmith', function () {
       })
     })
 
+    it('should not error on falsy input', function (done) {
+      const m = Metalsmith(fixture('match'))
+      m.process(function (err) {
+        if (err) done(err)
+        const matches = m.match()
+        assert.deepStrictEqual(matches, [])
+        done()
+      })
+    })
+
     it('should support negation & OR patterns', function (done) {
       const m = Metalsmith(fixture('match'))
       m.process(function (err) {
