@@ -1220,19 +1220,17 @@ describe('Metalsmith', function () {
     })
 
     it('should not remove existing destination directory if clean is false', function (done) {
-      const dir = path.join('test', 'fixtures', 'build-noclean', 'build')
-      const cmd =
-        process.platform === 'win32'
-          ? 'if not exist ' + dir + ' mkdir ' + dir + ' & type NUL > ' + dir + '\\empty.md'
-          : 'mkdir -p ' + dir + ' && touch ' + dir + '/empty.md'
-      const m = Metalsmith(fixture('build-noclean'))
-      m.clean(false)
-      exec(cmd, function (err) {
+      const m = Metalsmith(fixture('build-noclean')).clean(false)
+      m.writeFile('empty.md', { contents: '' }, (err) => {
         if (err) return done(err)
         m.build(function (err) {
           if (err) return done(err)
-          equal(fixture('build-noclean/build'), fixture('build-noclean/expected'))
-          done()
+          try {
+            equal(fixture('build-noclean/build'), fixture('build-noclean/expected'))
+            done()
+          } catch (err) {
+            done(err)
+          }
         })
       })
     })
