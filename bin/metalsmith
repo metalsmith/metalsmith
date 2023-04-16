@@ -49,7 +49,7 @@ program
 
 program.parse(process.argv)
 
-function buildCommand({ config, ...options }) {
+function buildCommand({ config, ...cliOptions }) {
   const dir = process.cwd()
   let path = isAbsolute(config) ? config : resolve(dir, config)
 
@@ -68,41 +68,46 @@ function buildCommand({ config, ...options }) {
 
   const format = extname(path).slice(1)
 
-  let json
+  let spec
   try {
     if (format === 'js' || format === 'cjs') {
-      json = require(path)
+      spec = require(path)
       // when a JS file is required that forgets to export using exports or module.exports,
       // node instead returns an empty object. Though Metalsmith should in theory consider this a valid config
       // for a simple copy -> paste it is highly likely that this was not the user's intension
-      if (isObject(json) && Object.keys(json).length === 0) {
+      if (!(spec instanceof Metalsmith) && isObject(spec) && Object.keys(spec).length === 0) {
         fatal(`it seems like ${config} is empty. Make sure it exports a metalsmith config object.`)
       }
     } else {
-      json = JSON.parse(readFileSync(path, 'utf-8'))
+      spec = JSON.parse(readFileSync(path, 'utf-8'))
     }
   } catch (e) {
     fatal(`it seems like ${config} is malformed or unsupported (ESM).`)
   }
 
-  /**
-   * Metalsmith.
-   */
+  /** First suppose a JS config file that exports new Metalsmith() */
+  let metalsmith = spec
 
-  const metalsmith = new Metalsmith(confRelativeDir)
-  if (json.source) metalsmith.source(json.source)
-  if (json.destination) metalsmith.destination(json.destination)
-  if (json.concurrency) metalsmith.concurrency(json.concurrency)
-  if (json.metadata) metalsmith.metadata(json.metadata)
-  if (json.clean != null) metalsmith.clean(json.clean)
-  if (json.frontmatter != null) metalsmith.frontmatter(json.frontmatter)
-  if (json.ignore != null) metalsmith.ignore(json.ignore)
-  if (isObject(json.env)) metalsmith.env(expandEnvVars(json.env, process.env))
-  if (options.env) options.env.forEach(envVar => {
+  /** if it's not suppose a metalsmith.json-style config object */
+  if (!(metalsmith instanceof Metalsmith)) {
+    metalsmith = new Metalsmith(confRelativeDir)
+    if (spec.source) metalsmith.source(spec.source)
+    if (spec.destination) metalsmith.destination(spec.destination)
+    if (spec.concurrency) metalsmith.concurrency(spec.concurrency)
+    if (spec.metadata) metalsmith.metadata(spec.metadata)
+    if (spec.clean != null) metalsmith.clean(spec.clean)
+    if (spec.frontmatter != null) metalsmith.frontmatter(spec.frontmatter)
+    if (spec.ignore != null) metalsmith.ignore(spec.ignore)
+    if (isObject(spec.env)) metalsmith.env(expandEnvVars(spec.env, process.env))
+  }
+
+  /* CLI --<option> overrides configs */
+  if (cliOptions.env) cliOptions.env.forEach(envVar => {
     const [name, value] = envVar.split('=')
     metalsmith.env(name, value)
   })
-  if (options.debug) metalsmith.env('DEBUG', options.debug)
+  if (cliOptions.debug) metalsmith.env('DEBUG', cliOptions.debug)
+  console.error(metalsmith.env())
 
   // set a flag plugins can check to target CLI-specific behavior
   metalsmith.env('CLI', true)
@@ -111,7 +116,7 @@ function buildCommand({ config, ...options }) {
    * Plugins.
    */
 
-  normalize(json.plugins).forEach(function (plugin) {
+  normalize(spec.plugins).forEach(function (plugin) {
     for (const name in plugin) {
       const opts = plugin[name]
       let mod
@@ -146,7 +151,7 @@ function buildCommand({ config, ...options }) {
     }
   }
 
-  if (options.dryRun) {
+  if (cliOptions.dryRun) {
     metalsmith.process(onBuild(`successfully ran a dry-run of the ${config} build`))
   } else {
     metalsmith.build(onBuild(`successfully built to ${metalsmith.destination()}`))

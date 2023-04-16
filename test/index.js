@@ -1,5 +1,6 @@
+/* eslint-env mocha, node */
+
 const assert = require('assert')
-const { it, describe, beforeEach } = require('mocha')
 const equal = require('assert-dir-equal')
 const exec = require('child_process').exec
 const fs = require('fs')
@@ -1318,6 +1319,22 @@ describe('CLI', function () {
               })
             })
         )
+        .then(
+          () =>
+            new Promise((resolve, reject) => {
+              exec(bin + ' -c metalsmith-instance.js', { cwd: fixture('cli-js') }, function (err, stdout) {
+                if (err) reject(err)
+                try {
+                  equal(fixture('cli-js/destination'), fixture('cli-js/expected'))
+                  assert(~stdout.indexOf('from instance'))
+                  assert(~stdout.indexOf(fixture('cli-js/destination')))
+                } catch (err) {
+                  reject(err)
+                }
+                resolve()
+              })
+            })
+        )
         .then(done)
         .catch(done)
     })
@@ -1410,8 +1427,7 @@ describe('CLI', function () {
         `${bin} --env DEBUG= --debug @metalsmith/markdown`,
         { cwd: fixture('cli-debug') },
         function (err, stdout, stderr) {
-          const match = stderr.split('\n')[2].slice(stderr.indexOf(' ') + 1)
-          assert.strictEqual(match, '@metalsmith/markdown:info Rendering file "index.md" as "index.html"')
+          assert(~stderr.indexOf('@metalsmith/markdown:info Rendering file "index.md" as "index.html"'))
           done()
         }
       )
