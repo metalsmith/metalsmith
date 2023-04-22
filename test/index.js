@@ -51,6 +51,94 @@ describe('Metalsmith', function () {
     assert.strictEqual(m._clean, true)
   })
 
+  describe('.matter', function () {
+    it('#options should set options for matter parsing/stringifying', function () {
+      const m = Metalsmith(fixture('test/tmp')).frontmatter({ excerpt: true })
+      m.matter.options({ excerpt_separator: '<!-- end -->' })
+      const parsed = m.matter.parse(Buffer.from('---\ntitle: Hello World\n---\nIntro\n<!-- end -->\nBody'))
+      assert.deepStrictEqual(
+        { ...parsed, contents: parsed.contents.toString() },
+        {
+          title: 'Hello World',
+          excerpt: 'Intro\n',
+          contents: 'Intro\n<!-- end -->\nBody'
+        }
+      )
+    })
+
+    it('#options should be in sync with metalsmith#frontmatter', function () {
+      // sync works from frontmatter -> matter.options but not the other way around (and is intended this way)!
+
+      let m = Metalsmith(fixture('test/tmp'))
+      // default options
+      assert.strictEqual(m.frontmatter(), true)
+      assert.deepStrictEqual(m.matter.options(), Object.assign(Object.create(null), m.matter.constructor.defaults))
+
+      m = Metalsmith(fixture('test/tmp'))
+      // setting via m.matter.options
+      m.matter.options({ excerpt_separator: '<!-- end -->' })
+      assert.strictEqual(m.matter.options().excerpt_separator, '<!-- end -->')
+      assert.deepStrictEqual(m.frontmatter(), true)
+
+      // setting via m.frontmatter
+      m = Metalsmith(fixture('test/tmp'))
+      const conf = { delimiters: ['+++', '°°°'] }
+      m.frontmatter(conf)
+      assert.deepStrictEqual(m.matter.options().delimiters, conf.delimiters)
+      assert.deepStrictEqual(
+        m.matter.options(),
+        Object.assign(Object.create(null), {
+          ...m.matter.constructor.defaults,
+          delimiters: conf.delimiters
+        })
+      )
+    })
+
+    it('#parse should parse front-matter according to options passed to metalsmith#frontmatter', function () {
+      const m = Metalsmith(fixture('test/tmp')).frontmatter({ excerpt: true })
+      const parsed = m.matter.parse(Buffer.from('---\ntitle: Hello World\n---\nIntro\n---\nBody'))
+      assert.deepStrictEqual(
+        { ...parsed, contents: parsed.contents.toString() },
+        {
+          title: 'Hello World',
+          excerpt: 'Intro\n',
+          contents: 'Intro\n---\nBody'
+        }
+      )
+    })
+
+    it('#stringify should stringify a file according to options passed to metalsmith#frontmatter', function () {
+      const m = Metalsmith(fixture('test/tmp'))
+      const stringified = m.matter.stringify({
+        title: 'Hello World',
+        excerpt: 'Intro\n',
+        contents: 'Intro\n---\nBody'
+      })
+      assert.strictEqual(
+        stringified,
+        ['---', 'title: Hello World', 'excerpt: |', '  Intro', '---', 'Intro', '---', 'Body'].join('\n') + '\n'
+      )
+    })
+
+    it('#wrap should wrap a file according to options passed to metalsmith#frontmatter', function () {
+      const m = Metalsmith(fixture('test/tmp'))
+      const stringifiedData = `{"title": "Hello World","excerpt": "Intro","contents": "Body"}`
+
+      const wrapped = m.matter.wrap(stringifiedData)
+      assert.strictEqual(wrapped, ['---', stringifiedData, '---'].join('\n'))
+
+      m.matter.options({ delimiters: ['~~~', '+++'] })
+      const wrapped2 = m.matter.wrap(stringifiedData)
+      assert.strictEqual(wrapped2, ['~~~', stringifiedData, '+++'].join('\n'))
+    })
+
+    /* {
+  "name": "metalsmith",
+  "description": "An extremely simple, pluggable static site generator.",
+  "boolean": true
+} */
+  })
+
   describe('#use', function () {
     it('should add a plugin to the plugins stack', function () {
       const m = Metalsmith('test/tmp')

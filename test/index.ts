@@ -130,6 +130,28 @@ debug.info('%s', 'An info')
 debug.warn('%s', 'A warning')
 debug.info('%s', 'An error')
 
+// test matter member
+m.matter.options()
+m.matter.options({ excerpt_separator: '---' })
+m.matter.options({
+  excerpt_separator: '---',
+  excerpt: true,
+  engines: {
+    parseOnly(str) {
+      return JSON.parse(str)
+    },
+    parseAndStringify: {
+      parse(str) { return JSON.parse(str) },
+      stringify(data) { return JSON.stringify(data) }
+    }
+  }
+})
+
+const { contents, mode, stats } = m.matter.parse('str')
+m.matter.parse(Buffer.from('str'))
+m.matter.stringify({ data: { hello: 'world' }, contents: Buffer.from('body') })
+m.matter.wrap(JSON.stringify({ hello: 'world' }))
+
 // test the env method
 const env = Metalsmith(__dirname).env()
 const envvar = Metalsmith(__dirname).env('DEBUG')

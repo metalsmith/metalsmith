@@ -10,12 +10,56 @@
 import { Stats } from 'fs';
 import { Mode } from 'stat-mode';
 import { Debugger as DebugDebugger } from 'debug';
+import { GrayMatterFile } from 'gray-matter';
 import micromatch = require('micromatch');
 declare class Metalsmith {
     /**
      * Initialize a new `Metalsmith` builder with a working `directory`.
      **/
     constructor(directory:string)
+    /**
+     * 
+     */
+    matter: {
+      /**
+       * Return matter options to use for parsing & stringification
+       */
+      options(): Metalsmith.MatterOptions
+      /**
+       * Set matter options to use for parsing & stringification
+       */
+      options(options: Metalsmith.MatterOptions): void
+      /**
+       * Parse a string or buffer into a {@linkcode Metalsmith.File} taking into account {@linkcode Metalsmith.frontmatter} options
+       * @example
+       * metalsmith.matter.parse(Buffer.from('---\ntitle: Hello World\n---\nIntro\n---'))
+       * === {
+       *   contents: Buffer<'Hello world'>,
+       *   title: 'Hello World',
+       *   excerpt: 'Intro'
+       * }
+       */
+      parse(contents: Buffer|string): Metalsmith.File,
+      /**
+       * Stringify a {@linkcode Metalsmith.File} object to a string with frontmatter and contents
+       * @example
+       * metalsmith.matter.stringify({
+       *   contents: Buffer.from('body'),
+       *   title: 'Hello World',
+       *   excerpt: 'Intro'
+       * }) === `
+       *   title: Hello World
+       *   excerpt: Intro
+       *   ---
+       *   body
+       * `
+       */
+      stringify(file: Metalsmith.File): string
+      /**
+       * Wrap stringified front-matter-compatible data with the matter delimiters
+       */
+      wrap(stringifiedData: Buffer|string): string
+    }
     /**
      * Set the working `directory`. Relative paths resolve to `process.cwd()`  
      * [API Docs](https://metalsmith.io/api/#Metalsmith+directory) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L163)
@@ -463,6 +507,19 @@ declare namespace Metalsmith {
       info: DebugDebugger;
       warn: DebugDebugger;
       error: DebugDebugger;
+    }
+
+    interface MatterOptions {
+      language?: string
+      excerpt?: boolean | ((file:GrayMatterFile<string>, options: Metalsmith.MatterOptions) => {})
+      excerpt_separator?: string
+      delimiters?: string | string[]
+      engines?: {
+        [engine:string]: ((file:string) => any) | {
+          parse: (file:string) => any
+          stringify?: (data:any) => string
+        }
+      }
     }
 }
 

@@ -34,6 +34,7 @@
     "lib/index.js",
     "lib/debug.js",
     "lib/helpers.js",
+    "lib/matter.js",
     "types/index.d.ts",
     "metalsmith-migrated-plugins.js",
     "bin/metalsmith",
