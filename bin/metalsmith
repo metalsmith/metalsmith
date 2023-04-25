@@ -107,7 +107,6 @@ function buildCommand({ config, ...cliOptions }) {
     metalsmith.env(name, value)
   })
   if (cliOptions.debug) metalsmith.env('DEBUG', cliOptions.debug)
-  console.error(metalsmith.env())
 
   // set a flag plugins can check to target CLI-specific behavior
   metalsmith.env('CLI', true)
