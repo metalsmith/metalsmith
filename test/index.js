@@ -1482,7 +1482,7 @@ describe('CLI', function () {
     })
 
     it('should support the env method', function (done) {
-      exec(bin, { cwd: fixture('cli-env'), env: { NODE_ENV: 'development' } }, function (err, stdout) {
+      exec(bin, { cwd: fixture('cli-env'), env: { ...process.env, NODE_ENV: 'development' } }, function (err, stdout) {
         equal(fixture('cli-env/build'), fixture('cli-env/expected'))
         assert(~stdout.indexOf('successfully built to '))
         assert(~stdout.indexOf(fixture('cli-env/build')))
