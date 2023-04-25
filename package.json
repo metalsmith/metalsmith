@@ -59,7 +59,7 @@
     "timeout": 3000
   },
   "dependencies": {
-    "commander": "^8.3.0",
+    "commander": "^10.0.1",
     "cross-spawn": "^7.0.3",
     "debug": "^4.3.4",
     "gray-matter": "^4.0.3",
