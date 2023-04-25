@@ -60,7 +60,7 @@ describe('Metalsmith', function () {
         { ...parsed, contents: parsed.contents.toString() },
         {
           title: 'Hello World',
-          excerpt: 'Intro\n',
+          excerpt: 'Intro',
           contents: 'Body'
         }
       )
@@ -101,8 +101,21 @@ describe('Metalsmith', function () {
         { ...parsed, contents: parsed.contents.toString() },
         {
           title: 'Hello World',
-          excerpt: 'Intro\n',
-          contents: 'Intro\n---\nBody'
+          excerpt: 'Intro',
+          contents: 'Body'
+        }
+      )
+    })
+
+    it('#parse should parse front-matter with a dynamically defined language', function () {
+      const m = Metalsmith(fixture('test/tmp')).frontmatter({ excerpt: true })
+      const parsed = m.matter.parse(Buffer.from('---js\n{ sum: 5 + 5 }\n---\nIntro\n---\nBody'))
+      assert.deepStrictEqual(
+        { ...parsed, contents: parsed.contents.toString() },
+        {
+          sum: 10,
+          excerpt: 'Intro',
+          contents: 'Body'
         }
       )
     })
