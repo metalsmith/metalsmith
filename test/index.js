@@ -61,7 +61,7 @@ describe('Metalsmith', function () {
         {
           title: 'Hello World',
           excerpt: 'Intro\n',
-          contents: 'Intro\n<!-- end -->\nBody'
+          contents: 'Body'
         }
       )
     })
@@ -112,11 +112,11 @@ describe('Metalsmith', function () {
       const stringified = m.matter.stringify({
         title: 'Hello World',
         excerpt: 'Intro\n',
-        contents: 'Intro\n---\nBody'
+        contents: 'Body'
       })
       assert.strictEqual(
         stringified,
-        ['---', 'title: Hello World', 'excerpt: |', '  Intro', '---', 'Intro', '---', 'Body'].join('\n') + '\n'
+        ['---', 'title: Hello World', 'excerpt: |', '  Intro', '---', 'Body'].join('\n') + '\n'
       )
     })
 
@@ -131,12 +131,6 @@ describe('Metalsmith', function () {
       const wrapped2 = m.matter.wrap(stringifiedData)
       assert.strictEqual(wrapped2, ['~~~', stringifiedData, '+++'].join('\n'))
     })
-
-    /* {
-  "name": "metalsmith",
-  "description": "An extremely simple, pluggable static site generator.",
-  "boolean": true
-} */
   })
 
   describe('#use', function () {
