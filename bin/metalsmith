@@ -49,7 +49,7 @@ program
 
 program.parse(process.argv)
 
-function buildCommand({ config, ...cliOptions }) {
+async function buildCommand({ config, ...cliOptions }) {
   const dir = process.cwd()
   let path = isAbsolute(config) ? config : resolve(dir, config)
 
@@ -70,8 +70,8 @@ function buildCommand({ config, ...cliOptions }) {
 
   let spec
   try {
-    if (format === 'js' || format === 'cjs') {
-      spec = require(path)
+    if (format.match(/^[cm]*js$/)) {
+      spec = (await import(path)).default
       // when a JS file is required that forgets to export using exports or module.exports,
       // node instead returns an empty object. Though Metalsmith should in theory consider this a valid config
       // for a simple copy -> paste it is highly likely that this was not the user's intension
@@ -82,7 +82,7 @@ function buildCommand({ config, ...cliOptions }) {
       spec = JSON.parse(readFileSync(path, 'utf-8'))
     }
   } catch (e) {
-    fatal(`it seems like ${config} is malformed or unsupported (ESM).`)
+    fatal(`it seems like ${config} is malformed or unsupported. Encountered error: ${e.message}`)
   }
 
   /** First suppose a JS config file that exports new Metalsmith() */

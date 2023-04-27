@@ -1367,7 +1367,7 @@ describe('CLI', function () {
       })
     })
 
-    it('should grab config from <configname>.(c)js', function (done) {
+    it('should grab config from <configname>.(c|m)js', function (done) {
       // below tests belong together, they need to be sequential because they operate on the same dirs
       new Promise((resolve, reject) => {
         exec(bin, { cwd: fixture('cli-js') }, function (err, stdout) {
@@ -1414,6 +1414,7 @@ describe('CLI', function () {
               })
             })
         )
+        // support Metalsmith instance exports
         .then(
           () =>
             new Promise((resolve, reject) => {
@@ -1422,6 +1423,40 @@ describe('CLI', function () {
                 try {
                   equal(fixture('cli-js/destination'), fixture('cli-js/expected'))
                   assert(~stdout.indexOf('from instance'))
+                  assert(~stdout.indexOf(fixture('cli-js/destination')))
+                } catch (err) {
+                  reject(err)
+                }
+                resolve()
+              })
+            })
+        )
+        // support .mjs CLI-style configs
+        .then(
+          () =>
+            new Promise((resolve, reject) => {
+              exec(bin + ' -c config.mjs', { cwd: fixture('cli-js') }, function (err, stdout) {
+                if (err) reject(err)
+                try {
+                  equal(fixture('cli-js/destination'), fixture('cli-js/expected'))
+                  assert(~stdout.indexOf('successfully built to '))
+                  assert(~stdout.indexOf(fixture('cli-js/destination')))
+                } catch (err) {
+                  reject(err)
+                }
+                resolve()
+              })
+            })
+        )
+        // support ESM Metalsmith instance exports
+        .then(
+          () =>
+            new Promise((resolve, reject) => {
+              exec(bin + ' -c metalsmith-instance.mjs', { cwd: fixture('cli-js') }, function (err, stdout) {
+                if (err) reject(err)
+                try {
+                  equal(fixture('cli-js/destination'), fixture('cli-js/expected'))
+                  assert(~stdout.indexOf('successfully built to '))
                   assert(~stdout.indexOf(fixture('cli-js/destination')))
                 } catch (err) {
                   reject(err)
