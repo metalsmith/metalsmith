@@ -13,13 +13,21 @@ In Metalsmith, all of the logic is handled by plugins. You simply chain them tog
 Here's what the simplest blog looks like:
 
 ```js
-const Metalsmith = require('metalsmith')
-const layouts = require('@metalsmith/layouts')
-const markdown = require('@metalsmith/markdown')
+import { fileURLToPath } from 'node:url'
+import { dirname } from 'path'
+import Metalsmith from 'metalsmith'
+import layouts from '@metalsmith/layouts'
+import markdown from '@metalsmith/markdown'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 Metalsmith(__dirname)
   .use(markdown())
-  .use(layouts())
+  .use(
+    layouts({
+      pattern: '**/*.html'
+    })
+  )
   .build(function (err) {
     if (err) throw err
     console.log('Build finished!')
@@ -45,25 +53,30 @@ yarn add metalsmith
 What if you want to get fancier by hiding unfinished drafts, grouping posts in collections, and using custom permalinks? Just add plugins...
 
 ```js
-const Metalsmith = require('metalsmith')
-const collections = require('@metalsmith/collections')
-const layouts = require('@metalsmith/layouts')
-const markdown = require('@metalsmith/markdown')
-const permalinks = require('@metalsmith/permalinks')
+import { fileURLToPath } from 'node:url'
+import { dirname } from 'path'
+import Metalsmith from 'metalsmith'
+import collections from '@metalsmith/collections'
+import layouts from '@metalsmith/layouts'
+import markdown from '@metalsmith/markdown'
+import permalinks from '@metalsmith/permalinks'
 
-Metalsmith(__dirname)
-  .source('./src')
-  .destination('./build')
-  .clean(true)
-  .frontmatter({
-    excerpt: true
-  })
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const t1 = performance.now()
+const mode = process.env.NODE_ENV
+
+Metalsmith(__dirname) // parent directory of this file
+  .source('./src') // source directory
+  .destination('./build') // destination directory
+  .clean(true) // clean destination before
+  .watch(mode === 'development') // rebuild on change in development
   .env({
-    NAME: process.env.NODE_ENV,
-    DEBUG: '@metalsmith/*',
-    DEBUG_LOG: 'metalsmith.log'
+    // pass NODE_ENV & other environment variables
+    DEBUG: process.env.DEBUG,
+    NODE_ENV: mode
   })
   .metadata({
+    // add any variable you want & use them in layout-files
     sitename: 'My Static Site & Blog',
     siteurl: 'https://example.com/',
     description: "It's about saying »Hello« to the world.",
@@ -72,18 +85,26 @@ Metalsmith(__dirname)
   })
   .use(
     collections({
-      posts: 'posts/*.md'
+      // group all blog posts by internally
+      posts: 'posts/*.md' // adding key 'collections':'posts'
     })
-  )
-  .use(markdown())
+  ) // use `collections.posts` in layouts
+  .use(markdown()) // transpile all md into html
   .use(
     permalinks({
-      relative: false
+      // change URLs to permalink URLs
+      relative: false // put css only in /css
     })
   )
-  .use(layouts())
-  .build(function (err) {
-    if (err) throw err
+  .use(
+    layouts({
+      pattern: '**/*.html'
+    })
+  ) // wrap layouts around html
+  .build((err) => {
+    // build process
+    if (err) throw err // error handling is required
+    console.log(`Build success in ${((performance.now() - t1) / 1000).toFixed(1)}s`)
   })
 ```
 
@@ -201,7 +222,7 @@ Which means you could just as easily use it to make...
 
 ## Resources
 
-- [Gitter community chat](https://gitter.im/metalsmith/community) for chat, questions
+- [Gitter Matrix community chat](https://app.gitter.im/#/room/#metalsmith_community:gitter.im) for chat, questions
 - [Twitter announcements](https://twitter.com/@metalsmithio) and the [metalsmith.io news page](https://metalsmith.io/news) for updates
 - [Awesome Metalsmith](https://github.com/metalsmith/awesome-metalsmith) - great collection of resources, examples, and tutorials
 - [emmer.dev on metalsmith](https://emmer.dev/blog/tag/metalsmith/) - A good collection of various how to's for metalsmith
@@ -217,6 +238,7 @@ Use the excellent [metalsmith-debug-ui plugin](https://github.com/leviwheatcroft
 
 Future Metalsmith releases will at least support the oldest supported Node LTS versions.
 
+Metalsmith 2.6.x supports NodeJS versions 14.14.0 and higher.
 Metalsmith 2.5.x supports NodeJS versions 12 and higher.  
 Metalsmith 2.4.x supports NodeJS versions 8 and higher.  
 Metalsmith 2.3.0 and below support NodeJS versions all the way back to 0.12.
@@ -243,5 +265,6 @@ Special thanks to [Ian Storm Taylor](https://github.com/ianstormtaylor), [Andrew
 [codecov-url]: https://coveralls.io/github/metalsmith/metalsmith?branch=master
 [license-badge]: https://img.shields.io/github/license/metalsmith/metalsmith
 [license-url]: LICENSE
-[gitter-badge]: https://img.shields.io/badge/GITTER-Join-blue.svg
-[gitter-url]: https://gitter.im/metalsmith/community
+
+[gitter-badge]: https://img.shields.io/badge/[gitter:matrix]-join-blue.svg
+[gitter-url]: https://app.gitter.im/#/room/#metalsmith_community:gitter.im
