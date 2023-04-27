@@ -5,6 +5,7 @@
 const exists = require('fs').existsSync
 const readFileSync = require('fs').readFileSync
 const Metalsmith = require('..')
+const { pathToFileURL } = require('url')
 const { Command } = require('commander')
 const program = new Command()
 const { resolve, isAbsolute, dirname, extname } = require('path')
@@ -67,6 +68,11 @@ async function buildCommand({ config, ...cliOptions }) {
   }
 
   const format = extname(path).slice(1)
+
+  // avoid ESM dynamic import error with absolute paths on Windows:
+  // Only URLs with a scheme in: file and data are supported by the default ESM loader. On Windows, absolute paths must be valid file:// URLs.
+  // cf also https://github.com/nuxt/nuxt/issues/15500#issuecomment-1451619865
+  path = pathToFileURL(path);
 
   let spec
   try {
