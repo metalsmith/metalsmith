@@ -6,6 +6,40 @@ This project adheres to [Semantic Versioning](http://semver.org).
 
 This document follows the guidelines of [Keep A Changelog](http://keepachangelog.com).
 
+## [2.6.0] - 2023-05-30
+
+### Added
+
+- [#356] Added Typescript support [`58d22a3`](https://github.com/metalsmith/metalsmith/commit/58d22a3)
+- Added --debug and --dry-run options to metalsmith (build) command [`2d84fbe`](https://github.com/metalsmith/metalsmith/commit/2d84fbe)
+- Added --env option to metalsmith (build) command [`9661ddc`](https://github.com/metalsmith/metalsmith/commit/9661ddc)
+- Added Metalsmith CLI support for loading a .(c)js config. Reads from metalsmith.js as second default after metalsmith.json [`45a4afe`](https://github.com/metalsmith/metalsmith/commit/45a4afe)
+- Added support for running (C/M)JS config files from CLI [`424e6ec`](https://github.com/metalsmith/metalsmith/commit/424e6ec)
+- **Dependencies:**
+  - `chokidar` [`9d40674`](https://github.com/metalsmith/metalsmith/commit/9d40674)
+  - `lodash.clonedeepwith` [`e12537f`](https://github.com/metalsmith/metalsmith/commit/e12537f)
+
+### Removed
+
+- [#231] Dropped support for Node < 14.14.0 [`80d8508`](https://github.com/metalsmith/metalsmith/commit/80d8508)
+- **Dependencies:**
+  - `rimraf`: replaced with native Node.js methods [`ae05945`](https://github.com/metalsmith/metalsmith/commit/ae05945)
+  - `cross-spawn`: [`baee1de`](https://github.com/metalsmith/metalsmith/commit/baee1de)
+
+### Updated
+
+- Modernized Metalsmith CLI, prepared transition to imports instead of require [`24fcffb`](https://github.com/metalsmith/metalsmith/commit/24fcffb) [`4929bc2`](https://github.com/metalsmith/metalsmith/commit/4929bc2)
+- **Dependencies:**
+  - `commander`: 6.2.1 -> 10.0.1 [`24fcffb`](https://github.com/metalsmith/metalsmith/commit/24fcffb) [`0810728`](https://github.com/metalsmith/metalsmith/commit/0810728)
+
+### Fixed
+
+- Fixes a duplicate empty input check in metalsmith.match [`60e173a`](https://github.com/metalsmith/metalsmith/commit/60e173a)
+- Gray-matter excerpts are removed from contents instead of being duplicated to the `excerpt` property [`2bfe800`](https://github.com/metalsmith/metalsmith/commit/2bfe800)
+- Gray-matter excerpts are trimmed [`acb363e`](https://github.com/metalsmith/metalsmith/commit/acb363e)
+
+[#231]: https://github.com/metalsmith/metalsmith/issues/231
+
 ## [2.5.1] - 2022-10-07
 
 ### Updated
