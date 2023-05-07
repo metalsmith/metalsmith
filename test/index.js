@@ -1242,14 +1242,21 @@ describe('Metalsmith', function () {
     it('should return a promise only when callback is omitted', function (done) {
       const m = Metalsmith(fixture('basic'))
 
-      assert.strictEqual(
-        m.build(() => {}),
-        undefined
-      )
-
-      m.build()
-        .then((files) => {
-          assert.strictEqual(typeof files, 'object')
+      //2 builds on the same metalsmith instance have to be executed sequentially in order not to create race conditions
+      const promiseReturnValue = m
+        .build()
+        .then(
+          () =>
+            new Promise((resolve, reject) => {
+              const returnValue = m.build((err) => {
+                if (err) reject(err)
+                resolve(returnValue)
+              })
+            })
+        )
+        .then((callbackReturnValue) => {
+          assert.strictEqual(typeof callbackReturnValue, 'undefined')
+          assert(promiseReturnValue instanceof Promise)
           done()
         })
         .catch(done)
