@@ -23,14 +23,17 @@ declare class Metalsmith {
     matter: {
       /**
        * Return matter options to use for parsing & stringification
+       * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+options) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/matter.js#L27)
        */
       options(): Metalsmith.MatterOptions
       /**
        * Set matter options to use for parsing & stringification
+       * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+options) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/matter.js#L27)
        */
       options(options: Metalsmith.MatterOptions): void
       /**
-       * Parse a string or buffer into a {@linkcode Metalsmith.File} taking into account {@linkcode Metalsmith.frontmatter} options
+       * Parse a string or buffer for front matter and return it as a {@linkcode Metalsmith.File} object.
+       * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+parse) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/matter.js#L37)
        * @example
        * metalsmith.matter.parse(Buffer.from('---\ntitle: Hello World\n---\nIntro\n---'))
        * === {
@@ -42,6 +45,7 @@ declare class Metalsmith {
       parse(contents: Buffer|string): Metalsmith.File,
       /**
        * Stringify a {@linkcode Metalsmith.File} object to a string with frontmatter and contents
+       * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+stringify) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/matter.js#L59)
        * @example
        * metalsmith.matter.stringify({
        *   contents: Buffer.from('body'),
