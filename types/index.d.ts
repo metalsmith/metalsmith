@@ -1,12 +1,5 @@
-// Type definitions for metalsmith 2.6
-// Project: https://github.com/metalsmith/metalsmith
-// Definitions by: Brian Lagerman <https://github.com/brian-lagerman>, Kevin Van Lierde <https://github.com/webketje>
-// Definitions: https://github.com/metalsmith/metalsmith
-// TypeScript Version: 3.1
-
 /// <reference types="node" />
-/// <reference types="micromatch" />
-/// <reference types="debug" />
+
 import { Stats } from 'fs';
 import { Mode } from 'stat-mode';
 import { Debugger as DebugDebugger } from 'debug';
@@ -160,6 +153,23 @@ declare class Metalsmith {
      * const on = metalsmith.frontmatter() // true or false
      */
     frontmatter(): boolean;
+    /**
+     * Set the list of paths to watch and trigger rebuilds on. The watch method will skip files ignored with {@linkcode Metalsmith.ignore}
+     * and will do partial (true) or full (false) rebuilds depending on the {@linkcode Metalsmith.clean} setting.
+     * It can be used both for rebuilding in-memory with {@linkcode Metalsmith.process} or writing to file system with {@linkcode Metalsmith.build},
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+watch) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L352)
+     * @default false
+     * @example
+     * metalsmith
+     *   .ignore(['wont-be-watched'])  // ignored
+     *   .clean(false)                 // do partial rebuilds
+     *   .watch(true)                  // watch all files in metalsmith.source()
+     *   .watch(['lib','src'])         // or watch files in directories 'lib' and 'src'
+     */
+    watch(
+      /** `true` or `false` to watch {@linkcode Metalsmith.source}, or one or more paths/ globs */
+      watch: boolean|string|string[]
+    ): Metalsmith;
     /**
      * Get a single metalsmith environment variable. Metalsmith env vars are case-insensitive.  
      * [API Docs](https://metalsmith.io/api/#Metalsmith+env) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L352)

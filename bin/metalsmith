@@ -121,33 +121,35 @@ async function buildCommand({ config, ...cliOptions }) {
    * Plugins.
    */
 
-  normalize(spec.plugins).forEach(function (plugin) {
-    for (const name in plugin) {
-      const opts = plugin[name]
-      let mod
+  if (!(spec instanceof Metalsmith)) {
+    normalize(spec.plugins).forEach(function (plugin) {
+      for (const name in plugin) {
+        const opts = plugin[name]
+        let mod
 
-      try {
-        const local = resolve(confRelativeDir, name)
-        const npm = resolve(confRelativeDir, 'node_modules', name)
+        try {
+          const local = resolve(confRelativeDir, name)
+          const npm = resolve(confRelativeDir, 'node_modules', name)
 
-        if (exists(local) || exists(`${local}.js`)) {
-          mod = require(local)
-        } else if (exists(npm)) {
-          mod = require(npm)
-        } else {
-          mod = require(name)
+          if (exists(local) || exists(`${local}.js`)) {
+            mod = require(local)
+          } else if (exists(npm)) {
+            mod = require(npm)
+          } else {
+            mod = require(name)
+          }
+        } catch (e) {
+          fatal(`failed to require plugin "${name}".`)
         }
-      } catch (e) {
-        fatal(`failed to require plugin "${name}".`)
-      }
 
-      try {
-        metalsmith.use(mod(opts))
-      } catch (e) {
-        fatal(`error using plugin "${name}"...`, `${e.message}\n\n${e.stack}`)
+        try {
+          metalsmith.use(mod(opts))
+        } catch (e) {
+          fatal(`error using plugin "${name}"...`, `${e.message}\n\n${e.stack}`)
+        }
       }
-    }
-  })
+    })
+  }
 
   function onBuild(message) {
     return (err) => {
