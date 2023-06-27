@@ -15,17 +15,17 @@ declare class Metalsmith {
      */
     matter: {
       /**
-       * Return matter options to use for parsing & stringification
+       * Return matter options to use for parsing & stringification  
        * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+options) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/matter.js#L27)
        */
       options(): Metalsmith.MatterOptions
       /**
-       * Set matter options to use for parsing & stringification
+       * Set matter options to use for parsing & stringification  
        * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+options) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/matter.js#L27)
        */
       options(options: Metalsmith.MatterOptions): void
       /**
-       * Parse a string or buffer for front matter and return it as a {@linkcode Metalsmith.File} object.
+       * Parse a string or buffer for front matter and return it as a {@linkcode Metalsmith.File} object.  
        * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+parse) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/matter.js#L37)
        * @example
        * metalsmith.matter.parse(Buffer.from('---\ntitle: Hello World\n---\nIntro\n---'))
@@ -37,7 +37,7 @@ declare class Metalsmith {
        */
       parse(contents: Buffer|string): Metalsmith.File,
       /**
-       * Stringify a {@linkcode Metalsmith.File} object to a string with frontmatter and contents
+       * Stringify a {@linkcode Metalsmith.File} object to a string with frontmatter and contents  
        * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+stringify) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/matter.js#L59)
        * @example
        * metalsmith.matter.stringify({
@@ -53,7 +53,7 @@ declare class Metalsmith {
        */
       stringify(file: Metalsmith.File): string
       /**
-       * Wrap stringified front-matter-compatible data with the matter delimiters
+       * Wrap stringified front-matter-compatible data with the matter delimiters  
        * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+wrap) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/matter.js#L69)
        */
       wrap(stringifiedData: Buffer|string): string
@@ -208,7 +208,7 @@ declare class Metalsmith {
      */
     env(env: {[key:string]: (number|boolean|string|null)}): Metalsmith;
     /**
-     * Assign values to the global `metadata` object.
+     * Assign values to the global `metadata` object.  
      * [API Docs](https://metalsmith.io/api/#Metalsmith+metadata) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L199)
      * @example
      * metalsmith.metadata({
@@ -218,7 +218,7 @@ declare class Metalsmith {
      */
     metadata(metadata: object): Metalsmith;
     /**
-     * Get the global `metadata` object.
+     * Get the global `metadata` object.  
      * [API Docs](https://metalsmith.io/api/#Metalsmith+metadata) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L199)
      * @example
      * const metadata = metalsmith.metadata();
