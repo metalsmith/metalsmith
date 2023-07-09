@@ -4,6 +4,7 @@ import { Stats } from 'fs';
 import { Mode } from 'stat-mode';
 import { Debugger as DebugDebugger } from 'debug';
 import { GrayMatterFile } from 'gray-matter';
+import { WatchOptions } from 'chokidar';
 import micromatch = require('micromatch');
 declare class Metalsmith {
     /**
@@ -168,8 +169,8 @@ declare class Metalsmith {
      *   .watch(['lib','src'])         // or watch files in directories 'lib' and 'src'
      */
     watch(
-      /** `true` or `false` to watch {@linkcode Metalsmith.source}, or one or more paths/ globs */
-      watch: boolean|string|string[]
+      /** `true` or `false` to watch {@linkcode Metalsmith.source}, or one or more paths/ globs, or a subset of chokidar watchOptions */
+      watch: boolean|string|string[]|Omit<WatchOptions, 'ignoreInitial'|'ignored'|'alwaysStat'|'cwd'>
     ): Metalsmith;
     /**
      * Get a single metalsmith environment variable. Metalsmith env vars are case-insensitive.  

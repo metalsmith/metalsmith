@@ -15,7 +15,7 @@ const defaultWatchOpts = {
   cwd: fixture('watch'),
   ignoreInitial: true,
   ignored: [],
-  paths: fixture('watch/src')
+  paths: [fixture('watch/src')]
 }
 
 describe('watcher', function () {
@@ -42,6 +42,29 @@ describe('watcher', function () {
     ms.watch(true)
 
     assert.deepStrictEqual(ms.watch(), { ...defaultWatchOpts, ignored: ['ignored'] })
+  })
+
+  it('should allow overwriting certain chokidar options', function () {
+    const ms = Metalsmith(fixture('watch'))
+    ms.ignore('ignored')
+    ms.watch({
+      useFsEvents: true,
+      awaitWriteFinish: {
+        stabilityTreshold: 500
+      },
+      usePolling: false,
+      ignored: []
+    })
+
+    assert.deepStrictEqual(ms.watch(), {
+      ...defaultWatchOpts,
+      useFsEvents: true,
+      awaitWriteFinish: {
+        stabilityTreshold: 500
+      },
+      usePolling: false,
+      ignored: ['ignored']
+    })
   })
 
   it('should detect added files', async function () {
