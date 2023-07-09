@@ -178,13 +178,13 @@ describe('watcher', function () {
             // this will only trigger if the if clause succeeds in triggering the chokidar watcher
           } else {
             try {
+              if (initialBuild > 10) throw new Error('Strict equality failure after 10 rounds')
               // doing the sort here because the order of execution of the batch is not guaranteed
               assert.deepStrictEqual(
                 Object.keys(files).sort(),
                 initialFiles.slice(1, 2).concat(['added', 'renamed']).sort()
               )
-              if (initialBuild > 10) throw new Error('Strict equality failure after 10 rounds')
-              resolve()
+              ms.watch(false).then(resolve)
             } catch (err) {
               if (err.message.startsWith('Strict equality failure')) {
                 reject(err)
