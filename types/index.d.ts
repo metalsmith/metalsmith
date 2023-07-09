@@ -155,10 +155,23 @@ declare class Metalsmith {
      * const on = metalsmith.frontmatter() // true or false
      */
     frontmatter(): boolean;
+    /** Consult [chokidar.watchOptions](https://github.com/paulmillr/chokidar#api) in use by `metalsmith.watch`.  
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+watch) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L510)
+     * @example
+     * metalsmith.watch()
+     * // {
+     * //   paths: [metalsmith.source()],
+     * //   ignoreInitial: true,
+     * //   awaitWriteFinish: false,
+     * //   ignore: metalsmith.ignore(),
+     * //   alwaysStat: false
+     * // }
+     */
+    watch(): false|WatchOptions
     /**
      * Set the list of paths to watch and trigger rebuilds on. The watch method will skip files ignored with {@linkcode Metalsmith.ignore}
      * and will do partial (true) or full (false) rebuilds depending on the {@linkcode Metalsmith.clean} setting.
-     * It can be used both for rebuilding in-memory with {@linkcode Metalsmith.process} or writing to file system with {@linkcode Metalsmith.build},
+     * It can be used both for rebuilding in-memory with {@linkcode Metalsmith.process} or writing to file system with {@linkcode Metalsmith.build}.  
      * [API Docs](https://metalsmith.io/api/#Metalsmith+watch) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L510)
      * @default false
      * @example
