@@ -72,21 +72,21 @@
   },
   "devDependencies": {
     "@metalsmith/drafts": "^1.3.0",
-    "@metalsmith/markdown": "^1.9.1",
-    "@types/debug": "^4.1.7",
+    "@metalsmith/markdown": "^1.10.0",
+    "@types/debug": "^4.1.8",
     "@types/micromatch": "^4.0.2",
     "@types/node": "^14.14.0",
     "assert-dir-equal": "^1.1.0",
-    "c8": "^7.14.0",
-    "eslint": "^8.38.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-n": "^15.7.0",
-    "mocha": "^9.2.2",
-    "prettier": "^2.8.7",
-    "release-it": "^15.10.1",
+    "c8": "^8.0.1",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-n": "^16.1.0",
+    "mocha": "^10.2.0",
+    "prettier": "^3.0.3",
+    "release-it": "^16.1.5",
     "toml": "^3.0.0",
-    "typescript": "^4.9.5"
+    "typescript": "^5.2.2"
   },
   "engines": {
     "node": ">=14.14.0"
