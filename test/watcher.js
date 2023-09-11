@@ -218,4 +218,46 @@ describe('watcher', function () {
       })
     })
   })
+
+  it('should pass synchronous errors to the watch callback', async function () {
+    const ms = Metalsmith(fixture('watch'))
+    const throwsError = () => {
+      throw new Error('failure')
+    }
+
+    return new Promise((resolve, reject) => {
+      ms.watch(true)
+        .use(throwsError)
+        .build((err) => {
+          try {
+            assert(err instanceof Error)
+            ms.watch(false)
+            resolve()
+          } catch (err) {
+            reject(err)
+          }
+        })
+    })
+  })
+
+  it('should pass asynchronous errors to the watch callback', async function () {
+    const ms = Metalsmith(fixture('watch'))
+    const throwsError = (files, ms, done) => {
+      done(new Error('failure'))
+    }
+
+    return new Promise((resolve, reject) => {
+      ms.watch(true)
+        .use(throwsError)
+        .build((err) => {
+          try {
+            assert(err instanceof Error)
+            ms.watch(false)
+            resolve()
+          } catch (err) {
+            reject(err)
+          }
+        })
+    })
+  })
 })
