@@ -6,6 +6,14 @@ This project adheres to [Semantic Versioning](http://semver.org).
 
 This document follows the guidelines of [Keep A Changelog](http://keepachangelog.com).
 
+## [2.6.2] - 2023-11-15
+
+- TS fixes: add generic to Metalsmith.File, bring back Metalsmith.DoneCallback, add Metalsmith.Plugin promise signature [`3ae6275`](https://github.com/metalsmith/metalsmith/commit/3ae6275)
+- [#394] Avoid leaking unhandled rejections in build/watch promises. [`cac48fc`](https://github.com/metalsmith/metalsmith/commit/cac48fc), [`5b48dce`](https://github.com/metalsmith/metalsmith/commit/5b48dce)
+- Fix a typo in CLI help message [`642a176`](https://github.com/metalsmith/metalsmith/commit/642a176)
+
+[#394]: https://github.com/metalsmith/metalsmith/issues/394
+
 ## [2.6.1] - 2023-07-10
 
 - [`34239d9`](https://github.com/metalsmith/metalsmith/commit/34239d9) Documents metalsmith.watch() getter signature in TS
