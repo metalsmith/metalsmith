@@ -507,22 +507,22 @@ declare namespace Metalsmith {
      * A Metalsmith plugin is a function that is passed the file list, the metalsmith instance, and a `done` callback.
      * Calling the callback is required for asynchronous plugins, and optional for synchronous plugins.
      */
-    type Plugin = (files: Files, metalsmith: Metalsmith, callback: Callback) => void;
-    type Callback = (err: Error | null, files: Files, metalsmith: Metalsmith) => void;
+    type Plugin = (files: Files, metalsmith: Metalsmith, callback: DoneCallback) => void|Promise<void>;
+    type DoneCallback = (err?: Error) => void;
+    type Callback = (err: Error | null, files: Files) => void;
     type Ignore = (path: string, stat: Stats) => void;
 
     /**
      * Metalsmith representation of a file
      */
-    interface File {
+    type File<AdditionalProperties extends Record<string, unknown> = Record<string, unknown>> = {
         /** A Node {@linkcode Buffer} that can be `.toString`'ed to obtain its human-readable contents */
         contents: Buffer;
         /** A Node {@linkcode Stats} object with extra filesystem metadata and methods (like {@linkcode Stats.isFile}) */
         stats?: Stats;
         /** Octal permission {@linkcode Mode} of a file */
         mode?: string;
-        [property: string]: any;
-    }
+    } & AdditionalProperties
 
     /**
      * Metalsmith representation of the files in {@linkcode Metalsmith.source}.

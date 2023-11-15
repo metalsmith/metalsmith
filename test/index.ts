@@ -78,13 +78,30 @@ Metalsmith(__dirname).metadata({ sitename: 'My Static Site' });
 // get global metadata object
 const meta = Metalsmith(__dirname).metadata();
 // plugin mock-up
-function fakePlugin(files: Metalsmith.Files, metalsmith: Metalsmith, done: any) {
+function fakePlugin(files: Metalsmith.Files, metalsmith: Metalsmith, done: Metalsmith.DoneCallback) {
     return;
+}
+const fakePromiseReturningPlugin:Metalsmith.Plugin = (files, ms) => {
+  // this should error
+  // return false
+  // this should work
+  return Promise.resolve()
 }
 // testing the file interface
 const file: Metalsmith.File = {
     contents: Buffer.from('string'),
+    custom: ''
 };
+// testing a custom file interface
+const customFile:Metalsmith.File<{
+  draft: boolean,
+  /** The file's permalink */
+  permalink: string
+}> = {
+  contents: Buffer.from('string'),
+  permalink: '',
+  draft: false
+}
 // testing optional file properties
 file.mode;
 file.stats && file.stats.isSymbolicLink();
@@ -103,7 +120,7 @@ Metalsmith(__dirname).plugins;
 // uncomment to test readonly protection
 // Metalsmith(__dirname).plugins = [];
 // add a fakePlugin to the metalsmith pipeline
-Metalsmith(__dirname).use(fakePlugin);
+Metalsmith(__dirname).use(fakePlugin).use(fakePromiseReturningPlugin)
 // add an ignore file
 Metalsmith(__dirname).ignore('corrupted.html');
 // get ignored files
@@ -146,7 +163,6 @@ m.matter.options({
     }
   }
 })
-
 const { contents, mode, stats } = m.matter.parse('str')
 m.matter.parse(Buffer.from('str'))
 m.matter.stringify({ data: { hello: 'world' }, contents: Buffer.from('body') })
@@ -202,10 +218,9 @@ assert(typeof fileData1 === undefined)
 assert(fileData2 instanceof Promise)
 
 // write variants
-Metalsmith(__dirname).write(files, '.', (err, files, metalsmith) => {
+Metalsmith(__dirname).write(files, '.', (err, files) => {
   if (err) throw err
   files.any && files.any.contents
-  metalsmith.env()
 })
 Metalsmith(__dirname).write(files, './dist')
   .then(files => { files })
