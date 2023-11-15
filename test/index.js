@@ -1347,9 +1347,10 @@ describe('CLI', function () {
 
   describe('build', function () {
     it('should error without a metalsmith.json', function (done) {
+      const expected = 'could not find configuration file \'metalsmith.json\'.'
       exec(bin, { cwd: fixture('cli-no-config') }, function (err) {
         assert(err)
-        assert(~err.message.indexOf('could not find a metalsmith.json configuration file.'))
+        assert(err.message.slice(-expected.length), expected)
         done()
       })
     })

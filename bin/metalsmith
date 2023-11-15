@@ -35,7 +35,7 @@ program
   # override env vars
   metalsmith --env NODE_ENV=production TZ=Europe/London
 
-  # override debug en var (shortcut)
+  # override DEBUG env var (shortcut)
   metalsmith --debug @metalsmith/*
   `)
 
@@ -63,7 +63,7 @@ async function buildCommand({ config, ...cliOptions }) {
     if (exists(resolve(confRelativeDir, 'metalsmith.js'))) {
       path = resolve(confRelativeDir, 'metalsmith.js')
     } else {
-      fatal(`could not find a ${config} configuration file.`)
+      fatal(`could not find a configuration file '${config}'.`)
     }
   }
 
@@ -80,7 +80,7 @@ async function buildCommand({ config, ...cliOptions }) {
       spec = (await import(path)).default
       // when a JS file is required that forgets to export using exports or module.exports,
       // node instead returns an empty object. Though Metalsmith should in theory consider this a valid config
-      // for a simple copy -> paste it is highly likely that this was not the user's intension
+      // for a simple copy -> paste it is highly likely that this was not the user's intention
       if (!(spec instanceof Metalsmith) && isObject(spec) && Object.keys(spec).length === 0) {
         fatal(`it seems like ${config} is empty. Make sure it exports a metalsmith config object.`)
       }
