@@ -1382,6 +1382,16 @@ describe('CLI', function () {
       })
     })
 
+    it('should grab config from a config.yaml', function (done) {
+      exec(bin + ' -c config.yaml', { cwd: fixture('cli-other-config') }, function (err, stdout) {
+        if (err) return done(err)
+        equal(fixture('cli-other-config/destination'), fixture('cli-other-config/expected'))
+        assert(~stdout.indexOf('successfully built to '))
+        assert(~stdout.indexOf(fixture('cli-other-config/destination')))
+        done()
+      })
+    })
+
     it('should grab config from <configname>.(c|m)js', function (done) {
       // below tests belong together, they need to be sequential because they operate on the same dirs
       new Promise((resolve, reject) => {
