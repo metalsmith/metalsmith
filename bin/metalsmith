@@ -85,7 +85,8 @@ async function buildCommand({ config, ...cliOptions }) {
         fatal(`it seems like ${config} is empty. Make sure it exports a metalsmith config object.`)
       }
     } else {
-      spec = JSON.parse(readFileSync(path, 'utf-8'))
+      const tempMs = new Metalsmith(confRelativeDir)
+      spec = tempMs.matter.parse(tempMs.matter.wrap(readFileSync(path, 'utf-8')))
     }
   } catch (e) {
     fatal(`it seems like ${config} is malformed or unsupported. Encountered error: ${e.message}`)
