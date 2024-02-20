@@ -231,8 +231,7 @@ describe('watcher', function () {
         .build((err) => {
           try {
             assert(err instanceof Error)
-            ms.watch(false)
-            resolve()
+            ms.watch(false).then(resolve)
           } catch (err) {
             reject(err)
           }
@@ -252,8 +251,7 @@ describe('watcher', function () {
         .build((err) => {
           try {
             assert(err instanceof Error)
-            ms.watch(false)
-            resolve()
+            ms.watch(false).then(resolve)
           } catch (err) {
             reject(err)
           }
