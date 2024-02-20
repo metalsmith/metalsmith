@@ -238,7 +238,7 @@ Use the excellent [metalsmith-debug-ui plugin](https://github.com/leviwheatcroft
 
 Future Metalsmith releases will at least support the oldest supported Node LTS versions.
 
-Metalsmith 2.6.x supports NodeJS versions 14.14.0 and higher.  
+Metalsmith 2.6.x supports NodeJS versions 14.18.0 and higher.  
 Metalsmith 2.5.x supports NodeJS versions 12 and higher.  
 Metalsmith 2.4.x supports NodeJS versions 8 and higher.  
 Metalsmith 2.3.0 and below support NodeJS versions all the way back to 0.12.

@@ -25,7 +25,7 @@ jobs:
     strategy:
       matrix:
         os: ['ubuntu-latest', 'windows-latest']
-        node: ['14.14.0']
+        node: ['14.18.0']
     name: Testing Node ${{ matrix.node }} on ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -43,7 +43,7 @@ jobs:
     strategy:
       matrix:
         os: ['ubuntu-latest', 'windows-latest']
-        node: ['14.14.0', '16.0', '18.0', '20.0']
+        node: ['14.18.0', '16.0', '18.0', '20.0']
     name: Testing Node ${{ matrix.node }} on ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
