@@ -139,33 +139,25 @@ async function buildCommand({ config, ...cliOptions }) {
   /**
    * Plugins.
    */
-
   if (!(spec instanceof Metalsmith)) {
-    normalize(spec.plugins).forEach(function (plugin) {
-      for (const name in plugin) {
-        const opts = plugin[name]
-        let mod
-
-        try {
-          const local = resolve(confRelativeDir, name)
-          const npm = resolve(confRelativeDir, 'node_modules', name)
-
-          if (exists(local) || exists(`${local}.js`)) {
-            mod = require(local)
-          } else if (exists(npm)) {
-            mod = require(npm)
-          } else {
-            mod = require(name)
-          }
-        } catch {
-          fatal(`failed to require plugin "${name}".`)
+    let plugins = []
+    try {
+      plugins = await Promise.all(normalize(spec.plugins).map(async function (pluginDef) {
+        for (const name in pluginDef) {
+          const plugin = await metalsmith.imports(name)
+          const options = pluginDef[name]
+          return { name, plugin, options }
         }
+      }))
+    } catch (err) {
+      fatal(`${err.stack}`)
+    }
 
-        try {
-          metalsmith.use(mod(opts))
-        } catch (e) {
-          fatal(`error using plugin "${name}"...`, `${e.message}\n\n${e.stack}`)
-        }
+    plugins.forEach(({ plugin, options, name }) => {
+      try {
+        metalsmith.use(plugin(options))
+      } catch (e) {
+        fatal(`Error: Initialization of plugin "${name}" resulted in error: `, `${e.message}\n\n${e.stack}`)
       }
     })
   }
@@ -199,7 +191,7 @@ async function initCommand(source, dest, { force, origin }) {
   try {
     new URL(origin)
   // not a URL, suppose file://
-  // eslint-disable-next-line no-unused-vars
+   
   } catch (_err) {
     if (!isAbsolute(origin)) origin = resolve(process.cwd(), origin)
     origin = `file://${origin}`

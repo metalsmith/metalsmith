@@ -656,6 +656,83 @@ describe('Metalsmith', function () {
     })
   })
 
+  describe('#imports', function () {
+    const ms = Metalsmith(fixture('imports'))
+
+    it('should auto-import CJS default export', async () => {
+      const mod = await ms.imports('./cjs-default-export.js')
+      assert.strictEqual(typeof mod, 'function')
+      assert.strictEqual(mod(), 'cjs-default-export')
+    })
+
+    it('should auto-import ESM default export', async () => {
+      const mod = await ms.imports('./esm-default-export.mjs')
+      assert.strictEqual(typeof mod, 'function')
+      assert.strictEqual(mod(), 'esm-default-export')
+    })
+
+    it('should import ESM named export', async () => {
+      const mod = await ms.imports('./esm-multiple-exports.mjs', 'first')
+      assert.strictEqual(typeof mod, 'function')
+      assert.strictEqual(mod(), 'first-export')
+    })
+
+    it('should import CJS named export', async () => {
+      const mod = await ms.imports('./cjs-multiple-exports.js', 'first')
+      assert.strictEqual(typeof mod, 'function')
+      assert.strictEqual(mod(), 'first-export')
+    })
+
+    it('should import CJS single named export', async () => {
+      let mod = await ms.imports('./cjs-single-named-export.js', 'keyNameDoesntMatter')
+      assert.strictEqual(typeof mod, 'function')
+      assert.strictEqual(mod(), 'cjs-single-named-export')
+      mod = await ms.imports('./cjs-single-named-export.js')
+      assert.strictEqual(typeof mod, 'function')
+      assert.strictEqual(mod(), 'cjs-single-named-export')
+    })
+
+    it('should import ESM single named export', async () => {
+      let mod = await ms.imports('./esm-single-named-export.mjs', 'keyNameDoesntMatter')
+      assert.strictEqual(typeof mod, 'function')
+      assert.strictEqual(mod(), 'esm-single-named-export')
+      mod = await ms.imports('./esm-single-named-export.mjs')
+      assert.strictEqual(typeof mod, 'function')
+      assert.strictEqual(mod(), 'esm-single-named-export')
+    })
+
+    it('should import all when no default export', async () => {
+      const mod = await ms.imports('./esm-multiple-exports.mjs')
+      assert.strictEqual(typeof mod, 'object')
+      assert.deepStrictEqual(Object.keys(mod), ['first', 'second'])
+    })
+
+    it('should import JSON', async () => {
+      const mod = await ms.imports('./local.json')
+      assert.strictEqual(typeof mod, 'object')
+      assert.deepStrictEqual(mod.default, { key: 'value' })
+    })
+
+    it('should error on invalid specifiers', async () => {
+      const argSets = [[], ['./nonExistantLocalModule.js'], ['./cjs-single-named-export.js', 'nonExistantExport']]
+
+      const results = await Promise.all(
+        argSets.map((args) => {
+          return ms.imports(...args).catch((err) => {
+            const toCheck = err.toString().split(/\n| module "| from "/)[0]
+            return Promise.resolve(toCheck)
+          })
+        })
+      )
+
+      assert.deepStrictEqual(results, [
+        'Error: Metalsmith.import() - "undefined" is not a valid import specifier.',
+        'Error: Metalsmith.import() cannot find',
+        'Error: Metalsmith.import() cannot import "nonExistantExport"'
+      ])
+    })
+  })
+
   describe('#read', function () {
     it('should read from a source directory', function (done) {
       const m = Metalsmith(fixture('read'))
@@ -1546,7 +1623,8 @@ describe('CLI', function () {
     it('should error when failing to require a plugin', function (done) {
       exec(bin, { cwd: fixture('cli-no-plugin') }, function (err) {
         assert(err)
-        assert(~err.message.indexOf('failed to require plugin "metalsmith-non-existant".'))
+        const expected = 'Metalsmith · Error: Metalsmith.import() cannot find module "metalsmith-non-existant".'
+        assert.ok(err.message.includes(expected))
         done()
       })
     })
@@ -1554,9 +1632,8 @@ describe('CLI', function () {
     it('should error when failing to use a plugin', function (done) {
       exec(bin, { cwd: fixture('cli-broken-plugin') }, function (err) {
         assert(err)
-        assert(~err.message.indexOf('error using plugin "./plugin"...'))
-        assert(~err.message.indexOf('Break!'))
-        assert(~err.message.indexOf('at module.exports'))
+        const expected = 'Metalsmith · Error: Initialization of plugin "./plugin" resulted in error:'
+        assert.ok(err.message.includes(expected))
         done()
       })
     })

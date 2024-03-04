@@ -34,7 +34,8 @@ export default [
     "prefer-const": "error",
     "no-unused-vars": ['error', {
       argsIgnorePattern: '^_',
-      varsIgnorePattern: '^_'
+      varsIgnorePattern: '^_',
+      caughtErrorsIgnorePattern: '^_'
     }],
     "no-var": "error",
     "n/exports-style": [0, "error"],
