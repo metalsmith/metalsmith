@@ -22,7 +22,7 @@ const color = {
 program
   .name('metalsmith')
   .description('Metalsmith CLI')
-  .version(require('../package.json').version)
+  .version(Metalsmith.version)
   .addHelpText('after', `
   Examples:
 

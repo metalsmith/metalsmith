@@ -7,6 +7,8 @@ import { GrayMatterFile } from 'gray-matter';
 import { WatchOptions } from 'chokidar';
 import micromatch = require('micromatch');
 declare class Metalsmith {
+    /** Metalsmith version */
+    static version: string
     /**
      * Initialize a new `Metalsmith` builder with a working `directory`.
      **/

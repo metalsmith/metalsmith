@@ -30,6 +30,13 @@ describe('Metalsmith', function () {
     assert(m instanceof Metalsmith)
   })
 
+  it('should expose a version property matching package.json version', function () {
+    assert.strictEqual(
+      Metalsmith.version,
+      JSON.parse(fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf-8')).version
+    )
+  })
+
   it('should error without a working directory', function () {
     assert.throws(function () {
       Metalsmith()
