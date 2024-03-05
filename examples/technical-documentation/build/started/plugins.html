@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Plugins</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+</head>
+<body>
+	Version: 1.0.0
+
+	<nav>
+		<h2>Navigation</h2>
+		<ul>
+			<li><a href="../index.html">Startseite</a></li>
+					<li>
+				API
+				<ul>
+									<li>
+						<a href="../api/api.html">API</a>
+					</li>
+								</ul>
+			</li>
+					<li>
+				Getting Started
+				<ul>
+									<li>
+						<a href="../started/install.html">Installation</a>
+					</li>
+									<li>
+						<a href="../started/plugins.html">Plugins</a>
+					</li>
+									<li>
+						<a href="../started/trouble.html">Troubleshooting</a>
+					</li>
+								</ul>
+			</li>
+				</ul>
+	</nav>
+	<article>
+		<h1 id="plugin"><a class="anchor" href="#plugin"><span></span></a>Plugin</h1>
+<p>All of the logic in the Client is handled by plugins. You simply chain them together.</p>
+<pre><code class="lang-js">Client()
+  .use(ssh({
+    port: &apos;22&apos;
+  }))
+  .connect(&apos;/var/socket&apos;)
+</code></pre>
+<p>...it&apos;s as easy as that!</p>
+
+	</article>
+	<footer>
+		<p>Generated with Metalsmith &mdash; <a href="http://www.metalsmith.io/">http://www.metalsmith.io/</a></p>
+	</footer>
+</body>
+</html>
