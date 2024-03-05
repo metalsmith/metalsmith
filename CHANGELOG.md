@@ -6,7 +6,25 @@ This project adheres to [Semantic Versioning](http://semver.org).
 
 This document follows the guidelines of [Keep A Changelog](http://keepachangelog.com).
 
+## [2.6.3] - 2024-03-05
+
+### Removed
+
+- Drops support for Node < 14.18.0 (4 minor versions) to be able to use 'node:' protocol imports" [`b170cf0`](https://github.com/metalsmith/metalsmith/commit/b170cf0)
+
+### Updated
+
+- Updated README.md code samples, links, and troubleshooting section
+- **Dependencies:** [`774a164`](https://github.com/metalsmith/metalsmith/commit/774a164)
+  - `chokidar`: 3.5.3 ▶︎ 3.6.0
+
+### Fixed
+
+- Fixes ms.watch(false) unreliable behavior when the build errors. [`0d8d791`](https://github.com/metalsmith/metalsmith/commit/0d8d791)
+
 ## [2.6.2] - 2023-11-15
+
+### Fixed
 
 - TS fixes: add generic to Metalsmith.File, bring back Metalsmith.DoneCallback, add Metalsmith.Plugin promise signature [`3ae6275`](https://github.com/metalsmith/metalsmith/commit/3ae6275)
 - [#394] Avoid leaking unhandled rejections in build/watch promises. [`cac48fc`](https://github.com/metalsmith/metalsmith/commit/cac48fc), [`5b48dce`](https://github.com/metalsmith/metalsmith/commit/5b48dce)
@@ -16,11 +34,21 @@ This document follows the guidelines of [Keep A Changelog](http://keepachangelog
 
 ## [2.6.1] - 2023-07-10
 
-- [`34239d9`](https://github.com/metalsmith/metalsmith/commit/34239d9) Documents metalsmith.watch() getter signature in TS
-- [`a719025`](https://github.com/metalsmith/metalsmith/commit/a719025) Normalizes ms.watch().paths to an array, allows access to a subset of chokidar options as advertised
-- [`5a516b2`](https://github.com/metalsmith/metalsmith/commit/5a516b2) Sets chokidar watchOption awaitWriteFinish to false, and batch timer to 0 to speed up watching
-- [`23b0944`](https://github.com/metalsmith/metalsmith/commit/23b0944) Fixes #389: ensure not missing watcher ready event to successfully launch build
-- [`05265ce`](https://github.com/metalsmith/metalsmith/commit/05265ce) Fixes formatting issue in types JSdoc comments
+### Added
+
+- Documents metalsmith.watch() getter signature in TS [`34239d9`](https://github.com/metalsmith/metalsmith/commit/34239d9)
+
+### Updated
+
+- Normalizes ms.watch().paths to an array, allows access to a subset of chokidar options as advertised [`a719025`](https://github.com/metalsmith/metalsmith/commit/a719025)
+- Sets chokidar watchOption awaitWriteFinish to false, and batch timer to 0 to speed up watching [`5a516b2`](https://github.com/metalsmith/metalsmith/commit/5a516b2)
+
+### Fixed
+
+- Fixes [#389]: ensure not missing watcher ready event to successfully launch build [`23b0944`](https://github.com/metalsmith/metalsmith/commit/23b0944)
+- Fixes formatting issue in types JSdoc comments [`05265ce`](https://github.com/metalsmith/metalsmith/commit/05265ce)
+
+[#389]: https://github.com/metalsmith/metalsmith/issues/389
 
 ## [2.6.0] - 2023-05-30
 
