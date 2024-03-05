@@ -1,0 +1,19 @@
+{{> header }}
+
+  <h1>{{ title }}</h1>
+  <p>{{ description }}</p>
+
+  {{{ contents }}}
+
+
+  <div>
+
+      {{#each collections.posts }}
+        <a href=".{{baseUrl}}/{{this.path}}/index.html" title="{{this.title}}">
+            <h2>{{this.title}}</h2>
+        </a>
+      {{/each}}
+
+  </div>
+
+{{> footer }}
