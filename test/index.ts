@@ -8,6 +8,9 @@ const markdown = require('metalsmith-markdown');
 const permalinks = require('metalsmith-permalinks');
 Metalsmith(__dirname)
 
+// read version
+Metalsmith.version
+
 // Well, here is our elevator pitch. It’s as easy as that:
 Metalsmith(__dirname) // __dirname defined by node.js:
     // name of current working directory
