@@ -1,0 +1,8 @@
+{
+"name": "html-minify-example",
+"version": "1.0.0",
+  "dependencies": {
+    "handlebars": "^4.0.5",
+    "metalsmith": "^2.1.0"
+  }
+}
