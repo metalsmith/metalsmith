@@ -6,7 +6,7 @@
 [![license: MIT][license-badge]][license-url]
 [![Gitter chat][gitter-badge]][gitter-url]
 
-> An extremely simple, _pluggable_ static site generator.
+> An extremely simple, _pluggable_ static site generator for NodeJS.
 
 In Metalsmith, all of the logic is handled by plugins. You simply chain them together.
 
@@ -54,26 +54,26 @@ What if you want to get fancier by hiding unfinished drafts, grouping posts in c
 
 ```js
 import { fileURLToPath } from 'node:url'
-import { dirname } from 'path'
+import { dirname } from 'node:path'
 import Metalsmith from 'metalsmith'
 import collections from '@metalsmith/collections'
 import layouts from '@metalsmith/layouts'
 import markdown from '@metalsmith/markdown'
 import permalinks from '@metalsmith/permalinks'
+import drafts from '@metalsmith/drafts'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const t1 = performance.now()
-const mode = process.env.NODE_ENV
+const devMode = process.env.NODE_ENV === 'development'
 
 Metalsmith(__dirname) // parent directory of this file
   .source('./src') // source directory
   .destination('./build') // destination directory
   .clean(true) // clean destination before
-  .watch(mode === 'development') // rebuild on change in development
   .env({
     // pass NODE_ENV & other environment variables
     DEBUG: process.env.DEBUG,
-    NODE_ENV: mode
+    NODE_ENV: process.env.NODE_ENV
   })
   .metadata({
     // add any variable you want & use them in layout-files
@@ -83,24 +83,30 @@ Metalsmith(__dirname) // parent directory of this file
     generatorname: 'Metalsmith',
     generatorurl: 'https://metalsmith.io/'
   })
+  .use(drafts(devMode)) // only include drafts when NODE_ENV === 'development'
   .use(
     collections({
-      // group all blog posts by internally
-      posts: 'posts/*.md' // adding key 'collections':'posts'
+      // group all blog posts by adding key
+      posts: 'posts/*.md' // collections:'posts' to metalsmith.metadata()
     })
   ) // use `collections.posts` in layouts
-  .use(markdown()) // transpile all md into html
   .use(
-    permalinks({
-      // change URLs to permalink URLs
-      relative: false // put css only in /css
+    markdown({
+      // transpile all md file contents into html
+      keys: ['description'], // and also file.description
+      globalRefs: {
+        // define links available to all markdown files
+        home: 'https://example.com'
+      }
     })
   )
+  .use(permalinks()) // change URLs to permalink URLs
   .use(
     layouts({
+      // wrap layouts around html
       pattern: '**/*.html'
     })
-  ) // wrap layouts around html
+  )
   .build((err) => {
     // build process
     if (err) throw err // error handling is required
@@ -118,26 +124,23 @@ Metalsmith works in three simple steps:
 
 Each plugin is invoked with the contents of the source directory, and each file can contain YAML front-matter that will be attached as metadata, so a simple file like...
 
-```
+```yml
 ---
 title: A Catchy Title
-date: 2021-12-01
+date: 2024-01-01
 ---
-
 An informative article.
 ```
 
 ...would be parsed into...
 
-```
+```js
 {
   'path/to/my-file.md': {
     title: 'A Catchy Title',
-    date: <Date >,
-    contents: <Buffer 7a 66 7a 67...>,
-    stats: {
-      ...
-    }
+    date: new Date(2024, 1, 1),
+    contents: Buffer.from('An informative article'),
+    stats: fs.Stats
   }
 }
 ```
@@ -223,7 +226,7 @@ Which means you could just as easily use it to make...
 ## Resources
 
 - [Gitter Matrix community chat](https://app.gitter.im/#/room/#metalsmith_community:gitter.im) for chat, questions
-- [Twitter announcements](https://twitter.com/@metalsmithio) and the [metalsmith.io news page](https://metalsmith.io/news) for updates
+- [X (formerly Twitter) announcements](https://x.com/@metalsmithio) and the [metalsmith.io news page](https://metalsmith.io/news) for updates
 - [Awesome Metalsmith](https://github.com/metalsmith/awesome-metalsmith) - great collection of resources, examples, and tutorials
 - [emmer.dev on metalsmith](https://emmer.dev/blog/tag/metalsmith/) - A good collection of various how to's for metalsmith
 - [glinka.co on metalsmith](https://www.glinka.co/blog/) - Another great collection of advanced approaches for developing metalsmith
@@ -231,8 +234,8 @@ Which means you could just as easily use it to make...
 
 ## Troubleshooting
 
-Use [debug](https://github.com/debug-js/debug/) to debug your build with `export DEBUG=metalsmith-*,@metalsmith/*` (Linux) or `set DEBUG=metalsmith-*,@metalsmith/*` for Windows.  
-Use the excellent [metalsmith-debug-ui plugin](https://github.com/leviwheatcroft/metalsmith-debug-ui) to get a snapshot UI for every build step.
+Set `metalsmith.env('DEBUG', '*metalsmith*')` to debug your build. This will log debug logs for all plugins using the built-in `metalsmith.debug` debugger.
+For older plugins using [debug](https://github.com/debug-js/debug/) directly, run your build with `export DEBUG=metalsmith-*,@metalsmith/*` (Linux) or `set DEBUG=metalsmith-*,@metalsmith/*` for Windows.
 
 ### Node Version Requirements
 
