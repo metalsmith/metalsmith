@@ -138,7 +138,7 @@ async function buildCommand({ config, ...cliOptions }) {
           } else {
             mod = require(name)
           }
-        } catch (e) {
+        } catch {
           fatal(`failed to require plugin "${name}".`)
         }
 
