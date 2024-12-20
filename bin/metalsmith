@@ -69,6 +69,13 @@ async function buildCommand({ config, ...cliOptions }) {
 
   const format = extname(path).slice(1)
 
+  // for backwards-compat with old plugins using DEBUG env var, and to have consistent process.env in JS exports configs
+  // the CLI --env option differs from metalsmith.env('var', 'val') in that it alters process.env
+  if (cliOptions.env) cliOptions.env.forEach(envVar => {
+    const [name, value] = envVar.split('=')
+    process.env[name] = value
+  })
+
   // avoid ESM dynamic import error with absolute paths on Windows:
   // Only URLs with a scheme in: file and data are supported by the default ESM loader. On Windows, absolute paths must be valid file:// URLs.
   // cf also https://github.com/nuxt/nuxt/issues/15500#issuecomment-1451619865
