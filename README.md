@@ -230,7 +230,7 @@ Which means you could just as easily use it to make...
 - [Awesome Metalsmith](https://github.com/metalsmith/awesome-metalsmith) - great collection of resources, examples, and tutorials
 - [emmer.dev on metalsmith](https://emmer.dev/blog/tag/metalsmith/) - A good collection of various how to's for metalsmith
 - [glinka.co on metalsmith](https://www.glinka.co/blog/) - Another great collection of advanced approaches for developing metalsmith
-- [Getting to Know Metalsmith](http://robinthrift.com/post/getting-to-know-metalsmith/) - a great series about how to use Metalsmith for your static site.
+- [Getting to Know Metalsmith](https://robinthrift.com/posts/getting-to-know-metalsmith/) - a great series about how to use Metalsmith for your static site.
 
 ## Troubleshooting
 
