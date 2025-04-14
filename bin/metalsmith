@@ -2,14 +2,15 @@
 
 /* eslint-disable no-console */
 
-const exists = require('fs').existsSync
-const readFileSync = require('fs').readFileSync
+const { execSync } = require('child_process')
+const { existsSync: exists, readFileSync, mkdirSync, readdirSync, mkdtempSync } = require('fs')
 const Metalsmith = require('..')
 const { pathToFileURL } = require('url')
 const { Command } = require('commander')
 const program = new Command()
-const { resolve, isAbsolute, dirname, extname } = require('path')
-const { isString, isObject } = require('../lib/helpers')
+const { resolve, isAbsolute, dirname, extname, join } = require('path')
+const { isString, isObject, rm } = require('../lib/helpers')
+const os = require('os')
 
 const color = {
   error: '\x1b[31m',
@@ -47,6 +48,16 @@ program
   .option('--debug', 'Set or override debug namespaces')
   .option('--dry-run', 'Process metalsmith files without outputting to the file system')
   .action(buildCommand)
+
+/** @TODO this command needs to be tested more e */
+program
+  .command('init')
+  .description('Initialize a new metalsmith project from a git repo (subpath). Runs a sequence of git and filesystem commands.\nAssumes a working git executable in $PATH and properly configured git/ssh configs.')
+  .argument('[source]', 'Source directory', 'starters/bare')
+  .argument('[destination]', 'Destination directory, defaults to current directory', '.')
+  .option('-f, --force', 'Force overwriting a non-empty directory', false)
+  .option('-o, --origin <origin>', 'Origin repository (https or ssh url, or a directory path). Defaults to https://github.com/metalsmith/resources if omitted', 'https://github.com/metalsmith/resources')
+  .action(initCommand)
 
 program.parse(process.argv)
 
@@ -171,6 +182,64 @@ async function buildCommand({ config, ...cliOptions }) {
   } else {
     metalsmith.build(onBuild(`successfully built to ${metalsmith.destination()}`))
   }
+}
+
+async function initCommand(source, dest, { force, origin }) {
+  dest = resolve(dest)
+
+  // git in $PATH pre-check, abort before any fs changes if needed
+  try {
+    execSync('git --version')
+  } catch (err) {
+    fatal(err.message, err.stack)
+  }
+
+  // to avoid git clone command failure due to non-empty dir
+  // this use case requires creating a temp dir and moving the files with metalsmith
+  let tempdir
+  if (exists(dest)) {
+    const files = readdirSync(dest)
+    if (files.length) {
+      if (force) {
+        tempdir = mkdtempSync(join(os.tmpdir(), 'metalsmithjs-'))
+      } else {
+        fatal('Cannot initialize a new metalsmith project in non-empty directory ' + dest)
+      }
+    }
+  } else {
+    mkdirSync(dest, { recursive: true })
+  }
+
+  // https://stackoverflow.com/questions/29368837/copy-a-git-repo-without-history
+  const gitCmd = [
+    `git clone '${origin}' . --no-checkout --depth 1 -q`,
+    'git sparse-checkout init',
+    'git sparse-checkout set \'' + source + '\'',
+    'git checkout'
+  ].join(' && ')
+
+  log('info', `Cloning ${origin}/${source} into ${dest}`)
+  try {
+    execSync(gitCmd, { cwd: tempdir ? tempdir : dest, stdio: 'pipe' })
+  } catch (err) {
+    // using fatal here somehow spawns a duplicate error log, to be investigated why
+    // possibly due to commander catching the subprocess error
+    log('error', err.stack)
+    return
+  }
+
+  try {
+    await Metalsmith(process.cwd())
+    .source(join(tempdir ? tempdir : dest, source))
+    .destination(dest)
+    .clean(true)
+    .build()
+    log('Initialized new "' + source + '" project at ' + join(process.cwd(), dest))
+  } catch (err) {
+    log('error', err.stack)
+  }
+  
+  if (tempdir) await rm(tempdir)
 }
 
 /**

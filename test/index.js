@@ -416,9 +416,13 @@ describe('Metalsmith', function () {
       const m = Metalsmith(fixture('match'))
       m.process(function (err) {
         if (err) done(err)
-        const matches = m.match('**/*.md').join(',')
-        assert.strictEqual(matches, `index.md,${path.join('nested', 'index.md')}`)
-        done()
+        try {
+          const matches = m.match('**/*.md').join(',')
+          assert.strictEqual(matches, `index.md,${path.join('nested', 'index.md')}`)
+          done()
+        } catch (err) {
+          done(err)
+        }
       })
     })
 
@@ -707,7 +711,7 @@ describe('Metalsmith', function () {
       })
     })
 
-    it('should properly handle broken symbolic links', function (done) {
+    it('should properly handle broken symbolic links', function () {
       // symbolic links are not really a thing on Windows
       if (process.platform === 'win32') {
         this.skip()
@@ -715,7 +719,7 @@ describe('Metalsmith', function () {
       const m = Metalsmith(fixture('read-symbolic-link-broken'))
       const ignored = Metalsmith(fixture('read-symbolic-link-broken')).ignore('dir')
 
-      Promise.all([
+      return Promise.all([
         new Promise((resolve, reject) => {
           m.read((err) => {
             resolve(err)
@@ -733,7 +737,6 @@ describe('Metalsmith', function () {
       ]).then(([regular, ignored]) => {
         assert.strictEqual(regular instanceof Error, true)
         assert.deepStrictEqual(ignored, {})
-        done()
       })
     })
 
@@ -1246,6 +1249,15 @@ describe('Metalsmith', function () {
       })
     })
 
+    it('should do a basic move & overwrite when ms.source is a subpath of ms.destination', async function () {
+      const files = await Metalsmith(fixture('basic-mv')).clean(true).source('src/nested').destination('src').build()
+
+      assert.strictEqual(typeof files, 'object')
+      equal(fixture('basic-mv/src'), fixture('basic-mv/expected'))
+      fs.mkdirSync(fixture('basic-mv/src/nested'), { recursive: true })
+      fs.renameSync(fixture('basic-mv/src/index.md'), fixture('basic-mv/src/nested/index.md'))
+    })
+
     it('should return a promise only when callback is omitted', function (done) {
       const m = Metalsmith(fixture('basic'))
 
@@ -1586,6 +1598,108 @@ describe('CLI', function () {
           done()
         }
       )
+    })
+  })
+
+  describe('init', function () {
+    // init only works with git repo's, but we don't want to check in a 116KB .git config folder
+    this.beforeAll(async function () {
+      this.timeout(5000)
+      return await new Promise((resolve, reject) => {
+        exec(
+          'git init && git add . && git status && git commit -m "Initial commit"',
+          { cwd: fixture('cli-init/expected') },
+          (err, stdout) => {
+            if (err) {
+              reject(err)
+              return
+            }
+            resolve(stdout)
+          }
+        )
+      })
+    })
+    this.beforeEach(async () => {
+      await Metalsmith(fixture('cli-init')).source('expected').destination('build-nonempty').build()
+    })
+    //cleanup of beforeAll
+    this.afterAll(async () => {
+      await rm(fixture('cli-init/expected/.git'))
+    })
+    it('should output a new starter to existing empty destination', function (done) {
+      const tempdir = fs.mkdtempSync(fixture('cli-init/build-'))
+      exec(
+        `${bin} init src ${tempdir} -o ${fixture('cli-init/expected')}`,
+        { cwd: fixture('cli-init') },
+        function (err) {
+          assert.strictEqual(err, null)
+          rm(tempdir).then(done).catch(done)
+        }
+      )
+    })
+
+    it('should error when git is not in $PATH', function (done) {
+      const nodeExecDir = path.dirname(process.argv[0])
+      const cmd = `${bin} init src ${fixture('basic/build-new')} -o ${fixture('basic/src')}`
+      const proc = exec(cmd, { cwd: fixture('basic'), env: { ...process.env, PATH: nodeExecDir, stdio: 'pipe' } })
+      let err
+      proc.stderr.on('data', (buff) => {
+        err = buff
+      })
+
+      proc.on('exit', (code) => {
+        try {
+          assert.strictEqual(code, 1)
+          assert.ok(err.match(/Error: Command failed: git --version/))
+          done()
+        } catch (err) {
+          done(err)
+        }
+      })
+    })
+
+    it('should error when origin is not a git repository', function (done) {
+      const tempdir = fs.mkdtempSync(fixture('cli-init/build-'))
+      const proc = exec(`${bin} init src ${tempdir} -o ${fixture('basic')}`, { cwd: fixture('basic'), stdio: 'pipe' })
+      proc.stderr.on('data', (stderr) => {
+        let r
+        try {
+          assert.ok(stderr.match(new RegExp("fatal: repository '.*/test/fixtures/basic' does not exist")))
+        } catch (err) {
+          r = err
+        }
+        rm(tempdir)
+          .then(() => {
+            done(r)
+          })
+          .catch(done)
+      })
+    })
+
+    it('should output a new starter to non-empty destination with --force option', function (done) {
+      exec(
+        `${bin} init src --force build-nonempty -o ${fixture('cli-init/expected')}`,
+        { cwd: fixture('cli-init') },
+        function (err) {
+          assert.strictEqual(err, null)
+          done()
+        }
+      )
+    })
+
+    it('should create an inexistant destination', function (done) {
+      rm(fixture('cli-init/build'))
+        .then(() => {
+          exec(
+            `${bin} init src build/new/folder -o ${fixture('cli-init/expected')}`,
+            { cwd: fixture('cli-init') },
+            function (err) {
+              assert.strictEqual(err, null)
+              done()
+            }
+          )
+        })
+        .catch(done)
     })
   })
 })

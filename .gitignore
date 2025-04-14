@@ -1,5 +1,6 @@
 node_modules
-test/fixtures/*/build
+test/fixtures/*/build*
+!test/fixtures/*/build-nonempty
 coverage.info
 coverage/
 .vscode/
