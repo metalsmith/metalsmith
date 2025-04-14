@@ -76,6 +76,8 @@ const clean = Metalsmith(__dirname).clean();
 Metalsmith(__dirname).frontmatter(false);
 // get frontmatter parsing flag
 const parse = Metalsmith(__dirname).frontmatter();
+// mark files as static
+Metalsmith(__dirname).statik(['assets'])
 // set global metadata object
 Metalsmith(__dirname).metadata({ sitename: 'My Static Site' });
 // get global metadata object

@@ -266,6 +266,13 @@ declare class Metalsmith {
      */
     ignore(): string[];
     /**
+     * Set the files/paths to consider static, i.e. that should be copied to `metalsmith.destination()` without being processed by plugins
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+statik) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L316)
+     * @example
+     * metalsmith.statik(["assets","CNAME","api/static"]);
+     */
+    statik(pattern: string | string[]): Metalsmith;
+    /**
      * Match filepaths in the source directory by [glob](https://en.wikipedia.org/wiki/Glob_(programming)) pattern.
      * If `input` is not specified, patterns are matched against `Object.keys(files)`  
      * [API Docs](https://metalsmith.io/api/#Metalsmith+match) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L346)

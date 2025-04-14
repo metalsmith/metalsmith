@@ -777,6 +777,41 @@ describe('Metalsmith', function () {
     })
   })
 
+  describe('#static', function () {
+    it('should not add static files to the files object', async function () {
+      const m = Metalsmith(fixture('static'))
+      return await m
+        .statik(['assets', 'CNAME'])
+        .use((files) => {
+          assert.deepStrictEqual(
+            Object.keys(files),
+            ['index.md', 'nested/index.md'].map(path.normalize),
+            'non-static files'
+          )
+        })
+        .process()
+    })
+    it("should match directory paths' descendants", async function () {
+      const m = Metalsmith(fixture('static'))
+      await m
+        .statik(['assets', 'nested'])
+        .use((files, m) => {
+          assert.deepStrictEqual(Object.keys(files), ['CNAME', 'index.md'].map(path.normalize))
+        })
+        .process()
+    })
+    it("should copy static files to the directory", async function () {
+      const m = Metalsmith(fixture('static'))
+      return await m.statik(['assets','CNAME']).build()
+          try {
+            equal(fixture('static/build'), fixture('static/expected'))
+            return true
+          } catch (err) {
+            return err
+          }
+    })
+  })
+
   describe('#read', function () {
     it('should read from a source directory', function (done) {
       const m = Metalsmith(fixture('read'))
