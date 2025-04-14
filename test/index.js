@@ -800,15 +800,15 @@ describe('Metalsmith', function () {
         })
         .process()
     })
-    it("should copy static files to the directory", async function () {
+    it('should copy static files to the directory', async function () {
       const m = Metalsmith(fixture('static'))
-      return await m.statik(['assets','CNAME']).build()
-          try {
-            equal(fixture('static/build'), fixture('static/expected'))
-            return true
-          } catch (err) {
-            return err
-          }
+      return await m.statik(['assets', 'CNAME']).build()
+      try {
+        equal(fixture('static/build'), fixture('static/expected'))
+        return true
+      } catch (err) {
+        return err
+      }
     })
   })
 
