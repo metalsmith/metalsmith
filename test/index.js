@@ -585,13 +585,17 @@ describe('Metalsmith', function () {
           if (err) {
             done(err)
           } else {
-            assert(
-              require('fs')
-                .readFileSync(fixture('debug-log/metalsmith.log'), 'utf-8')
-                .match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z metalsmith:test A log\n/),
-              true
-            )
-            done()
+            try {
+              assert(
+                require('fs')
+                  .readFileSync(fixture('debug-log/metalsmith.log'), 'utf-8')
+                  .match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z metalsmith:test A log\n/),
+                true
+              )
+              done()
+            } catch (err) {
+              done(err)
+            }
           }
         })
     })
@@ -608,9 +612,13 @@ describe('Metalsmith', function () {
         })
         .build((err) => {
           if (err) {
-            assert.strictEqual(err.code, 'invalid_logpath')
-            assert(err.message.match(/Inexistant directory path ".*" given for DEBUG_LOG/))
-            done()
+            try {
+              assert.strictEqual(err.code, 'invalid_logpath')
+              assert(err.message.match(/Inexistant directory path ".*" given for DEBUG_LOG/))
+              done()
+            } catch (err) {
+              done(err)
+            }
           } else {
             done(new Error('No error was thrown'))
           }
@@ -1282,9 +1290,14 @@ describe('Metalsmith', function () {
     })
 
     it('should execute a callback if one is supplied', function (done) {
-      Metalsmith(fixture('basic')).build((err, files) => {
-        assert.strictEqual(typeof files, 'object')
-        done()
+      Metalsmith(fixture('basic')).build((buildErr, files) => {
+        let err = buildErr
+        try {
+          assert.strictEqual(typeof files, 'object')
+        } catch (assertErr) {
+          err = assertErr
+        }
+        done(err)
       })
     })
 
@@ -1313,10 +1326,14 @@ describe('Metalsmith', function () {
           })
           done()
         })
-        .build(function (err) {
-          if (err) return done(err)
-          equal(fixture('basic-plugin/build'), fixture('basic-plugin/expected'))
-          done()
+        .build(function (buildErr) {
+          let err = buildErr
+          try {
+            equal(fixture('basic-plugin/build'), fixture('basic-plugin/expected'))
+          } catch (assertErr) {
+            err = assertErr
+          }
+          done(err)
         })
     })
 
