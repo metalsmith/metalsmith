@@ -4,7 +4,7 @@ import { Stats } from 'fs';
 import { Mode } from 'stat-mode';
 import { Debugger as DebugDebugger } from 'debug';
 import { GrayMatterFile } from 'gray-matter';
-import { WatchOptions } from 'chokidar';
+import { ChokidarOptions } from 'chokidar';
 import micromatch = require('micromatch');
 declare class Metalsmith {
     /** Metalsmith version */
@@ -157,7 +157,7 @@ declare class Metalsmith {
      * const on = metalsmith.frontmatter() // true or false
      */
     frontmatter(): boolean;
-    /** Consult [chokidar.watchOptions](https://github.com/paulmillr/chokidar#api) in use by `metalsmith.watch`.  
+    /** Consult [chokidar.ChokidarOptions](https://github.com/paulmillr/chokidar#api) in use by `metalsmith.watch`.  
      * [API Docs](https://metalsmith.io/api/#Metalsmith+watch) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L510)
      * @example
      * metalsmith.watch()
@@ -169,7 +169,7 @@ declare class Metalsmith {
      * //   alwaysStat: false
      * // }
      */
-    watch(): false|WatchOptions
+    watch(): false|ChokidarOptions
     /**
      * Set the list of paths to watch and trigger rebuilds on. The watch method will skip files ignored with {@linkcode Metalsmith.ignore}
      * and will do partial (true) or full (false) rebuilds depending on the {@linkcode Metalsmith.clean} setting.
@@ -184,8 +184,8 @@ declare class Metalsmith {
      *   .watch(['lib','src'])         // or watch files in directories 'lib' and 'src'
      */
     watch(
-      /** `true` or `false` to watch {@linkcode Metalsmith.source}, or one or more paths/ globs, or a subset of chokidar watchOptions */
-      watch: boolean|string|string[]|Omit<WatchOptions, 'ignoreInitial'|'ignored'|'alwaysStat'|'cwd'>
+      /** `true` or `false` to watch {@linkcode Metalsmith.source}, or one or more paths/ globs, or a subset of chokidar ChokidarOptions */
+      watch: boolean|string|string[]|Omit<ChokidarOptions, 'ignoreInitial'|'ignored'|'alwaysStat'|'cwd'>
     ): Metalsmith;
     /**
      * Get a single metalsmith environment variable. Metalsmith env vars are case-insensitive.  

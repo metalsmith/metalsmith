@@ -60,7 +60,7 @@
     "timeout": 3000
   },
   "dependencies": {
-    "chokidar": "^4.0.1",
+    "chokidar": "^4.0.3",
     "commander": "^10.0.1",
     "debug": "^4.3.4",
     "gray-matter": "^4.0.3",
