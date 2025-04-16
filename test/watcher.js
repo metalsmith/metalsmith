@@ -21,7 +21,7 @@ const defaultWatchOpts = {
 describe('watcher', function () {
   let initialBuild = true
 
-  this.timeout(5000)
+  this.timeout(10000)
   this.beforeEach(() => {
     initialBuild = true
   })

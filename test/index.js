@@ -1624,7 +1624,10 @@ describe('CLI', function () {
       this.timeout(5000)
       return await new Promise((resolve, reject) => {
         exec(
-          'git init && git add . && git status && git commit -m "Initial commit"',
+          [
+            'git init && git config user.name "MetalsmithCI" && git config user.email "ci@metalsmith.io"',
+            'git add . && git status && git commit -m "Initial commit"'
+          ].join(' && '),
           { cwd: fixture('cli-init/expected') },
           (err, stdout) => {
             if (err) {
@@ -1678,18 +1681,23 @@ describe('CLI', function () {
     it('should error when origin is not a git repository', function (done) {
       const tempdir = fs.mkdtempSync(fixture('cli-init/build-'))
       const proc = exec(`${bin} init src ${tempdir} -o ${fixture('basic')}`, { cwd: fixture('basic'), stdio: 'pipe' })
-      proc.stderr.on('data', (stderr) => {
-        let r
+      let err
+      proc.stderr.on('data', (buff) => {
+        err = buff
+      })
+      proc.on('exit', (code) => {
         try {
-          assert.ok(stderr.match(new RegExp("fatal: repository '.*/test/fixtures/basic' does not exist")))
+          assert.strictEqual(code, 1)
+          assert.ok(err.match(new RegExp("fatal: repository '.*/fixtures/basic' does not exist")))
+          rm(tempdir)
+            .then(() => {
+              done()
+            })
+            .catch(done)
+          done()
         } catch (err) {
-          r = err
+          done(err)
         }
-        rm(tempdir)
-          .then(() => {
-            done(r)
-          })
-          .catch(done)
       })
     })
 

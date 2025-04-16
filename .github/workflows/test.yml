@@ -51,7 +51,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: 'npm'
-
+      - run: git config --global user.name "MetalsmithCI" && git config --global user.email "ci@metalsmith.io" && git config --global init.defaultBranch main
       - run: npm install --no-package-lock
       - run: npm test
       - run: npm run test:types
