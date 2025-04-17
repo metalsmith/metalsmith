@@ -193,6 +193,17 @@ async function initCommand(source, dest, { force, origin }) {
   } catch (err) {
     fatal(err.message, err.stack)
   }
+  
+  // git warning: --depth is ignored in local clones; therefore to support local paths and avoid issues with different
+  // shells/ platforms, convert the path to an absolute file URL 
+  try {
+    new URL(origin)
+  // not a URL, suppose file://
+  // eslint-disable-next-line no-unused-vars
+  } catch (_err) {
+    if (!isAbsolute(origin)) origin = resolve(process.cwd(), origin)
+    origin = `file://${origin}`
+  }
 
   // to avoid git clone command failure due to non-empty dir
   // this use case requires creating a temp dir and moving the files with metalsmith
@@ -212,9 +223,9 @@ async function initCommand(source, dest, { force, origin }) {
 
   // https://stackoverflow.com/questions/29368837/copy-a-git-repo-without-history
   const gitCmd = [
-    `git clone '${origin}' . --no-checkout --depth 1 -q`,
+    `git clone "${origin}" . --no-checkout --depth 1 -q`,
     'git sparse-checkout init',
-    'git sparse-checkout set \'' + source + '\'',
+    `git sparse-checkout set "${source}"`,
     'git checkout'
   ].join(' && ')
 
@@ -234,7 +245,7 @@ async function initCommand(source, dest, { force, origin }) {
     .destination(dest)
     .clean(true)
     .build()
-    log('Initialized new "' + source + '" project at ' + join(process.cwd(), dest))
+    log(`Initialized new "${source}" project at ${dest}`)
   } catch (err) {
     log('error', err.stack)
   }

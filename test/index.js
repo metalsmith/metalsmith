@@ -1640,7 +1640,7 @@ describe('CLI', function () {
       })
     })
     this.beforeEach(async () => {
-      await Metalsmith(fixture('cli-init')).source('expected').destination('build-nonempty').build()
+      await Metalsmith(fixture('cli-init')).source('expected').ignore('.git').destination('build-nonempty').build()
     })
     //cleanup of beforeAll
     this.afterAll(async () => {
@@ -1670,6 +1670,7 @@ describe('CLI', function () {
       proc.on('exit', (code) => {
         try {
           assert.strictEqual(code, 1)
+          /** @TODO use assert.match instead when support for NodeJS < 16 is dropped */
           assert.ok(err.match(/Error: Command failed: git --version/))
           done()
         } catch (err) {
@@ -1680,21 +1681,21 @@ describe('CLI', function () {
 
     it('should error when origin is not a git repository', function (done) {
       const tempdir = fs.mkdtempSync(fixture('cli-init/build-'))
-      const proc = exec(`${bin} init src ${tempdir} -o ${fixture('basic')}`, { cwd: fixture('basic'), stdio: 'pipe' })
+      const proc = exec(`${bin} init src ${tempdir} -o build-nonempty`, { cwd: fixture('cli-init'), stdio: 'pipe' })
       let err
       proc.stderr.on('data', (buff) => {
-        err = buff
+        err += buff
       })
-      proc.on('exit', (code) => {
+      proc.on('exit', (_code) => {
         try {
-          assert.strictEqual(code, 1)
-          assert.ok(err.match(new RegExp("fatal: repository '.*/fixtures/basic' does not exist")))
+          /** @TODO use assert.match instead when support for NodeJS < 16 is dropped */
+          // code here is 0 because the shell didn't error, but git clone did
+          assert.ok(err.match(new RegExp('does not appear to be a git repository')))
           rm(tempdir)
             .then(() => {
               done()
             })
             .catch(done)
-          done()
         } catch (err) {
           done(err)
         }
