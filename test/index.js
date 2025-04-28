@@ -719,17 +719,61 @@ describe('Metalsmith', function () {
       const results = await Promise.all(
         argSets.map((args) => {
           return ms.imports(...args).catch((err) => {
-            const toCheck = err.toString().split(/\n| module "| from "/)[0]
+            const toCheck = err.toString().split(/\n| path "| module "/)[0]
             return Promise.resolve(toCheck)
           })
         })
       )
 
       assert.deepStrictEqual(results, [
-        'Error: Metalsmith.import() - "undefined" is not a valid import specifier.',
-        'Error: Metalsmith.import() cannot find',
-        'Error: Metalsmith.import() cannot import "nonExistantExport"'
+        'Error: Metalsmith#imports() - "undefined" is not a valid import specifier.',
+        'Error: Metalsmith#imports() could not load module at resolved',
+        'Error: Metalsmith#imports() could not load "nonExistantExport" from'
       ])
+    })
+
+    it('should import node_modules libraries when path is not absolute or explicitly relative', async () => {
+      const mses = (
+        await Promise.all([
+          ms.imports('metalsmith'),
+          ms.imports('../../../index.js'),
+          ms.imports('metalsmith/index.js')
+        ])
+      ).map((Ms) => {
+        const m = new Ms(fixture('basic'))
+        return m
+      })
+
+      mses.forEach((ms, i) => {
+        if (i > 0) assert.deepStrictEqual(ms[i - 1], ms[i])
+      })
+
+      const drafts = await ms.imports('@metalsmith/drafts')
+      assert.strictEqual(typeof drafts, 'function')
+      const files = { d: { draft: true } }
+      drafts()(files, ms, () => {})
+      assert.deepStrictEqual(files, {})
+    })
+
+    it('should fail on invalid JSON import', async () => {
+      return ms.imports('./invalid.json').catch((err) => {
+        assert.strictEqual(
+          [err.message.split(/ ".+"/)[0], err.message.split(/ ".+"/)[1]].join(''),
+          'Metalsmith#imports could not load due to invalid JSON.'
+        )
+        assert.ok(err.cause instanceof SyntaxError)
+        assert.ok(err.cause.stack.match('JSON.parse'))
+      })
+    })
+
+    it('should proxy the Node.js error for unsupported (CJS) dir imports', async () => {
+      return ms.imports('metalsmith/lib').catch((err) => {
+        assert.strictEqual(
+          err.message.split('\n')[0],
+          'Metalsmith#imports() could not load module at import path "metalsmith/lib".'
+        )
+        assert.strictEqual(err.cause.code, 'ERR_UNSUPPORTED_DIR_IMPORT')
+      })
     })
   })
 
@@ -1623,7 +1667,7 @@ describe('CLI', function () {
     it('should error when failing to require a plugin', function (done) {
       exec(bin, { cwd: fixture('cli-no-plugin') }, function (err) {
         assert(err)
-        const expected = 'Metalsmith · Error: Metalsmith.import() cannot find module "metalsmith-non-existant".'
+        const expected = 'Metalsmith · Error: Metalsmith#imports() could not load module at import path'
         assert.ok(err.message.includes(expected))
         done()
       })
