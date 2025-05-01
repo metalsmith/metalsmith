@@ -78,6 +78,11 @@ Metalsmith(__dirname).frontmatter(false);
 const parse = Metalsmith(__dirname).frontmatter();
 // mark files as static
 Metalsmith(__dirname).statik(['assets'])
+// return static files
+const statik = Metalsmith(__dirname).statik()
+statik.file.contents
+// @ts-expect-error 2790
+delete statik.file.contents
 // set global metadata object
 Metalsmith(__dirname).metadata({ sitename: 'My Static Site' });
 // get global metadata object

@@ -777,7 +777,7 @@ describe('Metalsmith', function () {
     })
   })
 
-  describe('#static', function () {
+  describe('#statik', function () {
     it('should not add static files to the files object', async function () {
       const m = Metalsmith(fixture('static'))
       return await m
@@ -791,24 +791,88 @@ describe('Metalsmith', function () {
         })
         .process()
     })
-    it("should match directory paths' descendants", async function () {
+
+    it('should expand directory paths to include their descendants', async function () {
       const m = Metalsmith(fixture('static'))
       await m
         .statik(['assets', 'nested'])
-        .use((files, m) => {
+        .use((files) => {
           assert.deepStrictEqual(Object.keys(files), ['CNAME', 'index.md'].map(path.normalize))
         })
         .process()
     })
+
     it('should copy static files to the directory', async function () {
       const m = Metalsmith(fixture('static'))
-      return await m.statik(['assets', 'CNAME']).build()
-      try {
-        equal(fixture('static/build'), fixture('static/expected'))
-        return true
-      } catch (err) {
-        return err
-      }
+      await m.statik(['assets', 'CNAME']).build()
+      equal(fixture('static/build'), fixture('static/expected'))
+    })
+
+    // before the build, .statik() returns the specification it was passed
+    it('should return static files when no arguments are given (during the build)', async function () {
+      const m = Metalsmith(fixture('static'))
+      await m
+        .statik(['assets', 'CNAME'])
+        .use((files, m, done) => {
+          const s = m.statik()
+          try {
+            assert.deepStrictEqual(
+              Object.keys(s),
+              ['CNAME', 'assets/script.js', 'assets/style.css'].map(path.normalize)
+            )
+            done()
+          } catch (err) {
+            done(err)
+          }
+        })
+        .process()
+    })
+
+    it('should return static files whose stats and contents are read-only', async function () {
+      const m = Metalsmith(fixture('static'))
+      await m
+        .statik('CNAME')
+        .use((files, m, done) => {
+          const s = m.statik()
+          s.CNAME.stats.size = 0
+          s.CNAME.contents = 'something else'
+          s.CNAME.contents.buffer = 'OTHER'
+          s.CNAME.mode = '0777'
+          try {
+            assert.deepStrictEqual(s.CNAME.contents, Buffer.from('CNAME'))
+            assert.strictEqual(s.CNAME.mode, '0664')
+            assert.deepStrictEqual(s.CNAME.stats, fs.statSync(fixture('static/src/CNAME')))
+            done()
+          } catch (err) {
+            done(err)
+          }
+        })
+        .process()
+    })
+
+    it('should return static files that can be added to and moved', async function () {
+      const m = Metalsmith(fixture('static'))
+      await m
+        .statik('CNAME')
+        .use((files, m, done) => {
+          const s = m.statik()
+          s.ADDED = { contents: Buffer.from('index.md') }
+          delete files['index.md']
+          s[path.normalize('sub/sub/CNAME')] = s.CNAME
+          delete s.CNAME
+          try {
+            assert.deepStrictEqual(Object.keys(s).sort(), ['ADDED', 'sub/sub/CNAME'].map(path.normalize))
+            assert.deepStrictEqual(s[path.normalize('sub/sub/CNAME')].stats, fs.statSync(fixture('static/src/CNAME')))
+            done()
+          } catch (err) {
+            done(err)
+          }
+        })
+        .build()
+      assert.strictEqual(
+        fs.readFileSync(fixture('static/build/ADDED'), 'utf-8'),
+        fs.readFileSync(fixture('static/src/index.md'), 'utf-8')
+      )
     })
   })
 

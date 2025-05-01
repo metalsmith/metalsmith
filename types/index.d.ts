@@ -266,7 +266,19 @@ declare class Metalsmith {
      */
     ignore(): string[];
     /**
-     * Set the files/paths to consider static, i.e. that should be copied to `metalsmith.destination()` without being processed by plugins
+     * Get files/paths considered static, i.e. that should be copied to {@linkcode Metalsmith.destination}` without being processed by plugins.  
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+statik) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L316)
+     * @example
+     * const statik = metalsmith.statik()
+     * statik['library.css'].contents.toString() // 'library.css'
+     * // move static file
+     * statik[path.normalize('css/library.css')] = statik['library.css']
+     * delete statik['library.css']
+     */
+    statik(): Metalsmith.Files;
+    /**
+     * Set files/paths to consider static, i.e. that should be copied to {@linkcode Metalsmith.destination} without being processed by plugins  
+     * The setter has no effect on the current run/watch repeat run  
      * [API Docs](https://metalsmith.io/api/#Metalsmith+statik) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L316)
      * @example
      * metalsmith.statik(["assets","CNAME","api/static"]);
