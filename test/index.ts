@@ -144,6 +144,11 @@ const matched1 = Metalsmith(__dirname).match('**/*.html')
 const matched2 = Metalsmith(__dirname).match('**/*.html', Object.keys({}))
 const matched3 = Metalsmith(__dirname).match('**/*.html', Object.keys({}), { dot: true })
 
+// test the imports utility
+Metalsmith(__dirname).imports('metalsmith').then(() => {})
+Metalsmith(__dirname).imports('./helpers/index.js', 'formatDate')
+(async function () { await Metalsmith(__dirname).imports('./data.json') }())
+
 // test the debugger
 Metalsmith(__dirname).debug.enable('*')
 Metalsmith(__dirname).debug.colors = false

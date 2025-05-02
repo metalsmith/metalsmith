@@ -294,6 +294,16 @@ declare class Metalsmith {
      */
     match(pattern:string|string[], input?:string[], options?:Omit<micromatch.Options, 'format'>): string[];
     /**
+     * Like Javascript's dynamic `import()`, with CJS/ESM support for loading default exports, all or a single named export, and JSON files.
+     * Relative paths are resolved against {@linkcode Metalsmith.directory}  
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+match) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L346)
+     * @example
+     * await metalsmith.imports('metalsmith') // Metalsmith
+     * await metalsmith.imports('data.json')  // object
+     * await metalsmith.imports('./helpers/index.js', 'formatDate')  // function
+     */
+    imports<T = any>(specifier:string, namedExport?:string): T;
+    /**
      * Resolve `paths` relative to the root directory.  
      * [API Docs](https://metalsmith.io/api/#Metalsmith+path) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L332)
      * @example

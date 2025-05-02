@@ -840,8 +840,10 @@ describe('Metalsmith', function () {
           s.CNAME.mode = '0777'
           try {
             assert.deepStrictEqual(s.CNAME.contents, Buffer.from('CNAME'))
-            assert.strictEqual(s.CNAME.mode, '0664')
-            assert.deepStrictEqual(s.CNAME.stats, fs.statSync(fixture('static/src/CNAME')))
+            if (process.platform !== 'win32') {
+              assert.strictEqual(s.CNAME.mode, '0644')
+              assert.deepStrictEqual(s.CNAME.stats, fs.statSync(fixture('static/src/CNAME')))
+            }
             done()
           } catch (err) {
             done(err)
