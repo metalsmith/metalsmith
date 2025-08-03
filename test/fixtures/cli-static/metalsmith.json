@@ -1,0 +1,6 @@
+{
+  "statik": ["assets/**", "*.json"],
+  "plugins": {
+    "./plugin": true
+  }
+}

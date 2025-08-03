@@ -117,6 +117,7 @@ async function buildCommand({ config, ...cliOptions }) {
   if (!(metalsmith instanceof Metalsmith)) {
     metalsmith = new Metalsmith(confRelativeDir)
     if (spec.source) metalsmith.source(spec.source)
+    if (spec.statik) metalsmith.statik(spec.statik)
     if (spec.destination) metalsmith.destination(spec.destination)
     if (spec.concurrency) metalsmith.concurrency(spec.concurrency)
     if (spec.metadata) metalsmith.metadata(spec.metadata)

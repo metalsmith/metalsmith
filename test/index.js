@@ -1838,6 +1838,13 @@ describe('CLI', function () {
         }
       )
     })
+
+    it('should support the statik option', function (done) {
+      exec(bin, { cwd: fixture('cli-static') }, function () {
+        equal(fixture('cli-static/build'), fixture('cli-static/expected'))
+        done()
+      })
+    })
   })
 
   describe('init', function () {
