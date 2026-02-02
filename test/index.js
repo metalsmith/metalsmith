@@ -841,7 +841,7 @@ describe('Metalsmith', function () {
           try {
             assert.deepStrictEqual(s.CNAME.contents, Buffer.from('CNAME'))
             if (process.platform !== 'win32') {
-              assert.strictEqual(s.CNAME.mode, '0644')
+              assert.strictEqual(s.CNAME.mode, '0664')
               assert.deepStrictEqual(s.CNAME.stats, fs.statSync(fixture('static/src/CNAME')))
             }
             done()
@@ -1843,6 +1843,58 @@ describe('CLI', function () {
       exec(bin, { cwd: fixture('cli-static') }, function () {
         equal(fixture('cli-static/build'), fixture('cli-static/expected'))
         done()
+      })
+    })
+  })
+
+  describe('clean', function () {
+    it('should error on non-existant file/directory', (done) => {
+      exec(`${bin} clean non-existant`, { cwd: fixture('cli-clean') }, (_err, stdout, stderr) => {
+        const expectedMsg = 'test/fixtures/cli-clean/non-existant: No such file or directory'.replace(/\//g, path.sep)
+        try {
+          assert.ok(~stderr.indexOf(expectedMsg))
+          done()
+        } catch (err) {
+          done(err)
+        }
+      })
+    })
+
+    it('should error on non-existant config file when [destination] is omitted', (done) => {
+      exec(`${bin} clean -c non-existant.json`, { cwd: fixture('cli-clean') }, (_err, stdout, stderr) => {
+        try {
+          const expectedMsg = 'Metalsmith · could not find a configuration file'
+          assert.ok(~stderr.indexOf(expectedMsg))
+          done()
+        } catch (err) {
+          done(err)
+        }
+      })
+    })
+
+    it('should clean any given directory', (done) => {
+      fs.mkdirSync(fixture('cli-clean/some/dir'), { recursive: true })
+      exec(`${bin} clean some/dir`, { cwd: fixture('cli-clean') }, (err) => {
+        try {
+          assert.strictEqual(err, null)
+          assert.ok(!fs.existsSync(fixture('cli-clean/some/dir')))
+          done()
+        } catch (err) {
+          done(err)
+        }
+      })
+    })
+
+    it('should clean metalsmith.destination() when [destination] is omitted', (done) => {
+      fs.mkdirSync(fixture('cli-clean/build/assets'), { recursive: true })
+      exec(`${bin} clean`, { cwd: fixture('cli-clean') }, (err) => {
+        try {
+          assert.strictEqual(err, null)
+          assert.ok(!fs.existsSync(fixture('cli-clean/build/assets')))
+          done()
+        } catch (err) {
+          done(err)
+        }
       })
     })
   })

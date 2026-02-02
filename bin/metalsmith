@@ -40,16 +40,15 @@ program
   metalsmith --debug @metalsmith/*
   `)
 
-program
+const buildCommand = program
   .command('build', { isDefault: true })
   .description('Run a metalsmith build')
   .option('-c, --config <path>', 'configuration file location', 'metalsmith.json')
   .option('--env <setting...>', 'Set or override one or more metalsmith environment variables.')
   .option('--debug', 'Set or override debug namespaces')
   .option('--dry-run', 'Process metalsmith files without outputting to the file system')
-  .action(buildCommand)
+  .action(buildAction)
 
-/** @TODO this command needs to be tested more e */
 program
   .command('init')
   .description('Initialize a new metalsmith project from a git repo (subpath). Runs a sequence of git and filesystem commands.\nAssumes a working git executable in $PATH and properly configured git/ssh configs.')
@@ -57,111 +56,33 @@ program
   .argument('[destination]', 'Destination directory, defaults to current directory', '.')
   .option('-f, --force', 'Force overwriting a non-empty directory', false)
   .option('-o, --origin <origin>', 'Origin repository (https or ssh url, or a directory path). Defaults to https://github.com/metalsmith/resources if omitted', 'https://github.com/metalsmith/resources')
-  .action(initCommand)
+  .action(initAction)
+
+const cleanCommand = program
+  .command('clean')
+  .description('Clean a directory')
+  .option('-c, --config [path]', 'configuration file location', 'metalsmith.json')
+  .argument('[destination]', 'Destination directory, defaults to metalsmith.destination()')
+  .action(cleanAction)
 
 program.parse(process.argv)
 
-async function buildCommand({ config, ...cliOptions }) {
-  const dir = process.cwd()
-  let path = isAbsolute(config) ? config : resolve(dir, config)
+async function buildAction({ config, ...cliOptions }) {
+  const metalsmith = await resolveConfig(config, buildCommand.opts())
 
-  // Important addition of 2.5.x. Given local plugins with a relative path are written with __dirname in mind,
-  // having a config-relative dir path makes sure the CLI runs properly
-  // when the command is executed from a subfolder or outside of the ms directory
-  const confRelativeDir = dirname(path)
-  if (!exists(path)) {
-    // commander only supports a single default, so we must set default manually here
-    if (exists(resolve(confRelativeDir, 'metalsmith.js'))) {
-      path = resolve(confRelativeDir, 'metalsmith.js')
-    } else {
-      fatal(`could not find a configuration file '${config}'.`)
-    }
-  }
-
-  const format = extname(path).slice(1)
-
-  // for backwards-compat with old plugins using DEBUG env var, and to have consistent process.env in JS exports configs
+  // CLI --<option> overrides configs
+  // For backwards-compat with old plugins using DEBUG env var, and to have consistent process.env in JS exports configs
   // the CLI --env option differs from metalsmith.env('var', 'val') in that it alters process.env
   if (cliOptions.env) cliOptions.env.forEach(envVar => {
     const [name, value] = envVar.split('=')
     process.env[name] = value
-  })
-
-  // avoid ESM dynamic import error with absolute paths on Windows:
-  // Only URLs with a scheme in: file and data are supported by the default ESM loader. On Windows, absolute paths must be valid file:// URLs.
-  // cf also https://github.com/nuxt/nuxt/issues/15500#issuecomment-1451619865
-  path = pathToFileURL(path);
-
-  let spec
-  try {
-    if (format.match(/^[cm]*js$/)) {
-      spec = (await import(path)).default
-      // when a JS file is required that forgets to export using exports or module.exports,
-      // node instead returns an empty object. Though Metalsmith should in theory consider this a valid config
-      // for a simple copy -> paste it is highly likely that this was not the user's intention
-      if (!(spec instanceof Metalsmith) && isObject(spec) && Object.keys(spec).length === 0) {
-        fatal(`it seems like ${config} is empty. Make sure it exports a metalsmith config object.`)
-      }
-    } else {
-      const tempMs = new Metalsmith(confRelativeDir)
-      spec = tempMs.matter.parse(tempMs.matter.wrap(readFileSync(path, 'utf-8')))
-    }
-  } catch (e) {
-    fatal(`it seems like ${config} is malformed or unsupported. Encountered error: ${e.message}`)
-  }
-
-  /** First suppose a JS config file that exports new Metalsmith() */
-  let metalsmith = spec
-
-  /** if it's not suppose a metalsmith.json-style config object */
-  if (!(metalsmith instanceof Metalsmith)) {
-    metalsmith = new Metalsmith(confRelativeDir)
-    if (spec.source) metalsmith.source(spec.source)
-    if (spec.statik) metalsmith.statik(spec.statik)
-    if (spec.destination) metalsmith.destination(spec.destination)
-    if (spec.concurrency) metalsmith.concurrency(spec.concurrency)
-    if (spec.metadata) metalsmith.metadata(spec.metadata)
-    if (spec.clean != null) metalsmith.clean(spec.clean)
-    if (spec.frontmatter != null) metalsmith.frontmatter(spec.frontmatter)
-    if (spec.ignore != null) metalsmith.ignore(spec.ignore)
-    if (isObject(spec.env)) metalsmith.env(expandEnvVars(spec.env, process.env))
-  }
-
-  /* CLI --<option> overrides configs */
-  if (cliOptions.env) cliOptions.env.forEach(envVar => {
-    const [name, value] = envVar.split('=')
     metalsmith.env(name, value)
   })
+
   if (cliOptions.debug) metalsmith.env('DEBUG', cliOptions.debug)
 
   // set a flag plugins can check to target CLI-specific behavior
   metalsmith.env('CLI', true)
-
-  /**
-   * Plugins.
-   */
-  if (!(spec instanceof Metalsmith)) {
-    let plugins = []
-    try {
-      plugins = await Promise.all(normalize(spec.plugins).map(async function (pluginDef) {
-        for (const name in pluginDef) {
-          const plugin = await metalsmith.imports(name)
-          const options = pluginDef[name]
-          return { name, plugin, options }
-        }
-      }))
-    } catch (err) {
-      fatal(`${err.stack}`)
-    }
-
-    plugins.forEach(({ plugin, options, name }) => {
-      try {
-        metalsmith.use(plugin(options))
-      } catch (e) {
-        fatal(`Error: Initialization of plugin "${name}" resulted in error: `, `${e.message}\n\n${e.stack}`)
-      }
-    })
-  }
 
   function onBuild(message) {
     return (err) => {
@@ -177,7 +98,7 @@ async function buildCommand({ config, ...cliOptions }) {
   }
 }
 
-async function initCommand(source, dest, { force, origin }) {
+async function initAction(source, dest, { force, origin }) {
   dest = resolve(dest)
 
   // git in $PATH pre-check, abort before any fs changes if needed
@@ -246,6 +167,19 @@ async function initCommand(source, dest, { force, origin }) {
   if (tempdir) await rm(tempdir)
 }
 
+async function cleanAction(destination, { config }) {
+  if (!destination) {
+    const metalsmith = await resolveConfig(config, cleanCommand.opts())
+    destination = metalsmith.destination()
+  }
+  destination = isAbsolute(destination) ? destination : resolve(process.cwd(), destination)
+  if (!exists(destination)) {
+    fatal(`${destination}: No such file or directory`)
+  } else {
+    await rm(destination)
+  }
+}
+
 /**
  * Log an error and then exit the process.
  *
@@ -305,4 +239,99 @@ function expandEnvVars(env, expansionSource) {
     }
   }, env)
   return env
+}
+
+/**
+ * 
+ * @param {string} path 
+ * @returns {Promise<Metalsmith>}
+ */
+async function resolveConfig(path, opts) {
+  const dir = process.cwd()
+  path = isAbsolute(path) ? path : resolve(dir, path)
+
+  // Important addition of 2.5.x. Given local plugins with a relative path are written with __dirname in mind,
+  // having a config-relative dir path makes sure the CLI runs properly
+  // when the command is executed from a subfolder or outside of the ms directory
+  const confRelativeDir = dirname(path)
+  if (!exists(path)) {
+    // commander only supports a single default, so we must set default manually here, but only when the --config option is not explicitlypassed
+    // we check for its default value is a proxy
+    if (opts.config === 'metalsmith.json' && exists(resolve(confRelativeDir, 'metalsmith.js'))) {
+      path = resolve(confRelativeDir, 'metalsmith.js')
+    } else {
+      fatal(`could not find a configuration file '${path}'.`)
+    }
+  }
+
+  const format = extname(path).slice(1)
+
+  // avoid ESM dynamic import error with absolute paths on Windows:
+  // Only URLs with a scheme in: file and data are supported by the default ESM loader. On Windows, absolute paths must be valid file:// URLs.
+  // cf also https://github.com/nuxt/nuxt/issues/15500#issuecomment-1451619865
+  path = pathToFileURL(path);
+
+  let spec
+
+  try {
+    if (format.match(/^[cm]*js$/)) {
+      spec = (await import(path)).default
+      // when a JS file is required that forgets to export using exports or module.exports,
+      // node instead returns an empty object. Though Metalsmith should in theory consider this a valid config
+      // for a simple copy -> paste it is highly likely that this was not the user's intention
+      if (!(spec instanceof Metalsmith) && isObject(spec) && Object.keys(spec).length === 0) {
+        fatal(`it seems like ${path} is empty. Make sure it exports a metalsmith config object.`)
+      }
+    } else {
+      const tempMs = new Metalsmith(confRelativeDir)
+      spec = tempMs.matter.parse(tempMs.matter.wrap(readFileSync(path, 'utf-8')))
+    }
+  } catch (e) {
+    fatal(`it seems like ${path} is malformed or unsupported. Encountered error: ${e.message}`)
+  }
+
+  /** First suppose a JS config file that exports new Metalsmith() */
+  let metalsmith = spec
+
+  /** if it's not suppose a metalsmith.json-style config object */
+  if (!(metalsmith instanceof Metalsmith)) {
+    metalsmith = new Metalsmith(confRelativeDir)
+    if (spec.source) metalsmith.source(spec.source)
+    if (spec.statik) metalsmith.statik(spec.statik)
+    if (spec.destination) metalsmith.destination(spec.destination)
+    if (spec.concurrency) metalsmith.concurrency(spec.concurrency)
+    if (spec.metadata) metalsmith.metadata(spec.metadata)
+    if (spec.clean != null) metalsmith.clean(spec.clean)
+    if (spec.frontmatter != null) metalsmith.frontmatter(spec.frontmatter)
+    if (spec.ignore != null) metalsmith.ignore(spec.ignore)
+    if (isObject(spec.env)) metalsmith.env(expandEnvVars(spec.env, process.env))
+  }
+
+  /**
+   * Plugins.
+   */
+  if (!(spec instanceof Metalsmith)) {
+    let plugins = []
+    try {
+      plugins = await Promise.all(normalize(spec.plugins).map(async function (pluginDef) {
+        for (const name in pluginDef) {
+          const plugin = await metalsmith.imports(name)
+          const options = pluginDef[name]
+          return { name, plugin, options }
+        }
+      }))
+    } catch (err) {
+      fatal(`${err.stack}`)
+    }
+
+    plugins.forEach(({ plugin, options, name }) => {
+      try {
+        metalsmith.use(plugin(options))
+      } catch (e) {
+        fatal(`Error: Initialization of plugin "${name}" resulted in error: `, `${e.message}\n\n${e.stack}`)
+      }
+    })
+  }
+
+  return metalsmith
 }
