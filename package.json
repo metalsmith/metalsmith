@@ -62,7 +62,7 @@
   "dependencies": {
     "chokidar": "^4.0.3",
     "commander": "^10.0.1",
-    "debug": "^4.3.4",
+    "debug": "^4.4.3",
     "gray-matter": "^4.0.3",
     "is-utf8": "~0.2.0",
     "lodash.clonedeepwith": "^4.5.0",
