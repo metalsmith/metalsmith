@@ -9,8 +9,8 @@ jobs:
   pre-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
         with:
           cache: 'npm'
 
@@ -25,11 +25,11 @@ jobs:
     strategy:
       matrix:
         os: ['ubuntu-latest', 'windows-latest']
-        node: ['14.18.0']
+        node: ['16.0']
     name: Testing Node ${{ matrix.node }} on ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
         with:
           cache: 'npm'
 
@@ -43,11 +43,11 @@ jobs:
     strategy:
       matrix:
         os: ['ubuntu-latest', 'windows-latest']
-        node: ['14.18.0', '16.0', '18.0', '20.0']
+        node: ['16.0', '18.0', '20.0', '22.0']
     name: Testing Node ${{ matrix.node }} on ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node }}
           cache: 'npm'
@@ -55,9 +55,9 @@ jobs:
       - run: npm install --no-package-lock
       - run: npm test
       - run: npm run test:types
-      - if: matrix.os == 'ubuntu-latest' && matrix.node == '18.0'
+      - if: matrix.os == 'ubuntu-latest' && matrix.node == '22.0'
         run: npm run coverage
-      - if: matrix.os == 'ubuntu-latest' && matrix.node == '18.0'
+      - if: matrix.os == 'ubuntu-latest' && matrix.node == '22.0'
         uses: coverallsapp/github-action@v2
         with:
           file: ./coverage.info
