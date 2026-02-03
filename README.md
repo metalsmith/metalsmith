@@ -114,6 +114,8 @@ Metalsmith(__dirname) // parent directory of this file
   })
 ```
 
+Read the docs in full at <https://metalsmith.io>
+
 ## How does it work?
 
 Metalsmith works in three simple steps:
@@ -256,7 +258,7 @@ Metalsmith releases adhere to [semver (semantic versioning)](https://semver.org/
 
 ## Credits
 
-Special thanks to [Ian Storm Taylor](https://github.com/ianstormtaylor), [Andrew Meyer](https://github.com/Ajedi32), [Dominic Barnes](https://github.com/dominicbarnes), [Andrew Goodricke](https://github.com/woodyrew), [Ismay Wolff](https://github.com/ismay), [Kevin Van Lierde](https://github.com/webketje) and [others](https://github.com/segmentio/metalsmith/graphs/contributors) for their contributions!
+Special thanks to [Ian Storm Taylor](https://github.com/ianstormtaylor), [Andrew Meyer](https://github.com/Ajedi32), [Dominic Barnes](https://github.com/dominicbarnes), [Andrew Goodricke](https://github.com/woodyrew), [Ismay Wolff](https://github.com/ismay), [Kevin Van Lierde](https://github.com/webketje) and [others](https://github.com/metalsmith/metalsmith/graphs/contributors) for their contributions!
 
 ## [License](LICENSE)
 
