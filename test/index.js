@@ -1,5 +1,3 @@
-/* eslint-env mocha, node */
-
 const assert = require('assert')
 const equal = require('assert-dir-equal')
 const exec = require('child_process').exec
@@ -327,7 +325,7 @@ describe('Metalsmith', function () {
       const badArgs = [NaN, 'hi', process, false, '1', '2', '3']
       badArgs.forEach(function (bad) {
         assert.throws(function () {
-          m.concurrency(bad), TypeError
+          ;(m.concurrency(bad), TypeError)
         })
       })
     })

@@ -1,5 +1,3 @@
-/* eslint-env node, mocha */
-
 const { writeFile, rename } = require('fs/promises')
 const assert = require('assert')
 const path = require('path')

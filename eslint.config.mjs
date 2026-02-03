@@ -1,11 +1,11 @@
 import pluginNode from 'eslint-plugin-n'
-import configPrettier from 'eslint-config-prettier'
+import pluginImport from 'eslint-plugin-import'
 import globals from "globals";
 import js from "@eslint/js";
 
 export default [
   pluginNode.configs['flat/recommended'],
-  configPrettier,
+  pluginImport.flatConfigs.recommended,
 {
   files: ["test/**/*.js"],
   languageOptions: {

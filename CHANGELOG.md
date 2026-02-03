@@ -190,7 +190,6 @@ Bugfix: include index.js in package.json files
 ### Updated
 
 - **Dependencies:** [`75e6878`](https://github.com/metalsmith/metalsmith/commit/75e6878)
-
   - `chalk`: 1.1.3 ▶︎ 3.0.0
   - `gray-matter`: 2.0.0 ▶︎ 4.0.3
   - `stat-mode`: 0.2.0 ▶︎ 1.0.0
