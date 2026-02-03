@@ -37,10 +37,8 @@
     "lib/matter.js",
     "types/index.d.ts",
     "lib/watcher.js",
-    "metalsmith-migrated-plugins.js",
     "bin/metalsmith",
-    "CHANGELOG.md",
-    "snapcraft.yaml"
+    "CHANGELOG.md"
   ],
   "types": "types/index.d.ts",
   "scripts": {
@@ -51,8 +49,7 @@
     "format": "prettier --write \"**/*.{yml,md,js,json}\"",
     "test": "c8 mocha",
     "test:types": "tsc",
-    "release": "release-it",
-    "postinstall": "node metalsmith-migrated-plugins.js || exit 0"
+    "release": "release-it"
   },
   "mocha": {
     "reporter": "spec",
