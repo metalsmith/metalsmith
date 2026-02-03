@@ -1,6 +1,6 @@
 {
   "name": "metalsmith",
-  "version": "2.6.3",
+  "version": "2.7.0",
   "description": "An extremely simple, pluggable static site generator.",
   "keywords": [
     "static",
