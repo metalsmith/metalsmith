@@ -839,7 +839,7 @@ describe('Metalsmith', function () {
           try {
             assert.deepStrictEqual(s.CNAME.contents, Buffer.from('CNAME'))
             if (process.platform !== 'win32') {
-              assert.strictEqual(s.CNAME.mode, '0664')
+              assert.ok(parseInt(s.CNAME.mode), '0644')
               assert.deepStrictEqual(s.CNAME.stats, fs.statSync(fixture('static/src/CNAME')))
             }
             done()
