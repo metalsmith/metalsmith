@@ -19,17 +19,17 @@ declare class Metalsmith {
     matter: {
       /**
        * Return matter options to use for parsing & stringification  
-       * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+options) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/matter.js#L27)
+       * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+options) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/matter.js#L27)
        */
       options(): Metalsmith.MatterOptions
       /**
        * Set matter options to use for parsing & stringification  
-       * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+options) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/matter.js#L27)
+       * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+options) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/matter.js#L27)
        */
       options(options: Metalsmith.MatterOptions): void
       /**
        * Parse a string or buffer for front matter and return it as a {@linkcode Metalsmith.File} object.  
-       * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+parse) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/matter.js#L37)
+       * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+parse) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/matter.js#L37)
        * @example
        * metalsmith.matter.parse(Buffer.from('---\ntitle: Hello World\n---\nIntro\n---'))
        * === {
@@ -41,7 +41,7 @@ declare class Metalsmith {
       parse(contents: Buffer|string): Metalsmith.File,
       /**
        * Stringify a {@linkcode Metalsmith.File} object to a string with frontmatter and contents  
-       * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+stringify) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/matter.js#L59)
+       * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+stringify) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/matter.js#L59)
        * @example
        * metalsmith.matter.stringify({
        *   contents: Buffer.from('body'),
@@ -57,13 +57,13 @@ declare class Metalsmith {
       stringify(file: Metalsmith.File): string
       /**
        * Wrap stringified front-matter-compatible data with the matter delimiters  
-       * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+wrap) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/matter.js#L69)
+       * [API Docs](https://metalsmith.io/api/#Metalsmith+matter+wrap) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/matter.js#L69)
        */
       wrap(stringifiedData: Buffer|string): string
     }
     /**
      * Set the working `directory`. Relative paths resolve to `process.cwd()`  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+directory) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L181)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+directory) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L196)
      * @example
      * new Metalsmith(__dirname)             // set the path of the working directory through the constructor
      * metalsmith.directory('./other/path')  // set the path of the working directory
@@ -71,14 +71,14 @@ declare class Metalsmith {
     directory(directory: string): Metalsmith;
     /**
      * Get the absolute path of the working directory.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+directory) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L181)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+directory) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L196)
      * @example
      * const msdir = metalsmith.directory();
      */
     directory(): string;
     /**
      * Set the path of the `source` directory, relative to `metalsmith.directory()`  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+source) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L217)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+source) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L232)
      * @default 'src'
      * @example
      * metalsmith.source('src');
@@ -86,14 +86,14 @@ declare class Metalsmith {
     source(path: string): Metalsmith;
     /**
      * Get the absolute path of the `source` directory.  
-     * [API](https://metalsmith.io/api/#Metalsmith+source) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L217)
+     * [API](https://metalsmith.io/api/#Metalsmith+source) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L232)
      * @example
      * const src = metalsmith.source();
      */
     source(): string;
     /**
      * Set the path of the `destination` directory.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+destination) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L235)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+destination) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L250)
      * @default 'build'
      * @example
      * metalsmith.destination('build');
@@ -104,14 +104,14 @@ declare class Metalsmith {
     ): Metalsmith;
     /**
      * Get the absolute path of the `destination` directory.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+destination) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L235)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+destination) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L250)
      * @example
      * const dest = metalsmith.destination()
      */
     destination(): string;
     /**
      * Set the `max` number of files to open at once. Useful if you encounter `EMFILE` errors, see [Node.js docs](https://nodejs.org/api/errors.html#errors_common_system_errors)  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+concurrency) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L253)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+concurrency) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L268)
      * @default Infinity
      * @example
      * metalsmith.concurrency(50)
@@ -122,14 +122,14 @@ declare class Metalsmith {
     ): Metalsmith;
     /**
      * Get the `max` number of files to open at once.  
-     * [API](https://metalsmith.io/api/#Metalsmith+concurrency) | [Source](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L253)
+     * [API](https://metalsmith.io/api/#Metalsmith+concurrency) | [Source](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L268)
      * @example
      * const max = metalsmith.concurrency()
      */
     concurrency(): number;
     /**
      * Set whether {@linkcode Metalsmith.directory} will be `cleaned` before writing. Defaults to `true`.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+clean) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L270)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+clean) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L285)
      * @default true
      * @example
      * metalsmith.clean(false)
@@ -137,14 +137,14 @@ declare class Metalsmith {
     clean(clean: boolean): Metalsmith;
     /**
      * Get whether the destination directory will be `cleaned` before writing.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+clean) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L270)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+clean) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L285)
      * @example
      * const clean = metalsmith.clean()
      */
     clean(): boolean;
     /**
      * Set the flag on whether to parse YAML `frontmatter`  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+frontmatter) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L291)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+frontmatter) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L306)
      * @default true
      * @example
      * metalsmith.frontmatter(false);
@@ -152,13 +152,13 @@ declare class Metalsmith {
     frontmatter(frontmatter?: boolean | {}): Metalsmith;
     /**
      * Get the flag on whether to parse YAML `frontmatter`  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+frontmatter) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L291)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+frontmatter) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L306)
      * @example
      * const on = metalsmith.frontmatter() // true or false
      */
     frontmatter(): boolean;
     /** Consult [chokidar.ChokidarOptions](https://github.com/paulmillr/chokidar#api) in use by `metalsmith.watch`.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+watch) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L510)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+watch) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L558)
      * @example
      * metalsmith.watch()
      * // {
@@ -174,7 +174,7 @@ declare class Metalsmith {
      * Set the list of paths to watch and trigger rebuilds on. The watch method will skip files ignored with {@linkcode Metalsmith.ignore}
      * and will do partial (true) or full (false) rebuilds depending on the {@linkcode Metalsmith.clean} setting.
      * It can be used both for rebuilding in-memory with {@linkcode Metalsmith.process} or writing to file system with {@linkcode Metalsmith.build}.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+watch) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L510)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+watch) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L558)
      * @default false
      * @example
      * metalsmith
@@ -189,7 +189,7 @@ declare class Metalsmith {
     ): Metalsmith;
     /**
      * Get a single metalsmith environment variable. Metalsmith env vars are case-insensitive.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+env) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L372)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+env) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L372)
      * @example
      * const env = metalsmith.env('NODE_ENV')
      * if (env === 'development') { ... }
@@ -197,7 +197,7 @@ declare class Metalsmith {
     env(name:string): number|boolean|string|null;
     /**
      * Get all metalsmith environment variables. Metalsmith env vars are returned in capital-case.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+env) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L372)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+env) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L387)
      * @example
      * const env = metalsmith.env();
      * console.log(env) // { NODE_ENV: 'development' }
@@ -205,7 +205,7 @@ declare class Metalsmith {
     env(): Object;
     /**
      * Set a single metalsmith environment variable (chainable). Metalsmith env vars are case-insensitive.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+env) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L372)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+env) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L387)
      * @example
      * metalsmith
      *  .env('NODE_ENV', process.env.NODE_ENV)
@@ -215,7 +215,7 @@ declare class Metalsmith {
     /**
      * Add multiple metalsmith environment variables at once (chainable). Metalsmith env vars are case-insensitive.  
      * This signature will overwrite but not remove existing metalsmith environment variables  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+env) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L372)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+env) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L387)
      * @example
      * metalsmith.env({
      *  NODE_ENV: process.env.NODE_ENV,
@@ -225,7 +225,7 @@ declare class Metalsmith {
     env(env: {[key:string]: (number|boolean|string|null)}): Metalsmith;
     /**
      * Assign values to the global `metadata` object.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+metadata) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L199)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+metadata) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L214)
      * @example
      * metalsmith.metadata({
      *   sitename: "My Static Site",
@@ -235,14 +235,14 @@ declare class Metalsmith {
     metadata(metadata: object): Metalsmith;
     /**
      * Get the global `metadata` object.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+metadata) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L199)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+metadata) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L214)
      * @example
      * const metadata = metalsmith.metadata();
      */
     metadata(): object;
     /**
      * Add a `plugin` function to the stack.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+use) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L164)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+use) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L179)
      * @example
      * import markdown from '@metalsmith/markdown'
      * metalsmith.use(markdown({ gfm: true }))
@@ -250,7 +250,7 @@ declare class Metalsmith {
     use(plugin: Metalsmith.Plugin | Metalsmith.Plugin[]): Metalsmith;
     /**
      * Set the {@linkcode Metalsmith.ignores} files/paths to ignore loading into Metalsmith.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+ignore) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L316)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+ignore) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L331)
      * @example
      * metalsmith.ignore("corrupted.html");
      * metalsmith.ignore(function (filepath: string, stats: Stats) {
@@ -260,14 +260,14 @@ declare class Metalsmith {
     ignore(files: string | string[] | Metalsmith.Ignore | Metalsmith.Ignore[]): Metalsmith;
     /**
      * Get the array of {@linkcode Metalsmith.ignores} files/paths.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+ignore) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L316)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+ignore) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L331)
      * @example
      * const ignored = metalsmith.ignore();
      */
     ignore(): string[];
     /**
      * Get files/paths considered static, i.e. that should be copied to {@linkcode Metalsmith.destination}` without being processed by plugins.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+statik) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L316)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+statik) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L417)
      * @example
      * const statik = metalsmith.statik()
      * statik['library.css'].contents.toString() // 'library.css'
@@ -279,7 +279,7 @@ declare class Metalsmith {
     /**
      * Set files/paths to consider static, i.e. that should be copied to {@linkcode Metalsmith.destination} without being processed by plugins  
      * The setter has no effect on the current run/watch repeat run  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+statik) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L316)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+statik) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L417)
      * @example
      * metalsmith.statik(["assets","CNAME","api/static"]);
      */
@@ -287,7 +287,7 @@ declare class Metalsmith {
     /**
      * Match filepaths in the source directory by [glob](https://en.wikipedia.org/wiki/Glob_(programming)) pattern.
      * If `input` is not specified, patterns are matched against `Object.keys(files)`  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+match) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L346)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+match) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L361)
      * @example
      * // match all .html files at the source dir root but omit files starting with a dot:
      * metalsmith.match('*.html', Object.keys(files), { dot: false })
@@ -296,7 +296,7 @@ declare class Metalsmith {
     /**
      * Like Javascript's dynamic `import()`, with CJS/ESM support for loading default exports, all or a single named export, and JSON files.
      * Relative paths are resolved against {@linkcode Metalsmith.directory}  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+match) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L346)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+match) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L898)
      * @example
      * await metalsmith.imports('metalsmith') // Metalsmith
      * await metalsmith.imports('data.json')  // object
@@ -305,14 +305,14 @@ declare class Metalsmith {
     imports<T = any>(specifier:string, namedExport?:string): T;
     /**
      * Resolve `paths` relative to the root directory.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+path) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L332)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+path) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L347)
      * @example
      * const path = metalsmith.path("./dist", "assets");
      */
     path(...paths: string[]): string;
     /**
      * Perform the build with the current settings outputting to {@linkcode Metalsmith.destination}.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+build) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L407)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+build) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L440)
      * @example
      * metalsmith.build()
      *   .then(files => console.log(`Build success. Processed ${files.length}`))
@@ -321,7 +321,7 @@ declare class Metalsmith {
     build(): Promise<Metalsmith.Files>;
     /**
      * Perform the build with the current settings outputting to {@linkcode Metalsmith.destination}.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+build) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L407)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+build) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L440)
      * @example
      * metalsmith.build((err, files) => {
      *   if (err) throw err
@@ -331,7 +331,7 @@ declare class Metalsmith {
     build(callback: Metalsmith.Callback): void;
     /**
      * Process files through {@linkcode Metalsmith.plugins} without writing out files.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+process) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L549)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+process) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L598)
      * @example
      * metalsmith.process()
      *  .then(files => console.log(`Done processing ${files.length} files.`))
@@ -340,7 +340,7 @@ declare class Metalsmith {
     process(): Promise<Metalsmith.Files>;
     /**
      * Process files through {@linkcode Metalsmith.plugins} without writing out files.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+process) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L549)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+process) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L598)
      * @example
      * metalsmith.process((err, files) => {
      *   if (err) throw err
@@ -350,7 +350,7 @@ declare class Metalsmith {
     process(callback: Metalsmith.Callback): void;
     /**
      * Run a set of files through the plugins stack.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+run) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L581)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+run) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L581)
      * @example
      * const file = { contents: Buffer.from('contents') }
      * metalsmith.run({ 'index.html': file } , (err, files) => { if (err) {throw err;}});
@@ -361,7 +361,7 @@ declare class Metalsmith {
     ): void;
     /**
      * `Run` a set of files through the plugins stack.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+run) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L581)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+run) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L637)
      * @example
      * const file = { contents: Buffer.from('contents') }
      * metalsmith.run({ 'index.html': file }, metalsmith.plugins, (err, files) => { if (err) {throw err;}});
@@ -374,7 +374,7 @@ declare class Metalsmith {
     ): void;
     /**
      * `Run` a set of files through the plugins stack.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+run) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L581)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+run) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L637)
      * @example
      * const file = { contents: Buffer.from('contents') }
      * metalsmith.run({ 'index.html': file }, metalsmith.plugins)
@@ -389,7 +389,7 @@ declare class Metalsmith {
     /**
      * Read a dictionary of files from a `dir`, parsing frontmatter *(promise variant)*.  
      * If no directory is provided, it will default to {@linkcode Metalsmith.source}.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+read) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L625)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+read) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L681)
      * @example
      * metalsmith.read('relative/to/msdir')
      *  .then(files => console.log(files))
@@ -402,7 +402,7 @@ declare class Metalsmith {
     /**
      * Read a dictionary of files from a `dir`, parsing frontmatter.  
      * If no directory is provided, it will default to {@linkcode Metalsmith.source}.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+read) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L625)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+read) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L681)
      * @example
      * metalsmith.read('relative/to/msdir', (err, files) => {
      *   if (err) throw err
@@ -416,7 +416,7 @@ declare class Metalsmith {
     ): void
     /**
      * Read a `file` by path. Relative paths resolve to {@linkcode Metalsmith.source}.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+readFile) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L663)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+readFile) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L775)
      * @example
      * metalsmith.readFile('index.md')
      *  .then(file => {
@@ -427,7 +427,7 @@ declare class Metalsmith {
     readFile(file: string): Promise<Metalsmith.File>;
     /**
      * Read a `file` by path. Relative paths resolve to {@linkcode Metalsmith.source}.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+readFile) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L663)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+readFile) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L775)
      * @example
      * metalsmith.readFile("a.html", (err, file) => {
      *   if (err) throw err
@@ -437,7 +437,7 @@ declare class Metalsmith {
     readFile(file: string, callback: (err:Error|null, file?:Metalsmith.File) => void): void;
     /**
      * Write an object of {@linkcode Metalsmith.Files} to a destination `dir`. Relative paths resolve to {@linkcode Metalsmith.destination}.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+write) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L719)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+write) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L832)
      * @example
      * const files = {
      *   'index.html': { contents: Buffer.from('...') }
@@ -447,14 +447,14 @@ declare class Metalsmith {
     write(files: Metalsmith.Files, dir: string, callback: Metalsmith.Callback): void;
     /**
      * Write an object of {@linkcode Metalsmith.Files} to a destination `dir`. Relative paths resolve to {@linkcode Metalsmith.destination}.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+write) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L719)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+write) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L832)
      * @example
      * metalsmith.write({fileA: "a.html"} , metalsmith.path("./dist"));
      */
     write(files: Metalsmith.Files, callback: Metalsmith.Callback): void;
     /**
      * Write an object of {@linkcode Metalsmith.Files} to a destination `dir`. Relative paths resolve to {@linkcode Metalsmith.destination}.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+write) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L719)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+write) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L832)
      * @example
      * const file = { contents: Buffer.from('...')
      * metalsmith.write({ 'index.html': file })
@@ -464,7 +464,7 @@ declare class Metalsmith {
     write(files: Metalsmith.Files, dir?:string): Promise<void>;
     /**
      * Write {@linkcode Metalsmith.File|data} to `filepath`. Relative paths resolve to {@linkcode Metalsmith.destination}.  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+writeFile) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L650)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+writeFile) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L869)
      * @example
      * const file = { contents: Buffer.from('File Contents') }
      * metalsmith.writeFile("test.html", file)
@@ -474,7 +474,7 @@ declare class Metalsmith {
     writeFile(filepath: string, data: Metalsmith.File): Promise<void>;
     /**
      * Write {@linkcode Metalsmith.File|data} to `filepath`. Relative paths resolve to {@linkcode Metalsmith.destination}.    
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+writeFile) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L650)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+writeFile) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L869)
      * @example
      * const file = { contents: Buffer.from('File Contents') }
      * metalsmith.writeFile("test.html", file, (err) => {
@@ -486,7 +486,7 @@ declare class Metalsmith {
 
     /**
      * Initialize a plugin {@linkcode Metalsmith.Debugger}  
-     * [API Docs](https://metalsmith.io/api/#Metalsmith+debug) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/debug.js)
+     * [API Docs](https://metalsmith.io/api/#Metalsmith+debug) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/debug.js)
      * @example
      * const debugger = metalsmith.debug('metalsmith-myplugin')
      *
@@ -522,7 +522,7 @@ declare class Metalsmith {
 
 /**
  * Initialize a new `Metalsmith` builder with a working `directory`.  
- * [API Docs](https://metalsmith.io/api/#Metalsmith) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.6.0/lib/index.js#L119)
+ * [API Docs](https://metalsmith.io/api/#Metalsmith) | [Source code](https://github.com/metalsmith/metalsmith/blob/v2.7.0/lib/index.js#L119)
  * @example
  * import { fileURLToPath } from 'url'
  * import { dirname } from 'path'

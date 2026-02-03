@@ -6,6 +6,43 @@ This project adheres to [Semantic Versioning](http://semver.org).
 
 This document follows the guidelines of [Keep A Changelog](http://keepachangelog.com).
 
+## [2.7.0] - 2026-02-18
+
+### Added
+
+- [#361] Added `Metalsmith#statik` getter/setter method for static files.
+- [#403] Added `Metalsmith#imports` utility method
+- [#380] Added `metalsmith init [options] [source] [destination]` CLI command to clone starters from subpaths in other git repo's
+- [#409] Enabled `clean(true)` builds to overwrite Metalsmith#source.In the build method, the order of execution of metalsmith.read() and rm(metalsmith.destination()) is swapped logically [`fe0274b`](https://github.com/metalsmith/metalsmith/commit/fe0274b)
+- Added `metalsmith clean [-c|--config] [destination]` CLI command to clean the build destination, or a specified directory [`08c0da7`](https://github.com/metalsmith/metalsmith/commit/08c0da7)
+- Added `Metalsmith.version`, decoupled CLI --version command from package.json [`87edd34`](https://github.com/metalsmith/metalsmith/commit/87edd34)
+- CLI --env parameter synchronizes to `process.env` [`5d99888`](https://github.com/metalsmith/metalsmith/commit/5d99888)
+- Added support for `metalsmith.yml|toml` configs [`52347d4`](https://github.com/metalsmith/metalsmith/commit/52347d4)
+
+### Removed
+
+- Drops support for Node < 16.0.0 (EOL: 2022-10-18) to support commander update [`e4bf5cc`](https://github.com/metalsmith/metalsmith/commit/e4bf5cc)
+- Removed snapcraft.yml/metalsmith-migrated-plugins.js and postinstall script from npm pkg [`e32098e`](https://github.com/metalsmith/metalsmith/commit/e32098e)
+
+### Updated
+
+- Reworked readdir helper used in Metalsmith#read. Allows file.stats to be preloaded in ms.readFile to avoid needing to read stats twice. [`d8bd616`](https://github.com/metalsmith/metalsmith/commit/d8bd616)
+- **Dependencies:** [`d1fd7db`](https://github.com/metalsmith/metalsmith/commit/d1fd7db), [`e4bf5cc`](https://github.com/metalsmith/metalsmith/commit/e4bf5cc), , [`5635a94`](https://github.com/metalsmith/metalsmith/commit/5635a94)
+  - `chokidar`: 3.6.0 ▶︎ 4.0.3
+  - `commander`: 10.0.1 ▶︎ 11.1.0
+  - `debug`: 4.3.4 ▶︎ 4.4.3
+  - `js-yaml` (subdependency of gray-matter): 3.14.1 ▶︎ 3.14.2
+
+### Fixed
+
+- Catches errors when inexistant DEBUG_LOG directory is specified [`cd3c36e`](https://github.com/metalsmith/metalsmith/commit/cd3c36e)
+- Fixes TS Chokidar.WatchOptions rename to ChokidarOptions [`5635a94`](https://github.com/metalsmith/metalsmith/commit/5635a94)
+
+[#409]: https://github.com/metalsmith/metalsmith/issues/409
+[#403]: https://github.com/metalsmith/metalsmith/issues/403
+[#361]: https://github.com/metalsmith/metalsmith/issues/361
+[#380]: https://github.com/metalsmith/metalsmith/issues/380
+
 ## [2.6.3] - 2024-03-05
 
 ### Removed
