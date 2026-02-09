@@ -6,7 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org).
 
 This document follows the guidelines of [Keep A Changelog](http://keepachangelog.com).
 
-## [2.7.0] - 2026-02-18
+## [2.7.0] - 2026-02-06
 
 ### Added
 
@@ -17,7 +17,7 @@ This document follows the guidelines of [Keep A Changelog](http://keepachangelog
 - Added `metalsmith clean [-c|--config] [destination]` CLI command to clean the build destination, or a specified directory [`08c0da7`](https://github.com/metalsmith/metalsmith/commit/08c0da7)
 - Added `Metalsmith.version`, decoupled CLI --version command from package.json [`87edd34`](https://github.com/metalsmith/metalsmith/commit/87edd34)
 - CLI --env parameter synchronizes to `process.env` [`5d99888`](https://github.com/metalsmith/metalsmith/commit/5d99888)
-- Added support for `metalsmith.yml|toml` configs [`52347d4`](https://github.com/metalsmith/metalsmith/commit/52347d4)
+- [#397] Added support for `metalsmith.yml|toml` configs [`52347d4`](https://github.com/metalsmith/metalsmith/commit/52347d4)
 
 ### Removed
 
@@ -42,6 +42,7 @@ This document follows the guidelines of [Keep A Changelog](http://keepachangelog
 [#403]: https://github.com/metalsmith/metalsmith/issues/403
 [#361]: https://github.com/metalsmith/metalsmith/issues/361
 [#380]: https://github.com/metalsmith/metalsmith/issues/380
+[#397]: https://github.com/metalsmith/metalsmith/issues/397
 
 ## [2.6.3] - 2024-03-05
 

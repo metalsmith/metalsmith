@@ -43,7 +43,7 @@ jobs:
     strategy:
       matrix:
         os: ['ubuntu-latest', 'windows-latest']
-        node: ['16.0', '18.0', '20.0', '22.0']
+        node: ['16.0', '18', '20', '22', '24']
     name: Testing Node ${{ matrix.node }} on ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v5
@@ -55,9 +55,9 @@ jobs:
       - run: npm install --no-package-lock
       - run: npm test
       - run: npm run test:types
-      - if: matrix.os == 'ubuntu-latest' && matrix.node == '22.0'
+      - if: matrix.os == 'ubuntu-latest' && matrix.node == '24'
         run: npm run coverage
-      - if: matrix.os == 'ubuntu-latest' && matrix.node == '22.0'
+      - if: matrix.os == 'ubuntu-latest' && matrix.node == '24'
         uses: coverallsapp/github-action@v2
         with:
           file: ./coverage.info
