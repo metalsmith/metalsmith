@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>{{ title }}</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+</head>
+<body>
+	Version: {{ metadata.version }}
+
+	<nav>
+		<h2>Navigation</h2>
+		<ul>
+			<li><a href="{{relativePath}}index.html">Startseite</a></li>
+		{% for key in metadata.collections|keys %}
+			<li>
+				{{ key }}
+				<ul>
+				{% for item in metadata.collections[key] %}
+					<li>
+						<a href="{{relativePath}}{{ item.path }}">{{ item.title }}</a>
+					</li>
+				{% endfor %}
+				</ul>
+			</li>
+		{% endfor %}
+		</ul>
+	</nav>
+	<article>
+		{{ contents }}
+	</article>
+	<footer>
+		<p>Generated with {{ metadata.generator }} &mdash; <a href="{{ metadata.url }}">{{ metadata.url }}</a></p>
+	</footer>
+</body>
+</html>
