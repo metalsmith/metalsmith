@@ -97,16 +97,21 @@ The existing watcher tests had two infrastructure problems:
 
 When a build errors synchronously (before the watcher's `closeWatcher` function is assigned), `watch(false)` fell through without returning anything. Callers expecting a thenable (e.g., `ms.watch(false).then(resolve)`) would crash with `TypeError: ms.watch(...).then is not a function`.
 
-**Fix**: Added a fallback `return Promise.resolve()` after the `closeWatcher` check in `Metalsmith.prototype.watch()`, so `watch(false)` always returns a Promise — whether or not there's a watcher to close.
+**Fix**: Added a `wasWatching` check to distinguish between two uses of `watch(false)`:
+
+- **Config-time** (`ms.watch(false).build(...)`) — `wasWatching` is falsy, falls through to `return this` for chaining
+- **Runtime stop** (`ms.watch(false).then(resolve)`) — `wasWatching` is truthy, returns a Promise
 
 ```js
+const wasWatching = this[symbol.watch]
+this[symbol.watch] = false
 if (options === false && typeof this[symbol.closeWatcher] === 'function') {
   return this[symbol.closeWatcher]()
 }
-if (options === false) return Promise.resolve()
+if (options === false && wasWatching) return Promise.resolve()
 ```
 
-This was a pre-existing bug exposed by the 100ms `watcherReady` stabilization delay (Fix 2), which changed the timing enough that `closeWatcher` hadn't been assigned yet when the error callback ran.
+The runtime case was a pre-existing bug exposed by the 100ms `watcherReady` stabilization delay (Fix 2), which changed the timing enough that `closeWatcher` hadn't been assigned yet when the error callback ran. Without `wasWatching`, the initial fix broke config-time chaining by always returning a Promise instead of `this`.
 
 ---
 
