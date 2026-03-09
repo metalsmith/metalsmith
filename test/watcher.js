@@ -34,7 +34,7 @@ describe('watcher', function () {
         if (watchState && watchState !== false) {
           await activeMs.watch(false)
         }
-      } catch (e) {
+      } catch (_e) {
         // ignore close errors
       }
       activeMs = null
