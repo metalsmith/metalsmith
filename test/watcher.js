@@ -7,7 +7,6 @@ const fixture = path.resolve.bind(path, __dirname, 'fixtures')
 
 const initialFiles = ['change', 'dir/file', 'remove'].map(path.normalize)
 
-
 const defaultWatchOpts = {
   alwaysStat: false,
   awaitWriteFinish: false,
